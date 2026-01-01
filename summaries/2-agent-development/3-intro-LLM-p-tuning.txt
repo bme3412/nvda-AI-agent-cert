@@ -1,116 +1,18 @@
-An Introduction to Large Language Models: Prompt Engineering and P-Tuning
-
-Apr 26, 2023
-By Tanay Varshney and Annie Surla
-
-+46
-Like
- Discuss (0)
-AI-Generated Summary
-
-ChatGPT has made quite an impression. Users are excited to use the AI chatbot to ask questions, write poems, imbue a persona for interaction, act as a personal assistant, and more. Large language models (LLMs) power ChatGPT, and these models are the topic of this post. 
-
-Before considering LLMs more carefully, we would first like to establish what a language model does. A language model gives a probability distribution of a word being valid in a sequence of words. Essentially, the job of a language model is to predict which word is the best fit in a sentence. Figure 1 provides an example.
-
-Screenshot of the words, "Hey I need to chop this onion, can you pass me the [?] -- Model's prediction[?]: Knife."
-Figure 1. Simple word prediction using a language model
-While language models like BERT have been effectively used to tackle many downstream tasks like text classification, it has been observed that with an increase in the scale of these models, certain additional abilities emerge. 
-
-This increased scale typically comes with a commensurate increase in the following three dimensions: the number of parameters, training data, and the computational resources required to train the model. For more information, see Emergent Abilities of Large Language Models.
-
-LLMs are deep learning models that can recognize, summarize, translate, predict, and generate content using large datasets. There is no one set demarcation for what is considered an LLM, but for the purposes of this discussion, we use this term to refer to any GPT-scale model or models with 1B or more parameters. 
-
-This post explains the benefits of using LLMs over a set of model pipelines built using smaller language models. It also covers the following basics:
-
-LLM prompts
-Prompt engineering
-P-tuning 
-Why use large language models?
-Chatbots are typically built with an ensemble of BERT models and a dialog manager. This method has some advantages such as smaller-sized models, which can result in lower latencies and compute requirements. This, in turn, is more cost-efficient. So why not use ensembles over LLMs?
-
-Ensembles, by their very design, are not as flexible as LLMs. This flexibility comes from the generation capabilities and the fact that said models are trained on a large corpus of data that entails a wide variety of tasks.
-In many cases, obtaining enough data to address challenges is not feasible.
-With each ensemble comes its own MLOps pipeline. Maintaining and updating a multitude of complex ensembles is difficult, as each model in every ensemble has to be fine-tuned regularly.
-An image containing examples for Question Answering, Content Generation, Paraphrasing, and Personal Assistant style tasks.
-Figure 2. A subset of possible tasks that can be handled by a single LLM
-Value of LLMs over multiple ensembles
-It can be argued that an ensemble of models can be less expensive than LLMs. However, considering just the inference costs, this assumption leaves out the following considerations:
-
-Engineering time and cost savings: Building, maintaining, and scaling an ensemble is a complex challenge. Each of the component models must be fine-tuned. AI infrastructure for model inference and scaling to accommodate traffic requires considerably more time to build. And this is looking at a single skill. To emulate LLMs, multiple skill sets must be built.
-Shorter time to ship features: The time required to build a new pipeline for a new skill is typically more than the time required to p-tune an LLM (more on this later). This means that TTM is much longer.
-Data acquisition and quality maintenance: Any purpose-built ensemble needs a large volume of case-specific data, which is not always available. This data must be collected on a per-model basis. In other words, in addition to the I/O from the ensemble, a data set for each of the individual models used in the ensemble is needed. Additionally, all models drift over time, and maintenance costs for fine-tuning add up quickly when working with multiple models.
-These considerations show the value of using LLMs over multiple ensembles.
-
-Prompting LLMs
-Prompts are used as a means to interact with LLMs to accomplish a task. A prompt is a user-provided input to which the model is meant to respond. Prompts can include instructions, questions, or any other type of input, depending on the intended use of the model. In the case of Stable Diffusion models, for example, the prompt is the description of the image to generate. 
-
-The DALL-E 2 LLM textural prompt, “Cat as a scientist conducting experiments in a lab” generates an image of a cat wearing glasses mixing liquid in a glass.
-Figure 3. A DALL-E 2 textual prompt (left) and the generated image (right)
-Prompts can also take the form of an image. With this approach, a generated textual output describes the image prompt. This is commonly used for tasks like image captioning.
-
-An image prompt of a black and white cat generates the text, “a black and white cat on a table.” 
-Figure 4. An image prompt (left) and the generated text (right) 
-With models such as GPT-3, a text prompt can be a simple question like, “How many colors are in the rainbow?” Or, the prompt can take the form of a complicated problem, data, or an instruction such as, “Compose a motivational poem to make me happy.” 
-
-Examples of different types of prompts, including a simple question about the colors in a rainbow, an instruction prompt about composing a motivational poem, and a complicated prompt involving analyzing stock price data.
-Figure 5. Examples of different types of prompts: simple, complicated, and instruction
-Prompts can also include specific constraints or requirements like tone, style, or even desired length of the response. For example, a prompt to write a letter to a friend can specify tone, word limit, and specific topics to include. 
-
-The quality and relevance of the response generated by the LLM is heavily dependent on the quality of the prompt. So, prompts play a critical role in customizing LLMs to ensure that the responses of the model meet the requirements of a custom use case. 
-
-Prompt engineering for better prompts
-The term prompt engineering refers to the process of carefully designing the prompts to generate a specific output. Prompts play a critical role in obtaining optimal results from the model, and how you write one can make a whole lot of difference in the output generated. The following examples discuss three different strategies:
-
-Zero-shot prompts
-Few-shot prompts
-Chain-of-thought prompts
-Zero-shot means prompting the model without any example of expected behavior from the model. For example, a zero-shot prompt asks a question.
-
-Screenshot of the question, "What is the capital of France?" and the answer, "France."
-Figure 7. A simple question is an example of a zero-shot prompt 
-In Figure 7, the answer is incorrect, as Paris is the capital. Judging from the answer, the model may not understand the use of the word “capital” in this context. 
-
-A simple way to overcome this issue is to give some examples in the prompt. This type of prompt is referred to as a few-shot prompt. You provide a few examples before posing the actual question. 
-
-Screenshot of multiple questions regarding the capitals of different countries before asking the question about the capital of France.
-Figure 8. Example questions for a few-shot prompt
-A few-shot prompt enables the model to learn without training. This is one way of engineering a prompt. 
-
-How do you get the model to answer a question logically? To explore this, start with a zero-shot prompt that is more complicated.
-
-Screenshot of a question, "A juggler can juggle 16 balls. Half of the balls are golf balls and half the golf balls are blue. How many blue golf balls are there?" and the answer, "There are 8 blue golf balls."
-Figure 9. A complicated logical question zero-shot prompt
-In Figure 9, the answer is once again incorrect. (The correct answer is four blue golf balls.) To help develop reasoning, use a prompting method called chain-of-thought prompting. Do this by providing some few-shot examples, where the reasoning process is explained. When the LLM answers the prompt, it shows its reasoning process as well.
-
-The example prompt shows Step 1 as "There are 4 balls.", step 2 as "There are 2 golf balls.", step 3 as "There is one red golf ball.", and the conclusion as "So there is one red golf ball." Given the example, the model produces the correct number of blue golf balls for the earlier question.
-Figure 10. An example of a few-shot chain-of-thought prompt, enabling the LLM to answer accurately with reasoning
-While the example shown in Figure 10 is a few-shot chain-of-thought prompt, you can also give a zero-shot chain-of-thought prompt. This type of prompt includes phrases such as, “Let’s think about this logically.” 
-
-The use of the phrase 'Let's think about this logically.' helps change the result to a three-item list of the story problem and an equation that produces the correct result of 4 blue golf balls.
-Figure 11. Zero-shot chain-of-thought prompt, enabling the LLM to answer accurately with reasoning
-With this approach, the LLM generated a chain of thought that answers the question accurately. It is useful to try a range of different prompts. 
-
-P-tuning to customize LLMs 
-As discussed earlier, prompt engineering is one way to customize a model’s response. However, this method has shortcomings:
-
-A small number of examples can be used, limiting the level of control.
-The examples must be pre-appended, which affects the token budget
-How can you work around these limitations?
-
-Transfer learning is an obvious candidate: start with a base model and use the use case–specific data to fine-tune the model. This approach works well when dealing with regular models, but fine-tuning a model with 530B parameters (about 5,300x larger than a BERT model) consumes considerable time and resources. 
-
-P-tuning, or prompt tuning, is a parameter-efficient tuning technique that solves this challenge. P-tuning involves using a small trainable model before using the LLM. The small model is used to encode the text prompt and generate task-specific virtual tokens. 
-
-These virtual tokens are pre-appended to the prompt and passed to the LLM. When the tuning process is complete, these virtual tokens are stored in a lookup table and used during inference, replacing the smaller model.
-
-Diagram shows a prompt, "How do I bake a cake?" going through a lighter p-tuned model before going through an LLM to produce a result that starts with, "For baking a cake follow this recipe...".
-Figure 12. The general flow of prompt tuning
-This process is beneficial for the following reasons:
-
-Considerably fewer resources are required (compared to fine-tuning the LLM) to customize the model pipeline to achieve the desired results.
-The time required to tune a smaller model is much less (as fast as ~20 minutes).
-Models p-tuned on different tasks can be saved, without the need for large amounts of memory.
-The NVIDIA NeMo cloud service simplifies this process. For more information, see p-tuning the models in the NeMo service (you must be a member of the early access program).
-
-Conclusion
-This post discussed LLMs and outlined cases for their use. It also covered the basic concepts involved in customizing the behavior of LLMs, including various types of prompts, prompt engineering, and p-tuning.
+Understanding Large Language Models: Prompting and P-Tuning
+At their core, language models do something deceptively simple: they predict which word should come next in a sequence. If you type "I need to chop this onion, can you pass me the..." the model assesses probabilities and suggests "knife" as the most likely completion. That's the fundamental job—determining which word fits best based on context. Earlier models like BERT excelled at this basic prediction task and were great for specific jobs like text classification.
+What changed with Large Language Models (LLMs) is scale, and scale brings surprising new capabilities. When you dramatically increase three things simultaneously—the number of parameters (think of these as the model's adjustable knobs), the amount of training data, and the computational horsepower used for training—something interesting happens. The model doesn't just get better at prediction; it develops emergent abilities it wasn't explicitly trained for. Models with a billion or more parameters (the GPT family being prime examples) can suddenly perform tasks like summarization, translation, content generation, and reasoning that smaller models struggle with, even when those smaller models were specifically designed for those tasks.
+The natural question is: why bother with these massive, expensive LLMs when you could build an ensemble of smaller specialized models that handle different tasks? The traditional chatbot approach uses multiple BERT-sized models working together with a dialog manager—one model for intent classification, another for entity recognition, another for response generation, and so on. This seems efficient because each component is smaller, faster, and cheaper to run. But this comparison misses crucial hidden costs.
+Building and maintaining ensembles is engineering hell. Each model in your ensemble needs its own fine-tuning pipeline, its own dataset, its own monitoring, its own deployment infrastructure. Want to add a new capability? You're building an entire new model pipeline from scratch, which means gathering labeled data, training, validation, deployment, and integration with your existing ensemble. This takes months. Meanwhile, an LLM can often handle that new capability immediately with just a well-crafted prompt, or at worst, a quick fine-tuning session that takes hours instead of months.
+The data requirements tell a similar story. Your ensemble needs high-quality, task-specific data for each component model, and that data must be continuously maintained because all models drift over time. One LLM trained on a massive, diverse corpus often handles multiple tasks without needing separate datasets for each. The engineering time savings alone often offset the higher inference costs, especially when you factor in faster time-to-market for new features and the flexibility to pivot without rebuilding entire pipelines.
+Prompts are how you interact with LLMs to accomplish tasks. Think of a prompt as your instruction manual to the model—it can be a simple question, a complex problem with data, detailed instructions with constraints, or even images (for multimodal models). For text-to-image models like DALL-E, the prompt might be "cat as a scientist conducting experiments in a lab," and the model generates that image. For conversational models, prompts range from straightforward queries like "How many colors are in the rainbow?" to elaborate requests like "Compose a motivational poem in the style of Maya Angelou, under 100 words, focusing on overcoming adversity."
+The critical insight is that prompt quality determines response quality. The same model can give wildly different results depending on how you phrase your request. This is where prompt engineering becomes essential—it's the art and science of crafting prompts that coax optimal performance from your model.
+Zero-shot prompting is the simplest approach: you just ask your question without any examples. "What is the capital of France?" is zero-shot. The model relies entirely on its training to understand what you want. This works beautifully for straightforward queries but can fail in surprising ways. If the model answers "France" instead of "Paris," it might be confusing the country with its capital city—the word "capital" has multiple meanings, and without context, the model guessed wrong.
+Few-shot prompting solves this by providing examples before your actual question. You might show the model: "What is the capital of Spain? Madrid. What is the capital of Italy? Rome. What is the capital of France?" Now the model sees the pattern—you want city names, not country names—and answers correctly. This technique is remarkable because the model learns the task structure from just a handful of examples, without any training or parameter updates. It's learning in-context, adapting its behavior based purely on the prompt structure.
+Chain-of-thought prompting tackles a different problem: getting models to reason logically rather than just pattern-match. If you ask "A juggler has 16 balls. Half are golf balls, and half the golf balls are blue. How many blue golf balls are there?" a zero-shot approach might incorrectly answer "8" by latching onto the first "half" mentioned. The model isn't breaking down the problem step-by-step.
+Chain-of-thought prompting fixes this by showing the model how to reason. You provide examples where the solution process is spelled out: "Step 1: There are 16 balls total. Step 2: Half are golf balls, so 8 golf balls. Step 3: Half the golf balls are blue, so 4 blue golf balls. Conclusion: There are 4 blue golf balls." When you then pose your actual problem, the model mimics this step-by-step reasoning and arrives at correct answers it would have missed otherwise.
+Interestingly, you can even use zero-shot chain-of-thought by simply adding phrases like "Let's think about this logically" or "Let's work through this step by step" to your prompt. This triggers the model to generate intermediate reasoning steps before its final answer, dramatically improving accuracy on problems requiring multi-step logic.
+While prompt engineering is powerful, it has real limitations. You can only fit a small number of examples before hitting the token budget—the maximum length the model can process. Every example you include uses up tokens that could otherwise go to actual content. Additionally, finding the perfect prompt often requires extensive trial and error. What if you need more control than a few examples can provide, but can't afford the astronomical cost of fully fine-tuning a 530-billion-parameter model?
+P-tuning (prompt tuning) offers an elegant middle ground. Instead of fine-tuning the entire massive LLM, you train a small auxiliary model that sits in front of it. This tiny model takes your text prompt and generates task-specific "virtual tokens"—learned representations that encode task information far more efficiently than example text could. These virtual tokens get prepended to your actual prompt before the LLM sees it.
+The beauty is that training this small auxiliary model requires a fraction of the resources needed to fine-tune the LLM itself. We're talking 20 minutes instead of days or weeks. Once training completes, you save the virtual tokens in a lookup table and discard the auxiliary model—during inference, you just retrieve the appropriate virtual tokens for your task and prepend them. You can maintain multiple task-specific versions this way without massive memory requirements, because you're only storing small token sets rather than entire fine-tuned model copies.
+This creates a three-tier customization strategy: use zero-shot or few-shot prompting for quick experiments and simple tasks, employ chain-of-thought for reasoning challenges, and resort to P-tuning when you need deeper customization but can't justify full fine-tuning costs. Each technique offers different tradeoffs between flexibility, performance, resource requirements, and time investment.
+The fundamental shift LLMs represent is moving from task-specific models requiring extensive training data and engineering for each new capability, to flexible foundation models that adapt through clever prompting and lightweight tuning. Rather than maintaining a zoo of specialized models, each with its own infrastructure and data pipeline, you maintain one powerful LLM and customize its behavior through prompts and efficient tuning methods. This dramatically reduces engineering complexity while enabling faster iteration and broader capability coverage with less task-specific data.

@@ -23,6 +23,7 @@ const KEY_TERMS = [
   
   // Key NVIDIA technologies
   'NIM', 'NeMo', 'NVIDIA NeMo', 'NVIDIA AI Blueprints', 'NeMo Guardrails',
+  'Triton Inference Server', 'TensorRT', 'Agent Intelligence Toolkit', 'AIQ',
   
   // Important operational concepts
   'Agent Ops', 'microservices', 'artifact repository',
@@ -33,11 +34,16 @@ const KEY_TERMS = [
   // Security essentials
   'RBAC', 'IAM',
   
-  // Memory concepts (for other articles)
+  // Memory concepts
   'short-term memory', 'long-term memory',
   
-  // Planning concepts (for other articles)
+  // Planning concepts
   'task decomposition', 'Chain of Thought',
+  
+  // Agent development concepts
+  'dynamic batching', 'model instances', 'LoRA', 'P-tuning', 'prompt tuning',
+  'Circuit Breaker', 'Retry pattern', 'transient faults', 'exponential back-off',
+  'idempotency', 'LangChain', 'LlamaIndex', 'CrewAI',
 ];
 
 function boldKeyTerms(text: string): string {
