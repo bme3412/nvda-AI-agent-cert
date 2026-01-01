@@ -1,0 +1,203 @@
+Overview
+
+What Is NVIDIA NeMo?
+NVIDIA NeMo™ is a modular software suite for managing the AI agent lifecycle. It provides microservices and toolkits for data processing, model fine-tuning and evaluation, reinforcement learning, policy enforcement, and system observability. NeMo helps enterprises build, monitor, and optimize agentic AI systems at scale, on any GPU-accelerated infrastructure. It integrates with existing AI platforms and supports cloud, on-premises, and hybrid deployment, enabling enterprises to rapidly manage and effortlessly create data flywheels that continuously optimize AI agents.
+
+New NVIDIA AI Blueprint for Building Data Flywheels
+Now available, this new AI blueprint enables developers to build an automated data flywheel that continuously powers your generative and agentic AI applications with more accurate and efficient models.
+
+Try Now
+Benefits
+Explore the Benefits of NVIDIA NeMo for Agentic AI
+Decorative
+Modular AI Agent Lifecycle Management
+Manage the AI agent lifecycle—from data curation, customization, and evaluation to guardrailing, observability, and optimization—with an enterprise-ready, interoperable software suite.
+
+Decorative
+Seamless Deployment and Scaling
+Easily build data flywheels that use enterprise data to improve AI agents, powering the entire flywheel with a simple Helm chart deployment or API calls for various parts of the workflow.
+
+Decorative
+Increased ROI
+Quickly train, customize, and deploy large language models (LLMs), vision-language models (VLMs), video AI, and speech AI at scale, reducing time to solution and increasing ROI.
+
+Decorative
+Accelerated Performance
+Maximize AI agent performance and throughput with GPU-accelerated optimization, multi-node scaling, and tuning for cost-efficient training, deployment, and continuous improvement.
+
+Decorative
+Safer Agentic AI
+Build safer agentic AI systems by vetting models, guardrailing prompts, and continuously scanning for vulnerabilities.
+
+Decorative
+Production Ready
+Deploy into production with a secure, optimized, full-stack solution that offers support, security, and API stability as part of NVIDIA AI Enterprise. 
+
+Build, monitor, and optimize AI agents anywhere—from the cloud and data center to the edge.
+
+Features
+Tools for Managing the AI Agent Lifecycle
+The AI agent lifecycle is an end-to-end process for developing and improving AI agents in production applications. NVIDIA NeMo provides tools that enable each step of this workflow, so enterprises can build powerful, secure, and continuously learning agents.
+
+The Features of NVIDIA NeMo
+Build
+Prepare AI-ready data
+Process existing multimodal datasets into high-quality, AI-ready formats for development pipelines, and generate synthetic data to close critical data gaps.	
+NeMo Curator
+Clean, filter, and prepare multimodal data.
+NeMo Data Designer
+Create domain-specific datasets from scratch.
+Select the right model
+Pick or build models suited to the use case, validate with academic benchmarks, run custom evaluations, and fine-tune if needed.	
+NVIDIA Nemotron
+State-of-the-art open multimodal reasoning models.
+NeMo Retriever
+Extraction, embedding, and reranking models for RAG pipelines.
+NeMo Evaluator
+Benchmark, test, and evaluate models and agents.
+Build your AI agent
+Turn your custom model into a scalable application, seamlessly connect it to your enterprise stack and tools, and define workflows with flexible orchestration.	
+NeMo Agent Toolkit
+Framework-agnostic toolkit to build, profile, and optimize AI agents.
+Deploy
+Deploy your agent with maximum performance
+Optimize your agent for production with high-throughput, low-latency inference, ensuring it can scale to meet enterprise demands and deliver fast, reliable responses.	
+NVIDIA NIM
+Run AI models in optimized containers, exposed as OpenAI-compatible APIs.
+Stay grounded in data and enforce guardrails
+Use retrieval-augmented generation (RAG) to anchor agent responses in trusted knowledge while applying safety, compliance, and content moderation guardrails.	
+NeMo Retriever
+Build accurate, privacy-preserving RAG pipelines.
+NeMo Guardrails
+Enforce safety, compliance, and control across AI interactions.
+Optimize
+Monitor and collect feedback
+Track the agent's real-world interactions with users and other systems. Systematically evaluate its performance and accuracy, finding opportunities to continuously improve.	
+NeMo Agent Toolkit
+Framework-agnostic toolkit to build, profile, and optimize AI agents.
+NeMo Customizer
+Fine-tune and align models with domain data.
+NeMo Framework
+Open-source toolkit for training and aligning LLMs and multimodal models.
+Continuously improve with data flywheels
+Use the feedback and data gathered from monitoring to create a data-driven flywheel, iteratively retraining the agent to continuously optimize and stay effective over time.	
+NeMo RL
+Post-train and align models at scale with advanced reinforcement learning techniques.
+NeMo Gym
+Simulated training environments to generate high-quality agentic RL rollouts.
+NeMo Evaluator
+Benchmark, test, and evaluate models and agents.
+NeMo Customizer
+Fine-tune and align models with domain data.
+Use Cases
+
+How NeMo Is Being Used
+See how NVIDIA NeMo supports industry use cases and jump-starts your AI development.
+
+AI Agents
+SDG for Agentic AI
+AI Assistant
+Information Retrieval
+Content Generation
+Humanoid Robot
+AI Agents
+AI agents are transforming customer service across sectors, helping companies enhance customer conversations, achieve high resolution rates, and improve human representative productivity. AI agents can handle predictive tasks, reason and problem-solve, be trained to understand industry-specific terms, and pull relevant information from an organization’s knowledge bases, wherever that data resides.
+
+Learn More About AI Agents
+AI Agent for Customer Service
+
+
+
+
+
+Apptronik
+
+Starting Options
+Ways to Get Started With NVIDIA NeMo
+Manage the AI agent lifecycle with tools and technologies for building, monitoring, and optimizing AI agents in production.
+
+1
+Try NVIDIA-optimized foundation models like NVIDIA Nemotron.
+
+Try Now
+2
+Build, monitor, and optimize AI agents with NVIDIA NeMo.
+
+Get Started
+3
+Jump-start building your AI solutions with NVIDIA Blueprints.
+
+Try the Blueprints
+Compare Starting Options
+Customer Stories
+How Industry Leaders Are Driving Innovation With NeMo
+More Customer Stories
+Worley Deploys NVIDIA NIM Microservices to Transform EPC Business With Agentic AI
+Architecture / Engineering / Construction, Energy
+
+Worley Deploys NVIDIA NIM Microservices to Transform EPC Business With Agentic AI
+Customer: Worley
+
+Products: NVIDIA AI Enterprise, NVIDIA NIM
+
+Technologies: NVIDIA NeMo Framework, NVIDIA Triton Inference Server
+
+Shell Trains Custom AI Chatbot With NVIDIA NeMo to Uplevel Operations
+Featured
+Energy
+
+Shell Trains Custom AI Chatbot With NVIDIA NeMo to Uplevel Operations
+Customer: Shell
+
+Products: NVIDIA NeMo, NVIDIA NeMo Curator, NVIDIA NeMo Framework
+
+Amdocs Builds Generative AI Agents for Telecom
+Telecommunications
+
+Amdocs Builds Generative AI Agents for Telecom
+Customer: Amdocs
+
+Products: NVIDIA DGX Cloud, NVIDIA AI Enterprise, NVIDIA Nemotron
+
+Technologies: NVIDIA NeMo framework
+
+Adopters
+Leading Adopters Across All Industries
+Customers
+Partners
+AI Sweden logo
+Amazon Logo
+Amdocs logo
+AT&T
+BRIA logo
+Dropbox logo
+Korea Telecom logo
+Perplexity logo
+Servicenow logo
+shell logo
+Resources
+The Latest in NVIDIA NeMo Resources
+Blogs
+Sessions
+Training
+Videos
+How to Train Scientific Agents with Reinforcement Learning
+December 15, 2025
+How to Train Scientific Agents with Reinforcement Learning
+The scientific process can be repetitive and tedious, with researchers spending hours digging through papers, managing experiment workflows…
+How to Build Privacy-Preserving Evaluation Benchmarks with Synthetic Data
+December 12, 2025
+How to Build Privacy-Preserving Evaluation Benchmarks with Synthetic Data
+Validating AI systems requires benchmarks—datasets and evaluation workflows that mimic real-world conditions—to measure accuracy, reliability…
+Train Small Orchestration Agents to Solve Big Problems
+December 01, 2025
+Train Small Orchestration Agents to Solve Big Problems
+Using the right tool and model for a task is a challenging and ever-present engineering problem in agent design. At NVIDIA Research, we’re making fast progress…
+Load More 
+View All Blogs 
+
+
+
+
+
+

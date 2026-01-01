@@ -1,0 +1,86 @@
+
+Agent Architecture and Design: Exam Weight 15%
+Foundational structuring and design of agentic AI systems, focusing on how agents interact, reason, and communicate within
+their environments.
+1.1 Design user interfaces for intuitive human-agent interaction.
+1.2 Implement reasoning and action frameworks (e.g., ReAct).
+1.3 Configure agent-to-agent communication protocols for collaboration.
+1.4 Manage short-term and long-term memory for context retention.
+1.5 Orchestrate multi-agent workflows and coordination.
+1.6 Apply logic trees, prompt chains, and stateful orchestration for multi-step reasoning.
+1.7 Integrate knowledge graphs to enable relational reasoning.
+1.8 Ensure adaptability and scalability of the agent’s architecture
+
+Agent Development: Exam Weight 15%
+Practical building, integration, and enhancement of agents.
+2.1 Engineer prompts and dynamic prompt chains for reliable performance.
+2.2 Integrate generative and multimodal models (text, vision, audio).
+2.3 Build and connect custom tools, APIs, and functions for external system interaction.
+2.4 Implement error handling (retry logic, graceful failure recovery).
+2.5 Develop dynamic conversation flows with real-time streaming and feedback mechanisms.
+2.6 Evaluate and refine agent decision-making strategies
+
+Evaluation and Tuning: Exam Weight 13%
+Measuring, comparing, and optimizing agent performance.
+3.1 Implement evaluation pipelines and task benchmarks to measure performance.
+3.2 Compare agent performance across tasks and datasets.
+3.3 Collect and integrate structured user feedback for iterative improvements.
+3.4 Tune model parameters (e.g., accuracy, latency-efficiency trade-offs).
+3.5 Analyze evaluation results to guide targeted optimization.
+
+Deployment and Scaling: Exam Weight 5%
+Operationalizing and scaling agentic systems.
+4.1 Deploy and orchestrate multi-agent systems at production scale.
+4.2 Apply MLOps practices for continuous integration and continuous delivery (CI/CD) workflows, monitoring, and governance.
+4.3 Profile performance and reliability under distributed system loads.
+4.4 Scale deployments using containerization (Docker, Kubernetes) with load balancing.
+4.5 Optimize deployment costs while ensuring high availability
+
+Cognition, Planning, and Memory: Exam Weight 10%
+Core cognitive processes underlying intelligent agent behavior, including reasoning strategies, decision-making,
+and memory management.
+5.1 Implement memory mechanisms for short- and long-term context retention.
+5.2 Apply reasoning frameworks (chain-of-thought, task decomposition).
+5.3 Engineer planning strategies for sequential and multi-step decision-making.
+5.4 Manage stateful orchestration to coordinate complex tasks and knowledge retention.
+5.5 Adapt reasoning strategies based on prior experiences and feedback.
+
+Knowledge Integration, and Data Handling: Exam Weight 10%
+Integration of external knowledge and the management of diverse data types.
+6.1 Implement retrieval pipelines (RAG, embedded search, hybrid approaches).
+6.2 Configure and optimize vector databases for fast retrieval.
+6.3 Build extract, transform, and load (ETL) pipelines to integrate enterprise or client data sources.
+6.4 Conduct data quality checks, augmentation, and preprocessing.
+6.5 Enable real-time access and reasoning over structured and unstructured knowledge
+
+NVIDIA Platform Implementation: Exam Weight 7%
+Leveraging NVIDIA’s AI hardware and software platforms for agentic AI systems.
+7.1 Integrate NVIDIA NeMo Guardrails for compliance and safety enforcement.
+7.2 Deploy NVIDIA NIM microservices for high-performance inference.
+7.3 Optimize workflows with the NVIDIA NeMo Agent Toolkit.
+7.4 Leverage NVIDIA TensorRT-LLM and Triton Inference Server for latency reduction.
+7.5 Manage and optimize multimodal input pipelines on NVIDIA hardware.
+
+Run, Monitor, and Maintain: Exam Weight 7%
+Ongoing operation, monitoring, and maintenance of agentic systems post-deployment.
+8.1 Define monitoring dashboards and reliability metrics.
+8.2 Track logs, errors, and anomalies for root cause diagnosis.
+8.3 Continuously benchmark deployed agents against prior versions.
+8.4 Implement automated tuning, retraining, and versioning in production.
+8.5 Ensure continuous uptime, transparency, and trust in live deployments
+
+Safety, Ethics, and Compliance: Exam Weight 5%
+Principles and practices that ensure agentic AI systems operate responsibly, uphold ethical standards, and comply with legal
+and regulatory frameworks.
+9.1 Design and enforce system security and audit trails.
+9.2 Integrate compliance guardrails (privacy, enterprise policy).
+9.3 Mitigate bias and toxicity in outputs.
+9.4 Deploy layered safety frameworks (filters, escalation protocols).
+9.5 Ensure compliance with licensing and regulatory standards.
+
+Human-AI Interaction and Oversight: Exam Weight 5%
+The design and implementation of systems that facilitate effective human oversight and interaction with agents.
+10.1 Build intuitive UIs with user-in-the-loop interaction.
+10.2 Design structured feedback loops that guide iterative agent improvements.
+10.3 Implement transparency mechanisms (explainable reasoning, decision traceability).
+10.4 Enable human oversight and intervention for accountability and trust.

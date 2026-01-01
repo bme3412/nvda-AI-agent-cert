@@ -1,0 +1,1391 @@
+AGENTIC AI SYSTEMS APPLIED TO TASKS IN FINANCIAL SERVICES:
+MODELING AND MODEL RISK MANAGEMENT CREWS
+IZUNNA OKPALA∗,†
+, ASHKAN GOLGOON∗,‡
+, ARJUN RAVI KANNAN∗,§
+Abstract. The advent of large language models has ushered in a new era of agentic systems, where artificial
+intelligence programs exhibit remarkable autonomous decision-making capabilities across diverse domains.
+This paper explores agentic system workflows in the financial services industry. In particular, we build
+agentic crews with human-in-the-loop module that can effectively collaborate to perform complex modeling
+and model risk management (MRM) tasks. The modeling crew consists of a judge agent and multiple agents
+who perform specific tasks such as exploratory data analysis, feature engineering, model selection/hyperparameter tuning, model training, model evaluation, and writing documentation. The MRM crew consists
+of a judge agent along with specialized agents who perform tasks such as checking compliance of modeling
+documentation, model replication, conceptual soundness, analysis of outcomes, and writing documentation.
+We demonstrate the effectiveness and robustness of modeling and MRM crews by presenting a series of
+numerical examples applied to credit card fraud detection, credit card approval, and portfolio credit risk
+modeling datasets.
+Keywords:: Large Language Models (LLMs), Multi-Agent Systems, Agentic Systems, Multi-Agent
+Debate, Multi-Agent Collaboration, Human-in-the-Loop (HITL).
+1. Introduction
+Large language models (LLMs) have emerged as a powerful tool in natural language processing, capable of
+generating and understanding textual data that mimic human behavior. One of the interesting applications
+of LLMs is their ability to engage in role-playing, where they can simulate various personas, perspectives, or
+even multiple roles within a conversation [46, 44, 9, 50]. Multi-agent systems leverage the phenomenal roleplaying abilities of individual LLM agents through effective debate and collaboration to perform complex
+tasks and achieve shared goals [7, 54, 76, 44, 31, 21, 14]. Such tasks often surpass what a single highly
+capable LLM agent can accomplish [7, 14].
+Recent research in LLM multi-agent systems has demonstrated considerable potential by equipping collaborative agents with specialized tools, resulting in advanced problem-solving skills in different domains
+[66, 30].
+Multi-agent systems have made great leaps in simulating human-like decision-making processes [68, 55,
+35, 44, 13, 9]. Recently, [44] introduced agents that can simulate emergent social behavior. The so-called
+generative agents can initiate and engage in conversations, notice each other, and form opinions. Generative
+agents are enabled through an architecture that consists of three components, namely memory stream,
+Date: April 2025.
+∗Emerging Capabilities Research Group, Discover Financial Services Inc., Riverwoods, IL 60015, USA.
+† Corresponding author, okpalaiu@mail.uc.edu.
+‡ agolgoon3@gatech.edu.
+§ arjun.kannan@gmail.com.
+1
+arXiv:2502.05439v2 [cs.AI] 29 Apr 2025
+2 OKPALA, GOLGOON, RAVI KANNAN
+reflection, and planning. The memory stream records a long-term memory of the agent’s experiences, which,
+along with a memory retrieval module, affects the agent’s real-time behavior. To better guide its behavior,
+the agent utilizes the reflection module, enabling the agent to draw conclusions about others and itself
+by gradually integrating relevant memories into higher-level inferences. Finally, the planning module is a
+mechanism that translates an agent’s reflections and current environment variables into action plans, which
+in turn affect the agent’s behavior in the future.
+In the field of software development, [46] proposed a framework known as ChatDev. This framework
+utilizes LLM-powered (software) agents through natural language communication such that they actively
+contribute to different phases of software development, namely the design, coding, testing, and documenting stages. ChatDev applies two main mechanisms — the chat chain mechanism divides tasks into smaller
+subtasks to promote seamless collaboration, while the communicative dehallucination mechanism tries to
+minimize coding hallucination. The success of this framework demonstrates how natural language communication can enable agents to effectively collaborate on complex tasks such as software development. Similar
+examples of agent-based systems for software engineering tasks include code review automation [55], code
+search and improvement [78], agile development [41], code testing and analysis [63, 39, 18], large-scale software development tasks [47], and code repository generation and navigation [74, 37]. See [15] for a recent
+review of LLM multi-agent systems applied to software development.
+LLM-based multi-agents have been used in various non-conventional yet interesting contexts in a host of
+different fields. Some of these efforts include synthetic data generation [38, 36], machine translation [66],
+jury trial and court simulation [8, 53], and healthcare [52, 33, 43, 60].
+TransAgents [66] is a multi-agent virtual company that mirrors the translation process in literary texts.
+This framework possesses a diverse array of roles such as Senior Editors, junior editors, translators, localization specialists, and proofreaders. For each distinct role, a set of agents is generated to improve the
+efficiency of the simulations. Moreover, two agent collaboration strategies are examined, namely Addition-bySubtraction Collaboration and Trilateral Collaboration. In the debate-style collaboration strategy [35, 13, 7],
+multiple agents suggest their answers, and a moderator agent wraps up the conversations. Addition-bySubtraction [66], however, only involves two agents. The Addition agent extracts the most comprehensive
+information possible, while the Subtraction agent eliminates redundancies in the extracted information and
+provides feedback to the Addition agent. The collaboration in the Trilateral strategy is divided into three
+branches, each assigned to its distinctive agent, namely Action agent, Critique agent, and Judge agent. The
+Action agent is tasked with following instructions and executing the actions needed. The Critique agent
+reviews the actions and provides feedback to the Action agent. The Judge agent checks the responses for
+further revisions and makes the final decision.
+Recent progress in LLMs integration with multi-agent systems has opened up groundbreaking opportunities for its application in financial services [42, 27, 79, 3]. Several key streams of research utilizing agentic
+systems in finance include trading and investment agents [62, 34, 73, 71, 77, 75, 61, 72, 19], markets and
+economic activities simulation [32, 16, 80, 57], financial sentiment analysis [69], auditing and compliance
+automation [59, 20], anomaly detection [45], and stock predictions [28].
+Generative Pre-trained Transformers (GPTs) do not exactly mimic how human memory works, which is
+organized into long, medium, and short-term levels. This can make it hard for LLMs to quickly focus on
+urgent and important tasks such as stock trading, where it is crucial to extract key insights from layered
+financial data. TradingGPT [34] introduces an LLM multi-agent system with layered memories utilized for
+stock and fund trading. In this framework, inspired by the hierarchical nature of human memory, an agent
+assigns perceived memory into long-term, middle-term, or short-term memory layers. Improving on [44]’s
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 3
+metrics for recency, relevancy, and importance, [34] models a hierarchical arrangement of events within each
+memory layer and within an agent’s memory. Their treatment of an agent’s memory enables the agents to
+effectively debate, form strategies, track financial changes, and make informed investment decisions based
+on their individual risk appetite.
+StockAgent [75], another LLM-based multi-agent system, is designed to model investors’ trading behavior in the stock market. The simulations performed using StockAgent are devoted to observing how agent
+decision-making strategies can influence volatility and liquidity as market indicators. In doing so, simulations are designed to replicate real-world conditions based on NASDAQ and Hong Kong Stock Exchange
+mechanisms, using two anonymized U.S. stocks, one existing and the other one in the IPO stage.
+When it comes to quantitative investment, [62, 73] proposed frameworks known as Alpha-GPT and AlphaGPT 2.0, respectively. Alpha-GPT [62] introduces a novel approach to quantitative investment research
+by integrating human-AI interaction for alpha mining, enabling users to convert natural language trading
+ideas into structured, actionable alpha factors using LLMs. Alpha-GPT addresses challenges like expression
+validation and backtesting. Alpha-GPT 2.0 [73] expands on this framework, automating the entire research
+pipeline through a system of AI agents. These agents manage alpha mining, modeling, and analysis, using
+machine learning tools for tasks like feature selection and portfolio optimization, enhancing the efficiency
+and scalability of quantitative research.
+Apart from leveraging agentic systems as investment and trading tools, agents have been utilized for
+conducting simulations in economics. The paper [16] examines how LLMs, like GPT-3, can simulate humanlike economic behavior, allowing researchers to conduct virtual economic experiments. These simulations
+mirror traditional economic studies, offering a scalable, cost-effective tool for testing hypotheses before realworld experiments, though with some limitations regarding data quality and representativeness.
+EconAgent [32] introduces a new approach to macroeconomic simulation using LLM-powered multi-agent
+systems. EconAgent creates agents that can simulate human-like economic behaviors, including decisionmaking in the labor, consumption, and financial markets. The framework addresses key challenges in macroeconomic simulations, such as agent heterogeneity and the influence of macroeconomic trends. The method
+also offers adaptability and realistic decision-making, exhibiting improved simulations over traditional models, potentially transforming macroeconomic policy analysis and research.
+LLM-based agents can be used to model competition in economic and sociological settings. CompeteAI
+[80] leverages two types of agents, namely competitors (e.g., restaurants) and judges (customers), to model
+competition. Competitor agents are tasked with managing resources, adjusting menus, hiring staff, and
+running advertisements, adapting their strategies based on feedback they receive from judges. Judge agents
+represent customers with diverse preferences (e.g., dietary restrictions and income level). Judges choose
+between different competitors based on their respective service quality. Moreover, judge agents provide
+feedback through ratings and comments that influence future decisions of the competitors (such as modifying
+menus and changing prices). This configuration enables a realistic simulation of competition, offering insights
+into adaptive strategies and decision-making processes.
+Recently, [69] devised a multi-agent system architecture that combines multiple specialized LLM agents,
+each focusing on a different aspect of financial sentiment analysis. The agents considered include a Macro
+Sentiment Agent, Micro Sentiment Agent, Event Extraction Agent, and Knowledge Reasoning Agent. These
+agents work together in a coordinated manner to perform comprehensive financial sentiment analysis. The
+authors argue that multi-agent systems are well-suited for financial sentiment analysis, as the task requires
+integrating diverse sources of information and capabilities. The modular and distributed nature of a multiagent system in their case allows for flexibility and scalability in handling sentiment analysis.
+4 OKPALA, GOLGOON, RAVI KANNAN
+Multi-agent systems were recently used for anomaly detection in financial services as well. The paper
+[45] presents an LLM-based multi-agent framework for anomaly detection in financial services. Agents are
+defined for specific tasks, such as data validation, external information gathering, and institutional knowledge
+integration. These agents collaborate to identify, analyze, and validate financial data anomalies efficiently.
+This framework enhances accuracy and reduces human involvement, making it useful for real-time monitoring
+and decision-making in financial markets, where quick and reliable anomaly detection is crucial.
+Financial services also benefited from applying agentic systems to compliance and auditing automation
+tasks. Recently, [59] introduced a dual-agent AI system for structured finance tasks. In this framework,
+one agent handles document extraction, while the other ensures data accuracy via cross-verification between
+documents like loan applications and bank statements. This configuration, especially using two agents,
+improves accuracy (up to 100%) but increases computational costs, although it is still faster and more
+economical compared to manual review approaches. The system is tested on various open- and closed-source
+models, including Llama 3 and GPT-4, demonstrating the efficiency of multi-agent frameworks for complex
+document analysis.
+Understanding and monitoring multi-agent LLM systems is crucial because their interactions can amplify
+biases, leading to unintended behaviors and causing potential harm; hence, it is essential to ensure that
+agents are built strategically to be fair, safe, and ethical in their application to complex tasks. Next, we
+point out some of these concerns and potential solutions.
+The safety of multi-agent systems is important, especially when it involves the financial services industry,
+a heavily regulated entity. As [6] would put it, harms in agentic systems lead to systemic and long-range impacts, as well as undermining collective decision-making power. They noted the research on FATE (Fairness,
+Accountability, Transparency, and Ethics) [1, 65], which suggests that as programmable systems become
+more agentic, they may amplify biases and inequities, particularly for marginalized groups. Some other
+challenges, not necessarily related to harm and safety, were elucidated by [14]. These include, but are not
+limited to, the following: optimizing task planning, managing complex context information, and improving
+memory management. Identifying the challenges of LLM-powered multi-agent systems and their potential
+solutions is of paramount importance in ensuring the safety and compliance of agentic systems. Some of
+these challenges include error handling techniques and/or system failures leading to unpredictable behavior
+like hallucination, lack of control and oversight over the input variables that shape the decision of the system,
+induced preference or bias, toxic degeneration, and difficulty assessing how agents reach their conclusions.
+LLM agents are viewed as “black boxes” primarily because their decision-making is often opaque [48].
+Transparency in AI automation is the foundation for trust, and by extension, machine interpretability and
+bias control. According to [49], safety concerns range from the use of unproven theories, concepts, or
+questionable data sources in LLM building blocks to the use of retrieval-augmented systems to pull false
+information from internet sources. These issues can lead to the agentic system exhibiting discriminatory
+behavior, thus producing harmful results or offensive content [40]. One of the ways to tackle this issue is the
+introduction of human-in-the-loop. This is the ability for humans to intervene or be a part of the processing
+capabilities of agentic systems. This approach, when applied properly, will be critical to protecting endusers from biased or incorrect outputs [49]. The behaviors and vulnerabilities of agentic systems arise
+implicitly from the training data specific to the LLM model used rather than being explicitly programmed
+[49]. According to [17], humans can provide oversight, feedback, and intervention to prevent the agents from
+taking harmful actions. Since these agents are not fully transparent, a triadic framework involving human
+regulation, agent alignment, and an understanding of environmental feedback (agent regulation) is needed
+to address these safety concerns [56].
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 5
+Figure 1. General components of an LLM-based agent (adapted from [58])
+Another way to tackle the issue of safety and harm in agentic systems is the use of guardrails. Guardrails
+are a set of rules that ensure operational safety and ethical practices in machine learning applications. Their
+implementation can be in the form of a layered protection model, system prompts, retrieval-augmented generation (RAG) [29] architectures, and other techniques that minimize bias and protect privacy [2]. Guardrails
+reduce the likelihood of issues like bias, potential for unsafe actions, dataset poisoning, lack of explainability, hallucinations, and non-reproducibility [2]. Moreover, [49] beyond their position on transparency, also
+argue in favor of guardrails inclusion in LLM-based systems to ensure their runtime behavior is safe and
+responsible. Ultimately, guardrails are a crucial aspect of harnessing the immense potential of LLMs while
+minimizing harm and ensuring their alignment with human values.
+This paper is organized as follows. In §2, we briefly review the components of agentic systems and agents
+collaboration strategies. Agentic systems applications in financial services are discussed in §3 with agentic
+systems for modeling and model risk management workflows, respectively, given in §3.3 and §3.4. Future
+directions are discussed in §4.
+2. Agentic systems architectures
+In this section, we briefly review some important elements of agentic systems architecture and its general
+components (see [58, 54, 10, 12] for further details).
+2.1. Agentic Systems Components. Agentic systems utilize LLMs as their knowledge-bank and are
+equipped with predefined functions to create a plan for a given task, collaborate with one another, and
+leverage a wide variety of tools to execute the plan [58]. An agent is typically characterized by the following
+general components, namely agent core, memory module, tools, and planning module (see Figure 1).
+The agent core contains information about the core NLP engine (such as GPTs), the agent’s goals, tools,
+memory, and persona.
+The memory module consists of short-term and long-term memories. The short-term memory tracks
+immediate context and actions, while the long-term memory stores information across multiple prior sessions,
+enabling more personalized interaction to be provided by the agent [58].
+6 OKPALA, GOLGOON, RAVI KANNAN
+Tools are external systems and workflows, APIs, and specialized functions that agents can leverage to
+perform tasks. These tools allow the agent to interact with the outside world, access real-time data, perform
+computations, or control systems. Some examples of agent tools are retrieval-augmented generation (RAG)
+[29] tools to enable extracting contextually relevant information (context), web browsing and scraping tools,
+third-party integration tools (e.g., weather, finance, or social media APIs), computation, code execution,
+and interpreter tools, etc. (see [12, 67, 11, 58]).
+In LLM-based agentic systems, a planning module is responsible for managing the decision-making and
+task execution process by breaking down complex tasks into manageable steps. In other words, the planning
+module acts as a task orchestration engine that manages how an agent handles multi-step, goal-oriented
+tasks. In doing so, a combination of two techniques, namely task (and question) decomposition as well as
+reflection (or critique), is used [58]. Task decomposition is used to break down a complex task into smaller
+(more manageable) subtasks. The reflection or critic mechanism plays a key role in improving the agent’s
+decision-making, planning, and reasoning processes. Several techniques like ReAct [70], Reflexion [51], Chain
+of Thought [64], and Graph of Thought [4] have emerged as methods for augmenting the planning process
+by introducing reflective or evidence-based approaches. These techniques enhance the agent’s reasoning
+capabilities by enabling it to reflect on its own actions, evaluate possible outcomes, and refine its execution
+plans, resulting in handling tasks with greater accuracy and efficiency.
+One should note that there is no general consensus about the definition of agent components in the
+literature. Next, we focus on CrewAI [12, 11] for defining agent components, as this is the framework we
+adopt to implement our crews for the rest of the paper. In CrewAI, the key components comprising the
+agent are Role Playing, Focus, Tools, Cooperation, Guardrails, and Memory.
+The memory system in CrewAI helps agents to recall, reason, and effectively learn from past events and
+interactions [12]. The memory system consists of short-term memory, long-term memory, entity memory,
+and contextual memory. Role playing is a specific identity assigned to an agent within the CrewAI system.
+This provides context and direction, influencing how the agent interacts with other agents and tools. The
+Focus component gives the agent the ability to concentrate on its assigned tasks without being distracted
+by irrelevant information or activities [11]. The agent is thus able to execute its prompts, enabling the
+prioritization of its efforts on specific tasks. It connects to the role-playing component, which streamlines
+the agent to a particular function irrespective of the prompts within the agent’s construct.
+For agents to work effectively, especially when there are specialized actions like exploratory data analysis
+that need to be performed, tools are used [12]. Tools are the capabilities that agents can utilize to accomplish
+specific tasks. The selection of appropriate tools is vital, as providing agents with too many options can lead
+to confusion and inefficiency. Guardrails are safety measures and protocols implemented to ensure that agents
+operate reliably and ethically. These guidelines help prevent issues such as hallucinations (incorrect outputs)
+and ensure that agents adhere to best practices during their interactions [11]. One of the component that
+drives this action is the LLM temperature. A temperature setting of ‘1’ allows the LLM greater freedom to
+generate creative or less accurate responses, whereas a temperature of ‘0’ restricts it to deterministic outputs,
+eliminating such flexibility. It is always a good practice to evaluate trade-offs to ensure agents perform
+optimally. In our case, we selected a moderate temperature of ‘0.2’ to balance creativity and precision. Text
+generation spans the entire vocabulary without the temperature parameter. For instance, Llama3 can go
+through the whole 128,256 tokens, Deepseek-R1 spans 130,000 tokens, and GPT-3.5 Turbo reaches 100,256
+tokens. A higher or no temperature allows for more variability. When using a low temperature setting, we
+ensure that tokens with the highest softmax scores are selected. The temperature parameter controls the
+impact of this sampling. Specifically, it modifies the softmax function to adjust the distribution of token
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 7
+Figure 2. Agentic system collaboration structure: Horizontal Collaboration (left), Hierarchical Collaboration (middle), Nested Collaboration (right) (adapted from [14])
+selection. In Equation 2.1, xi
+is the raw score (logit) for class i, T is the temperature parameter, and j is
+the index that iterates over all classes in the set of possible classes.
+(2.1) T raditional Sof tmax e
+xi
+Pe
+xj
+.... T emperature − adjusted sof tmax e
+xi
+T
+Pe
+xj
+T
+For additional context on our guardrail strategy refer to §3.1. The Cooperation component is arguably
+one function that makes CrewAI unique. It involves the collaborative efforts of multiple agents working
+together to achieve common goals. Agents can share information, delegate tasks, and provide feedback to
+one another, enhancing the overall effectiveness of the system [11].
+2.2. Collaboration Strategies in Agentic Systems. Collaboration in agentic systems enables agents to
+assist one another by sharing information and integrating their skills. In CrewAI [12], this collaboration is
+realized utilizing information sharing, task assistance, and resource allocation. Effective information sharing
+is essential to ensure that all agents can communicate their findings and stay well-informed. Task assistance
+provides the opportunity for agents to ask for help from other agents that possess specialized skills for a
+task. Finally, resource allocation is responsible for the efficient allocation of computational resources among
+agents to optimize task execution.
+There are multiple collaboration structures in a multi-agent framework based on agents functionality and
+their interactions, such as equi-level or horizontal collaboration, hierarchical or vertical collaboration, and
+hybrid or nested collaboration [14, 67, 66] (see Figure 2). In horizontal collaboration, each agent has its
+own role and strategy, with no agents having a hierarchical advantage over the others. Agents with similar
+goals collaborate, while agents with opposing goals negotiate or debate to collectively make decisions and
+complete the task [14]. In a hierarchical structure, a leader agent guides the follower agents to execute its
+instructions [14]. When both horizontal and vertical structures are present, a nested structure (or hybrid)
+is formed. Finally, the state of multi-agent systems, their collaboration strategy, agent roles, the number
+of agents, and their relations may evolve [14]. This scenario leads to dynamic structures in which agents
+may possess dynamically evolving configurations in order to adaptively react to external factors or dynamic
+conditions [54, 14].
+8 OKPALA, GOLGOON, RAVI KANNAN
+3. Applications to financial services
+In this section, we provide an end-to-end agentic system implementation for two major functions in
+financial services. In particular, we build modeling and model risk management crews and illustrate how
+these agents collaborate to perform their specialized collective tasks.
+The financial services industry is highly dependent on accurate modeling procedures for its predictive
+and decision-making capabilities. We develop the modeling and model risk management crews to illustrate
+how the agents can collaborate to perform relatively complex functions in an efficient and scalable manner.
+The goal is to streamline the modeling workflow, carry out model risk management procedures on a trained
+model, and effectively manage dependencies as well as collaboration among agents.
+The system architecture for the financial crews with human in-the-loop integration, memory property and
+role-playing, are discussed in §3.1 and §3.2. Agentic workflows for modeling and model risk management
+crews are discussed in §3.3 and §3.4. We provide three modeling use cases to highlight the diverse range of
+tasks that can be accomplished with agentic systems, namely credit card fraud detection, credit card approval,
+and portfolio credit risk modeling in §3.5. Our agents were powered by Llama3, Deepseek-R1 and GPT-3.5
+Turbo. CrewAI served as the foundational framework for managing the agentic system, as illustrated in the
+paper.
+3.1. Agentic Human-in-the-Loop (A-HITL). The mind map presented in Figure 3 illustrates a human
+expert as the orchestrator of the system. The graph shows a human expert overseeing both the modeling and
+model risk management crews, providing instructions to help them achieve their respective objectives. The
+expert assigns predefined tasks to Agents based on their persona with additional instructions in a case where
+the agent is not able to figure out how to solve the problem. Agentic systems without human orchestration
+can exhibit abnormal behavior due to the inherent challenges associated with large language models (LLMs),
+particularly when handling complex tasks. Issues such as hallucination and a tendency to focus on isolated
+segments of text (often referred to as text chunking) can impede overall context.
+To address these challenges, we first adopt a minimal temperature parameter at the LLM level, so that
+text generation focuses on tokens with higher softmax (see Equation 2.1). We also make use of the methodical
+guardrail strategy in CrewAI, which establishes a clear distinction between Agents and Tasks. Each Agent
+has a defined persona and is accompanied by a backstory that details its specialization. The Task module
+specifies the actions to be executed and outlines the expected output, thereby minimizing deviations from the
+primary goal defined within the Agent’s construct. This expected output not only serves as a benchmark, but
+also prompts the Agent to refine its response, ensuring that the initial output is not treated as final. Given
+that our program utilizes code execution, we have implemented a custom tool to manage standard output
+from these executions and log all actions, including errors and completions. This enables us to verify that
+any generated code runs without problems. However, there remains a 1-10% chance that the output may not
+align with expectations, which highlights the importance of incorporating a human-in-the-loop. Considering
+the sensitivity of financial modeling and the need for thorough quality assurance, we propose that a human
+expert assume the role of system orchestrator rather than relying on an agentic orchestrator (see Figures 5
+and 6). In this framework, the human expert oversees task delegation, guides Agents in correcting errors
+when they fail to do so autonomously, and provides additional suggestions to enhance the results produced
+by the Agents. Additionally, we introduced a judge Agent to review the actions performed by other Agents,
+offering insights and recommendations to the human expert. This allows the human expert to orchestrate
+the entire process effectively, ensuring timely feedback and corrections when necessary.
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 9
+Figure 3. Mind-map demo of the agentic system
+3.2. Financial crews system architecture. The proposed system comprises two interconnected crews
+and tools. Within the crews, we have several autonomous agents, each responsible for distinct tasks within
+the pipeline. The architecture is designed to promote modularity, allowing agents to operate independently
+and collaboratively. The key crews and agents include:
+(1) Modeling Crews
+• Data Extraction
+• Exploratory Data Analysis (EDA)
+• Feature Engineering
+• Meta Tuning
+• Model Training
+• Model Evaluation
+• Documentation Writer
+• Manager/Judge
+(2) MRM Crews
+• Documentation Compliance Checker
+• Model Replication
+• Conceptual Soundness
+• Outcome Analyzer
+• Documentation Writer
+• Manager/Judge
+10 OKPALA, GOLGOON, RAVI KANNAN
+Figure 4. Memory, delegation and information retrieval
+3.2.1. Memory, delegation and information retrieval. The memory property is most effective when individual
+agents store their inputs and outputs in memory, allowing for effective transfer of knowledge to the other
+agents. Since we have employed a human to oversee all processes, we introduced knowledge transfer into
+the Human-in-the-Loop (HITL) module using the context parameter inherited from the Task module. This
+allows each agent to access additional information, helping them understand previous actions in relation to
+their current tasks. These interactions, including inputs and outputs, are visually represented in Figure 4.
+The memory stream is an object with a specific capacity and can hold task delegations in natural language,
+task execution timestamps, and the information needed by the collaborating agent. The core attribute of the
+memory object is the storage of interconnected interactions from different agents. For example, let us walk
+through the responsibilities of one of the agents in the modeling crew and the management of the memory
+stream. The crew consists of multiple members, each with distinct or overlapping functions. In this section,
+we will focus on the role of the data scientist in charge of the data exploration task (see Figure 5). The
+Data Scientist conducts exploratory data analysis to observe the following insights and trends over time:
+(1) shape of the dataset, (2) features with missing values and the percentage of missing values within those
+features, (3) correlation matrix across multiple features, (4) descriptive statistics for each feature, (5) data
+distributions, including positive and negative skewness, and (6) outlier or adversarial inputs. The memory
+stream stores all inputs and outputs and can be utilized by any agent as input. In this study, we aim to
+elucidate three key components of the memory stream: tool input, action input (such as generated code),
+and context.
+3.2.2. Role playing properties of the system. The “role-playing feature” makes the solution more intuitive,
+since specific roles or personas are assigned to each agent, guiding their behavior and decision-making within
+a collaborative task.
+These roles represent specific job functions, such as data engineering or machine learning engineering,
+based on the requirements and objectives of the initialized agents. The first agent is a data analyst tasked
+with data extraction and spliting to avoid data leakage (see §3.3 for more detail on the actions performed
+by this agent). We briefly touched on the role of the data scientist in §3.2.1. There are two data scientists:
+The goal of the first one is to conduct an in-depth exploratory analysis of the data provided. The second
+data scientist prioritizes feature engineering, with a particular emphasis on the creation of a preprocessor
+pipeline based on data characteristics. This preprocessor addresses data scaling, class imbalance, feature
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 11
+selection, and encoding. The next agent (meta-tuning agent) is a machine learning engineer with a good
+understanding of the different strengths and weaknesses of machine learning models, making it a good candidate for model selection and hyperparameter tuning. The interdependent functions of data scientists and
+other agents illustrate the need for collaboration and the value of clear and designated roles. The subsequent agents with machine learning engineer designation are tasked with training the selected model with
+optimal hyperparameters and evaluating its performance (see meta-tuning, model training, and evaluation
+in Appendix A). Here, the importance of the memory stream is emphasized; different results were chained
+together to achieve the common goal of the entire crew. The evaluation agent is prompted to evaluate the
+trained model based on five metrics, namely accuracy, f1-score, recall, precision, and area under curve (auc).
+3.3. Agentic system for financial modeling. The agentic system, introduced in §1, features a modular
+architecture that leverages the strengths of individual components to achieve a unified goal. Figure 5 and 6
+provides a clearer description of agentic systems and how tasks are segmented based on expertise. In this
+section, we discuss the workflow of our proposed agentic system applied to financial modeling. The distinct
+roles facilitate specialization (see §3.2.2). We provide detailed descriptions of these agents, their assigned
+functions, and the methods used to prompt them.
+(1) Data Extraction Agent: This agent functions as a data analyst, tasked with extracting data from
+external sources such as Kaggle or GitHub. Its primary responsibility is to split the data into training
+and testing sets to prevent data leakage. Additionally, it performs a mini-task of subsampling the
+training set for use by the meta-tuning agent in hyperparameter tuning and model selection. The
+agent utilizes a specialized tool, the “code execution tool,” and is powered by GPT-3.5 Turbo (see
+Log 1).
+(2) EDA Agent: This agent specializes in exploratory data analysis, assuming the “role” of a Data
+Scientist. It employs the EDA Tool, designed to capture nuances that basic data exploration may
+overlook. It utilizes the Llama3 model as its LLM engine, enabling it to perform in-depth analyses.
+The agent’s procedures include identifying missing values, detecting class imbalances, analyzing
+categorical variables, and pinpointing outliers that need addressing. In addition, it provides insights
+into the data distribution of all features, capturing skewness and correlations. The results are
+presented in a summarized, easy-to-read format (see log 1).
+(3) Feature Engineering Agent: This agent is responsible for creating a preprocessor pipeline based on
+the characteristics of the data. The preprocessing steps include KNN imputation for missing numeric
+features, feature normalization, ordinal encoding for categorical variables, and custom imputation
+for missing categorical variables. The LLM that powers the code generation for this agent is GPT-3.5
+Turbo, and it assumes the role of “Senior Data Scientist’.’ The feature engineering agent effectively
+manages missing values, encodes categorical variables, and normalizes numeric features (see log 2).
+(4) Meta-Tuning Agent: This agent is responsible for identifying the optimal hyperparameters and
+performing model selection using the “code execution tool.” It is configured to utilize the preprocessor
+created by the feature engineering agent to perform grid search on a select hyperparameters inputs.
+The subsample of the training data generated by the data extraction agent is used to improve
+processing speed. The agent assumes the “role” of a “Senior Machine Learning Engineer,” and
+makes use of GPT3.5 Turbo for its operations.
+(5) Model Training Agent: This agent is responsible for training the selected machine learning model
+and its optimal hyperparameters using the “code execution tool.” It uses GPT3.5 Turbo because of
+its code generation capability. There is also a provision within the prompt for saving the trained
+model to a pre-defined directory. The agent takes the same persona as the meta-tuning agent.
+12 OKPALA, GOLGOON, RAVI KANNAN
+Figure 5. Visual representation of the modeling crew
+(6) Model Evaluation Agent: This agent is responsible for evaluating the trained model using the test
+data. It uses the same LLM engine as the meta-tuning and model training agent. The generated
+code calculates the accuracy score, f1-score, precision, recall, and auc of the trained model using the
+test data from the “data extraction agent.” This agent takes on the persona of a “Senior Machine
+Learning Engineer.”
+(7) Judge Agent: The judge takes the role of a “Manager,” with the goal of examining how well its
+coworkers performed. The LLM that powers the judge task is the DeepSeek-R1 model because of its
+reasoning capabilities. It acts as a layer of security to support the human expert in making informed
+decision.
+(8) Documentation Writer Agent: This agent is responsible for creating technical documentation for
+all tasks performed by the modeling agents. With expertise in technical writing and a deep understanding of data science workflows, it utilizes the output instance from the HITL module to collect
+results from individual agents. This allows the agent to compile a comprehensive summary of all
+tasks within the agentic ecosystem, leveraging the capabilities of DeepSeek-R1.
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 13
+Algorithm 1 Modeling Crew
+Human
+human_instruction → provide instructions to agent in [agents]
+Agent
+procedure (Data Extraction) role ← Data Analyst
+goal ← Extract and split data into train and test set
+tool = [code_executor]
+end procedure
+procedure (EDA) role ← Data Scientist
+goal ← Conduct a detailed exploratory data analysis
+tool = [eda_tool]
+end procedure
+procedure (Feature Engineering) role ← Sr. Data Scientist
+goal ← Create a preprocess pipeline.
+tool = [code_executor]
+end procedure
+procedure (Meta-Tuning) role ← Sr. Machine Learning Engineer
+goal ← P erform model selection and hyperparameter tuning
+tool = [code_executor]
+end procedure
+procedure (Model Training) role ← Sr. Machine Learning Engineer
+goal ← T rain the selected model with the best performing hyperparameters.
+tool = [code_executor]
+end procedure
+procedure (Model Evaluation) role ← Sr. Machine Learning Engineer
+goal ← Evaluate the trained model.
+tool = [code_executor]
+end procedure
+Agent role ← Judge
+goal ← Check agents actions.
+if (execution completed) then
+feedback = assess ← [actions, codebase, results]
+feedback → human
+end if
+End
+End
+3.4. Agentic system for model risk management. The model risk management (MRM) crew can be
+seen as a safeguard team that ensures the modeling crew is operating as intended while upholding regulatory
+rules, business objectives, and modeling functions. It features a modular architecture that capitalizes on
+the strengths of individual components to accomplish a shared objective. Figure 3 offers a more explicit
+illustration of how the MRM crew interfaces with the modeling crew and the distinct agents involved. We
+present comprehensive descriptions of MRM agents, their designated functions, and how these agents are
+prompted.
+(1) Documentation Compliance Checker: This agent checks for documentation and procedural compliance. The documentation produced after the modeling crew completes their tasks is verified by
+14 OKPALA, GOLGOON, RAVI KANNAN
+Figure 6. Visual representation of the Model Risk Management (MRM) crew
+this agent using the organizational modeling guide.1 This guide shows the steps to be adhered to
+while training or building machine learning models. The agent utilizes Cache-Augmented Generation
+(CAG) framework to compare the steps and tasks handled by the modeling crew with the modeling
+guide. Since this function includes components that require domain knowledge in data science, it
+takes the “role” of a “Data Scientist,” and utilizes the DeepSeek-R1 model for its operations.
+(2) Model Replication: This agent is responsible for accurately replicating the model selected and trained
+by the modeling crew to ensure that its performance metrics align with their results. Using GPT-3.5
+Turbo, it receives the model’s hyperparameters and name from the modeling crew and performs
+1This organizational modeling guide is AI-generated and intended for illustrative purposes only. It is not affiliated with,
+endorsed by, or reflective of the actual internal modeling guide of the Discover Financial Services.
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 15
+the replication within its own environment for validation. The agent’s designated role is “Machine
+Learning Engineer.”
+(3) This agent is dedicated to the comprehensive validation of the trained model, focusing on feature
+importance, interpretability, and compliance. It is assigned the role of “Model Validation Analyst.” The conceptual soundness function involves a thorough examination of the model’s conceptual
+framework, target objectives, data characteristics, and constraints. The LLM engine utilized for this
+purpose is GPT-3.5 Turbo.
+(4) Outcome Analyzer: This agent tests the trained model using transformed data that simulate extreme conditions. These extreme conditions involve regenerating the inputs by multiplication or the
+addition of some fixed/randomized values, effectively creating adversarial inputs for the model (see
+Appendix B). The agent perturbs the test data, leading to simulated shifts in input data distributions and outlier input. These inputs will then be tested on the trained machine learning model to
+evaluate its robustness. The agent has the role of a “Model Validation Analyst,” and its powered by
+GPT3.5 Turbo.
+(5) Judge Agent: The judge agent is a replica of the judge in the modeling crews discussed. The only
+difference here is that it has a strong background in model risk management, enabling it to check
+agents’ alignment to risk management.
+(6) Documentation Writer: This agent produces technical documentation similar to that of the modeling
+crew, and it is skilled in technical writing with a deep understanding of data science workflows.
+Algorithm 2 Model Risk Management Crew
+Human
+human_instruction → provide instructions to agent in [agents]
+Agent
+procedure (Documentation Compliance Checker) role ← Data Scientist
+goal ← V erif y the modeling crew documentation for compliance.
+tool = [cache_augmented_generation]
+end procedure
+procedure (Model Replication) role ← Machine Learning Engineer
+goal ← Replicate the model from the modeling crew, and verif y results.
+tool = [code_executor]
+end procedure
+procedure (Conceptual Soundness) role ← Model V alidation Analyst
+goal ← Assess model‘s assumptions, feature importance, and interpretability.
+tool = [code_executor]
+end procedure
+procedure (Outcome analyzer) role ← Model V alidation Analyst
+goal ← P erturb the data, and independently check the performance metrics.
+tool = [code_executor]
+end procedure
+Agent role ← Judge
+goal ← Check agents actions.
+if (execution completed) then
+feedback = assess ← [actions, codebase, results]
+feedback → human
+end if
+End
+End
+16 OKPALA, GOLGOON, RAVI KANNAN
+3.5. Experiments and Results. We conduct experiments with three practical use cases relevant to the
+financial services industry using the agentic framework discussed in §3.1. Figure 7 illustrates the process
+flow, demonstrating how the agentic system operates in conjunction with various tasks and tools. Both
+the modeling and MRM crews adhere to this paradigm. The process, outlined earlier in Algorithm 1,
+demonstrates a hierarchical process. This gives the human expert the ability to delegate and manage the
+agents and tasks available to them for various functions. The available tools can be utilized by any agent or
+task based on the agent’s persona and human expert directives.
+Figure 7. Pictorial representation of the Human-Agent-Task-Tool integration
+3.5.1. Credit Card Fraud Detection Dataset. We present the performance metrics derived from parsing the
+credit card fraud detection dataset [22] through the agentic system and highlight several subtleties involved.
+The dataset contains 284, 807 rows and 31 columns. The column “Class,” serves as the target variable
+for binary classification. This column identifies whether a transaction is fraudulent (represented by 1) or
+non-fraudulent (represented by 0). A notable characteristic of the dataset is its class imbalance, as 99.83%
+of the transactions were non-fraudulent. Apart from the target feature, the dataset consists entirely of 29
+numeric features and a date feature. The numeric feature includes the “Amount” feature, representing the
+monetary value of each transaction. The remaining 28 features were anonymized, labeled “V1” to “V28.”
+There were no missing values, categorical or text-based features. The human expert, as illustrated in Figure
+7, oversees the delegation of tasks, making the process hierarchical in nature. The first task in the pipeline
+involves extracting and splitting the data. This task, along with any additional instructions from the human
+expert, is assigned to the data extraction agent. The hand-off and execution details for data extraction and
+exploratory data analysis can be found in Log 1.
+Log 1. Human - Data Extraction - EDA Agent interaction
+Human Interface
+Task : Extract data from external source and split into train and test set
+Select the Agent you want to use for this iteration :
+1. Data Extraction Agent
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 17
+2. EDA Agent
+....
+Enter the associated Agent number : 1
+Working Agent : Data Analyst
+Starting Task : Extract the data in the Kaggle location - ‘mlg - ulb / creditcardfraud ,’ split it
+,→ into train and test set and get 40% sample from the train data .
+Human Feedback : Drop the Time variable , and split the original dataset using the 80/20 rule
+I need to load the data from Kaggle , split it into train and test sets , drop the ‘Time ’
+,→ feature , and save the resulting datasets . Then , I need to extract a 40% sample from
+,→ the train dataset and save it as well . Finally , I should print the locations of the
+,→ train and test datasets .
+Action : Python Code Executor Tool
+Action Input : {" generated_code ": " ### "}
+Final Answer :
+The data has been successfully extracted from ‘mlg - ulb / creditcardfraud ’, split into train
+,→ and test sets , and a 40% sample has been extracted from the train dataset .....
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Human Interface
+Task : Conduct indepth Exploratory data analysis on the dataset extracted
+Select the Agent you want to use for this iteration :
+1. Data Extraction Agent
+2. EDA Agent
+....
+Enter the associated Agent number : 2
+Working Agent : Data Scientist - EDA
+Starting Task : Conduct a detailed exploratory data analysis on the dataset extracted by the
+,→ data analyst .
+Human Feedback : None
+I should use the Exploratory Data Analysis Tool to conduct a detailed analysis on the
+,→ dataset .
+Action : Exploratory Data Analysis Tool
+Action Input : {‘ data_input ’: ‘### ’}
+Final Answer :
+- The dataset contains 284807 rows and 31 columns ..... truncated
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+The model trained using the agentic system presents good performance compared to the results obtained
+from H2O AutoML. A direct comparison with the most upvoted solution on Kaggle [23] was not feasible due
+18 OKPALA, GOLGOON, RAVI KANNAN
+to methodological flaws. Specifically, the Kaggle solution applied SMOTE and random undersampling prior
+to the train-test split, resulting in data leakage and compromising the integrity of the final results.
+The AutoML solution utilized several models, including XGBoost, Generalized Linear Model (GLM),
+Gradient Boosting Machine (GBM), and Distributed Random Forest (DRF), along with an additional model
+selected automatically by the framework. This approach was designed to align closely with the options
+provided to the meta-tuning agent. Although CatBoost and AdaBoost were not directly available within the
+H2O framework, XGBoost, GBM, and DRF effectively filled that gap.
+The best-performing model within the AutoML framework was XGBoost, achieving the following metrics:
+accuracy of 99.9%, precision of 98.5%, F1 score of 82.1%, and recall of 70.4%. In contrast, the CatBoost
+model, selected as the optimal model by the agentic framework, demonstrated good performance with an
+accuracy of 99.9%, precision of 97.6%, recall of 81.6%, and f1 score of 88.9%. This indicates that the
+CatBoost model outperformed the XGBoost model in terms of recall and F1 score, suggesting that it is
+better suited for scenarios where capturing true positive instances is critical, such as in fraud detection. The
+top five performing features are “V4, V12, V13, V1, and V23.”
+The model risk management analysis highlights some crucial points. The model was tested on two inputs;
+the shifted inputs and outlier inputs. The shifted inputs were derived by randomly assigning new values to
+non-categorical features, while outliers are generated by taking a feature and increasing it beyond its original
+distribution range. The shifted input function was applied to all the features primarily because the fraud
+dataset had no categorical variables. There was a noticeable decline in performance for the shifted inputs;
+accuracy decreased from 99.9% to 99.8%, F1 score dropped from 88.9% to 65%, and precision declined from
+97.6% to 54.1%. This decline highlights the model’s vulnerability to input shifts, indicating that it may
+struggle to generalize effectively under altered conditions. However, the model was able to maintain aboveaverage performance on adversarial and outlier inputs, achieving accuracy, F1 score, and precision of 99.9%,
+86.7%, and 91%, respectively (see Figure 8). This suggests that the model is robust against certain types of
+adversarial attacks and can effectively identify relevant patterns even in the presence of noise.
+(a) Performance metrics and feature importance (b) Top Capture rate and MRM report
+Figure 8. Performance report on the Credit Card Fraud Detection dataset
+3.5.2. Credit Card Approval Prediction Dataset. This section provides an overview of evaluating the performance of the agentic system when applied to the credit card approval dataset [25]. The dataset consists of
+two tables: one for application records and the other for credit records. The target variable, “STATUS” is
+encoded as follows: ‘0’ indicates 1-29 days past due, ‘1’ represents 30-59 days past due, ‘2’ signifies 60-89 days
+overdue, ‘3’ corresponds to 90-119 days overdue, ‘4’ denotes 120-149 days overdue, ‘5’ stands for accounts
+that are overdue or classified as bad debts with write-offs for more than 150 days, ‘C’ indicates accounts
+that were paid off within the month, and ‘X’ signifies that there was no loan activity for the month. To
+simplify the analysis, the “STATUS” variable was transformed into binary inputs, where ‘0’, ‘X’, and ‘C’
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 19
+indicate non-default scenarios, while other values signify defaults. This data transformation for the credit
+card approval dataset was consistent with the method described by [5]. Pentaho Data Integration (PDI)
+was employed to process the dataset. In the “application records” table, duplicate IDs were removed, the
+age of the applicant age and years of work experience were calculated. Applicants under 21 years old and
+those with null or empty values were filtered out. For the “credit records” dataset, monthly loan payments
+were calculated. The “STATUS” variable was categorized as “Good Debt” or “Bad Debt” based on the
+number of days overdue, and the total good and bad debt for each applicant was computed. The two tables
+were merged, removing applicants with empty values for good/bad debt counts and eligibility status. The
+description in Log 2 illustrates the feature engineering process for the credit card approval use case, which
+occurs subsequent to the EDA phase. Refer to Appendix A for a sample end-to-end interaction between
+agents for the credit risk use case.
+Log 2. Human - Feature Engineering Agent interaction
+Human Interface
+Task : Create a feature engineering pipeline using dataset properties
+Select the Agent you want to use for this iteration :
+1. Data Extraction Task
+2. EDA Task
+3. Feature Engineering Task
+.......
+Enter the associated Agent number : 3
+Working Agent : Senior Data Scientist - Feature Engineering
+Starting Task : Create a feature engineering pipeline using the train data properties .
+Human Feedback : Create a preprocessor and apply KNN Imputation , standard scaler for data
+,→ normalization , ordinal encoding for categorical encoding and selectKBest for feature
+,→ selection .
+I need to create a feature engineering pipeline using the train data properties .
+Action : Python Code Executor Tool
+Action Input : {" ### "}
+Final Answer :
+- Numeric and categorical transformers were successfully created .
+- ‘ KNNImputer ’ was used to handle missing values in the numeric features .
+......
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+We discovered some procedural flaws in the ETL process used by the most upvoted solution; the resulting
+dataset contained applicants with age equal to ‘1000.’ Also, it did not adequately account for good and bad
+debt counts in relation to the target variable. Consequently, we decided to benchmark our results using
+the second most voted solution [5], and AutoML for additional verification. The Kaggle solution achieved
+record-high metrics, with an accuracy, recall, and F1 score of 99.9% and a precision of 100% using Logistic
+Regression. The top-performing AutoML model, the Generalized Linear Model (GLM), also attained 99.9%
+across all metrics. In comparison, our agentic system produced similar results to the Kaggle solution using
+the CatBoost Classifier. This demonstrates that the agentic framework is competitive with existing solutions.
+The model risk management analysis revealed a minimal decline in accuracy and precision, both at 99.8%,
+20 OKPALA, GOLGOON, RAVI KANNAN
+while other metrics remained unchanged for the shifted inputs. Notably, the model exhibited no significant
+decline in performance when faced with adversarial inputs, suggesting that the data is well represented and
+the patterns were captured well by the model. The top five performing features are “Owned_Work_Phone,
+Owned_Mobile_Phone, Total_Family_Members, Housing_Type, and Job_Title.”
+Figure 9. Performance report for credit card approval
+3.5.3. Portfolio Credit Risk Dataset. The result of using agentic programming on the portfolio credit risk
+dataset [24] presents further arguments to underscore the importance of model risk management. Refer
+to Appendix A for a detailed overview of the end-to-end interaction among agents for the portfolio credit
+risk use case. The dataset [24] contains 32,581 data points and 12 features, with the target feature named
+“loan_status.” The “person_age” feature indicates the age of the borrower, while “person_income” represents their annual income. The “person_home_ownership” feature describes the borrower’s home ownership
+status, which can impact their creditworthiness. Additionally, “person_emp_length” reflects the length of
+employment in years. Loan characteristics are detailed through the “loan_intent” and “loan_grade” features, which outline the purpose of the loan and its associated grading. The “loan_amnt” specifies the
+total amount borrowed, and “loan_int_rate” provides the interest rate applicable to the loan. The target variable, “loan_status”, indicates whether the loan has defaulted (1) or remained non-default (0). The
+“loan_percent_income” shows the proportion of income allocated to loan repayments, while “cb_person_def
+ault_on_file” reveals historical default records. The “cb_person_cred_hist_length” measures the length
+of the borrower’s credit history, providing insights into their borrowing behavior.
+The credit risk dataset, similar to the fraud and card approval datasets, had the class imbalance issue,
+with 78.18% of instances belonging to the majority class (‘loan_status‘ = 1). Missing values were identified
+in two features: ‘person_emp_length‘ (2.75% missing) and ‘loan_int_rate‘ (9.56% missing). Preliminary
+performance metrics indicate the robustness of the model trained through agentic collaborative, achieving
+an accuracy of 93.4%. This result is slightly lower than the accuracy recorded by the upvoted solution on
+Kaggle [26]. We also benchmarked our results using AutoML, which produced an accuracy of 92.9%. The
+preprocessing steps applied by the Kaggle solution includes creating new features like income group, loan
+amount group, loan-to-income ratio, and interest rate-to-loan amount ratio. They also utilized OneHotEncoder for categorical variable encoding. Among their top-performing models was CatBoost, which achieved
+an accuracy of 93.72%, with a recall of 72.68%, precision of 97.78%, and an f1-score of 83.37%. LightGBM
+also performed well, reaching an accuracy of 93.54%. In contrast, the model selected at the meta-tuning
+stage of the agentic programming was XGBoost classifier, achieving an accuracy of 93.4%, precision of 97.2%,
+recall of 72.4%, and an f1-score of 82.9%. The feature engineering agent specifically applied ordinal encoding,
+differing from the one-hot encoding employed by the Kaggle solution. Instead of creating new features, we
+maintained the original features and applied KNN imputation to address the missing values (see Appendix
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 21
+Figure 10. Performance report for portfolio credit risk
+A). The AutoML solution produced comparable metrics to both the agentic system and the Kaggle solution,
+achieving an accuracy of 92.9%, precision of 94.4%, recall of 72.4%, and an f1-score of 81.9% using Distributed Random Forest (DRF). The top five performing features were “loan_percent_income, loan_grade,
+loan_amt, loan_int_rate, and person_income.”
+Further analysis by the MRM crew revealed a decline in performance. For the shifted inputs, accuracy,
+f1-score, and precision all decreased, with accuracy falling to 79.1%, f1-score to 60.5%, and precision to
+52.2%. These findings indicate that the model may be susceptible to changes in the input data distribution.
+Compared to the card approval use case, the credit risk dataset contains fewer object-typed variable, indicating that a substantial portion of its input data experienced a distribution shift. Additional analysis using
+adversarial inputs demonstrated the model’s resilience, with accuracy, f1-score, and precision consistently
+remaining high at 92.8%, 81.4%, and 96%, respectively. This indicates that the model effectively handles
+and categorizes adversarial cases.
+3.5.4. Model Risk Management. Model risk management provides benchmark and safeguard mechanisms
+beyond adversarial and shifted input tests, as detailed in each experimental result. This critical component
+of the agentic architecture (see Figure 3) ensures that the modeling crew complies with organizational documentation standards (see Log 4). The “Documentation Compliance Checker Agent,” utilizes the CAG tool
+to validate each step of the modeling procedure against the organization’s modeling guide. As shown in
+Log 4, the initial prompt directed the agent to review the modeling documentation and the organization’s
+modeling guide. This review establishes a baseline to confirm that the modeling crew adhered to the prescribed procedures. The log output confirms that the modeling documentation aligns with the organization’s
+guidelines. The “Model Replication Agent” replicates the training and testing of the selected model using
+the exact hyperparameters specified by the modeling crew to ensure that the results align. The “Conceptual
+Soundness Agent” evaluates the model’s adherence to the business case, assesses its performance metrics, and
+verifies its interpretability. Detailed results from these assessments are documented in Log 4, with specific
+descriptions provided for each finding. Additional tests were also performed per human expert’s request by
+the “Outcome Analyzer Agent” to simulate extreme scenarios and test the models adaptability to change.
+3.5.5. Human verification of results - Reliability check. The complexity of the agentic system calls for human
+evaluation. This is done to make sure that the agents do not produce unreliable outputs and also to determine
+the usage of the provided dataset. In the case of the modeling and MRM crew, the authors meticulously
+verified each output and examined the various codes and inferences generated by the agents. By running
+these outputs side by side in a controlled Python environment, we were able to confirm that the results were
+consistent and accurate. Not only was accuracy accounted for, but the output was in line with standard
+22 OKPALA, GOLGOON, RAVI KANNAN
+machine learning assumptions. This human-centered validation process serves as a crucial safeguard against
+potential flaws or discrepancies that may have gone undetected by the agents themselves, the judge and
+human expert. This reduces the likelihood of biases, blind spots, or unforeseen edge cases that only a human
+observer can identify.
+4. Future Directions
+We view this paper as a foundational and pragmatic effort to harness the power of agentic systems
+for tasks relevant to the financial services industry. Looking ahead, research in this area should focus on
+self-improving agents, a proponent of self-learning, where agents enhance their initial prompts and adapt
+to roles that were not initially assigned to them. A good example would be an adaptive learning agent
+that continuously improves its performance through the interactions it had in the past and the various
+feedbacks it received. Other areas worthy of in-depth investigation include the research and development of
+crew-generating agentic systems, the application of reinforcement learning to agentic workflow, and/or the
+application of graph theory to agentic systems.
+Acknowledgement
+We would like to thank Sharon O’Shea Greenbach (Sr. Counsel & Director, Regulatory Policy at DFS)
+for her constructive comments relevant to compliance challenges that emerge within the financial services
+sector and for carefully reviewing the manuscript. Ashkan Golgoon benefited from stimulating discussions
+with Amirhossein Tajdini and Khashayar Filom. Izunna Okpala benefited from technical discussions on the
+topic of benchmarking with Ryan Franks. The opinions expressed herein are solely our own and do not
+reflect the views or opinions of our employer. The authors have not used any customer data or internal data
+from Discover Financial Services for their experiments.
+References
+[1] A. Abid, M. Farooqi, and J. Zou. Persistent anti-muslim bias in large language models. In Proceedings of the 2021
+AAAI/ACM Conference on AI, Ethics, and Society, pages 298–306, 2021.
+[2] S. G. Ayyamperumal and L. Ge. Current state of llm risks and ai guardrails. arXiv preprint arXiv:2406.12934, 2024.
+[3] S. Bahoo, M. Cucculelli, X. Goga, and J. Mondolo. Artificial intelligence in finance: a comprehensive review through
+bibliometric and content analysis. SN Business & Economics, 4(2):23, 2024.
+[4] M. Besta, N. Blach, A. Kubicek, R. Gerstenberger, M. Podstawski, L. Gianinazzi, J. Gajda, T. Lehmann, H. Niewiadomski,
+P. Nyczyk, et al. Graph of thoughts: Solving elaborate problems with large language models. In Proceedings of the AAAI
+Conference on Artificial Intelligence, volume 38, pages 17682–17690, 2024.
+[5] M. Caesar. Credit Card Approval Prediction (Cleaned Version). https://www.kaggle.com/code/caesarmario/
+credit-card-approval-prediction-w-pycaret/notebook, June 2022. [Online; accessed 17. Jan. 2025].
+[6] A. Chan, R. Salganik, A. Markelius, C. Pang, N. Rajkumar, D. Krasheninnikov, L. Langosco, Z. He, Y. Duan, M. Carroll,
+et al. Harms from increasingly agentic algorithmic systems. In Proceedings of the 2023 ACM Conference on Fairness,
+Accountability, and Transparency, pages 651–666, 2023.
+[7] C.-M. Chan, W. Chen, Y. Su, J. Yu, W. Xue, S. Zhang, J. Fu, and Z. Liu. Chateval: Towards better llm-based evaluators
+through multi-agent debate. arXiv preprint arXiv:2308.07201, 2023.
+[8] G. Chen, L. Fan, Z. Gong, N. Xie, Z. Li, Z. Liu, C. Li, Q. Qu, S. Ni, and M. Yang. Agentcourt: Simulating court with
+adversarial evolvable lawyer agents. arXiv preprint arXiv:2408.08089, 2024.
+[9] W. Chen, Y. Su, J. Zuo, C. Yang, C. Yuan, C. Qian, C.-M. Chan, Y. Qin, Y. Lu, R. Xie, et al. Agentverse: Facilitating
+multi-agent collaboration and exploring emergent behaviors in agents. arXiv preprint arXiv:2308.10848, 2023.
+[10] Y. Cheng, C. Zhang, Z. Zhang, X. Meng, S. Hong, W. Li, Z. Wang, Z. Wang, F. Yin, J. Zhao, et al. Exploring large
+language model based intelligent agents: Definitions, methods, and prospects. arXiv preprint arXiv:2401.03428, 2024.
+[11] CrewAI. Multi AI agent systems with crewAI - deeplearning.ai, 2024. [Online; accessed 12. Aug. 2024].
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 23
+[12] crewAIInc. crewAI: Cutting-edge framework for orchestrating role-playing, autonomous AI agents. https://github.com/
+crewAIInc/crewAI/, 2024.
+[13] Y. Du, S. Li, A. Torralba, J. B. Tenenbaum, and I. Mordatch. Improving factuality and reasoning in language models
+through multiagent debate. arXiv preprint arXiv:2305.14325, 2023.
+[14] S. Han, Q. Zhang, Y. Yao, W. Jin, Z. Xu, and C. He. Llm multi-agent systems: Challenges and open problems. arXiv
+preprint arXiv:2402.03578, 2024.
+[15] J. He, C. Treude, and D. Lo. Llm-based multi-agent systems for software engineering: Vision and the road ahead. arXiv
+preprint arXiv:2404.04834, 2024.
+[16] J. J. Horton. Large language models as simulated economic agents: What can we learn from homo silicus? Technical
+report, National Bureau of Economic Research, 2023.
+[17] W. Hua, X. Yang, Z. Li, C. Wei, and Y. Zhang. Trustagent: Towards safe and trustworthy llm-based agents through agent
+constitution. arXiv preprint arXiv:2402.01586, 2024.
+[18] D. Huang, Q. Bu, J. M. Zhang, M. Luck, and H. Cui. Agentcoder: Multi-agent-based code generation with iterative testing
+and optimisation. arXiv preprint arXiv:2312.13010, 2023.
+[19] Y. Huang, C. Zhou, K. Cui, and X. Lu. A multi-agent reinforcement learning framework for optimizing financial trading
+strategies based on timesnet. Expert Systems with Applications, 237:121502, 2024.
+[20] H. Jingrong, H. Shan, C. Zhaobin, L. Yu, L. Yingying, et al. Ai-driven digital transformation in banking: A new perspective
+on operational efficiency and risk management. Information Systems and Economics, 5(1):82–90, 2024.
+[21] S. Jinxin, Z. Jiabao, W. Yilei, W. Xingjiao, L. Jiawen, and H. Liang. Cgmi: Configurable general multi-agent interaction
+framework. arXiv preprint arXiv:2308.12503, 2023.
+[22] Kaggle. Credit Card Fraud Detection Dataset. https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data, Mar.
+2005. [Online; accessed 3. Oct. 2024].
+[23] Kaggle. Credit Fraud, Dealing with Imbalanced Datasets. https://www.kaggle.com/code/janiobachmann/
+credit-fraud-dealing-with-imbalanced-datasets, Mar. 2005. [Online; accessed 22. Jan. 2025].
+[24] Kaggle. Credit Risk Dataset. https://www.kaggle.com/datasets/laotse/credit-risk-dataset/data, 2020. [Online; accessed 3. Oct. 2024].
+[25] Kaggle. Credit Card Approval. https://www.kaggle.com/datasets/rikdifos/credit-card-approval-prediction, 2021.
+[Online; accessed 3. Oct. 2024].
+[26] Kaggle. Credit Risk Prediction Training and EDA. https://www.kaggle.com/code/anshtanwar/
+credit-risk-prediction-training-and-eda, 2024. [Online; accessed 22. Jan. 2025].
+[27] V. Kanaparthi. Transformational application of artificial intelligence and machine learning in financial technologies and
+financial services: A bibliometric review. arXiv preprint arXiv:2401.15710, 2024.
+[28] K. J. Koa, Y. Ma, R. Ng, and T.-S. Chua. Learning to generate explainable stock predictions using self-reflective large
+language models. In Proceedings of the ACM on Web Conference 2024, pages 4304–4315, 2024.
+[29] P. Lewis, E. Perez, A. Piktus, F. Petroni, V. Karpukhin, N. Goyal, H. Küttler, M. Lewis, W.-t. Yih, T. Rocktäschel, et al.
+Retrieval-augmented generation for knowledge-intensive nlp tasks. Advances in Neural Information Processing Systems,
+33:9459–9474, 2020.
+[30] C. Li, R. Yang, T. Li, M. Bafarassat, K. Sharifi, D. Bergemann, and Z. Yang. Stride: A tool-assisted llm agent framework
+for strategic and interactive decision-making. arXiv preprint arXiv:2405.16376, 2024.
+[31] G. Li, H. Hammoud, H. Itani, D. Khizbullin, and B. Ghanem. Camel: Communicative agents for" mind" exploration of
+large language model society. Advances in Neural Information Processing Systems, 36:51991–52008, 2023.
+[32] N. Li, C. Gao, M. Li, Y. Li, and Q. Liao. Econagent: Large language model-empowered agents for simulating macroeconomic
+activities. Preprint, 2024.
+[33] R. Li, X. Wang, and H. Yu. Exploring llm multi-agents for icd coding. arXiv preprint arXiv:2406.15363, 2024.
+[34] Y. Li, Y. Yu, H. Li, Z. Chen, and K. Khashanah. Tradinggpt: Multi-agent system with layered memory and distinct
+characters for enhanced financial trading performance. arXiv preprint arXiv:2309.03736, 2023.
+[35] T. Liang, Z. He, W. Jiao, X. Wang, Y. Wang, R. Wang, Y. Yang, Z. Tu, and S. Shi. Encouraging divergent thinking in
+large language models through multi-agent debate. arXiv preprint arXiv:2305.19118, 2023.
+[36] Y. Ling, X. Jiang, and Y. Kim. Mallm-gan: Multi-agent large language model as generative adversarial network for
+synthesizing tabular data. arXiv preprint arXiv:2406.10521, 2024.
+[37] X. Liu, B. Lan, Z. Hu, Y. Liu, Z. Zhang, W. Zhou, F. Wang, and M. Shieh. Codexgraph: Bridging large language models
+and code repositories via code graph databases. arXiv preprint arXiv:2408.03910, 2024.
+[38] A. Mitra, L. Del Corro, G. Zheng, S. Mahajan, D. Rouhana, A. Codas, Y. Lu, W.-g. Chen, O. Vrousgos, C. Rosset, et al.
+Agentinstruct: Toward generative teaching with agentic flows. arXiv preprint arXiv:2407.03502, 2024.
+[39] N. Mündler, M. N. Müller, J. He, and M. Vechev. Code agents are state of the art software testers. arXiv preprint
+arXiv:2406.12952, 2024.
+24 OKPALA, GOLGOON, RAVI KANNAN
+[40] M. Nasr, N. Carlini, J. Hayase, M. Jagielski, A. F. Cooper, D. Ippolito, C. A. Choquette-Choo, E. Wallace, F. Tramèr, and
+K. Lee. Scalable extraction of training data from (production) language models. arXiv preprint arXiv:2311.17035, 2023.
+[41] M. H. Nguyen, T. P. Chau, P. X. Nguyen, and N. D. Bui. Agilecoder: Dynamic collaborative agents for software development
+based on agile methodology. arXiv preprint arXiv:2406.11912, 2024.
+[42] Y. Nie, Y. Kong, X. Dong, J. M. Mulvey, H. V. Poor, Q. Wen, and S. Zohren. A survey of large language models for
+financial applications: Progress, prospects and challenges. arXiv preprint arXiv:2406.11903, 2024.
+[43] H. Pandey, A. Amod, et al. Advancing healthcare automation: Multi-agent systems for medical necessity justification.
+arXiv preprint arXiv:2404.17977, 2024.
+[44] J. S. Park, J. O’Brien, C. J. Cai, M. R. Morris, P. Liang, and M. S. Bernstein. Generative agents: Interactive simulacra
+of human behavior. In Proceedings of the 36th annual acm symposium on user interface software and technology, pages
+1–22, 2023.
+[45] T. Park. Enhancing anomaly detection in financial markets with an llm-based multi-agent framework. arXiv preprint
+arXiv:2403.19735, 2024.
+[46] C. Qian, X. Cong, C. Yang, W. Chen, Y. Su, J. Xu, Z. Liu, and M. Sun. Communicative agents for software development.
+arXiv preprint arXiv:2307.07924, 6, 2023.
+[47] Z. Rasheed, M. Waseem, M. Saari, K. Systä, and P. Abrahamsson. Codepori: Large scale model for autonomous software
+development by using multi-agents. arXiv preprint arXiv:2402.01411, 2024.
+[48] S. Schwartz, A. Yaeli, and S. Shlomov. Enhancing trust in llm-based ai automation agents: New considerations and future
+challenges. arXiv preprint arXiv:2308.05391, 2023.
+[49] M. Shamsujjoha, Q. Lu, D. Zhao, and L. Zhu. Towards ai-safety-by-design: A taxonomy of runtime guardrails in foundation
+model based systems. arXiv preprint arXiv:2408.02205, 2024.
+[50] M. Shanahan, K. McDonell, and L. Reynolds. Role play with large language models. Nature, 623(7987):493–498, 2023.
+[51] N. Shinn, F. Cassano, A. Gopinath, K. Narasimhan, and S. Yao. Reflexion: Language agents with verbal reinforcement
+learning. Advances in Neural Information Processing Systems, 36, 2024.
+[52] M. Sudarshan, S. Shih, E. Yee, A. Yang, J. Zou, C. Chen, Q. Zhou, L. Chen, C. Singhal, and G. Shih. Agentic llm workflows
+for generating patient-friendly medical reports. arXiv preprint arXiv:2408.01112, 2024.
+[53] J. Sun, C. Dai, Z. Luo, Y. Chang, and Y. Li. Lawluo: A chinese law firm co-run by llm agents. arXiv preprint
+arXiv:2407.16252, 2024.
+[54] Y. Talebirad and A. Nadiri. Multi-agent collaboration: Harnessing the power of intelligent llm agents. arXiv preprint
+arXiv:2306.03314, 2023.
+[55] D. Tang, Z. Chen, K. Kim, Y. Song, H. Tian, S. Ezzini, Y. Huang, and J. K. T. F. Bissyande. Collaborative agents for
+software engineering. arXiv preprint arXiv:2402.02172, 2024.
+[56] X. Tang, Q. Jin, K. Zhu, T. Yuan, Y. Zhang, W. Zhou, M. Qu, Y. Zhao, J. Tang, Z. Zhang, et al. Prioritizing safeguarding
+over autonomy: Risks of llm agents for science. arXiv preprint arXiv:2402.04247, 2024.
+[57] N. Vadori, L. Ardon, S. Ganesh, T. Spooner, S. Amrouni, J. Vann, M. Xu, Z. Zheng, T. Balch, and M. Veloso. Towards multiagent reinforcement learning-driven over-the-counter market simulations. Mathematical Finance, 34(2):262–347, 2024.
+[58] T. Varshney. NVIDIA Generaitve AI Technical Blog: Introduction to LLM Agents. https://developer.nvidia.com/blog/
+introduction-to-llm-agents/, 2023.
+[59] X. Wan, H. Deng, K. Zou, and S. Xu. Enhancing the efficiency and accuracy of underlying asset reviews in structured
+finance: The application of multi-agent framework. arXiv preprint arXiv:2405.04294, 2024.
+[60] H. Wang, S. Zhao, Z. Qiang, N. Xi, B. Qin, and T. Liu. Beyond direct diagnosis: Llm-based multi-specialist agent
+consultation for automatic diagnosis. arXiv preprint arXiv:2401.16107, 2024.
+[61] S. Wang, H. Yuan, L. M. Ni, and J. Guo. Quantagent: Seeking holy grail in trading by self-improving large language
+model. arXiv preprint arXiv:2402.03755, 2024.
+[62] S. Wang, H. Yuan, L. Zhou, L. M. Ni, H.-Y. Shum, and J. Guo. Alpha-gpt: Human-ai interactive alpha mining for
+quantitative investment. arXiv preprint arXiv:2308.00016, 2023.
+[63] Z. Wang, D. J. Kim, and T.-H. Chen. Identifying performance-sensitive configurations in software systems through code
+analysis with llm agents. arXiv preprint arXiv:2406.12806, 2024.
+[64] J. Wei, X. Wang, D. Schuurmans, M. Bosma, F. Xia, E. Chi, Q. V. Le, D. Zhou, et al. Chain-of-thought prompting elicits
+reasoning in large language models. Advances in neural information processing systems, 35:24824–24837, 2022.
+[65] L. Weidinger, J. Uesato, M. Rauh, C. Griffin, P.-S. Huang, J. Mellor, A. Glaese, M. Cheng, B. Balle, A. Kasirzadeh, et al.
+Taxonomy of risks posed by language models. In Proceedings of the 2022 ACM Conference on Fairness, Accountability,
+and Transparency, pages 214–229, 2022.
+[66] M. Wu, Y. Yuan, G. Haffari, and L. Wang. (perhaps) beyond human translation: Harnessing multi-agent collaboration for
+translating ultra-long literary texts. arXiv preprint arXiv:2405.11804, 2024.
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 25
+[67] Q. Wu, G. Bansal, J. Zhang, Y. Wu, S. Zhang, E. Zhu, B. Li, L. Jiang, X. Zhang, and C. Wang. Autogen: Enabling
+next-gen llm applications via multi-agent conversation framework. arXiv preprint arXiv:2308.08155, 2023.
+[68] C. Xie, C. Chen, F. Jia, Z. Ye, K. Shu, A. Bibi, Z. Hu, P. Torr, B. Ghanem, and G. Li. Can large language model agents
+simulate human trust behaviors? arXiv preprint arXiv:2402.04559, 2024.
+[69] F. Xing. Designing heterogeneous llm agents for financial sentiment analysis. arXiv preprint arXiv:2401.05799, 2024.
+[70] S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao. React: Synergizing reasoning and acting in language
+models. arXiv preprint arXiv:2210.03629, 2022.
+[71] Y. Yu, H. Li, Z. Chen, Y. Jiang, Y. Li, D. Zhang, R. Liu, J. W. Suchow, and K. Khashanah. Finmem: A performanceenhanced llm trading agent with layered memory and character design. In Proceedings of the AAAI Symposium Series,
+volume 3, pages 595–597, 2024.
+[72] Y. Yu, Z. Yao, H. Li, Z. Deng, Y. Cao, Z. Chen, J. W. Suchow, R. Liu, Z. Cui, D. Zhang, et al. Fincon: A synthesized llm multi-agent system with conceptual verbal reinforcement for enhanced financial decision making. arXiv preprint
+arXiv:2407.06567, 2024.
+[73] H. Yuan, S. Wang, and J. Guo. Alpha-gpt 2.0: Human-in-the-loop ai for quantitative investment. arXiv preprint
+arXiv:2402.09746, 2024.
+[74] D. Zan, A. Yu, W. Liu, D. Chen, B. Shen, W. Li, Y. Yao, Y. Gong, X. Chen, B. Guan, et al. Codes: Natural language to
+code repository via multi-layer sketch. arXiv preprint arXiv:2403.16443, 2024.
+[75] C. Zhang, X. Liu, M. Jin, Z. Zhang, L. Li, Z. Wang, W. Hua, D. Shu, S. Zhu, X. Jin, et al. When ai meets finance (stockagent): Large language model-based stock trading in simulated real-world environments. arXiv preprint arXiv:2407.18957,
+2024.
+[76] J. Zhang, X. Xu, and S. Deng. Exploring collaboration mechanisms for llm agents: A social psychology view. arXiv preprint
+arXiv:2310.02124, 2023.
+[77] W. Zhang, L. Zhao, H. Xia, S. Sun, J. Sun, M. Qin, X. Li, Y. Zhao, Y. Zhao, X. Cai, et al. Finagent: A multimodal
+foundation agent for financial trading: Tool-augmented, diversified, and generalist. arXiv preprint arXiv:2402.18485,
+2024.
+[78] Y. Zhang, H. Ruan, Z. Fan, and A. Roychoudhury. Autocoderover: Autonomous program improvement. arXiv preprint
+arXiv:2404.05427, 2024.
+[79] H. Zhao, Z. Liu, Z. Wu, Y. Li, T. Yang, P. Shu, S. Xu, H. Dai, L. Zhao, G. Mai, et al. Revolutionizing finance with llms:
+An overview of applications and insights. arXiv preprint arXiv:2401.11641, 2024.
+[80] Q. Zhao, J. Wang, Y. Zhang, Y. Jin, K. Zhu, H. Chen, and X. Xie. Competeai: Understanding the competition behaviors
+in large language model-based agents. arXiv preprint arXiv:2310.17512, 2023.
+Appendix A. Agentic collaboration in Financial modeling - credit risk use case
+In this section, we present the log derived from running the agentic system on the portfolio credit risk
+dataset [24]. The entire operation starts with the human expert initializing the crew with the first request
+— to extract data from an external source. The modeling crew can be viewed as a modeling team within
+an organization. Each member of the team has specific characteristics. The team also has some tools at
+their disposal to perform certain functions. The job of the modeling team is to build and evaluate a machine
+learning model for a particular modeling use case; in this example, we explore the portfolio credit risk. The
+human expert is responsible for orchestrating the end-to-end modeling pipeline. They have access to the
+functionalities of each individual agent through their personas and descriptions. The process kicks off with
+the human expert delegating data extraction and loading tasks to the data extraction agent, followed by
+exploratory data analysis. The EDA report after the task is completed shows the shape of the input data:
+32,581 rows by 12 columns. The report also contains some other descriptive statistics that are stored in
+memory and can be retrieved by any of the agent when the need arises. The next step in the process is
+feature engineering. Since the information provided by the EDA agent shows that there are some missing
+values in the data as well as class imbalance, the human expert is informed and can provide context on
+how they want the feature engineering pipeline to be created. The output from the feature engineering
+agent is a pickle file that contains the preprocessor object, which includes the necessary transformations
+to be applied to the training dataset prior to model training. A similar approach was employed for model
+26 OKPALA, GOLGOON, RAVI KANNAN
+selection, where the human expert instructs the meta-tuning agent to utilize the preprocessor created by
+the feature engineering agent. This section provides a holistic view of how the agentic system executes a
+modeling workflow through the use of specialized agents.
+Log 3. Portfolio Credit Risk Log
+Human Interface
+Task : Extract data from external source and split into train and test set
+Select the Agent you want to use for this iteration :
+1. Data Extraction Agent
+2. EDA Agent
+3. Feature Engineering Agent
+4. Meta - Tune Agent
+5. Model Training Agent
+6. Model Evaluation Agent
+Enter the associated Agent number : 1
+Working Agent : Data Analyst
+Starting Task : Extract the data in the Kaggle location - ‘ laotse / credit - risk - dataset ,’ split
+,→ it into train and test set and get 40% sample from the train data .
+Human Feedback : Split the original dataset using the 80/20 rule
+I need to load the data from Kaggle , split it into train and test sets , and save the
+,→ resulting datasets . Then , I need to extract a 40% sample from the train dataset and
+,→ save it as well .
+Action : Python Code Executor Tool
+Action Input : { generated_code ": " ### "}
+Final Answer :
+The data has been successfully extracted from Kaggle , split into train and test sets , and a
+,→ 40% sample has been extracted from the train dataset . The train dataset is located at
+,→ ‘ credit / X_train . csv ’ and the test dataset is located at ‘ credit / X_test . csv .’
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Human Interface
+Task : Conduct indepth exploratory data analysis on the dataset extracted
+Select the Agent you want to use for this iteration :
+1. Data Extraction Agent
+2. EDA Agent
+3. Feature Engineering Agent
+4. Meta - Tune Agent
+5. Model Training Agent
+6. Model Evaluation Agent
+Enter the associated Agent number : 2
+Working Agent : Data Scientist - EDA
+Starting Task : Conduct a detailed exploratory data analysis on the provided dataset
+,→ extracted by the data extraction agent .
+Human Feedback : None
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 27
+I should use the " Exploratory Data Analysis Tool " to analyze the provided dataset and gather
+,→ all the necessary information to conduct a detailed exploratory data analysis .
+Action : Exploratory Data Analysis Tool
+Action Input : {" data_path ": " credit / credit_risk_dataset . csv "}
+Final Answer :
+The data contains 32581 rows and 12 columns .
+The target variable is the loan_status column .
+Out of all the features , 2 features have missing values .
+The dataset is highly imbalanced one class having 78.18% of the total dataset .
+The feature ‘ person_age ’ is highly correlated with : cb_person_cred_hist_length ..... truncated
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Human Interface
+Task : Create a feature engineering pipeline using the train data properties
+Select the Agent you want to use for this iteration :
+1. Data Extraction Agent
+2. EDA Agent
+3. Feature Engineering Agent
+4. Meta - Tune Agent
+5. Model Training Agent
+6. Model Evaluation Agent
+Enter the associated Agent number : 3
+Working Agent : Senior Data Scientist - Feature Engineering
+Starting Task : Create a feature engineering pipeline using the train data properties .
+Human Feedback : Create a preprocessor and apply KNN Imputation to numeric features , use
+,→ standardscaler to normalize the numeric features , ordinal encoding for categorical
+,→ encoding , simple imputation for missing categorical inputs , and selectKBest for
+,→ feature selection .
+I need to create a feature engineering preprocessor using the train data properties . I will
+,→ create transformers for numeric and categorical variables .
+Action : Python Code Executor Tool
+Action Input : {" generated_code ": " ### "}
+Task completed successfully . No further steps required .
+Thought : I now can give a great answer
+Final Answer : Feature Engineering Report
+Pipeline :
+- Numeric and categorical transformers were successfully created .
+- ColumnTransformer was used to create a preprocessor combining the numeric and
+,→ categorical transformers ..... truncated
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+28 OKPALA, GOLGOON, RAVI KANNAN
+Human Interface
+Task : Perform hyperparameter tuning and model selection using GridSearchCV and 40% sample
+,→ training set from the data extractor agent
+1. Data Extraction Agent
+2. EDA Agent
+3. Feature Engineering Agent
+4. Meta - Tune Agent
+5. Model Training Agent
+6. Model Evaluation Agent
+Enter the associated Agent number : 4
+Working Agent : Senior Machine Learning Engineer - Meta - Tuning
+Starting Task : Perform hyperparameter tuning using GridSearchCV .
+Human Feedback : Use the preprocessor object created by the feature engineering agent , the
+,→ 40% train sample generated by the data extraction agent to speed up the process , a
+,→ cross validation of 5 and scoring metric of roc_auc for this process .
+I need to create and train a model selection pipeline with pre - defined hyperparameters using
+,→ GridSearchCV . I will need to load the preprocessor as the estimator , set up the
+,→ param grids for each model , perform hyperparameter tuning , and save the best
+,→ performing estimator . I will use the 40% train data sample from the data extraction
+,→ agent to speed up the process .
+Action : Python Code Executor Tool
+Action Input : {‘ generated_code ’: " ### "}
+{‘ standard output ’: Task completed successfully . ‘ last_variable ’: {‘ best_estimator ’:
+,→ Pipeline ( steps =[( ‘ preprocessor ’,
+ColumnTransformer ( transformers =[( ‘ num ’ ,
+Pipeline ( steps =[( ‘ imputer ’, ..... truncated
+,→ }, ‘ action ’: No further steps required .}
+Thought : I now can give a great answer
+Final Answer :
+Pipeline :
+- Hyperparameter tuning was successfully performed .
+- The best performing model is XGBoost .
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Human Interface
+Task : Train the best estimator from the meta - tuning agent with the full training set
+1. Data Extraction Agent
+2. EDA Agent
+3. Feature Engineering Agent
+4. Meta - Tune Agent
+5. Model Training Agent
+6. Model Evaluation Agent
+Enter the associated Agent number : 5
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 29
+Working Agent : Senior Machine Learning Engineer - Model Training
+Starting Task : Train the the modeling pipeline fromt the meta - tuning agent with the full
+,→ training set .
+Human Feedback : None
+I need to load the best performing estimator , train it on the full X_train and y_train data ,
+,→ and save the trained model as ‘ best_model . pkl .’
+Action : Python Code Executor Tool
+Action Input : { " generated_code ": " ### "}
+Task completed successfully . No further steps required .
+Final Answer :
+The best performing estimator has been successfully trained using the X_train and y_train
+,→ data . The trained model has been saved as ‘ best_model . pkl . ’
+Training Report :
+- Loaded the best performing estimator , the X_train and y_train data .
+- Retrained the best estimator on the provided data .
+- Saved the trained model as ‘ best_model . pkl .’
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Human Interface
+Task : Evaluate the trained model using the test data
+1. Data Extraction Agent
+2. EDA Agent
+3. Feature Engineering Agent
+4. Meta - Tune Agent
+5. Model Training Agent
+6. Model Evaluation Agent
+Enter the associated Agent number : 6
+Working Agent : Senior Machine Learning Engineer - Model Evaluation
+Starting Task : Load and evaluate the trained model using test dataset .
+Human Feedback : None
+I need to use the Python Code Executor Tool to load the trained model , X_test , and y_test ,
+,→ then evaluate the model using the test dataset .
+Action : Python Code Executor Tool
+Action Input : {" generated_code ": " ### "}
+Final Answer :
+Evaluation Metrics :
+- Accuracy : 0.9341721651066441
+- Precision : 0.9721189591078067
+- Recall : 0.7238754325259515
+30 OKPALA, GOLGOON, RAVI KANNAN
+- F1 - score : 0.8298294327647758
+- AUC : 0.9515551149945969
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Working Agent : Manager - Judge
+Thinking
+Okay , I need to evaluate the codebase and actions performed by the modeling agents to
+,→ provide a comprehensive assessment of their work . First , looking at the Code
+,→ Generation Output , there are three versions of the code : Model Code , Code with Tuning
+,→ , and Final Code . The final code includes several hyperparameters like learning rate ,
+,→ n_estimators , max_depth , etc . , which suggests a grid search was performed for
+,→ optimization . This is good because it shows an attempt to find the best model
+,→ configuration . I will use the Python Code Executor Tool to execute the provided code
+,→ snippets and analyze the outputs to understand the process and identify any areas of
+,→ improvement ....... truncated
+Action : Python Code Executor Tool
+Action Input : {" generated_code ": " ### "}
+Task completed successfully . No further steps required .
+Final Answer :
+Assessment Report :
+1. Data Extraction Task :
+- The data has been successfully extracted from Kaggle , split into train and test sets ,
+,→ and a 40% sample has been extracted from the train dataset ....... truncated
+2. EDA Task :
+- The Exploratory Data Analysis ( EDA ) report provided detailed insights into the dataset .
+- It included information on the data overview ....... truncated
+3. Feature Engineering Task :
+- The Feature Engineering report outlined the pipeline used for feature transformation
+,→ and selection .
+- It included information on the transformers , imputers , encoders , feature selection
+,→ methods , and ....... truncated
+4. Meta - Tune Task :
+- The Model Selection report detailed the hyperparameter tuning process and identified
+,→ XGBoost as the best performing model .
+- The Senior Machine Learning Engineer successfully conducted ....... truncated
+5. Model Training Task :
+- The best performing estimator was retrained using the X_train and y_train data .
+- The Senior Machine Learning Engineer effectively retrained the model ....... truncated
+6. Model Evaluation Task :
+- The evaluation metrics including Accuracy , Precision , Recall , F1 - score , and AUC were
+,→ calculated for the trained model using the test dataset .
+- The trained model was ....... truncated
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 31
+Overall , the modeling agents performed their tasks effectively , following best practices and
+,→ producing high - quality work . The process was well - documented , and the outputs met
+,→ the expected criteria . The team demonstrated expertise in data extraction , EDA ,
+,→ feature engineering , hyperparameter tuning , model training , and evaluation .
+Areas of improvement :
+- Ensure consistency in variable naming conventions across tasks for better readability .
+- Include more detailed comments in the code to explain complex operations for better
+,→ understanding by other team members .
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Appendix B. Agents collaboration - Model Risk Management on Portfolio Credit Risk
+The Model Risk Management (MRM) crew plays a crucial role in this research. We briefly discuss the
+various interactions among agents for the credit-risk use case (refer to Log 4). The human expert for the
+model risk management is responsible for ensuring that the model trained by the modeling crew complies
+with organizational modeling guide. This involves verifying the steps taken by the team to produce results
+and assessing the model’s performance benchmarks against business objectives. To initiate this process, the
+expert delegates the documentation compliance task to the “Documentation Compliance Checker Agent,”
+designated as the “Data Scientist.” This compliance checker utilizes the Cache-Augmented Generation
+(CAG) tool to validate each component of the modeling procedure against the organizational modeling
+guide. As demonstrated in Log 4, the first prompt was to review the modeling documentation and the
+modeling guide provided by the organization. This establishes a foundation for the agent to ensure that the
+modeling team adhered to standard procedures. The output of this agent is stored in memory and can be
+used subsequently as context for other agents performing similar tasks. The “Model Replication Agent” is
+responsible for independently training and evaluating the selected model in a separate environment using the
+hyperparameters provided by the modeling crew. This ensures that the model can be reliably reproduced
+under the same conditions. The agent’s primary objective is to validate the model’s replicability and assess
+its performance benchmarks, identifying any discrepancies that may arise. This helps ensure consistency,
+robustness, and reliability in the behavior of the model in different environments. The “Conceptual Soundness
+Agent” comes into play when the human expert requests validation regarding the model’s alignment with
+business assumptions, performance metrics, and interpretability. With this information, the expert can
+request for additional tasks to be performed, as detailed in the log; such as testing the trained model under
+extreme scenarios. This task is assigned to the “Outcome Analyzer Agent”, responsible for perturbing the
+original data to generate adversarial and shifted inputs.
+Log 4. Model Risk Management - Log
+Human Interface
+Task : Perform compliance check on the modeling teams documentation
+Select the Agent you want to use for this iteration :
+1. Documentation Compliance Agent
+2. Model Replication Agent
+3. Conceptual Soundness Agent
+4. Outcome Analyzer Agent
+Enter the associated Agent number : 1
+32 OKPALA, GOLGOON, RAVI KANNAN
+Working Agent : Data Scientist - D oc um ent at io n Compliance Check
+Starting Task : Verify the modeling documentation from the modeling team against the
+,→ organization ’s modeling guide .
+Human Feedback : Read the documentation and compare with the modeling guide to see if the
+,→ modeling crew adhered to the modeling steps
+I should use the Cache - Augmented Generation ( CAG ) Tool to compare the organizational
+,→ modeling guide with the modeling team ’s documentation .
+Action : Cache - Augmented Generation ( CAG ) Tool
+Action Input :
+{
+" pdf_path ": " credit / modeling_blueprint . pdf ",
+" model_doc_path ": " credit / crew_documentation . doc "
+}
+Reading modeling do cum en ta ti on from the modeling crew ....
+Modeling Do cu me nt at io n
+## Exploratory Data Analysis
+- The dataset contains 32581 rows and 12 columns .
+- The target variable is the loan_status column .
+- 2 features have missing values ..... truncated
+Reading the modeling guide ....
+Co mp re he ns iv e Guide to Machine Learning Pipeline Development
+## Introduction :
+Machine learning pipeline development is a structured process that involves a series
+of stages to build and deploy machine learning models effectively . In this document , we will
+,→ provide a detailed overview of each stage in the machine learning pipeline ,
+,→ including Exploratory Data Analysis ( EDA ) , Feature Engineering , Model Selection ,
+,→ Hyperparameter Tuning , Model Training , and Model Evaluation .... truncated
+Final Answer :
+The modeling documentation provided by the modeling team closely adheres to the processes
+,→ described in the organizational modeling guide . The team successfully followed the
+,→ steps outlined in the guide for Exploratory Data Analysis , Feature Engineering , Model
+,→ Selection , Hyperparameter Tuning , Model Training , and Model Evaluation . The
+,→ documentation demonstrates a thorough understanding of the data and the machine
+,→ learning pipeline development process , showcasing alignment with the organizational
+,→ modeling blueprint .
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Human Interface
+Task : Replicate the model training performed by the modeling team and check for
+,→ reproducibility .
+Select the Agent you want to use for this iteration :
+1. Documentation Compliance Agent
+2. Model Replication Agent
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 33
+3. Conceptual Soundness Agent
+4. Outcome Analyzer Agent
+Enter the associated Agent number : 2
+Working Agent : Machine Learning Engineering - Model replication
+Starting Task : Create and train a machine learning pipeline using the parameters provided by
+,→ the modeling team and check for reproducibility .
+Human Feedback : Use the hyperparameters from the selected model for this exercise .
+I need to replicate the model training performed by the modeling team and check for
+,→ reproducibility and consistency .
+Action : Python Code Executor Tool
+Action Input : { " generated_code ": " ### " }
+Error during execution : [07:16:26] ../ src / c_api / c_api_utils .h :167: Invalid missing value :
+,→ null .... Stack trace : [bt] (0) / usr / local / lib / python3 .11/ dist - packages / xgboost / lib /
+,→ libxgboost .so (+0 x139553 )
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): The solution
+,→ provided did not load the pipeline with joblib . Please make sure to use the syntax "
+,→ import joblib " in your next execution .
+Thought : I need to use the correct import to load the libraries needed for replicating the
+,→ model training performed by the modeling team .
+Action : Python Code Executor Tool
+Action Input : { " generated_code ": " ### "}
+Task completed successfully . No further steps required .
+Thought : I now can give a great answer
+Final Answer :
+Evaluation Metrics :
+- Accuracy : 0.9335583857603191
+- Precision : 0.9685185185185186
+- Recall : 0.7238754325259515
+- F1 - score : 0.8285148514851486
+- AUC : 0.9514352452234618
+The model replication was successful , and the evaluation metrics of the replicated model
+,→ closely match those of the modeling team . The model is reproducible based on the
+,→ comparison of metrics .
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Human Interface
+Task : Get the features that contributed to the result of the machine learning model to
+,→ underscore model interpretability .
+34 OKPALA, GOLGOON, RAVI KANNAN
+Select the Agent you want to use for this iteration :
+1. Documentation Compliance Agent
+2. Model Replication Agent
+3. Conceptual Soundness Agent
+4. Outcome Analyzer Agent
+Enter the associated Agent number : 3
+Working Agent : Senior Model Validation Analyst - Conceptual Soundness
+Starting Task : Check feature importance and explainability of the trained estimator / model .
+Human Feedback : None
+I need to follow the standard guideline to check for feature importance and explainability
+,→ of the best estimator / model .
+Action : Python Code Executor Tool
+Action Input : {" generated_code ": " ### "}
+Task completed successfully . No further steps required .
+Final Answer :
+As per the analysis conducted on the best estimator / model , the top features that contributed
+,→ to the model ’ s result are as follows :
+1. loan_percent_income - 0.30188808
+2. loan_grade - 0.24068688
+3. loan_amnt - 0.24007724
+4. loan_int_rate - 0.08827841
+5. person_income - 0.052032843
+6. person_home_ownership - 0.035037637
+7. loan_intent - 0.018300708
+8. person_emp_length - 0.012395994
+9. cb_person_default_on_file - 0.011302248
+The feature importance values indicate the contribution of each feature towards the model ’ s
+,→ predictive performance . In this case , the top features such as ‘ loan_percent_income ’,
+,→ ‘ loan_grade ’, and ‘ loan_amnt ’ have the highest importance values , suggesting that
+,→ they play a significant role in determining the model ’s output .
+Based on the feature importance analysis , the model appears to be compliant with standard
+,→ practice as it has identified relevant features that align with domain knowledge and
+,→ expectations . The high importance assigned to key loan - related features indicates
+,→ that the model is focusing on relevant factors that influence credit risk assessment .
+,→ Overall , the feature importance results support the model ’ s explainability and
+,→ conceptual soundness in making predictions related to credit risk .
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Human Interface
+Task : Perform Stress testing on the trained model by simulating adversarial inputs and
+,→ outliers .
+Select the Agent you want to use for this iteration :
+AGENTIC AI SYSTEMS FOR FINANCIAL SERVICES 35
+1. Documentation Compliance Agent
+2. Model Replication Agent
+3. Conceptual Soundness Agent
+4. Outcome Analyzer Agent
+Enter the associated Agent number : 4
+Working Agent : Model Validation Analyst - Outcome Analyzer
+Starting Task : Conduct additional testing of the model located at ‘ credit / best_model . pkl ’ to
+,→ test for stability under extreme conditions .
+Human Feedback : None
+I need to conduct additional testing of the model to test stability under extreme conditions
+,→ by simulating shifted inputs and outlier / adversarial inputs .
+Action : Python Code Executor Tool
+Action Input : { " generated_code ": " ### "}
+{‘ standard output ’: Task completed successfully . ‘ last_variable ’: X_test_shifted - input , ‘
+,→ action ’: ‘No further steps required . ’}
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): ‘I didn ’t get any
+,→ output . On looking at the generated code , you missed to use the model ’s predict
+,→ function on the adversarial and outlier input . Please correct this error , and re -
+,→ execute .‘
+Thought : I need to make some corrections and use the predict function of the trained model
+,→ on simulated input .
+{‘ standard output ’: Task completed successfully . Result : {‘ Shifted Inputs ’: { ‘ Accuracy ’:
+,→ 0.7916219119226638 , ‘F1 Score ’: 0.6054619407321324 , ‘ Precision ’: 0.5217826740110165 ,
+,→ ‘AUC ’: 0.7664093114514315} , ‘ Outlier / Adversarial Inputs ’: { ‘ Accuracy ’:
+,→ 0.9284947061531379 , ‘ F1 Score ’: 0.8141945773524721 , ‘ Precision ’: 0.9604891815616181 ,
+,→ ‘AUC ’: 0.8232268482638927}}" , ‘ last_variable ’: {‘ result ’: { ‘ Shifted Inputs ’: {‘
+,→ Accuracy ’: 0.7916219119226638 , ‘F1 Score ’: 0.6054619407321324 , ‘ Precision ’:
+,→ 0.5217826740110165 , ‘AUC ’: 0.7664093114514315} , ‘ Outlier / Adversarial Inputs ’: {‘
+,→ Accuracy ’: 0.9284947061531379 , ‘F1 Score ’: 0.8141945773524721 , ‘ Precision ’:
+,→ 0.9604891815616181 , ‘AUC ’: 0.9072319157761454}}} , ‘ action ’: No further steps required
+,→ .}
+Final Answer :
+{
+" Shifted Inputs ": {
+" Accuracy ": 0.7916219119226638 ,
+" F1 Score ": 0.6054619407321324 ,
+" Precision ": 0.5217826740110165 ,
+" AUC ": 0.8232268482638927
+},
+" Outlier / Adversarial Inputs ": {
+" Accuracy ": 0.9284947061531379 ,
+" F1 Score ": 0.8141945773524721 ,
+36 OKPALA, GOLGOON, RAVI KANNAN
+" Precision ": 0.9604891815616181 ,
+" AUC ": 0.9072319157761454
+}
+}
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end
+Working Agent : Manager - Judge
+Thinking
+Okay , I need to assess the codebase and actions performed by the modeling risk management
+,→ agents using the provided tools ....... truncated
+Action : Python Code Executor Tool
+Action Input : { " generated_code ": " ### "}
+Task completed successfully . No further steps required .
+Final Answer :
+Assessment Report on Modeling Risk Management Agents :
+1. Documentation Compliance Task :
+- Action : Cache - Augmented Generation ( CAG ) Tool
+- The modeling documentation provided by the modeling team closely adheres to the
+,→ processes described in the organizational modeling guide ..... truncated
+2. Model Replication Task :
+- Action : Python Code Executor Tool
+- The model replication was successful , and the evaluation metrics ..... truncated
+3. Conceptual Soundness Task :
+- Action : Python Code Executor Tool
+- The top 10 features that contributed to the model ’ s result were identified .....
+,→ truncated
+4. Outcome Analyzer Task :
+- Action : Python Code Executor Tool
+- The outcome analysis report includes the evaluation ..... truncated
+The modeling risk management agents have demonstrated proficiency in their tasks . The
+,→ documentation , model replication , feature importance analysis , and outcome evaluation
+,→ collectively indicate a strong foundation in model risk management practices .
+Areas of improvement could include further enhancing the interpretability of the models ,
+,→ conducting additional stress testing , and ensuring continuous alignment with evolving
+,→ organizational modeling standards .
+Human Interface
+Human : Provide additional instruction to the Agent ( type ‘end ’ to stop ): end

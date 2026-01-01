@@ -1,0 +1,168 @@
+NVIDIA NeMo Guardrails for Developers
+NVIDIA NeMo™ Guardrails is a scalable solution for orchestrating AI guardrails that keep agentic AI applications safe, reliable, and aligned. It allows you to define, orchestrate, and enforce guardrails for content safety, topic control, PII detection, RAG grounding, and jailbreak prevention—all with low latency and seamless integration. Extensible and customizable, it integrates with frameworks like LangChain, LangGraph, and LlamaIndex, supports multi-agent deployments, and leverages GPU acceleration for low-latency performance. NeMo Guardrails includes out-of-the-box NVIDIA Nemotron models packaged as NVIDIA NIM™ microservices and on Hugging Face—covering content safety, topic control, and jailbreak detection—alongside a growing ecosystem of AI safety models, rails, and observability tools. It’s part of the larger NVIDIA NeMo software suite for building, monitoring, and optimizing AI agents across their lifecycle.
+
+
+See NVIDIA NeMo Guardrails in Action
+Enforce content safety, RAG grounding, and jailbreak prevention while building secure, compliant AI agents. This video demonstrates how NeMo Guardrails streamlines guardrail orchestration for safer, more reliable AI applications.
+
+
+How NVIDIA NeMo Guardrails Works
+NeMo Guardrails provides components for building a robust, scalable guardrail solution for LLM applications and agents. It evaluates user inputs and model responses based on use-case-specific policies, providing an additional layer of safeguards beyond what’s natively available.
+
+Key Benefits:
+
+Programmable Policies: Supports customizable content moderation, PII detection, topic relevance, and jailbreak detection tailored to your industry and use case.
+Effective Orchestration: Screens both user inputs and model outputs, effectively orchestrates multiple rails with the lowest latency.
+Enterprise-Grade Support and Scale: Handle high volume and scale to multiple applications with enterprise-grade support.
+Flow Management: Block, filter, or tailor next action or responses based on your requirements with flexible actions.
+ A diagram showing how NeMo Guardrails works supports multiple AI guardrails
+Introductory Blog
+Simplify building trustworthy LLM apps with AI guardrails for safety, security, and control.
+
+Read Blog
+Deploy Guardrails Tutorial
+Run Inference with Parallel Rails using NeMo Guardrails microservice.
+
+Access Tutorial
+Example Configurations
+The configurations in this folder showcase various features of NeMo Guardrails, e.g., using a specific LLM, enabling streaming, and enabling fact-checking.
+
+Explore Examples
+Customer Assistant Example
+Learn how to integrate advanced content moderation, jailbreak detection, and topic control with NeMo Guardrails microservices.
+
+Try Notebook
+Ways to Get Started With NVIDIA NeMo Guardrails
+Use the right tools and technologies to safeguard AI applications with NeMo Guardrails scalable AI guardrail orchestration solution.
+
+AI guardrails code
+Download
+Get free access to the NeMo Guardrails microservice for research, development, and testing. You can try the microservice through the Safety for Agentic AI developer example.
+
+Download Microservice
+AI guardrails code
+Access 
+To use the latest features and source code for adding AI guardrails to LLM applications, NeMo Guardrails is available as an open-source project on GitHub.
+
+Access SDK
+AI guardrails microservice
+Try
+Try the Nemotron Safety Guard models for content safety, topic control, and jailbreak detection on Hugging Face.
+
+Try the Models
+Performance
+NeMo Guardrails enables AI guardrails to ensure that LLM responses are safe, secure, and compliant. Experience up to 1.4x improvement in compliance rate with a mere half-second of latency. Keep Enterprise AI operations safe and reliable by enforcing custom rules for AI models, agents, and systems. Use prepackaged NVIDIA NIM microservices that are optimized to make it easier to deploy.
+
+Experience Over 1.4x Improvement in Compliance Rate
+With Only Half a Second of Latency With NeMo Guardrails
+Evaluated Policy Compliance With 5 AI Guardrails
+
+
+The benchmark shows that orchestrating up to five GPU-accelerated guardrails in parallel with NeMo Guardrails increases policy compliance by 1.5x while adding only ~0.5 seconds of latency—delivering ~50% better protection without slowing down responses.
+
+Starter Kits
+Hero-Workflow
+Safeguard your deployments with NemoGuard NIM microservices. 
+
+Integrate NemoGuard Microservice
+Try Microservice
+Try the Tutorial Notebook
+Guardrails for RAG 
+Enhance content safety with programmable guardrails while building RAG apps delivering context-aware responses from vast multimodal enterprise data sources.
+
+Try Blueprint
+Tutorial
+Guardrails Evaluation
+Measure the effectiveness and performance of AI guardrails in generative AI applications with an evaluation tool through NeMo Guardrails.
+
+Try Microservice
+Read Blog
+NVIDIA NeMo Guardrails Learning Library
+Filter by:
+
+Explore Resources
+View All NVIDIA NeMo Guardrails Resources
+Featured
+Video
+NeMo|NeMo Evaluator|NeMo Customizer|NeMo Guardrails
+Beyond the Algorithm with NVIDIA
+Explore the NVIDIA Data Flywheel Blueprint, an open reference architecture for distilling knowledge from larger models into smaller, faster, and cost-efficient alternatives.
+
+Featured
+Example
+NeMo|NeMo Evaluator|NeMo Customizer|NeMo Guardrails
+Data Flywheel Blueprint
+Build a data flywheel, with NVIDIA NeMo microservices, that continuously optimizes AI agents for latency and cost — while maintaining accuracy targets.
+
+Featured
+Blog
+NeMo Guardrails|NeMo|NIM
+How to Safeguard AI Agents for Customer Service
+With this tutorial, you’ll learn how to deploy AI agents that provide fast, accurate responses while maintaining customer trust and brand integrity.
+
+Featured
+NIM
+NeMo Guardrails
+Llama 3.1 NemoGuard 8B ContentSafety
+Industry leading content safety model from NVIDIA for enhancing the safety and moderation capabilities of LLMs.
+
+Featured
+Blog
+NeMo Guardrails|NeMo
+NeMo Guardrails and LangChain Templates
+Learn to build secure, trustworthy RAG apps using LangChain Templates and NeMo Guardrails.
+
+Featured
+Container
+NeMo|NeMo Evaluator|NeMo Guardrails|NeMo Customizer
+NVIDIA NeMo Microservices
+This collection contains the NeMo microservices to build an end-to-end platform for fine-tuning, evaluating, and serving LLMs on your Kubernetes cluster.
+
+Blog
+NeMo|NeMo Evaluator|NeMo Customizer|NeMo Guardrails
+Build Efficient AI Agents With the Data Flywheel Blueprint
+Explore how our new AI blueprint can help enable self-improving AI agents by automating model optimization.
+
+Video
+NeMo|NeMo Customizer|NeMo Evaluator|NeMo Guardrails
+Customizing AI Agents for Tool Calling
+Learn how to customize AI agents for precise function calling with this end-to-end example with NVIDIA NeMo microservices.
+
+NIM
+NeMo Guardrails
+Llama 3.1 NemoGuard 8B TopicControl
+First-of-a-kind topic classification model from NVIDIA for ensuring AI conversations remain on-topic.
+
+Blog
+NeMo|NeMo Retriever|NeMo Curator|NeMo Evaluator
+Maximize AI Agent Performance with Data Flywheels
+AI agents need to continuously evolve. With NeMo microservices developers can create and maintain a robust data flywheel for AI agents.
+
+Documentation
+NeMo Guardrails
+NeMo Guardrails Documentation
+Explore resources for getting started such as examples, the user guide, security guidelines, evaluation tools and more.
+
+Example
+NeMo Guardrails
+NeMo Guardrails Example Bots
+The examples in this folder showcase various configurations of guardrails. You can use them as a starting point for different types of bots you want to build with NeMo Guardrails.
+
+1 - 12 of 48
+First page
+Previous page
+1
+Page: 1
+
+1
+Next page
+Last page
+More Resources
+AI guardrails community
+Explore the Community
+AI guardrails training
+Get Training and Certification
+AI guardrails startup
+Accelerate Your Startup
+Ethical AI
+NVIDIA’s platforms and application frameworks enable developers to build a wide array of AI applications. Consider potential algorithmic bias when choosing or creating the models being deployed. Work with the model’s developer to ensure that it meets the requirements for the relevant industry and use case; that the necessary instructions and documentation are provided to understand error rates, confidence intervals, and results; and that the model is being used under the conditions and in the manner intended.

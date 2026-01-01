@@ -1,0 +1,46 @@
+Agentic AI: The Top 5 Challenges and How to Overcome Them
+Technology
+Big Ideas
+Feb 5, 2025Read Time: 5 min
+As generative AI continues its unprecedented surge in popularity, we are already seeing it evolve into the next generation of machine learning-driven technologies: agentic AI.
+
+With agentic AI, we are not just prompting models and receiving an answer in a simple one-step process. The AI is engaging in complex multi-step processes, often interacting with different systems to achieve a desired outcome. For example, an organization could have an AI-powered help desk with agents that use natural language processing to understand and process incoming IT support tickets from employees. These agents could autonomously reset passwords, install software updates, and elevate tickets to human staff when necessary.
+
+Agents will be one of the most significant innovations in the AI industry, possibly more than future generations of foundation models. By 2028, Gartner predicts that at least 15% of day-to-day work decisions will be made autonomously by agentic AI, up from 0% in 2024.
+
+However, while AI agents can improve efficiency, save costs, and free up IT staff to focus on more critical projects that need human reasoning, they’re not without challenges. Before deploying agentic AI, enterprises should be prepared to address several issues that could otherwise impact the trustworthiness and security of the systems and outputs.
+
+Model logic and critical thinking
+With agentic AI, one agent acts as a “planner” and orchestrates the actions of multiple agents. The model provides a “critical thinker” function, offering feedback on the output of the planner and the different agents that are executing on those instructions. The more feedback created, the more insights the model has, and the better the outputs will be.
+
+For this to work well, the critical thinker model needs to be trained on data that’s as closely grounded in reality as possible. In other words, we need to give it a lot of information on specific goals, plans, actions, and results, and provide a lot of feedback. This can require many iterations—running through hundreds or even thousands of plans and results—before the model has enough data to start acting as a critical thinker.
+
+Reliability and predictability
+The way we interact with computers today is predictable. For instance, when we build software systems, an engineer sits and writes code, telling the computer exactly what to do, step by step. With an agentic AI process, we're not telling the agent what to do step by step. Rather, we lead with the outcome we want to achieve, and the agent determines how to reach this goal. The software agent has a degree of autonomy, which means there can be some randomness in the outputs.
+
+We saw a similar issue with ChatGPT and other LLM-based generative AI systems when they first debuted. But in the last two years, we’ve seen considerable improvements in the consistency of generative AI outputs, thanks to fine-tuning, human feedback loops, and consistent efforts to train and refine these models. We’ll need to put a similar level of effort into minimizing the randomness of agentic AI systems by making them more predictable and reliable.
+
+Data privacy and security
+Some companies are hesitant to use agentic AI due to privacy and security concerns, which are similar to those with generative AI but can be even more concerning. For example, when a user engages with an LLM, every bit of information given to the model becomes embedded in that model. There’s no way to go back and ask it to “forget” that information. Some types of security attacks, such as prompt injection, take advantage of this by trying to get the model to leak proprietary information. Because software agents have access to many different systems with a high level of autonomy, there is an increased risk that it could expose private data from more sources.
+
+To address this problem, companies need to start small, containerizing the data as much as possible, to ensure it is not exposed beyond the internal domain where it is needed. It’s also critical to anonymize the data, obscuring the user and stripping any personally identifiable information (like social security numbers or addresses) from the prompt, before sending it to the model.
+
+At a high level, we can look at three different types of agentic AI systems and their respective security implications for business use:
+
+Consumer agentic AI – Typically an internal user interface with an external AI model. As a company, we have zero control over the AI itself, only over the data and prompts we send.
+
+Employee agentic AI – Built internally for internal usage. While there is less risk, this still poses a risk of exposing highly private information to nonqualified users in the company. For example, companies can decide to build their own GPT-like experience for internal use only.
+
+Customer-facing agentic-AI – Built by a business to serve its customers. Since there is some risk with interacting and working with customers, the system must have good segmentation to avoid exposing private customer data.
+
+Data quality and relevancy
+Once the data and the user have been anonymized, we want our agentic model to deliver results that are grounded in quality data that is relevant to the user’s prompt. That will be a significant challenge. Too often, generative AI models fail to deliver the expected results because they are disconnected from the most accurate, current data. Agentic AI systems face additional issues because they will need to access data across a wide variety of different platforms and sources.
+
+A data streaming platform (DSP) can be useful here because it provides engineers with tools to enable relevant answers using high-quality data. For example, developers can use Apache Kafka® and Kafka Connect to bring in data from disparate sources, and Apache Flink® to communicate with other models. Agentic AI systems will be successful, overcome hallucinations, and generate the right responses only if they are grounded in reliable, fresh data.
+
+ROI and talent
+AI is still new territory for many companies, requiring them to purchase new hardware and GPUs, and create a new data infrastructure, particularly with new memory management for caching and for short-term and long-term storage. It also requires building an inference model in-house. To do this, they’ll need to hire new talent with these specialized skills or train existing workers on AI. Return on investment (ROI) will take time, especially for early adopters.
+
+Despite these hurdles, agentic AI will spread through enterprises much like generative AI has. We’re already seeing some AI technology vendors move in this direction. For example, Microsoft Copilot has evolved from simply automating certain code processes to acting in an agentic way to write and test code.
+
+Before companies will see the benefits from agentic AI, they will need to be prepared to resolve the issues of reliability, data privacy and quality, and model logic. They will also need to be prepared for significant investments up-front. However, the potential impact on the business may be much greater than what they’re seeing with just generative AI.

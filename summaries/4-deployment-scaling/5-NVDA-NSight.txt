@@ -1,0 +1,123 @@
+NVIDIA Nsight Systems
+NVIDIA Nsight™ Systems is a system-wide performance analysis tool designed to visualize an application’s algorithms, identify the largest opportunities to optimize, and tune to scale efficiently across any quantity or size of CPUs and GPUs, from large servers to our smallest systems-on-a-chip (SoCs).
+
+
+Nsight Systems 2025.6.1 is available now.
+
+Nsight Systems can make high-performance games with beautiful graphics
+Nsight Systems visualizes system workload metrics on a timeline and provides tools that help developers detect, understand, and solve performance issues. 
+
+Profile the System
+The full picture of app optimization requires drilling deeply into hardware interactions to ensure maximum parallelism is achieved. Nsight Systems visualizes unbiased, system-wide activity data on a unified timeline, allowing application developers to investigate correlations, dependencies, activity, bottlenecks, and resource allocation to ensure hardware components are working harmoniously. 
+
+Analyze Performance
+Nsight Systems offers low-overheard performance analysis that visualizes otherwise hidden layers of events and metrics used for pursuing optimizations, including CPU parallelization and core utilization, GPU streaming-multiprocessor (SM) optimization, system workload and CUDA® libraries trace, network communications, OS interactions, and more.
+
+Scale Across Platforms
+Nsight Systems is the universal tool for developing applications on NVIDIA platforms, whether on-premises or in the cloud. Scale across a wide range of NVIDIA platforms, from NVIDIA DGX™ to NVIDIA RTX™ workstations, including NVIDIA DRIVE® for automotive and NVIDIA Jetson™ for edge AI and robotics. Nsight Systems provide valuable insights for optimizing AI, high-performance computing (HPC), pro-visualization and gaming applications. 
+
+Explore Key Features 
+Visualize CPU-GPU Interactions
+Nsight Systems latches on to a target application to expose GPU and CPU activity, events, annotations, throughput, and performance metrics in a chronological timeline. With low overhead, this data can be visualized accurately and in parallel for ease of understanding. GPU workloads are further correlated with in-application CPU events, allowing for performance blockers to be easily identified and remedied. 
+
+Nsight Systems can make high-performance games with beautiful graphics
+CPU activity (top) in parallel to GPU graphics and compute activity (bottom).
+Nsight Systems tracks GPU activity
+The GPU Metrics section of the Nsight Systems timeline.
+Track GPU Activity
+To further explore the GPU, toggling on GPU Metrics Sampling will plot low-level input/output (IO) activity such as PCIe throughput, NVIDIA NVLink®, and dynamic random-access memory (DRAM) activity. GPU Metrics Sampling also exposes SM utilization, Tensor Core activity, instruction throughput, and warp occupancy. Every workload and their CPU origin can be readily tracked to support performance tuning. 
+
+Trace GPU Workloads
+For compute tasks, Nsight Systems supports investigating the CUDA API and tracing CUDA libraries, including cuBLAS, cuDNN, and NVIDIA TensorRT™. For graphics computing, Nsight Systems supports profiling Vulkan, OpenGL, DirectX 11, DirectX 12, DXR, and NVIDIA OptiX™ APIs.  
+
+ Nsight Systems traces GPU workloads
+Alt text: DX12 API calls as they happen chronologically in the timeline alongside render thread.
+
+Scale AI Applications to the Data Center and Cloud with NVIDIA Nsight Systems GTC Demo Video
+Accelerate Multi-Node Performance
+Nsight Systems supports multi-node profiling to resolve performance limiters on the scale of data centers and clusters. Multi-node analysis automatically diagnoses performance limiters across many nodes simultaneously. Additionally, network metrics alongside Python backtrace sampling paint a complete picture across GPUs, CPUs, DPUs, and internode communication.
+
+
+Optimize Python for AI and Deep Learning
+Nsight Systems helps you write Python applications that maximize GPU utilization. Backtraces and automatic call stack sampling allows you to fine-tune performance for deep learning applications. 
+
+Furthermore, integration with Jupyter Lab allows you to profile Python and other supported languages directly in Jupyter, including detailed analysis with the full Nsight Systems GUI. 
+
+
+Get the NVIDIA Nsight Tools JupyterLab Extension
+
+Feature Spotlight on Python support in Nsight Developer Tools
+Nsight Systems detects frame stutter and bottlenecks
+Nsight Systems detected a low-health frame resulting in a large stutter, as well as the calls that caused it. 
+Detect Frame Stutter and Bottlenecks
+Nsight Systems automatically detects slow frames (by highlighting frame times higher than a target) as well as local stutter frames (by highlighting frames with higher times than neighboring frames). It also automatically reports CPU times per frame and API calls that are likely candidates for causing stutters. This equips developers with plenty of information to locate and resolve the causes of frame drops and inconsistent frame timing.
+
+
+Read more about using Nsight Systems to fix stutters in games
+ 
+
+View Other Tools Within the Nsight Suite
+Nsight Systems is part of the NVIDIA Nsight Developer Tools suite, a collection of powerful tools, libraries, and SDKs that enable developers to build, debug, and profile software utilizing the latest accelerated computing hardware.
+
+
+img-alt-text
+Nsight Graphics
+NVIDIA Nsight Graphics is a standalone developer tool with ray-tracing support that enables you to debug, profile, and export frames built with Direct3D, Vulkan, OpenGL, OpenVR, and the Oculus SDK.
+
+Get Started
+img-alt-text
+Nsight Compute
+Nsight Compute is an interactive kernel profiler for CUDA applications. It provides detailed performance metrics and API debugging via a user interface and command-line tool. It also provides a customizable, data-driven user interface and metric collection that can be extended with analysis scripts for post-processing results..
+
+Get Started
+img-alt-text
+Nsight Aftermath SDK
+Nsigh Aftermath SDK is a library that integrates into a D3D12 or Vulkan game’s crash reporter to generate GPU “mini-dumps” when an exception or TDR occurs, exposing pipeline information to resolve an unexpected crash.
+
+Get Started
+ 
+
+Check out partner testimonials and ecosystem
+Vulkan is the cornerstone of Adobe’s multi-platform, multi-vendor rendering strategy for its Adobe Substance 3D products. Thanks to the ray-tracing extensions that NVIDIA pioneered and contributed to Khronos, Vulkan gives native access to ray-tracing hardware, offering exceptional ray-tracing performance on supported devices. In addition, Nsight Graphics and Nsight Systems are invaluable tools when it comes to understanding and improving the performance of Vulkan ray-tracing applications.
+
+— Francois Beaune, Lead Software Engineer of Photorealistic Rendering, Adobe 3D and Immersive
+
+
+NVIDIA Nsight Systems has enabled the Microsoft Azure HPC+AI team to perform detailed analysis and optimize GPU-accelerated AI and software for our services and customers. The tool paints a clear picture of events on the CPUs, GPUs, NICs, and OS, which have allowed us to quickly identify the top time-consuming functions and cold spots to target.
+
+— Kushal Datta, Principal Software Engineer, Microsoft Azure HPC+AI
+
+
+We noticed that our new Quadro P6000 server was ‘starved’ during training, and we needed experts to support us. NVIDIA Nsight Systems helped us to achieve over 90% GPU utilization. A deep learning model that previously took 600 minutes to train now takes only 90.
+
+— Felix Goldberg, Chief AI Scientist, Tracxpoint
+
+
+
+
+Deepset achieves a 3.9X speedup and 12.8X cost reduction for training natural language processing models by working with AWS and NVIDIA.
+
+Learn More
+
+
+
+
+
+
+
+Watch Nsight Developer Tools CUDA Tutorials
+CUDA Developer Tools is a series of tutorial videos designed to get you started with using Nsight tools for CUDA development. It explores key features for CUDA profiling, debugging, and optimizing. 
+
+
+CUDA Developer Tools | NVIDIA Nsight Tools Ecosystem
+
+CUDA Developer Tools | Intro to NVIDIA Nsight Systems
+
+CUDA Developer Tools | Intro to NVIDIA Nsight Compute
+CUDA Developer Tools Tutorials Playlist
+Watch Nsight Systems Sessions and Technical Videos on Demand
+-
+See All
+
+
+Stay up to Date on the Latest NVIDIA Nsight Systems News

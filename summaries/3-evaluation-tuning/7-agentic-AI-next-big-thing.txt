@@ -1,0 +1,165 @@
+What Is Agentic AI?
+Michael Chen | Senior Writer | June 17, 2025
+
+
+In This Article
+
+What Is Agentic AI?
+Agentic AI Explained
+How Does Agentic AI Work?
+How Is Agentic AI Different from Traditional AI?
+What’s the Difference Between Agentic AI and Generative AI?
+Real-World Use Cases of Agentic AI
+Agentic AI Benefits
+Agentic AI Challenges
+How to Get Started with Agentic AI
+Future of Agentic AI
+Agentic AI FAQs
+AI’s leap from helping to doing is here. Agentic AI is stepping out of the passive role and into the driver’s seat, designed to autonomously plan, execute, and adapt to make autonomous decisions based on its environment and carryout tasks within its operational scope. This potential for proactive, goal-oriented problem-solving holds immense promise for tackling intricate challenges across various domains. Here’s what you need to know.
+
+What Is Agentic AI?
+Agentic AI refers to an AI system that’s capable of making autonomous decisions based on both past performance and its current assessment of what’s needed to accomplish a task, operating with minimal human oversight. An agentic AI system can look at the current state of its progress toward its goal, then make appropriate decisions, such as adding new steps or asking humans or other AI systems for help.
+
+Unlike traditional AI—the term commonly used for nongenerative AI services—agentic AI isn’t locked into an input/output model through human queries and supervision. Instead, the technology is autonomous enough that the system can take complex steps toward its goal, checking in with humans only when required.
+
+Another way to think about agentic AI is to compare it to a manager versus a technician. Specialized AI agents are trained to do set tasks based on external inputs, like a skilled technician assigned to a job. Agentic AI can deploy various AI techniques, including generative AI, while making autonomous decisions, like a manager deciding which technicians are necessary to complete a project. Using this analogy, the manager can collaborate with peers and take feedback from in-the-field technicians, optimize workflows, request more information, and deploy additional resources as needed.
+
+Key Takeaways
+
+Agentic AI refers to AI systems capable of making autonomous decisions on how to achieve a goal, then executing on its decisions.
+Agentic AI systems can collaborate with AI agents and humans to set and achieve goals.
+Agentic AI systems often use tools, including AI models and specialized AI agents and orchestrated AI services, to achieve strategic goals.
+While capable of more complex and independent actions than traditional AI, agentic AI systems may also require significantly more resources.
+Agentic AI Explained
+Agentic AI represents the third wave of AI development. The initial burst of modern AI saw the introduction of technologies, including recommendation engines and auto-fill text, that analyzed large data sets to identify statistical correlations and calculate likely outcomes. The second wave came more recently as new algorithms and more processing power and data availability led to the ability of AI to generate creative content, including text, images, and music.
+
+The third wave of AI focuses on the ability to bring disparate elements and abilities together under the umbrella of choice. It’s important to differentiate between AI agents and agentic AI systems. Agents have access to predictive, generative, and other AI capabilities. Instead of waiting for a user to prompt for, say, a generative output, an agent is programmed to work toward a specific goal. Thus, agentic AI analyzes paths to the goal and makes decisions on the best way to complete the task. Agents can also consider a record of past task completion to improve outcomes.
+
+With the ability to process and synthesize large volumes of data, an AI agent may be capable of accomplishing research on a level that humans can’t. By making choices without prompting, agents can uncover further information and absorb feedback, helping them become collaborative partners, whether for work, hobbies, or personal tasks.
+
+Agentic AI systems go bigger by weaving together individual AI agents and other appropriate systems or tools into a cohesive whole. For example, an AI agent can handle customer complaints. An agentic AI system can then use that data to help product designers and marketing leaders adapt their offerings based on patterns in customer behavior.
+
+Thus, the question facing enterprises isn’t “What can agentic AI do for us?” Instead, enterprises may want to ask “Where should we start?” The answer is often prebuilt agentic AI platforms that offer easy integration, scalability, and customization.
+
+How Does Agentic AI Work?
+Agentic AI systems are designed to manage and execute various AI elements in pursuit of an established project goal. While the specific details for each mission will vary slightly, the following illustrates the general steps used by agentic AI systems:
+
+Establishing a goal and parameters: The project objective and constraints are received from human input.
+Tasks and steps: An appropriate LLM, possibly a foundation model selected from prebuilt options, processes this information to chain together tasks needed to achieve the goal while remaining within established parameters and limitations.
+Autonomous decisions: With tasks set, the agentic AI system decides how to achieve its objectives and executes autonomously or with human interaction when appropriate.
+Feedback and revision: The agent will take in data from parallel tasks and adjust the workflow as needed. This can mean anything from cutting steps for workflow optimization to adding in new steps for further data gathering. What makes agentic AI systems so compelling is their ability to make decisions and adapt based on real-time data.
+Systemic improvement: As the agent works toward its goal, it applies recorded results and actions into a systemic feedback loop, commonly known in the AI industry as the “data flywheel.” This loop pushes the boundaries of the agent, aiming to improve accuracy and efficiency over time.
+
+For agentic AI systems to work as designed, IT teams often make lower-level automations/agents and data available to agents. Once that’s in place, enterprises can integrate a commercial agentic AI system that suits their needs for function, customizability, scalability, and performance before refining it to execute based on project goals.
+
+How Does Agentic AI Work? diagram
+Characteristics of Agentic AI include proactive and goal-oriented behavior as well as adaptation and autonomy.
+How Is Agentic AI Different from Traditional AI?
+Traditional AI is the industry term for AI systems that aren’t generative, and thus not agentic. These rule- and logic-based systems take in data, process it, and produce more data as output. Take the example of fraud detection. In this case, the system would focus on a finance company’s customer records after being trained to identify anomalies and outliers across a range of categories, including type of purchase, geography, amount, and time of day. This is an input (transaction data)/output (determination of fraud status) situation. Despite the workflow decisions involved, the AI is ultimately performing a predefined task for which it has been specifically trained.
+
+Agentic AI is designed to be more autonomous, focusing on a goal, then deciding on the best way to get there. An agentic AI system has the independence to seek out the information it needs to determine how to achieve its objective, or even to connect with other available tools. Let’s go back to the example of fraud detection. Agentic AI can ask questions and uncover information that may provide more context and may therefore produce better results. So if a previous fraud detection model noticed an anomaly in purchase price and category that leads to a flag, an agentic AI system would be able to communicate with other systems to gather further details about the customer’s situation.
+
+In this case, requesting weather details could reveal that the customer’s region faced a massive, sudden storm with widespread reports of disaster conditions. In addition, the rash of sudden purchases came from hardware and grocery stores, which could indicate shopping for emergency supplies. Despite the out-of-character behavior, the agent could apply this knowledge and send contextual notes when reporting the flag so a human can make the final call. Because of agentic AI’s ability to make decisions, the supervisor has much more information to render a final judgment without needing to do that legwork.
+
+What’s the Difference Between Agentic AI and Generative AI?
+Both agentic AI and generative AI are powerful systems, and they each serve specific and unique purposes. Agentic AI focuses on decision-making and actions, while generative AI focuses on content generation. While GenAI has grown in power and capability in recent years—and the output itself has improved in accuracy and quality—it’s still a data in/data out workflow.
+
+In other words, GenAI still requires a prompt.
+
+Take the example of a large language model for researching a technical report. The researcher will offer a variety of prompts and get detailed output. The researcher may also ask follow-up questions based on the output or change the context of the query to provide a different approach or perspective. The researcher can then combine this information and glean what’s most appropriate for the report.
+
+With agentic AI, much of this process theoretically could be streamlined. Instead of asking a series of queries and considering where information gaps lie, the researcher provides the agentic AI system with a goal—the more specific and detailed, the better. Within this goal, the agentic AI system can then communicate with an LLM for a generated output. Knowing what the intended goal is, the agentic AI system can then take the information provided and continue refining until the output is satisfactory. In addition, the agentic AI system can communicate with other outside sources and AI models, opening a path of original research that can be applied to the output before providing a final result to the user.
+
+For a real-world analogy, GenAI is akin to having a toolkit to DIY fix a leaky sink. An AI agent is more like bringing in a plumber to fix the leak and explore what, if any, related issues may have caused the issue. And an agentic AI system is more like a general contractor, who can direct the plumber while also coordinating with an electrician and mold inspector to investigate damage related to the leak.
+
+Real-World Use Cases of Agentic AI
+Agentic AI has the potential to accelerate operations and solve problems across a spectrum of use cases: for enterprises, governments, personal applications, and more. The following showcase a few of the ways agentic AI can integrate into daily life.
+
+Healthcare profiles: Patient data can come from many sources, including wearable devices, blood results, and vitals from a physical. When taken together, that data might show a pattern indicative of an emerging condition. However, coming to that conclusion requires broader institutional knowledge combined with the ability to access and assess that data. Agentic AI can quickly process all incoming data for a specific patient to see emerging signs of issues. In addition, the agent has the autonomy to grab additional data as needed to identify and produce a report for the overseeing physician.
+Insurance claims: Insurance claims deal with many moving parts, often processing information from multiple parties. Agentic AI systems can expedite this process by identifying critical and relevant data from submitted forms and details to cross-reference and verify information. At the same time, the system can manage the workflow process and ping stakeholders when they have outstanding action requests.
+Supply chain management: Many elements of a typical supply chain—from forecasting to inventory management—can benefit from agentic AI. One specific example is transportation and route management. In this case, standard logistics data comes from the shipment’s tracking system. However, an AI agent can interface with other systems to consider route optimization. Weather, traffic, and even factors such as political stability and national holidays can all potentially be factored in, with agent-generated adjustments to optimize delivery routes.
+Traffic management: Governments could integrate agentic AI into traffic control systems to synthesize a variety of incoming data. Real-time traffic data from cameras and sensors, weather and construction data, and predictive analytics using historical patterns can all be processed and analyzed by an overseeing agentic AI to adjust traffic light timing to help reduce congestion and ease driver frustration.
+Agentic AI Benefits
+Agentic AI represents an upgrade to automation and process improvement, potentially leading to numerous benefits, especially when built on a solid foundation of workload and data management and application-specific agent systems.
+
+The following are some of the most common benefits that enterprises enjoy when they successfully implement agentic AI.
+
+Always-on operations: Agentic AI goes beyond nonagentic AI’s need for input upon finishing a task and instead works toward a goal. That decision-making autonomy means it can contribute to always-on operations, whether for data processing, research gathering, responding to customer requests and questions, or other functions.
+Cost reduction: Agentic AI systems can be fast, accurate, and always working, and that can lead to cost efficiencies. The source of savings will vary by industry, but companies commonly benefit from running analysis faster and at larger scale, which enables them to make decisions that can help them improve processes or hit milestones faster.
+Increased productivity: When an agentic AI system is directed toward a goal, such as classifying financial transactions, making general ledger entries, or helping customers, the AI can make decisions about gathering additional information, running a tangential analysis, or other related tasks. Agentic AI systems can gather information quickly while also enabling a range of parallel processes, all with minimal human intervention.
+New perspectives: Agentic AI is designed to fulfill a goal with the autonomy to make decisions on how it achieves its objective. Tangents and additional data gathering/processing are all within the scope of possibilities for an agent, and that can open the door to new, unexpected insights.
+Agentic AI Challenges
+As AI begins to present more human-like interactions, challenges become a combination of technical issues, such as handling the required processing, and establishing mechanisms for trust, control, and alignment with the business’s values and intentions. The more autonomy agentic AI has to set goals, plan actions, and interact with people, the more organizations may want to consider developing methods for monitoring and intervention—without stifling the potential for innovation and problem-solving.
+
+Here are four specific issues to watch for.
+
+Accuracy: Agentic systems generally improve on human-level accuracy. However, as always, bad data can lead to undesirable outcomes, including inaccurate outputs or unwanted actions. Just like a new employee, businesses may wish to monitor newly deployed agentic systems until results are consistently correct. And, just like a new employee, trust should be earned. With that in mind, consider that the early tasks handled by agentic AI systems should be low risk and easily fixable.
+Data and workload management: Ultimately, any AI system is an extension of the enterprise’s data and management of the necessary compute and network workloads and resources used for a task. Thus, IT teams may want to determine if their local and cloud infrastructure, databases, and other resources are efficient and optimized before embarking on agent integration.
+Data privacy: The autonomy of agentic AI means it can request access to external systems and data. As agents process heavy volumes with speed, the potential for encountering sensitive information grows. Addressing privacy and regulatory compliance, and accessible information on actions and accessed data can let agentic AI function with less risk of compromising sensitive data.
+Transparency: Agents are the basis of agentic AI, and they should be developed with the means to explain decisions and conclusions. In addition, consider that key elements, such as the agent’s logic and evaluation methods, should be made accessible so that they can be confirmed to be well founded or corrected if they aren’t.
+How to Get Started with Agentic AI
+8 Steps for Implementing Agentic AI
+Agentic AI projects are typically unique to organizations with parameters based on available resources, team goals, and other variables. However, the following broad steps outline how most teams get started with agentic AI projects.
+
+1. Define objectives
+
+Agentic AI systems have autonomy and goal-setting capabilities, where they plan and execute multistep tasks toward an outcome with minimal human intervention. This is different from nonagentic and task-focused AI systems, which may have an objective of producing a specific, accurate output—say, an image generated by a query or a movie someone will enjoy. Until the desired objective is defined, teams can’t focus on building a system based on available resources. Objectives can also inform what prebuilt system to start with.
+
+2. Architect for robustness and reliability
+
+Set appropriate performance benchmarks and metrics spanning the system’s lifecycle, from training and implementation to active agentic AI. Security, compliance, and quality reviews are key factors and should integrate as many perspectives as possible. Finally, even if a project is hitting or even exceeding KPIs, teams still will want to commit to continuous monitoring and improvements to keep up with what will hopefully be growing demand. Think about potential points of failure, and develop contingency plans.
+
+3. Incorporate safety layers
+
+Because agentic AI is given some level of autonomy to make decisions, consider layers of safety for your project. These might include technical guardrails that help prevent misuse, security and data privacy layers to help protect data as the AI interfaces with other systems, and human oversight steps in project workflows.
+
+4. Limit scope and autonomy
+
+Agentic AI projects require parameters to help prevent AI decisions from exceeding scope or autonomy boundaries. Examples of parameters include decision thresholds that trigger human intervention, constraints on certain actions and decisions, restrictions for accessing certain types of materials, and incorporation of feedback loops to help ensure the agent’s results continue to improve.
+
+5. Focus on explainability and transparency
+
+Because agentic AI acts autonomously, conclusions and actions should be explainable so that when teams examine decisions, the hows and whys are clear. Explainability both supports model improvement and helps troubleshooting when goals aren’t optimally met.
+
+6. Establish clear controls, and prioritize privacy, security, and compliance
+
+Your organization likely has established rules to address privacy, security, and compliance. Consider whether those guidelines are applicable to new systems, such as agentic AI. Every time an agentic system makes a decision, connects with other systems, processes inputs, or generates outputs, that represents a potential risk, so establishing controls are important considerations.
+
+7. Continuous monitoring, evaluation, and improvement
+
+Just as with any new technology, agentic AI systems should be monitored. Areas to watch include performance—how available the system is and how quickly it completes its assigned tasks—and the accuracy of the outputs or actions. Also consider behavior monitoring. By logging actions and decisions over time, you can identify unusual or unexpected behavior patterns or changes that may indicate data drift or model degradation. The depth and frequency of monitoring will depend on the criticality of the agentic AI and how its failure might affect the organization.
+
+8. Encourage collaboration and multidisciplinary input
+
+A broad and diverse range of perspectives allow teams to gain insights into results and training opportunities that may otherwise be overlooked. By analyzing the model from a range of perspectives, teams can have a more well-rounded and optimized agentic AI system that helps to reduce both blind spots and potential risks.
+
+All the details above regarding monitoring, analysis, and transparency flow up to clear handoffs that delineate responsibilities between the AI agents comprising the agentic AI system and human teams.
+
+Future of Agentic AI
+Architects are working to make agentic AI systems more robust, reliable, and capable of operating effectively and safely in complex and dynamic environments. The field is rapidly evolving, and ongoing research into modular design, the benefits of the cloud, advanced learning mechanisms, and other areas are expected to continue to contribute to building more dependable autonomous systems.
+
+The following are some of the areas to watch.
+
+Accuracy: As agentic AI systems are refined, teams will look at new ways to improve accuracy via learning processes that can incorporate feedback from successes and failures to improve policies and decision-making. Watch for techniques such as reinforcement learning and better filtering and validation techniques.
+Integration: Right now, agentic AI is just becoming integrated into enterprise systems, including business applications. Over the next several years, the use of agentic AI is expected to mature to become more adaptable and customizable, with easier entry points across more functions.
+Energy efficiency: Power consumption is one of AI’s greatest challenges. Agentic AI, with its inherently more complex processes and self-directed research, is projected to use more resources than previous AI use cases. Finding ways to reduce the energy footprint of models may be key to the long-term success of agentic AI.
+Autonomy: Right now, agentic AI systems generally work with human oversight—however, this isn’t a requirement. It’s because the technology hasn’t earned fully autonomous trust. The goal of agentic AI technology is to find a proper balance of autonomy, functionality, and control.
+Get Started with OCI Generative AI Agents
+
+Enterprises can easily and quickly bring agentic AI into the fold with Oracle Cloud Infrastructure (OCI) Generative AI Agents. With the processing power and scalability of OCI, Oracle’s agentic AI platform combines LLM and retrieval-augmented generation capabilities with an enterprise’s data, enabling powerful insights discovered autonomously and guided by natural-language interfaces. Automation tools for agentic AI systems, such as Oracle Integration, can help organizations simplify service orchestration, including for robotic process automation, or RPA, robots with unified observability and effective human oversight.
+
+
+GenAI is getting even more adept at bringing together your structured and unstructured data. The potential result: Invaluable insights and innovative solutions to give you a jump on the competition. Is your data infrastructure ready to capitalize?
+
+Agentic AI FAQs
+What’s the difference between RPA and agentic AI?
+
+RPA refers to robotic process automation and focuses on specific tasks rather than decisions. For example, RPA excels at automating repetitive tasks, such as updating data formats or transferring data from one application to another. Agentic AI systems collaborate to set, refine, and achieve goals; in this case, an AI agent can determine a data set needs to be accessed in a separate format, and it will employ RPA to create a copy of the data set before updating the format.
+
+What’s the most used generative AI?
+
+ChatGPT remains the most well-known generative AI tool. Other popular GenAI tools that work in other mediums include Midjourney for image creation and Sora for video generation.
+
+What’s an agentic AI framework?
+
+From a high-level perspective, agentic frameworks refer to the software and systems used for developing agentic AI systems. Agentic frameworks are often built on existing components to provide the foundation for refinement and project-oriented specificity for goals and capabilities. Agentic frameworks typically include base modules for language interpretation, tool integration, resource management, sentiment analysis, vector search, and data preprocessing.

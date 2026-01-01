@@ -1,0 +1,1056 @@
+NVIDIA Agent Intelligence Toolkit Overview
+NVIDIA Agent Intelligence (AIQ) toolkit is a flexible, lightweight, and unifying library that allows you to easily connect existing enterprise agents to data sources and tools across any framework.
+
+Note
+
+Agent Intelligence toolkit was previously known as AgentIQ, however the API has not changed and is fully compatible with previous releases. Users should update their dependencies to depend on aiqtoolkit instead of agentiq. The transitional package named agentiq is available for backwards compatibility, but will be removed in the future.
+
+Key Features
+Framework Agnostic: AIQ toolkit works side-by-side and around existing agentic frameworks, such as LangChain, LlamaIndex, CrewAI, and Microsoft Semantic Kernel, as well as customer enterprise frameworks and simple Python agents. This allows you to use your current technology stack without replatforming. AIQ toolkit complements any existing agentic framework or memory tool you’re using and isn’t tied to any specific agentic framework, long-term memory, or data source.
+
+Reusability: Every agent, tool, and agentic workflow in this library exists as a function call that works together in complex software applications. The composability between these agents, tools, and workflows allows you to build once and reuse in different scenarios.
+
+Rapid Development: Start with a pre-built agent, tool, or workflow, and customize it to your needs. This allows you and your development teams to move quickly if you’re already developing with agents.
+
+Profiling: Use the profiler to profile entire workflows down to the tool and agent level, track input/output tokens and timings, and identify bottlenecks.
+
+Observability: Monitor and debug your workflows with any OpenTelemetry-compatible observability tool, with examples using Phoenix and W&B Weave.
+
+Evaluation System: Validate and maintain accuracy of agentic workflows with built-in evaluation tools.
+
+User Interface: Use the AIQ toolkit UI chat interface to interact with your agents, visualize output, and debug workflows.
+
+Full MCP Support: Compatible with Model Context Protocol (MCP). You can use AIQ toolkit as an MCP client to connect to and use tools served by remote MCP servers. You can also use AIQ toolkit as an MCP server to publish tools via MCP.
+
+FAQ
+For frequently asked questions, refer to FAQ.
+
+Framework Integrations
+To keep the library lightweight, many of the first party plugins supported by AIQ toolkit are located in separate distribution packages. For example, the aiqtoolkit-langchain distribution contains all the LangChain specific plugins and the aiqtoolkit-mem0ai distribution contains the Mem0 specific plugins.
+
+To install these first-party plugin libraries, you can use the full distribution name (for example, aiqtoolkit-langchain) or use the aiqtoolkit[langchain] extra distribution. A full list of the supported extras is listed below:
+
+aiqtoolkit[agno] or aiqtoolkit-agno - Agno specific plugins
+
+aiqtoolkit[crewai] or aiqtoolkit-crewai - CrewAI specific plugins
+
+aiqtoolkit[langchain] or aiqtoolkit-langchain - LangChain specific plugins
+
+aiqtoolkit[llama-index] or aiqtoolkit-llama-index - LlamaIndex specific plugins
+
+aiqtoolkit[mem0ai] or aiqtoolkit-mem0ai - Mem0 specific plugins
+
+aiqtoolkit[semantic-kernel] or aiqtoolkit-semantic-kernel - Microsoft Semantic Kernel specific plugins
+
+aiqtoolkit[test] or aiqtoolkit-test - AIQ toolkit Test specific plugins
+
+aiqtoolkit[weave] or aiqtoolkit-weave - Weights & Biases Weave specific plugins
+
+aiqtoolkit[zep-cloud] or aiqtoolkit-zep-cloud - Zep specific plugins
+
+Prerequisites
+NVIDIA Agent Intelligence (AIQ) toolkit is a Python library that doesn’t require a GPU to run the workflow by default. You can deploy the core workflows using one of the following:
+
+Ubuntu or other Linux distributions, including WSL, in a Python virtual environment.
+
+Before you begin using AIQ toolkit, ensure that you meet the following software prerequisites.
+
+Install Git
+
+Install Git Large File Storage (LFS)
+
+Install uv
+
+Install From Source
+Clone the AIQ toolkit repository to your local machine.
+
+git clone git@github.com:NVIDIA/AIQToolkit.git aiqtoolkit
+cd aiqtoolkit
+Initialize, fetch, and update submodules in the Git repository.
+
+git submodule update --init --recursive
+Fetch the data sets by downloading the LFS files.
+
+git lfs install
+git lfs fetch
+git lfs pull
+Create a Python environment.
+
+uv venv --seed .venv
+source .venv/bin/activate
+Install the AIQ toolkit library. To install the AIQ toolkit library along with all of the optional dependencies. Including developer tools (--all-groups) and all of the dependencies needed for profiling and plugins (--all-extras) in the source repository, run the following:
+
+uv sync --all-groups --all-extras
+Alternatively to install just the core AIQ toolkit without any plugins, run the following:
+
+uv sync
+At this point individual plugins, which are located under the packages directory, can be installed with the following command uv pip install -e '.[<plugin_name>]'. For example, to install the langchain plugin, run the following:
+
+uv pip install -e '.[langchain]'
+Note
+
+Many of the example workflows require plugins, and following the documented steps in one of these examples will in turn install the necessary plugins. For example following the steps in the examples/simple/README.md guide will install the aiqtoolkit-langchain plugin if you haven’t already done so.
+
+In addition to plugins, there are optional dependencies needed for profiling. To install these dependencies, run the following:
+
+uv pip install -e .[profiling]
+Verify that you’ve installed the AIQ toolkit library.
+
+aiq --help
+aiq --version
+If the installation succeeded, the aiq command will log the help message and its current version.
+
+Obtaining API Keys
+Depending on which workflows you are running, you may need to obtain API keys from the respective services. Most AIQ toolkit workflows require an NVIDIA API key defined with the NVIDIA_API_KEY environment variable. An API key can be obtained by visiting build.nvidia.com and creating an account.
+
+Running Example Workflows
+Before running any of the AIQ toolkit examples, set your NVIDIA API key as an environment variable to access NVIDIA AI services.
+
+export NVIDIA_API_KEY=<YOUR_API_KEY>
+Note
+
+Replace <YOUR_API_KEY> with your actual NVIDIA API key.
+
+Running the Simple Workflow
+Install the aiq_simple Workflow
+
+uv pip install -e examples/simple
+Run the aiq_simple Workflow
+
+aiq run --config_file=examples/simple/configs/config.yml --input "What is LangSmith"
+Run and evaluate the aiq_simple Workflow
+
+The eval_config.yml YAML is a super-set of the config.yml containing additional fields for evaluation. To evaluate the aiq_simple workflow, run the following command:
+
+aiq eval --config_file=examples/simple/configs/eval_config.yml
+AIQ Toolkit Packages
+Once an AIQ toolkit workflow is ready for deployment to production, the deployed workflow will need to declare a dependency on the aiqtoolkit package, along with the needed plugins. When declaring a dependency on AIQ toolkit it is recommended to use the first two digits of the version number. For example if the version is 1.0.0 then the dependency would be 1.0.
+
+For more information on the available plugins, refer to Framework Integrations.
+
+Example dependency for AIQ toolkit using the langchain plugin for projects using a pyproject.toml file:
+
+dependencies = [
+"aiqtoolkit[langchain]~=1.0",
+# Add any additional dependencies your workflow needs
+]
+Alternately for projects using a requirements.txt file:
+
+aiqtoolkit[langchain]==1.0.*
+Next Steps
+AIQ toolkit contains several examples which demonstrate how AIQ toolkit can be used to build custom workflows and tools. These examples are located in the examples directory of the AIQ toolkit repository.
+
+Refer to the AIQ toolkit tutorials for more detailed information on how to use AIQ toolkit.
+
+Sharing NVIDIA Agent Intelligence Toolkit Components
+Every AIQ toolkit component is packaged inside of an AIQ toolkit plugin and is designed to be sharable with the community of AIQ toolkit developers. Functions are by far the most common AIQ toolkit component type. In fact, AIQ components include all pieces that leverage an AIQ toolkit registration decorator (e.g. register_function, register_llm_client, register_evaluator, etc.). This guide will discuss the requirements for developing registered components that can be shared, discovered, and integrated leveraged with any AIQ toolkit application.
+
+Enabling Local and Remote Discovery
+To begin building a sharable component, do the following:
+
+Define a configuration object as described in Customizing the Configuration Object
+
+Define a function as described in Creating a New Tool and Workflow.
+
+This section emphasizes the details of configuration objects that facilitate component discovery.
+
+After installing the AIQ toolkit library, and potentially other AIQ toolkit plugin packages, a developer may want to know what components are available for workflow development or evaluation. A great tool for this is the aiq info components CLI utility described in Components Information. This command produces a table containing information dynamically accumulated from each AIQ toolkit component. The details column is sourced from each configuration object’s docstring and field descriptions. Behind the scenes, these data (and others) are aggregated into a component’s DiscoveryMetadata to enable local and remote discovery. This object includes the following key fields:
+
+package: The name of the package containing the AIQ toolkit component.
+
+version: The version number of the package containing the AIQ toolkit component.
+
+component_type: The type of AIQ toolkit component this metadata represents (e.g. function, llm, embedder, etc.)
+
+component_name: The registered name of the AIQ toolkit component to be used in the _type field when configuring a workflow configuration object.
+
+description: Description of the AIQ toolkit component pulled from its config objects docstrings and field metadata.
+
+developer_notes: Other notes to a developers to aid in the use of the component.
+
+For this feature to provide useful information, there are a few hygiene requirements placed on AIQ toolkit component configuration object implementations.
+
+Specify a name: This will be pulled into the component_name column and will be used in the _type field of a workflow’s configuration object.
+
+Include a Docstring: This information is pulled into the description column to describe the functionality of the component.
+
+Annotate fields with pydantic.Field: This information is pulled into the description and provides developers with documentation on each configurable field, including dtype, field description, and any default values.
+
+The code sample below provides a notional registered function’s configuration object that satisfies with these requirements.
+
+from pydantic import Field
+
+from aiq.data_models.function import FunctionBaseConfig
+
+class MyFnConfig(FunctionBaseConfig, name="my_fn_name"):  # includes a name
+    """The docstring should provide a description of the components utility."""  # includes a docstring
+
+    a: str = Field(default="my_default_value", description="Notational description of what this field represents")  # includes a field description
+By incorporating these elements, the description field in the aiq info components provides the following information:
+
+                                                                                        AIQ toolkit Search Results
+┏━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ package                ┃ version                ┃ component_type ┃ component_name          ┃ description                                                                                        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ aiq_notional_pkg_name  │ 0.1.1                  │ function       │ my_fn_name              │ The docstring should provide a description of the components utility.                              │
+│                        │                        │                │                         │                                                                                                    │
+│                        │                        │                │                         │   Args:                                                                                            │
+│                        │                        │                │                         │     _type (str): The type of the object.                                                           │
+│                        │                        │                │                         │     a (str): Notational description of what this field represents. Defaults to "my_default_value". │
+└────────────────────────┴────────────────────────┴────────────────┴─────────────────────────┴────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Without satisfying these requirements, a developer would need to inspect the each component’s source code to identify when it should be used and its configuration options. This significantly reduces developer velocity.
+
+Package Distribution
+After completing AIQ toolkit development of component plugin, the next step is to create a package that will allow the plugin to be installed and registered with the AIQ toolkit environment. Because each AIQ toolkit plugin package is a pip installable package, this process it is straightforward, and follows standard Python pyproject.toml packaging steps. If you are unfamiliar with this process, consider reviewing the Python Packaging User Guide.
+
+When building the pyproject.toml file, there are two critical sections:
+
+Dependencies: Ensure you include the necessary AIQ toolkit dependencies. An example is provided below:
+
+dependencies = [
+"aiq[langchain]",
+]
+Entrypoints: Provide the path to your plugins so they are registered with AIQ toolkit when installed. An example is provided below:
+
+[project.entry-points.'aiq.components']
+aiq_notional_pkg_name = "aiq_notional_pkg_name.register"
+Building a Wheel Package
+After completing development and creating a pyproject.toml file that includes the necessary sections, the simplest distribution path is to generate a Python wheel. This wheel can be distributed manually or published to a package repository such as PyPI. The standard process for generating a Python wheel can be followed as outlined in the [Packaging Python Projects] (https://packaging.python.org/en/latest/tutorials/packaging-projects/) guide.
+
+While simple, this process does not take advantage of the DiscoveryMetadata to enable remote component discovery.
+
+Publish to a Remote Registry
+Alternatively, AIQ toolkit provides an extensible interface that allows developers to publish packages and their DiscoveryMetadata arbitrary remote registries. The benefit of this approach comes from improved utilization of captured DiscoveryMetadata to improve discovery of useful components.
+
+By including this additional metadata, registry owners are empowered to extend their search interface and accelerate the process of discovering useful components and development of AIQ toolkit based applications.
+
+Share Source Code
+The last option for distribution is through source code. Since each AIQ toolkit package is a pip installable Python package, each can be installed directly from source. Examples of this installation path are provided in the Get Started guide.
+
+Summary
+There are several methods for component distribution, each of which depends on constructing a pip installable Python packages that point to the hygienic implementations of component plugins. This lightweight, but extensible approach provides a straightforward path for distributing AIQ toolkit agentic applications and their components to the developer community.
+
+Profiling and Performance Monitoring of NVIDIA Agent Intelligence Toolkit Workflows
+The AIQ toolkit Profiler Module provides profiling and forecasting capabilities for AIQ toolkit workflows. The profiler instruments the workflow execution by:
+
+Collecting usage statistics in real time (via callbacks).
+
+Recording the usage statistics on a per-invocation basis (e.g., tokens used, time between calls, LLM calls).
+
+Storing the data for offline analysis.
+
+Forecasting usage metrics using time-series style models (linear, random forest, etc.).
+
+Computing workflow specific metrics for performance analysis (e.g., latency, throughput, etc.).
+
+Analyzing workflow performance measures such as bottlenecks, latency, and concurrency spikes.
+
+These functionalities will allow AIQ toolkit developers to dynamically stress test their workflows in pre-production phases to receive workflow-specific sizing guidance based on observed latency and throughput of their specific workflows At any or every stage in a workflow execution, the AIQ toolkit profiler generates predictions/forecasts about future token and tool usage. Client side forecasting allows for workflow-specific predictions which can be difficult, if not impossible, to achieve server side in order to facilitate inference planning. Will allow for features such as offline-replay or simulation of workflow runs without the need for deployed infrastructure such as tooling/vector DBs, etc. Will also allow for AIQ toolkit native observability and workflow fingerprinting.
+
+Prerequisites
+The AIQ toolkit profiler requires additional dependencies not installed by default.
+
+Install these dependencies by running the following command:
+
+uv pip install -e .[profiling]
+Current Profiler Architecture
+The AIQ toolkit Profiler can be broken into the following components:
+
+Profiler Decorators and Callbacks
+profiler/decorators.py defines decorators that can wrap each workflow or LLM framework context manager to inject usage-collection callbacks.
+
+profiler/callbacks directory implements callback handlers. These handlers track usage statistics (tokens, time, inputs/outputs) and push them to the AIQ toolkit usage stats queue. We currently support callback handlers for LangChain, LLama Index, CrewAI, and Semantic Kernel.
+
+Profiler Runner
+profiler/profile_runner.py is the main orchestration class. It collects workflow run statistics from the AIQ toolkit Eval module, computed workflow-specific metrics, and optionally forecasts usage metrics using the AIQ toolkit Profiler module.
+
+Under profiler/forecasting, the code trains scikit-learn style models on the usage data. model_trainer.py can train a LinearModel or a RandomForestModel on the aggregated usage data (the raw statistics collected). base_model.py, linear_model.py, and random_forest_regressor.py define the abstract base and specific scikit-learn wrappers.
+
+Under profiler/inference_optimization we have several metrics that can be computed out evaluation traces of your workflow including workflow latency, commonly used prompt prefixes for caching, identifying workflow bottlenecks, and concurrency analysis.
+
+CLI Integrations
+Native integrations with aiq eval to allow for running of the profiler through a unified evaluation interface. Configurability is exposed through a workflow YAML configuration file consistent with evaluation configurations.
+
+Using the Profiler
+Step 1: Enabling Instrumentation on a Workflow [Optional]
+NOTE: If you don’t set it, AIQ toolkit will inspect your code to infer frameworks used. We recommend you set it explicitly. To enable profiling on a workflow, you need to wrap the workflow with the profiler decorators. The decorators can be applied to any workflow using the framework_wrappers argument of the register_function decorator. Simply specify which AIQ toolkit supported frameworks you will be using anywhere in your workflow (including tools) upon registration and AIQ toolkit will automatically apply the appropriate profiling decorators at build time. For example:
+
+@register_function(config_type=WebQueryToolConfig, framework_wrappers=[LLMFrameworkEnum.LANGCHAIN])
+async def webquery_tool(config: WebQueryToolConfig, builder: Builder):
+Once workflows are instrumented, the profiler will collect usage statistics in real time and store them for offline analysis for any LLM invocations or tool calls your workflow makes during execution. Runtime telemetry is stored in a intermediate_steps_stream context variable during runtime. AIQ toolkit has a subscriber that will read intermediate steps through eval.
+
+Even if a function isn’t one of the built-in AIQ toolkit “Functions”, you can still profile it with our simple decorator. The @track_function decorator helps you capture details such as when a function starts and ends, its input arguments, and its output—even if the function is asynchronous, a generator, or a class method.
+
+How It Works
+The decorator automatically logs key events in three stages:
+
+SPAN_START: Logged when the function begins executing. It records the serialized inputs.
+
+SPAN_CHUNK: For generator functions, each yielded value is captured as it’s produced.
+
+SPAN_END: Logged when the function finishes executing. It records the serialized output.
+
+It supports all kinds of functions:
+
+Synchronous functions & methods
+
+Asynchronous functions
+
+Generators (both sync and async)
+
+Key Benefits
+Broad Compatibility: Use this decorator on any Python function, regardless of its type.
+
+Simple Metadata: Optionally pass a dictionary of metadata to add extra context about the function call.
+
+Automatic Data Serialization: The decorator converts input arguments and outputs into a JSON-friendly format (with special handling for Pydantic models), making the data easier to analyze.
+
+Reactive Event Streaming: All profiling events are pushed to the AIQ toolkit intermediate step stream, so you can subscribe and monitor events in real time.
+
+How to Use
+Just decorate your custom function with @track_function and provide any optional metadata if needed:
+
+from aiq.profiler.decorators.function_tracking import track_function
+
+@track_function(metadata={"action": "compute", "source": "custom_function"})
+def my_custom_function(a, b):
+    # Your function logic here
+    return a + b
+Step 2: Configuring the Profiler with Eval
+The profiler can be run through the aiq eval command. The profiler can be configured through the profiler section of the workflow configuration file. The following is an example eval configuration section from the simple workflow which shows how to enable the profiler:
+
+eval:
+  general:
+    output_dir: ./.tmp/aiq/examples/simple/
+    dataset:
+      _type: json
+      file_path: examples/simple/data/langsmith.json
+    profiler:
+      # Compute inter query token uniqueness
+      token_uniqueness_forecast: true
+      # Compute expected workflow runtime
+      workflow_runtime_forecast: true
+      # Compute inference optimization metrics
+      compute_llm_metrics: true
+      # Avoid dumping large text into the output CSV (helpful to not break structure)
+      csv_exclude_io_text: true
+      # Idenitfy common prompt prefixes
+      prompt_caching_prefixes:
+        enable: true
+        min_frequency: 0.1
+      bottleneck_analysis:
+        # Can also be simple_stack
+        enable_nested_stack: true
+      concurrency_spike_analysis:
+        enable: true
+        spike_threshold: 7
+
+  evaluators:
+    rag_accuracy:
+      _type: ragas
+      metric: AnswerAccuracy
+      llm_name: nim_rag_eval_llm
+    rag_groundedness:
+      _type: ragas
+      metric: ResponseGroundedness
+      llm_name: nim_rag_eval_llm
+    rag_relevance:
+      _type: ragas
+      metric: ContextRelevance
+      llm_name: nim_rag_eval_llm
+    trajectory_accuracy:
+      _type: trajectory
+      llm_name: nim_trajectory_eval_llm
+Please also note the output_dir parameter which specifies the directory where the profiler output will be stored. Let us explore the profiler configuration options:
+
+token_uniqueness_forecast: Compute the inter-query token uniqueness forecast. This computes the expected number of unique tokens in the next query based on the tokens used in the previous queries.
+
+workflow_runtime_forecast: Compute the expected workflow runtime forecast. This computes the expected runtime of the workflow based on the runtime of the previous queries.
+
+compute_llm_metrics: Compute inference optimization metrics. This computes workflow-specific metrics for performance analysis (e.g., latency, throughput, etc.).
+
+csv_exclude_io_text: Avoid dumping large text into the output CSV. This is helpful to not break the structure of the CSV output.
+
+prompt_caching_prefixes: Identify common prompt prefixes. This is helpful for identifying if you have commonly repeated prompts that can be pre-populated in KV caches
+
+bottleneck_analysis: Analyze workflow performance measures such as bottlenecks, latency, and concurrency spikes. This can be set to simple_stack for a simpler analysis. Nested stack will provide a more detailed analysis identifying nested bottlenecks like tool calls inside other tools calls.
+
+concurrency_spike_analysis: Analyze concurrency spikes. This will identify if there are any spikes in the number of concurrent tool calls. At a spike_threshold of 7, the profiler will identify any spikes where the number of concurrent running functions is greater than or equal to 7. Those are surfaced to the user in a dedicated section of the workflow profiling report.
+
+Step 3: Running the Profiler
+To run the profiler, simply run the aiq eval command with the workflow configuration file. The profiler will collect usage statistics and store them in the output directory specified in the configuration file.
+
+aiq eval --config_file examples/simple/configs/eval_config.yml
+This will, based on the above configuration, produce the following files in the output_dir specified in the configuration file:
+
+all_requests_profiler_traces.json : This file contains the raw usage statistics collected by the profiler. Includes raw traces of LLM and tool input, runtimes, and other metadata.
+
+inference_optimization.json: This file contains the computed workflow-specific metrics. This includes 90%, 95%, and 99% confidence intervals for latency, throughput, and workflow runtime.
+
+standardized_data_all.csv: This file contains the standardized usage data including prompt tokens, completion tokens, LLM input, framework, and other metadata.
+
+You’ll also find a JSON file and text report of any advanced or experimental techniques you ran including concurrency analysis, bottleneck analysis, or PrefixSpan.
+
+Walkthrough of Profiling a Workflow
+In this guide, we will walk you through an end-to-end example of how to profile an AIQ toolkit workflow using the AIQ toolkit profiler, which is part of the library’s evaluation harness. We will begin by creating a workflow to profile, explore some of the configuration options of the profiler, and then perform an in-depth analysis of the profiling results.
+
+Defining a Workflow
+For this guide, we will use a simple, but useful, workflow that analyzes the body of a given email to determine if it is a Phishing email. We will define a single tool that takes an email body as input and returns a response on whether the email is a Phishing email or not. We will then add that tool as the only tool available to the tool_calling agent pre-built in the AIQ toolkit library. Below is the implementation of the phishing tool. The source code for this example can be found at examples/email_phishing_analyzer/.
+
+Configuring the Workflow
+The configuration file for the workflow is as follows. Here, pay close attention to how the profiler and eval sections are configured.
+
+## CONFIGURATION OPTIONS OMITTED HERE FOR BREVITY
+
+functions:
+  email_phishing_analyzer:
+    _type: email_phishing_analyzer
+    llm: nim_llm
+    prompt: |
+      Examine the following email content and determine if it exhibits signs of malicious intent. Look for any
+        suspicious signals that may indicate phishing, such as requests for personal information or suspicious tone.
+
+      Email content:
+      {body}
+
+      Return your findings as a JSON object with these fields:
+
+      - is_likely_phishing: (boolean) true if phishing is suspected
+      - explanation: (string) detailed explanation of your reasoning
+
+
+## OTHER CONFIGURATION OPTIONS OMITTED FOR BREVITY
+
+eval:
+  general:
+    output_dir: ./.tmp/eval/examples/email_phishing_analyzer/test_models/llama-3.1-8b-instruct
+    verbose: true
+    dataset:
+        _type: csv
+        file_path: examples/email_phishing_analyzer/data/smaller_test.csv
+        id_key: "subject"
+        structure:
+          question_key: body
+          answer_key: label
+
+    profiler:
+        token_uniqueness_forecast: true
+        workflow_runtime_forecast: true
+        compute_llm_metrics: true
+        csv_exclude_io_text: true
+        prompt_caching_prefixes:
+          enable: true
+          min_frequency: 0.1
+        bottleneck_analysis:
+          # Can also be simple_stack
+          enable_nested_stack: true
+        concurrency_spike_analysis:
+          enable: true
+          spike_threshold: 7
+Diving deeper into the eval section, we see that the profiler section is configured with the following options:
+
+token_uniqueness_forecast: Compute inter query token uniqueness
+
+workflow_runtime_forecast: Compute expected workflow runtime
+
+compute_llm_metrics: Compute inference optimization metrics
+
+csv_exclude_io_text: Avoid dumping large text into the output CSV (helpful to not break structure)
+
+prompt_caching_prefixes: Identify common prompt prefixes
+
+bottleneck_analysis: Enable bottleneck analysis
+
+concurrency_spike_analysis: Enable concurrency spike analysis. Set the spike_threshold to 7, meaning that any concurrency spike above 7 will be raised to the user specifically.
+
+We also we see the evaluators section, which includes the following metrics:
+
+rag_accuracy: Evaluates the accuracy of the answer generated by the workflow against the expected answer or ground truth.
+
+rag_groundedness: Evaluates the groundedness of the response generated by the workflow based on the context retrieved by the workflow.
+
+rag_relevance: Evaluates the relevance of the context retrieved by the workflow against the question.
+
+Running the Profiler
+To run the profiler, simply run the aiq eval command with the workflow configuration file. The profiler will collect usage statistics and store them in the output directory specified in the configuration file.
+
+aiq eval --config_file examples/email_phishing_analyzer/configs/<config_file>.yml
+Among other files, this will produce a standardized_results_all.csv file in the output_dir specified in the configuration file. This file will contain the profiling results of the workflow that we will use for the rest of the analysis.
+
+Analyzing the Profiling Results
+The remainder of this guide will demonstrate how to perform a simple analysis of the profiling results using the standardized_results_all.csv file to compare the performance of various LLMs and evaluate the workflow’s efficiency. Ultimately, we will use the collected telemetry data to identify which LLM we think is the best fit for our workflow.
+
+Particularly, we evaluate the following models:
+
+meta-llama-3.1-8b-instruct
+
+meta-llama-3.1-70b-instruct
+
+mixtral-8x22b-instruct
+
+phi-3-medium-4k-instruct
+
+phi-3-mini-4k-instruct
+
+We run evaluation of the workflow on a small dataset of emails and compare the performance of the LLMs based on the metrics provided by the profiler. Once we run aiq eval, we can analyze the standardized_results_all.csv file to compare the performance of the LLMs.
+
+Henceforth, we assume that you have run the aiq eval command and have the standardized_results_all.csv file in the output_dir specified in the configuration file. Please also take a moment to create a CSV file containing the concatenated results of the LLMs you wish to compare.
+
+Plotting Prompt vs Completion Tokens for LLMs
+One of the first things we can do is to plot the prompt vs completion tokens for each LLM. This will give us an idea of how the LLMs are performing in terms of token usage. We can use the standardized_results_all.csv file to plot this data.
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+df = pd.read_csv("standardized_results_all.csv")
+# Filter LLM_END events
+df_llm_end = df[df["event_type"] == "LLM_END"]
+
+# Plot scatter plot
+plt.figure(figsize=(10, 6))
+sns.scatterplot(
+    data=df_llm_end,
+    x="prompt_tokens",
+    y="completion_tokens",
+    hue="llm_name",
+    style="function_name",
+    s=100  # Marker size
+)
+
+# Customize the plot
+plt.xlabel("Prompt Tokens", fontsize=12)
+plt.ylabel("Completion Tokens", fontsize=12)
+plt.title("Prompt Tokens vs Completion Tokens by LLM and Function", fontsize=14)
+plt.legend(title="LLM / Function", bbox_to_anchor=(1.05, 1), loc="upper left")
+plt.grid(True)
+plt.show()
+The plot will show the prompt tokens on the x-axis and the completion tokens on the y-axis. Each point represents a completion event by an LLM for a given prompt. The color of the point represents the LLM used, and the style represents the function used. Below is an example of what the plot might look like:
+
+Prompt vs Completion Tokens
+
+We see from the image above that the meta-llama-3.1-8b-instruct LLM has the highest prompt token usage and takes many more turns than any other model, perhaps indicating that it fails at tool calling. We also note that none of the phi-3-* models succeed at any tool calling, as they have no completion tokens in the email_phishing_analyzer function. This could be due to the fact that the phi-3-* models are not well-suited for the task at hand.
+
+Analyzing Workflow Runtimes
+Another important metric to analyze is the workflow runtime. We can use the standardized_results_all.csv file to plot the workflow runtime for each LLM. This will give us an idea of how long each LLM takes to complete the workflow and compare if some LLMs are more efficient than others.
+
+df["event_timestamp"] = pd.to_numeric(df["event_timestamp"])
+
+# Filter only LLM_START and LLM_END events
+df_llm = df[df["event_type"].isin(["LLM_START", "LLM_END"])]
+
+# Group by example_number and llm_name to get first LLM_START and last LLM_END timestamps
+df_runtime = df_llm.groupby(["example_number", "llm_name"]).agg(
+    start_time=("event_timestamp", "min"),
+    end_time=("event_timestamp", "max")
+).reset_index()
+
+# Compute runtime
+df_runtime["runtime_seconds"] = df_runtime["end_time"] - df_runtime["start_time"]
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(
+    data=df_runtime,
+    x="llm_name",
+    y="runtime_seconds"
+)
+
+# Set log scale for y-axis
+plt.yscale("log")
+
+# Customize the plot
+plt.xlabel("LLM Model", fontsize=12)
+plt.ylabel("Runtime (log10 scale, seconds)", fontsize=12)
+plt.title("Example Runtime per LLM Model (Log Scale)", fontsize=14)
+plt.xticks(rotation=45)
+plt.grid(True, which="both", linestyle="--", linewidth=0.5)
+plt.show()
+We use the log scale for the y-axis to better visualize the runtime differences between the LLMs. The box plot will show the runtime of each LLM model for each example in the dataset. Below is an example of what the plot might look like: LLM Runtime
+
+From the image above, we see that the mixtral-8x22b-instruct LLM has the highest runtime, indicating that it takes the longest to complete the workflow. The phi-3-mini-4k-instruct LLM has the lowest runtime, ostensibly due to the fact that it does not call tools at all and is the smallest model. At the log scale, the mixtral-8x22b-instruct model take more than 10x longer than most other models.
+
+Analyzing Token Efficiency
+Let us collect one more piece of information from the standardized_results_all.csv file to compare the performance of the LLMs. We will look at the total prompt and completion tokens generated by each LLM to determine which LLM is the most efficient in terms of token usage.
+
+import numpy as np
+
+# Aggregate total prompt and completion tokens per example and LLM
+df_tokens = df_llm_end.groupby(["example_number", "llm_name"]).agg(
+    total_prompt_tokens=("prompt_tokens", "sum"),
+    total_completion_tokens=("completion_tokens", "sum")
+).reset_index()
+
+# Reshape data for plotting
+df_tokens_melted = df_tokens.melt(
+    id_vars=["example_number", "llm_name"],
+    value_vars=["total_prompt_tokens", "total_completion_tokens"],
+    var_name="Token Type",
+    value_name="Token Count"
+)
+
+plt.figure(figsize=(12, 6))
+sns.barplot(
+    data=df_tokens_melted,
+    x="llm_name",
+    y="Token Count",
+    hue="Token Type",
+    ci=None
+)
+
+# Set log scale for y-axis
+plt.yscale("log")
+
+# Customize the plot
+plt.xlabel("LLM Model", fontsize=12)
+plt.ylabel("Total Token Count per Example (log10 scale)", fontsize=12)
+plt.title("Total Prompt and Completion Tokens per Example by LLM Model (Log Scale)", fontsize=14)
+plt.xticks(rotation=45)
+plt.legend(title="Token Type")
+plt.grid(axis="y", linestyle="--", linewidth=0.5, which="both")
+plt.show()
+The bar plot will show the total prompt and completion tokens generated by each LLM for each example in the dataset. Below is an example of what the plot might look like: Token Efficiency
+
+We see that the llama-3.1-8b-instruct LLM generates the most tokens, both prompt and completion, indicating that it is the most verbose model. The phi-3-mini-4k-instruct LLM generates the fewest tokens, indicating that it is the most efficient model in terms of token usage. llama-3.1-70b-instruct and mixtral-8x22b-instruct are in the middle in terms of token usage, indicating that they may be reasonable choices.
+
+Understanding Where the Models Spend Time
+We can also analyze the bottleneck analysis provided by the profiler to understand where the LLMs spend most of their time. This can help us identify potential bottlenecks in the workflow and optimize the LLMs accordingly. For example, we can explore why the mixtral-8x22b-instruct model has such a long runtime!. To do so, we can directly visualize the Gantt charts produced by the nested stack analysis in the bottleneck_analysis section of the profiler configuration for each model. Let’s look at one below:
+
+ time chart one 
+
+It is interesting here that most of the latency comes from the initial invocation of the agent, wherein it reasons and decides on whether to call a tool. Subsequent steps take much less time in seconds, which is the axis of the Gantt chart. On the other hand, the llama-3.3-70b-instruct model has a much more balanced distribution of time across the workflow, indicating that it is more efficient in terms of time usage for a model of roughly equivalent size.
+
+ time chart two 
+
+However, the llama-3.3-70b-instruct model fails to call the appropriate tool in the email_phishing_analyzer function, which may cause its responses to be less relevant our grounded. Let us explore those metrics below.
+
+Analyzing RAGAS Metrics
+Finally, we can analyze the RAGAS metrics provided by the profiler to evaluate the performance of the LLMs. We can use the output of the eval harness to compare the accuracy, groundedness, and relevance of the responses generated by each LLM.
+
+Below is plot visualizing the accuracy, groundedness, and relevance of the responses generated by each LLM: RAGAS Metrics
+
+Clearly, the phi-3-* models are not good fits given their groundedness and relevance are both 0, so we will not use them for this workflow. The llama-3.3-70b-instruct model has the highest accuracy also did not have high groundedness and relevance, so we will not use it either. The mixtral-8x22b-instruct model has a much higher runtime than the llama-3.1-8b-instruct model, so we will not use it either. The llama-3.1-8b-instruct model has the highest groundedness and relevance, so we will use it for our workflow.
+
+Conclusion
+In this guide, we walked through an end-to-end example of how to profile an AIQ toolkit workflow using the AIQ toolkit profiler. We defined a simple workflow, configured the profiler, ran the profiler, and analyzed the profiling results to compare the performance of various LLMs and evaluate the workflow’s efficiency. We used the collected telemetry data to identify which LLM we think is the best fit for our workflow. We hope this guide has given you a good understanding of how to profile an AIQ toolkit workflow and analyze the results to make informed decisions about your workflow configuration.
+
+If you’d like to optimize further, we recommend exploring the workflow_profiling_report.txt file that was also created by the profiler. That has detailed information about workflow bottlenecks, and latency at various concurrencies, which can be helpful metrics when identifying performance issues in your workflow.
+
+Observe Workflows
+The AIQ toolkit Observability Module provides support for configurable telemetry setup to do logging tracing and metrics for AIQ toolkit workflows.
+
+Enables users to configure telemetry options from a predefined list based on their preferences.
+
+Listens real-time usage statistics pushed by IntermediateStepManager.
+
+Translates the usage statistics to OpenTelemetry format and push to the configured provider/method. (e.g., phoenix, OTelCollector, console, file)
+
+These features enable AIQ toolkit developers to test their workflows locally and integrate observability seamlessly.
+
+Installation
+The core observability features (console and file logging) are included by default. For advanced telemetry features like OpenTelemetry and Phoenix tracing, you need to install the optional telemetry dependencies:
+
+uv pip install -e '.[telemetry]'
+This will install:
+
+OpenTelemetry API and SDK for distributed tracing
+
+Arize Phoenix for visualization and analysis of LLM traces
+
+Configurable Components
+Users can set up telemetry configuration within the workflow configuration file.
+
+Logging Configuration
+Users can write logs to:
+
+Console (console)
+
+Temporary file (file)
+
+Both (by specifying both options)
+
+Configuration Fields
+_type: Accepted values → console, file
+
+level: Log level (e.g., DEBUG, INFO, WARN, ERROR)
+
+path (for file logging only): File path where logs will be stored.
+
+Tracing Configuration
+Users can set up tracing using:
+
+Phoenix (requires [telemetry] extra)
+
+Custom providers (See registration section below.)
+
+Configuration Fields
+_type: The name of the registered provider.
+
+endpoint: The provider’s listening endpoint.
+
+project: The associated project name.
+
+Sample Configuration:
+
+general:
+  telemetry:
+    logging:
+      console:
+        _type: console
+        level: WARN
+      file:
+        _type: file
+        path: /tmp/aiq_simple_calculator.log
+        level: DEBUG
+    tracing:
+      phoenix:
+        _type: phoenix
+        endpoint: http://localhost:6006/v1/traces
+        project: simple_calculator
+AIQ Toolkit Observability Components
+The Observability components AsyncOtelSpanListener, leverage the Subject-Observer pattern to subscribe to the IntermediateStep event stream pushed by IntermediateStepManager. Acting as an asynchronous event listener, AsyncOtelSpanListener listens for AIQ toolkit intermediate step events, collects and efficiently translates them into OpenTelemetry spans, enabling seamless tracing and monitoring.
+
+Process events asynchronously using a dedicated event loop.
+
+Transform function execution boundaries (FUNCTION_START, FUNCTION_END) and intermediate operations (LLM_END, TOOL_END) into OpenTelemetry spans.
+
+Maintain function ancestry context using InvocationNode objects, ensuring distributed tracing across nested function calls, while preserving execution hierarchy.
+
+aiq.profiler.decorators: Defines decorators that can wrap each workflow or LLM framework context manager to inject usage-collection callbacks.
+
+callbacks: Directory that implements callback handlers. These handlers track usage statistics (tokens, time, inputs/outputs) and push them to the AIQ toolkit usage stats queue. AIQ toolkit profiling supports callback handlers for LangChain, LLama Index, CrewAI, and Semantic Kernel.
+
+Registering a New Telemetry Provider as a Plugin
+AIQ toolkit allows users to register custom telemetry providers using the @register_telemetry_exporter decorator in aiq.observability.register.
+
+Example:
+
+class PhoenixTelemetryExporter(TelemetryExporterBaseConfig, name="phoenix"):
+    endpoint: str
+    project: str
+
+
+@register_telemetry_exporter(config_type=PhoenixTelemetryExporter)
+async def phoenix_telemetry_exporter(config: PhoenixTelemetryExporter, builder: Builder):
+
+    from phoenix.otel import HTTPSpanExporter
+    try:
+        yield HTTPSpanExporter(endpoint=config.endpoint)
+    except ConnectionError as ex:
+        logger.warning("Unable to connect to Phoenix at port 6006. Are you sure Phoenix is running?\n %s",
+                       ex,
+                       exc_info=True)
+    except Exception as ex:
+        logger.error("Error in Phoenix telemetry Exporter\n %s", ex, exc_info=True)
+
+
+Evaluating NVIDIA Agent Intelligence Toolkit Workflows
+AIQ toolkit provides a set of evaluators to run and evaluate the AIQ toolkit workflows. In addition to the built-in evaluators, AIQ toolkit provides a plugin system to add custom evaluators.
+
+Evaluating a Workflow
+To evaluate a workflow, you can use the aiq eval command. The aiq eval command takes a workflow configuration file as input. It runs the workflow using the dataset specified in the configuration file. The workflow output is then evaluated using the evaluators specified in the configuration file.
+
+To run and evaluate the simple example workflow, use the following command:
+
+aiq eval --config_file=examples/simple/configs/eval_config.yml
+Understanding the Evaluation Configuration
+The eval section in the configuration file specifies the dataset and the evaluators to use. The following is an example of an eval section in a configuration file:
+
+examples/simple/configs/eval_config.yml:
+
+eval:
+  general:
+    output_dir: ./.tmp/aiq/examples/simple/
+    dataset:
+      _type: json
+      file_path: examples/simple/data/langsmith.json
+  evaluators:
+    rag_accuracy:
+      _type: ragas
+      metric: AnswerAccuracy
+      llm_name: nim_rag_eval_llm
+The dataset section specifies the dataset to use for running the workflow. The dataset can be of type json, jsonl, csv, xls, or parquet. The dataset file path is specified using the file_path key.
+
+Understanding the Dataset Format
+The dataset file provides a list of questions and expected answers. The following is an example of a dataset file:
+
+examples/simple/data/langsmith.json:
+
+[
+  {
+    "id": "1",
+    "question": "What is langsmith",
+    "answer": "LangSmith is a platform for LLM application development, monitoring, and testing"
+  },
+  {
+    "id": "2",
+    "question": "How do I proptotype with langsmith",
+    "answer": "To prototype with LangSmith, you can quickly experiment with prompts, model types, retrieval strategy, and other parameters"
+  }
+]
+Understanding the Evaluator Configuration
+The evaluators section specifies the evaluators to use for evaluating the workflow output. The evaluator configuration includes the evaluator type, the metric to evaluate, and any additional parameters required by the evaluator.
+
+Display all evaluators
+To display all existing evaluators, run the following command:
+
+aiq info components -t evaluator
+Ragas Evaluator
+RAGAS is an OSS evaluation framework that enables end-to-end evaluation of RAG workflows. AIQ toolkit provides an interface to RAGAS to evaluate the performance of RAG-like AIQ toolkit workflows.
+
+examples/simple/configs/eval_config.yml:
+
+eval:
+  evaluators:
+    rag_accuracy:
+      _type: ragas
+      metric: AnswerAccuracy
+      llm_name: nim_rag_eval_llm
+    rag_groundedness:
+      _type: ragas
+      metric: ResponseGroundedness
+      llm_name: nim_rag_eval_llm
+    rag_relevance:
+      _type: ragas
+      metric: ContextRelevance
+      llm_name: nim_rag_eval_llm
+The following ragas metrics are recommended for RAG workflows:
+
+AnswerAccuracy: Evaluates the accuracy of the answer generated by the workflow against the expected answer or ground truth.
+
+ContextRelevance: Evaluates the relevance of the context retrieved by the workflow against the question.
+
+ResponseGroundedness: Evaluates the groundedness of the response generated by the workflow based on the context retrieved by the workflow.
+
+These metrics use a judge LLM for evaluating the generated output and retrieved context. The judge LLM is configured in the llms section of the configuration file and is referenced by the llm_name key in the evaluator configuration.
+
+examples/simple/configs/eval_config.yml:
+
+llms:
+  nim_rag_eval_llm:
+    _type: nim
+    model_name: meta/llama-3.1-70b-instruct
+    max_tokens: 8
+For these metrics, it is recommended to use 8 tokens for the judge LLM.
+
+Evaluation is dependent on the judge LLM’s ability to accurately evaluate the generated output and retrieved context. This is the leadership board for the judge LLM:
+
+    1)- mistralai/mixtral-8x22b-instruct-v0.1
+    2)- mistralai/mixtral-8x7b-instruct-v0.1
+    3)- meta/llama-3.1-70b-instruct
+    4)- meta/llama-3.3-70b-instruct
+For a complete list of up-to-date judge LLMs, refer to the RAGAS NV metrics leadership board
+
+Trajectory Evaluator
+This evaluator uses the intermediate steps generated by the workflow to evaluate the workflow trajectory. The evaluator configuration includes the evaluator type and any additional parameters required by the evaluator.
+
+examples/simple/configs/eval_config.yml:
+
+eval:
+  evaluators:
+    trajectory:
+      _type: trajectory
+      llm_name: nim_trajectory_eval_llm
+A judge LLM is used to evaluate the trajectory based on the tools available to the workflow.
+
+The judge LLM is configured in the llms section of the configuration file and is referenced by the llm_name key in the evaluator configuration.
+
+Workflow Output
+The aiq eval command runs the workflow on all the entries in the dataset. The output of these runs is stored in a file named workflow_output.json under the output_dir specified in the configuration file.
+
+examples/simple/configs/eval_config.yml:
+
+eval:
+  general:
+    output_dir: ./.tmp/aiq/examples/simple/
+If additional output configuration is needed you can specify the eval.general.output section in the configuration file. If the eval.general.output section is specified, the dir configuration from that section overrides the output_dir specified in the eval.general section.
+
+eval:
+  general:
+    output:
+      dir: ./.tmp/aiq/examples/simple/
+Here is a sample workflow output generated by running an evaluation on the simple example workflow:
+
+./.tmp/aiq/examples/simple/workflow_output.json:
+
+  {
+    "id": "1",
+    "question": "What is langsmith",
+    "answer": "LangSmith is a platform for LLM application development, monitoring, and testing",
+    "generated_answer": "LangSmith is a platform for LLM (Large Language Model) application development, monitoring, and testing. It provides features such as automations, threads, annotating traces, adding runs to a dataset, prototyping, and debugging to support the development lifecycle of LLM applications.",
+    "intermediate_steps": [
+      {
+        >>>>>>>>>>>>>>> SNIPPED >>>>>>>>>>>>>>>>>>>>>>
+      }
+    ],
+    "expected_intermediate_steps": []
+  },
+The contents of the file have been snipped for brevity.
+
+Evaluator Output
+Each evaluator provides an average score across all the entries in the dataset. The evaluator output also includes the score for each entry in the dataset along with the reasoning for the score. The score is a floating point number between 0 and 1, where 1 indicates a perfect match between the expected output and the generated output.
+
+The output of each evaluator is stored in a separate file under the output_dir specified in the configuration file.
+
+Here is a sample evaluator output generated by running evaluation on the simple example workflow:
+
+./.tmp/aiq/examples/simple/rag_accuracy_output.json:
+
+{
+  "average_score": 0.6666666666666666,
+  "eval_output_items": [
+    {
+      "id": 1,
+      "score": 0.5,
+      "reasoning": {
+        "question": "What is langsmith",
+        "answer": "LangSmith is a platform for LLM application development, monitoring, and testing",
+        "generated_answer": "LangSmith is a platform for LLM application development, monitoring, and testing. It supports various workflows throughout the application development lifecycle, including automations, threads, annotating traces, adding runs to a dataset, prototyping, and debugging.",
+        "retrieved_contexts": [
+          >>>>>>> SNIPPED >>>>>>>>
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "score": 0.75,
+      "reasoning": {
+        "question": "How do I proptotype with langsmith",
+        "answer": "To prototype with LangSmith, you can quickly experiment with prompts, model types, retrieval strategy, and other parameters",
+        "generated_answer": "LangSmith is a platform for LLM application development, monitoring, and testing. It supports prototyping, debugging, automations, threads, and capturing feedback. To prototype with LangSmith, users can quickly experiment with different prompts, model types, and retrieval strategies, and debug issues using tracing and application traces. LangSmith also provides features such as automations, threads, and feedback capture to help users develop and refine their LLM applications.",
+        "retrieved_contexts": [
+          >>>>>>> SNIPPED >>>>>>>>
+        ]
+      }
+    }
+  ]
+}
+The contents of the file have been snipped for brevity.
+
+Evaluating Remote Workflows
+You can evaluate remote workflows by using the aiq eval command with the --endpoint flag. In this mode the workflow is run on the remote server specified in the --endpoint configuration and evaluation is done on the local server.
+
+Launch AIQ toolkit on the remote server with the configuration file:
+
+aiq serve --config_file=examples/simple/configs/config.yml
+Run the evaluation with the --endpoint flag and the configuration file with the evaluation dataset:
+
+aiq eval --config_file=examples/simple/configs/eval_config.yml --endpoint http://localhost:8000
+Evaluation Endpoint
+You can also evaluate workflows using the AIQ toolkit evaluation endpoint. The evaluation endpoint is a REST API that allows you to evaluate workflows using the same configuration file as the aiq eval command. The evaluation endpoint is available at /evaluate on the AIQ toolkit server. For more information, refer to the AIQ toolkit Evaluation Endpoint documentation.
+
+Adding Custom Evaluators
+You can add custom evaluators to evaluate the workflow output. To add a custom evaluator, you need to implement the evaluator and register it with the AIQ toolkit evaluator system. See the Custom Evaluator documentation for more information.
+
+Overriding Evaluation Configuration
+You can override the configuration in the eval_config.yml file using the --override command line flag. The following is an example of overriding the configuration:
+
+aiq eval --config_file examples/simple/configs/eval_config.yml \
+        --override llms.nim_rag_eval_llm.temperature 0.7 \
+        --override llms.nim_rag_eval_llm.model_name meta/llama-3.1-70b-instruct
+Additional Evaluation Options
+For details on other evaluators and evaluation options, refer to AIQ toolkit Evaluation Concepts for more information.
+
+Profiling and Performance Monitoring of AIQ Toolkit Workflows
+You can profile workflows via the AIQ toolkit evaluation system. For more information, refer to the Profiler documentation.
+
+Launching the NVIDIA Agent Intelligence Toolkit API Server and User Interface
+NVIDIA Agent Intelligence (AIQ) toolkit provides a user interface for interacting with your running workflow.
+
+User Interface Features
+Chat history
+
+Interact with Workflow via HTTP API
+
+Interact with Workflow via WebSocket
+
+Enable or disable Workflow intermediate steps
+
+Expand all Workflow intermediate steps by default
+
+Override intermediate steps with the same ID
+
+Walk-through
+This walk-through guides you through the steps to set up and configure the AIQ toolkit user interface. Refer to examples/simple_calculator/README.md to set up the simple calculator workflow demonstrated in the following walk-through properly.
+
+The AIQ toolkit UI is located in a git submodule at external/aiqtoolkit-opensource-ui. Ensure you have checked out all of the git submodules by running the following:
+
+git submodule update --init --recursive
+Start the AIQ Toolkit Server
+You can start the AIQ toolkit server using the aiq serve command with the appropriate configuration file.
+
+aiq serve --config_file=examples/simple_calculator/configs/config.yml
+Running this command will produce the expected output as shown below:
+
+2025-03-07 12:54:20,394 - aiq.cli.commands.start - INFO - Starting AIQ toolkit from config file: 'examples/simple_calculator/configs/config.yml'
+WARNING:  Current configuration will not reload as not all conditions are met, please refer to documentation.
+INFO:     Started server process [47250]
+INFO:     Waiting for application startup.
+2025-03-07 12:54:20,730 - aiq.profiler.decorators - INFO - Langchain callback handler registered
+2025-03-07 12:54:21,313 - aiq.agent.react_agent.agent - INFO - Filling the prompt variables "tools" and "tool_names", using the tools provided in the config.
+2025-03-07 12:54:21,313 - aiq.agent.react_agent.agent - INFO - Initialized ReAct Agent Graph
+2025-03-07 12:54:21,316 - aiq.agent.react_agent.agent - INFO - ReAct Graph built and compiled successfully
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+  Current configuration will not reload as not all conditions are met, please refer to documentation.
+INFO:     Started server process [47250]
+INFO:     Waiting for application startup.
+2025-03-07 12:54:20,730 - aiq.profiler.decorators - INFO - Langchain callback handler registered
+2025-03-07 12:54:21,313 - aiq.agent.react_agent.agent - INFO - Filling the prompt variables "tools" and "tool_names", using the tools provided in the config.
+2025-03-07 12:54:21,313 - aiq.agent.react_agent.agent - INFO - Initialized ReAct Agent Graph
+2025-03-07 12:54:21,316 - aiq.agent.react_agent.agent - INFO - ReAct Graph built and compiled successfully
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+Verify the AIQ Toolkit Server is Running
+After the server is running, you can make HTTP requests to interact with the workflow.
+
+curl --request POST \
+  --url http://localhost:8000/generate \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "input_message": "Is 4 + 4 greater than the current hour of the day?",
+    "use_knowledge_base": true
+}'
+Running this command will produce the following expected output:
+
+Note: The response depends on the current time of day the command executes.
+
+{
+  "value": "No, 8 is less than the current hour of the day (4)."
+}
+Launch the AIQ Toolkit User Interface
+After the AIQ toolkit server starts, launch the web user interface. Launching the UI requires that Node.js v18+ is installed. Instructions for downloading and installing Node.js can be found in the official Node.js documentation.
+
+cd external/aiqtoolkit-opensource-ui
+npm install
+npm run dev
+After the web development server starts, open a web browser and navigate to http://localhost:3000/. Port 3001 is an alternative port if port 3000 (default) is in use.
+
+AIQ toolkit Web User Interface
+
+Connect the User Interface to the AIQ Toolkit Server Using HTTP API
+Configure the settings by selecting the Settings icon located on the bottom left corner of the home page.
+
+AIQ toolkit Web UI Settings
+
+Settings Options
+Note: It is recommended to select /chat/stream for intermediate results streaming.
+
+Theme: Light or Dark Theme.
+
+HTTP URL for Chat Completion: REST API enpoint.
+
+/generate
+
+/generate/stream
+
+/chat
+
+/chat/stream
+
+WebSocket URL for Completion: WebSocket URL to connect to running AIQ toolkit server.
+
+WebSocket Schema - Workflow schema type over WebSocket connection.
+
+Simple Calculator Example Conversation
+Interact with the chat interface by prompting the Agent with the message: Is 4 + 4 greater than the current hour of the day?
+

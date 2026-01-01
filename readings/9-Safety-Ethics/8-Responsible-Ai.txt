@@ -1,0 +1,19 @@
+Responsible AI Revisited: Critical Changes and Updates Since Our 2023 Playbook
+Adnan Masood, PhD.
+Adnan Masood, PhD.
+
+Follow
+64 min read
+·
+May 29, 2025
+3
+
+
+
+
+Two Years On: Strategic Shifts in AI Risk & Governance After the 2023 Book — Examining the Maturation of AI Ethics, Risk Management Frameworks, Generative AI Governance, and Hyperscaler Platform Developments in Corporate Settings
+Complimentary Reading
+
+
+In 2023, my co-author Heather Dawe and I released “Responsible AI in the Enterprise,” which aimed to provide practical AI risk management strategies for explainable, auditable, and safe models. The landscape of Artificial Intelligence, particularly concerning its responsible development and deployment in enterprise settings, was already dynamic. However, the period from mid-2023 to May 2025 has witnessed an evolution of unprecedented velocity and scale.
+This report endeavors to outline the significant “delta” — the changes and…

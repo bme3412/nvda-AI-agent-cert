@@ -1,0 +1,29 @@
+NVIDIA Agent Intelligence Toolkit Overview
+NVIDIA Agent Intelligence (AIQ) toolkit is a flexible, lightweight, and unifying library that allows you to easily connect existing enterprise agents to data sources and tools across any framework.
+
+Note
+
+Agent Intelligence toolkit was previously known as AgentIQ, however the API has not changed and is fully compatible with previous releases. Users should update their dependencies to depend on aiqtoolkit instead of agentiq. The transitional package named agentiq is available for backwards compatibility, but will be removed in the future.
+
+Key Features
+Framework Agnostic: AIQ toolkit works side-by-side and around existing agentic frameworks, such as LangChain, LlamaIndex, CrewAI, and Microsoft Semantic Kernel, as well as customer enterprise frameworks and simple Python agents. This allows you to use your current technology stack without replatforming. AIQ toolkit complements any existing agentic framework or memory tool you’re using and isn’t tied to any specific agentic framework, long-term memory, or data source.
+
+Reusability: Every agent, tool, and agentic workflow in this library exists as a function call that works together in complex software applications. The composability between these agents, tools, and workflows allows you to build once and reuse in different scenarios.
+
+Rapid Development: Start with a pre-built agent, tool, or workflow, and customize it to your needs. This allows you and your development teams to move quickly if you’re already developing with agents.
+
+Profiling: Use the profiler to profile entire workflows down to the tool and agent level, track input/output tokens and timings, and identify bottlenecks.
+
+Observability: Monitor and debug your workflows with any OpenTelemetry-compatible observability tool, with examples using Phoenix and W&B Weave.
+
+Evaluation System: Validate and maintain accuracy of agentic workflows with built-in evaluation tools.
+
+User Interface: Use the AIQ toolkit UI chat interface to interact with your agents, visualize output, and debug workflows.
+
+Full MCP Support: Compatible with Model Context Protocol (MCP). You can use AIQ toolkit as an MCP client to connect to and use tools served by remote MCP servers. You can also use AIQ toolkit as an MCP server to publish tools via MCP.
+
+FAQ
+For frequently asked questions, refer to FAQ.
+
+Feedback
+We would love to hear from

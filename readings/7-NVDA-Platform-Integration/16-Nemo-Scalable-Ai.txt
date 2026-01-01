@@ -1,0 +1,181 @@
+NVIDIA NeMo Speech Collection
+Latest News
+NVIDIA-Nemotron-3-Nano-30B-A3B is out with full reproducible script and recipes! Checkout NeMo Megatron-Bridge, NeMo AutoModel, NeMo-RL and NGC container to try them!(2025-12-15)
+Pivot notice: This repo will pivot to focus on speech models collections only. Please refer to NeMo Framework Github Org for the complete list of repos under NeMo Framework
+NeMo 2.0, with its support for LLMs and VLMs will be deprecated by 25.11, and replaced by NeMo Megatron-Bridge and NeMo Automodel. More details can be find in the NeMo Framework github org readme. (2025-10-10)
+Pretrain and finetune 🤗Hugging Face models via AutoModel
+Training on Blackwell using Nemo
+Training Performance on GPU Tuning Guide
+New Models Support
+NeMo Framework 2.0
+New Cosmos World Foundation Models Support
+Large Language Models and Multimodal Models
+Speech Recognition
+Introduction
+NVIDIA NeMo Framework is a scalable and cloud-native generative AI framework built for researchers and PyTorch developers working on Large Language Models (LLMs), Multimodal Models (MMs), Automatic Speech Recognition (ASR), Text to Speech (TTS), and Computer Vision (CV) domains. It is designed to help you efficiently create, customize, and deploy new generative AI models by leveraging existing code and pre-trained model checkpoints.
+
+For technical documentation, please see the NeMo Framework User Guide.
+
+What's New in NeMo 2.0
+NVIDIA NeMo 2.0 introduces several significant improvements over its predecessor, NeMo 1.0, enhancing flexibility, performance, and scalability.
+
+Python-Based Configuration - NeMo 2.0 transitions from YAML files to a Python-based configuration, providing more flexibility and control. This shift makes it easier to extend and customize configurations programmatically.
+
+Modular Abstractions - By adopting PyTorch Lightning’s modular abstractions, NeMo 2.0 simplifies adaptation and experimentation. This modular approach allows developers to more easily modify and experiment with different components of their models.
+
+Scalability - NeMo 2.0 seamlessly scaling large-scale experiments across thousands of GPUs using NeMo-Run, a powerful tool designed to streamline the configuration, execution, and management of machine learning experiments across computing environments.
+
+Overall, these enhancements make NeMo 2.0 a powerful, scalable, and user-friendly framework for AI model development.
+
+Important
+
+NeMo 2.0 is currently supported by the LLM (large language model) and VLM (vision language model) collections.
+
+Get Started with NeMo 2.0
+Refer to the Quickstart for examples of using NeMo-Run to launch NeMo 2.0 experiments locally and on a slurm cluster.
+For more information about NeMo 2.0, see the NeMo Framework User Guide.
+NeMo 2.0 Recipes contains additional examples of launching large-scale runs using NeMo 2.0 and NeMo-Run.
+For an in-depth exploration of the main features of NeMo 2.0, see the Feature Guide.
+To transition from NeMo 1.0 to 2.0, see the Migration Guide for step-by-step instructions.
+Get Started with Cosmos
+NeMo Curator and NeMo Framework support video curation and post-training of the Cosmos World Foundation Models, which are open and available on NGC and Hugging Face. For more information on video datasets, refer to NeMo Curator. To post-train World Foundation Models using the NeMo Framework for your custom physical AI tasks, see the Cosmos Diffusion models and the Cosmos Autoregressive models.
+
+LLMs and MMs Training, Alignment, and Customization
+All NeMo models are trained with Lightning. Training is automatically scalable to 1000s of GPUs. You can check the performance benchmarks using the latest NeMo Framework container here.
+
+When applicable, NeMo models leverage cutting-edge distributed training techniques, incorporating parallelism strategies to enable efficient training of very large models. These techniques include Tensor Parallelism (TP), Pipeline Parallelism (PP), Fully Sharded Data Parallelism (FSDP), Mixture-of-Experts (MoE), and Mixed Precision Training with BFloat16 and FP8, as well as others.
+
+NeMo Transformer-based LLMs and MMs utilize NVIDIA Transformer Engine for FP8 training on NVIDIA Hopper GPUs, while leveraging NVIDIA Megatron Core for scaling Transformer model training.
+
+NeMo LLMs can be aligned with state-of-the-art methods such as SteerLM, Direct Preference Optimization (DPO), and Reinforcement Learning from Human Feedback (RLHF). See NVIDIA NeMo Aligner for more information.
+
+In addition to supervised fine-tuning (SFT), NeMo also supports the latest parameter efficient fine-tuning (PEFT) techniques such as LoRA, P-Tuning, Adapters, and IA3. Refer to the NeMo Framework User Guide for the full list of supported models and techniques.
+
+LLMs and MMs Deployment and Optimization
+NeMo LLMs and MMs can be deployed and optimized with NVIDIA NeMo Microservices.
+
+Speech AI
+NeMo ASR and TTS models can be optimized for inference and deployed for production use cases with NVIDIA Riva.
+
+NeMo Framework Launcher
+Important
+
+NeMo Framework Launcher is compatible with NeMo version 1.0 only. NeMo-Run is recommended for launching experiments using NeMo 2.0.
+
+NeMo Framework Launcher is a cloud-native tool that streamlines the NeMo Framework experience. It is used for launching end-to-end NeMo Framework training jobs on CSPs and Slurm clusters.
+
+The NeMo Framework Launcher includes extensive recipes, scripts, utilities, and documentation for training NeMo LLMs. It also includes the NeMo Framework Autoconfigurator, which is designed to find the optimal model parallel configuration for training on a specific cluster.
+
+To get started quickly with the NeMo Framework Launcher, please see the NeMo Framework Playbooks. The NeMo Framework Launcher does not currently support ASR and TTS training, but it will soon.
+
+Get Started with NeMo Framework
+Getting started with NeMo Framework is easy. State-of-the-art pretrained NeMo models are freely available on Hugging Face Hub and NVIDIA NGC. These models can be used to generate text or images, transcribe audio, and synthesize speech in just a few lines of code.
+
+We have extensive tutorials that can be run on Google Colab or with our NGC NeMo Framework Container. We also have playbooks for users who want to train NeMo models with the NeMo Framework Launcher.
+
+For advanced users who want to train NeMo models from scratch or fine-tune existing NeMo models, we have a full suite of example scripts that support multi-GPU/multi-node training.
+
+Key Features
+Large Language Models
+Multimodal
+Automatic Speech Recognition
+Text to Speech
+Computer Vision
+Requirements
+Python 3.10 or above
+Pytorch 2.5 or above
+NVIDIA GPU (if you intend to do model training)
+Developer Documentation
+Version	Status	Description
+Latest	Documentation Status	Documentation of the latest (i.e. main) branch.
+Stable	Documentation Status	Documentation of the stable (i.e. most recent release)
+Install NeMo Framework
+The NeMo Framework can be installed in a variety of ways, depending on your needs. Depending on the domain, you may find one of the following installation methods more suitable.
+
+Conda / Pip: Install NeMo-Framework with native Pip into a virtual environment.
+Used to explore NeMo on any supported platform.
+This is the recommended method for ASR and TTS domains.
+Limited feature-completeness for other domains.
+NGC PyTorch container: Install NeMo-Framework from source with feature-completeness into a highly optimized container.
+For users that want to install from source in a highly optimized container.
+NGC NeMo container: Ready-to-go solution of NeMo-Framework
+For users that seek highest performance.
+Contains all dependencies installed and tested for performance and convergence.
+Support matrix
+NeMo-Framework provides tiers of support based on OS / Platform and mode of installation. Please refer the following overview of support levels:
+
+Fully supported: Max performance and feature-completeness.
+Limited supported: Used to explore NeMo.
+No support yet: In development.
+Deprecated: Support has reached end of life.
+Please refer to the following table for current support levels:
+
+OS / Platform	Install from PyPi	Source into NGC container
+linux - amd64/x84_64	Limited support	Full support
+linux - arm64	Limited support	Limited support
+darwin - amd64/x64_64	Deprecated	Deprecated
+darwin - arm64	Limited support	Limited support
+windows - amd64/x64_64	No support yet	No support yet
+windows - arm64	No support yet	No support yet
+Conda / Pip
+Install NeMo in a fresh Conda environment:
+
+conda create --name nemo python==3.10.12
+conda activate nemo
+Pick the right version
+NeMo-Framework publishes pre-built wheels with each release. To install nemo_toolkit from such a wheel, use the following installation method:
+
+pip install "nemo_toolkit[all]"
+If a more specific version is desired, we recommend a Pip-VCS install. From NVIDIA/NeMo, fetch the commit, branch, or tag that you would like to install.
+To install nemo_toolkit from this Git reference $REF, use the following installation method:
+
+git clone https://github.com/NVIDIA/NeMo
+cd NeMo
+git checkout @${REF:-'main'}
+pip install '.[all]'
+Install a specific Domain
+To install a specific domain of NeMo, you must first install the nemo_toolkit using the instructions listed above. Then, you run the following domain-specific commands:
+
+pip install nemo_toolkit['all'] # or pip install "nemo_toolkit['all']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
+pip install nemo_toolkit['asr'] # or pip install "nemo_toolkit['asr']@git+https://github.com/NVIDIA/NeMo@$REF:-'main'}"
+pip install nemo_toolkit['nlp'] # or pip install "nemo_toolkit['nlp']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
+pip install nemo_toolkit['tts'] # or pip install "nemo_toolkit['tts']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
+pip install nemo_toolkit['vision'] # or pip install "nemo_toolkit['vision']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
+pip install nemo_toolkit['multimodal'] # or pip install "nemo_toolkit['multimodal']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
+NGC PyTorch container
+NOTE: The following steps are supported beginning with 24.04 (NeMo-Toolkit 2.3.0)
+
+We recommended that you start with a base NVIDIA PyTorch container: nvcr.io/nvidia/pytorch:25.01-py3.
+
+If starting with a base NVIDIA PyTorch container, you must first launch the container:
+
+docker run \
+  --gpus all \
+  -it \
+  --rm \
+  --shm-size=16g \
+  --ulimit memlock=-1 \
+  --ulimit stack=67108864 \
+  nvcr.io/nvidia/pytorch:${NV_PYTORCH_TAG:-'nvcr.io/nvidia/pytorch:25.01-py3'}
+From NVIDIA/NeMo, fetch the commit/branch/tag that you want to install.
+To install nemo_toolkit including all of its dependencies from this Git reference $REF, use the following installation method:
+
+cd /opt
+git clone https://github.com/NVIDIA/NeMo
+cd NeMo
+git checkout ${REF:-'main'}
+bash docker/common/install_dep.sh --library all
+pip install ".[all]"
+NGC NeMo container
+NeMo containers are launched concurrently with NeMo version updates. NeMo Framework now supports LLMs, MMs, ASR, and TTS in a single consolidated Docker container. You can find additional information about released containers on the NeMo releases page.
+
+To use a pre-built container, run the following code:
+
+docker run \
+  --gpus all \
+  -it \
+  --rm \
+  --shm-size=16g \
+  --ulimit memlock=-1 \
+  --ulimit stack=67108864 \
+  nvcr.io/nvidia/pytorch:${NV_PYTORCH_TAG:-'nvcr.io/nvidia/nemo:25.02'}

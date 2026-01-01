@@ -1,0 +1,84 @@
+Chat With Your Enterprise Data Through Open-Source AI-Q NVIDIA Blueprint
+
+Jun 11, 2025
+By Nicola Sessions and Kris Murphy
+
++10
+Like
+ Discuss (0)
+AI-Generated Summary
+
+Enterprise data is exploding—petabytes of emails, reports, Slack messages, and databases pile up faster than anyone can read. Employees are left searching for answers in a sea of information, as “68% of available data in an organization goes unused,” according to market researcher Gartner1.
+
+That’s now possible with today’s availability of AI-Q, an open-source NVIDIA Blueprint that puts your business knowledge at your fingertips. AI-Q is a free, reference implementation for building artificial general agents (AGA) that connect to your enterprise data; reason across multimodal data sources using the latest AGI models; and deliver comprehensive, fast, accurate answers—securely and at scale.
+
+AI-Q provides a developer-friendly workflow example for building an AI-powered agent that can: 
+
+Extract multimodal data from diverse sources (text, PDFs, images, tables, databases)
+Retrieve and understand information using fast semantic search, retrieval-augmented generation (RAG), and web search powered by Tavily 
+Reason, plan, and take action with advanced agentic workflows
+Deliver actionable insights to employees, securely and efficiently
+In this blog, we’ll describe the features and components of the AI-Q NVIDIA Blueprint, including example use cases.
+
+The AI-Q Blueprint includes three main building blocks: 1) performance-optimized NVIDIA NIM, 2) NVIDIA NeMo Retriever microservices, and 3) the NVIDIA NeMo Agent toolkit. These AI building blocks are used to create robust, scalable, and reliable AI agents for any domain or industry. 
+
+To demonstrate how to build an AI agent with the AI-Q Blueprint, we created the AI-Q Research Assistant Blueprint. It shows how an AI agent can synthesize hours of research in minutes. Using the AI-Q Blueprint building blocks, AI agents can connect to many data sources, reason, and help with enterprise business functions, including sales, IT, software development, marketing, human resources, and finance.
+
+AI agents can also help improve the drug discovery process. To demonstrate this, NVIDIA created a Biomedical AI-Q Research Agent Blueprint for developers using the AI-Q Blueprint. With the biomedical AI research agent, hours of medical research studies can be synthesized faster, ultimately reducing the time required for pharmaceutical R&D.
+
+Components and features of the AI-Q Blueprint workflow
+Key components and features of the AI-Q Blueprint include:
+
+Multimodal PDF data extraction
+RAG for data retrieval
+Advanced AI reasoning
+Enterprise AI customization and integration
+AI observability and optimization for multi-agent systems
+Multimodal PDF data extraction from diverse sources
+A flowchart diagram showing the AI-Q NVIDIA Blueprint. Enterprise files flow through NeMo Retriever extraction and embedding, are stored in a vector database accelerated by NVIDIA cuVS, then are reranked with NeMo Retriever and used for generation. Web search also feeds into generation. An agent receives prompts from a user or machine; interacts with a Llama Nemotron reasoning model that iteratively plans, reflects, and refines; and finally sends results to a report generation model.
+Figure 1. The AI-Q Blueprint architecture diagram integrating RAG and NeMo Retriever, NVIDIA Llama Nemotron for reasoning and NVIDIA NIM for report generation.
+The workflow starts with multimodal PDF data ingestion. Enterprise data is stored in a range of formats—text documents, PDFs, images, tables, and more. AI-Q Blueprint uses NVIDIA NeMo Retriever extraction microservices to ingest and index structured, semi-structured, and unstructured data, using accelerated computing to do so up to 15x faster and at petabyte scale. 
+
+RAG for efficient and accurate data retrieval
+With NVIDIA NeMo Retriever and RAG, enterprise data is continuously extracted, embedded, and indexed so that the system always operates using the most current information. Vectors are stored in an NVIDIA cuVS accelerated database managed via Docker Compose, supporting scalable and efficient deployments. This architecture ensures that user queries are answered with data-grounded responses, and privacy controls are enforced throughout the pipeline.
+
+Advanced AI reasoning for autonomous decision making and planning
+Using a Llama Nemotron model, the AI-Q Blueprint provides advanced reasoning capabilities—enhancing retrieval and reranking through dynamic problem decomposition, iterative refinement, and context-aware decision making. This continuous reflection process improves the quality and reliability of generated outputs, enabling AI agents to provide more accurate, nuanced, and actionable insights from heterogeneous data sources. NVIDIA Llama Nemotron models have the unique ability to dynamically toggle reasoning on or off to balance performance and cost efficiency, while providing up to 5x faster inference speeds. 
+
+Enterprise AI customization and integration for flexible development
+To provide developers with a flexible foundation for building domain-specific AI agents that leverage private enterprise data, AI-Q integrates with a wide range of data sources, such as ERP, CRM, data warehouses, documents, images, and chat logs. That empowers AI agents to deliver insights that are deeply contextualized for an organization’s unique needs. AI-Q includes comprehensive development guides that simplify setup, including step-by-step instructions for configuring Python environments, deploying with Docker, and managing both frontend and backend services.
+
+The NVIDIA NeMo Agent toolkit is framework-agnostic, enabling integration with a wide array of popular agentic platforms and tools. It natively supports and provides first-party plugins for Agno (formerly Phidata), CrewAI, LangChain, LlamaIndex, MemO, Semantic Kernel, Weave, and Zep Cloud, among others. These integrations are managed through modular plugin packages, allowing developers to broaden the toolkit’s capabilities according to their workflow requirements. Because the Agent toolkit is open, others in the community can further extend the toolkit integrations.
+
+The toolkit also supports direct connections to large language model (LLM) APIs, including NVIDIA NIM and OpenAI, and is compatible with the Model Context Protocol (MCP), which enables interoperability with tools served by MCP servers. This flexible architecture enables the Agent toolkit to orchestrate and optimize complex, multi-agent workflows across diverse technology stacks without requiring teams to replatform, making it a unifying layer for enterprise AI development.
+
+AI observability and optimization for scalable multi-agent systems
+For scalable deployment and orchestration, the Agent toolkit, included in the AI-Q Blueprint, provides stateless REST APIs that manage state across core processes like query generation, summary generation, and artifact Q&A. Fine-grained telemetry, configurable logging, tracing, and real-time metrics collection provided with the Agent toolkit translate usage statistics into OpenTelemetry format for integration with industry-standard monitoring tools. This enables full system traceability, allowing enterprises to monitor performance, identify bottlenecks, and gain deep insight into how business intelligence is generated.
+
+The toolkit profiler tracks detailed metrics like token usage, response timings, and latency at both agent and tool levels, facilitating dynamic performance tuning and workflow-specification forecasting. These capabilities empower organizations to continuously evaluate, debug and refine AI agent workflows for higher accuracy and efficiency—ultimately supporting reliable, transparent, and high-performing agentic AI systems at scale.
+
+
+Agentic AI toolkit optimizes AI agents for healthcare
+Therapyside’s Maia has evolved from a simple AI assistant that answers therapists’ questions to a powerful reasoning agent that automates key administrative tasks—like scheduling, payment tracking, and resource delivery—directly within the platform. It saves clinicians up to 22 minutes per patient per day and allows them to focus more on patient care. Maia’s reasoning loop was built with the NVIDIA NeMo Agent toolkit, which orchestrates tool calls and error handling, and RAG with NVIDIA NeMo Retriever. 
+
+Pangaea Data built a platform that uses AI to analyze structured and unstructured patient data against established clinical guidelines. Working with Alexion, AstraZeneca’s rare disease division, Pangaea Data is accelerating the detection of rare disease patients. Using the Agent toolkit, the two achieved 98% accuracy in retrieving critical data points and optimized their development workflow, reducing configuration time for clinical score calculators from weeks to days.
+
+From feedback to foresight: empowering AI agents to learn and improve
+To ensure AI agents deliver reliable results in production, ongoing evaluation and optimization are essential. The Agent toolkit gives developers access to detailed telemetry and profiling data, making it straightforward to monitor agent performance and pinpoint areas for improvement. Using the NVIDIA Blueprint for building data flywheels, a reference architecture built on the NVIDIA NeMo microservices, developers can enable agents to continuously learn and adapt, automating the process of collecting feedback and optimizing models to improve the performance of the agentic system. Check out NVIDIA’s notebook to integrate the toolkit evaluation and profiling capabilities with a data flywheel.
+
+With the AI-Q Blueprint, enterprises can find meaning in their AI data platforms, accelerated storage systems from NVIDIA-certified storage providers. For example, VAST Data’s AI Operating System integrates with NVIDIA AI-Q to enable real-time, multimodal AI pipelines that continuously learn from enterprise data—powering groundbreaking AI solutions across industries. VAST is working with CACEIS, one of Europe’s largest asset servicing firms, to build a real-time AI platform to securely capture, transcribe, and analyze client meetings, instantly turning those insights into action. 
+
+
+Get started today
+Ready to unlock the full potential of your enterprise data? The AI-Q NVIDIA Blueprint is available now on GitHub, with everything you need to get started:
+
+Step-by-step environment setup
+Deployment guides for RAG services, LLM models, and frontend/backend systems
+Local development and testing instructions
+Troubleshooting and FAQs
+NVIDIA Launchable for one-click deployable GPU development environment to help you get up and running with the AI-Q Research Assistant example
+Transform how your organization accesses knowledge. Build robust, intelligence research agents that empower decision making and drive innovation—starting today. 
+
+Explore the code and documentation on GitHub and join the community of developers building the future of enterprise AI. Or join the conversation on the NVIDIA agentic AI forum or Discord. 
+
+Need help getting started? NVIDIA integration partners—including Deloitte, EY, Quantiphi, SoftServe, and Tech Mahindra—are building solutions using the AI-Q Blueprint components to help organizations deploy agentic AI applications in production.

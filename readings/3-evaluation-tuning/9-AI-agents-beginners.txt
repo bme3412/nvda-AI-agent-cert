@@ -1,0 +1,407 @@
+As AI agents move from experimental prototypes to real-world applications, the ability to understand their behavior, monitor their performance, and systematically evaluate their outputs becomes important.
+
+Learning Goals
+After completing this lesson, you will know how to/understand:
+
+Core concepts of agent observability and evaluation
+Techniques for improving the performance, costs, and effectiveness of agents
+What and how to evaluate your AI agents systematically
+How to control costs when deploying AI agents to production
+How to instrument agents built with AutoGen
+The goal is to equip you with the knowledge to transform your “black box” agents into transparent, manageable, and dependable systems.
+
+Note: It is important to deploy AI Agents that are safe and trustworthy. Check out the Building Trustworthy AI Agents lesson as well.
+
+Traces and Spans
+Observability tools such as Langfuse or Azure AI Foundry usually represent agent runs as traces and spans.
+
+Trace represents a complete agent task from start to finish (like handling a user query).
+Spans are individual steps within the trace (like calling a language model or retrieving data).
+Trace tree in Langfuse
+
+Without observability, an AI agent can feel like a “black box” - its internal state and reasoning are opaque, making it difficult to diagnose issues or optimize performance. With observability, agents become “glass boxes,” offering transparency that is vital for building trust and ensuring they operate as intended.
+
+Why Observability Matters in Production Environments
+Transitioning AI agents to production environments introduces a new set of challenges and requirements. Observability is no longer a “nice-to-have” but a critical capability:
+
+Debugging and Root-Cause Analysis: When an agent fails or produces an unexpected output, observability tools provide the traces needed to pinpoint the source of the error. This is especially important in complex agents that might involve multiple LLM calls, tool interactions, and conditional logic.
+Latency and Cost Management: AI agents often rely on LLMs and other external APIs that are billed per token or per call. Observability allows for precise tracking of these calls, helping to identify operations that are excessively slow or expensive. This enables teams to optimize prompts, select more efficient models, or redesign workflows to manage operational costs and ensure a good user experience.
+Trust, Safety, and Compliance: In many applications, it’s important to ensure that agents behave safely and ethically. Observability provides an audit trail of agent actions and decisions. This can be used to detect and mitigate issues like prompt injection, the generation of harmful content, or the mishandling of personally identifiable information (PII). For example, you can review traces to understand why an agent provided a certain response or used a specific tool.
+Continuous Improvement Loops: Observability data is the foundation of an iterative development process. By monitoring how agents perform in the real world, teams can identify areas for improvement, gather data for fine-tuning models, and validate the impact of changes. This creates a feedback loop where production insights from online evaluation inform offline experimentation and refinement, leading to progressively better agent performance.
+Key Metrics to Track
+To monitor and understand agent behavior, a range of metrics and signals should be tracked. While the specific metrics might vary based on the agent’s purpose, some are universally important.
+
+Here are some of the most common metrics that observability tools monitor:
+
+Latency: How quickly does the agent respond? Long waiting times negatively impact user experience. You should measure latency for tasks and individual steps by tracing agent runs. For example, an agent that takes 20 seconds for all model calls could be accelerated by using a faster model or by running model calls in parallel.
+
+Costs: What’s the expense per agent run? AI agents rely on LLM calls billed per token or external APIs. Frequent tool usage or multiple prompts can rapidly increase costs. For instance, if an agent calls an LLM five times for marginal quality improvement, you must assess if the cost is justified or if you could reduce the number of calls or use a cheaper model. Real-time monitoring can also help identify unexpected spikes (e.g., bugs causing excessive API loops).
+
+Request Errors: How many requests did the agent fail? This can include API errors or failed tool calls. To make your agent more robust against these in production, you can then set up fallbacks or retries. E.g. if LLM provider A is down, you switch to LLM provider B as backup.
+
+User Feedback: Implementing direct user evaluations provide valuable insights. This can include explicit ratings (👍thumbs-up/👎down, ⭐1-5 stars) or textual comments. Consistent negative feedback should alert you as this is a sign that the agent is not working as expected.
+
+Implicit User Feedback: User behaviors provide indirect feedback even without explicit ratings. This can include immediate question rephrasing, repeated queries or clicking a retry button. E.g. if you see that users repeatedly ask the same question, this is a sign that the agent is not working as expected.
+
+Accuracy: How frequently does the agent produce correct or desirable outputs? Accuracy definitions vary (e.g., problem-solving correctness, information retrieval accuracy, user satisfaction). The first step is to define what success looks like for your agent. You can track accuracy via automated checks, evaluation scores, or task completion labels. For example, marking traces as “succeeded” or “failed”.
+
+Automated Evaluation Metrics: You can also set up automated evals. For instance, you can use an LLM to score the output of the agent e.g. if it is helpful, accurate, or not. There are also several open source libraries that help you to score different aspects of the agent. E.g. RAGAS for RAG agents or LLM Guard to detect harmful language or prompt injection.
+
+In practice, a combination of these metrics gives the best coverage of an AI agent’s health. In this chapters example notebook, we’ll show you how these metrics looks in real examples but first, we’ll learn how a typical evaluation workflow looks like.
+
+Instrument your Agent
+To gather tracing data, you’ll need to instrument your code. The goal is to instrument the agent code to emit traces and metrics that can be captured, processed, and visualized by an observability platform.
+
+OpenTelemetry (OTel): OpenTelemetry has emerged as an industry standard for LLM observability. It provides a set of APIs, SDKs, and tools for generating, collecting, and exporting telemetry data.
+
+There are many instrumentation libraries that wrap existing agent frameworks and make it easy to export OpenTelemetry spans to an observability tool. Below is an example on instrumenting an AutoGen agent with the OpenLit instrumentation library:
+
+import openlit
+
+openlit.init(tracer = langfuse._otel_tracer, disable_batch = True)
+The example notebook in this chapter will demonstrate how to instrument your AutoGen agent.
+
+Manual Span Creation: While instrumentation libraries provides a good baseline, there are often cases where more detailed or custom information is needed. You can manually create spans to add custom application logic. More importantly, they can enrich automatically or manually created spans with custom attributes (also known as tags or metadata). These attributes can include business-specific data, intermediate computations, or any context that might be useful for debugging or analysis, such as user_id, session_id, or model_version.
+
+Example on creating traces and spans manually with the Langfuse Python SDK:
+
+from langfuse import get_client
+ 
+langfuse = get_client()
+ 
+span = langfuse.start_span(name="my-span")
+ 
+span.end()
+Agent Evaluation
+Observability gives us metrics, but evaluation is the process of analyzing that data (and performing tests) to determine how well an AI agent is performing and how it can be improved. In other words, once you have those traces and metrics, how do you use them to judge the agent and make decisions?
+
+Regular evaluation is important because AI agents are often non-deterministic and can evolve (through updates or drifting model behavior) – without evaluation, you wouldn’t know if your “smart agent” is actually doing its job well or if it’s regressed.
+
+There are two categories of evaluations for AI agents: online evaluation and offline evaluation. Both are valuable, and they complement each other. We usually begin with offline evaluation, as this is the minimum necessary step before deploying any agent.
+
+Offline Evaluation
+Dataset items in Langfuse
+
+This involves evaluating the agent in a controlled setting, typically using test datasets, not live user queries. You use curated datasets where you know what the expected output or correct behavior is, and then run your agent on those.
+
+For instance, if you built a math word-problem agent, you might have a test dataset of 100 problems with known answers. Offline evaluation is often done during development (and can be part of CI/CD pipelines) to check improvements or guard against regressions. The benefit is that it’s repeatable and you can get clear accuracy metrics since you have ground truth. You might also simulate user queries and measure the agent’s responses against ideal answers or use automated metrics as described above.
+
+The key challenge with offline eval is ensuring your test dataset is comprehensive and stays relevant – the agent might perform well on a fixed test set but encounter very different queries in production. Therefore, you should keep test sets updated with new edge cases and examples that reflect real-world scenarios​. A mix of small “smoke test” cases and larger evaluation sets is useful: small sets for quick checks and larger ones for broader performance metrics​.
+
+Online Evaluation
+Observability metrics overview
+
+This refers to evaluating the agent in a live, real-world environment, i.e. during actual usage in production. Online evaluation involves monitoring the agent’s performance on real user interactions and analyzing outcomes continuously.
+
+For example, you might track success rates, user satisfaction scores, or other metrics on live traffic. The advantage of online evaluation is that it captures things you might not anticipate in a lab setting – you can observe model drift over time (if the agent’s effectiveness degrades as input patterns shift) and catch unexpected queries or situations that weren’t in your test data​. It provides a true picture of how the agent behaves in the wild.
+
+Online evaluation often involves collecting implicit and explicit user feedback, as discussed, and possibly running shadow tests or A/B tests (where a new version of the agent runs in parallel to compare against the old). The challenge is that it can be tricky to get reliable labels or scores for live interactions – you might rely on user feedback or downstream metrics (like did the user click the result).
+
+Combining the two
+Online and offline evaluations are not mutually exclusive; they are highly complementary. Insights from online monitoring (e.g., new types of user queries where the agent performs poorly) can be used to augment and improve offline test datasets. Conversely, agents that perform well in offline tests can then be more confidently deployed and monitored online.
+
+In fact, many teams adopt a loop:
+
+evaluate offline -> deploy -> monitor online -> collect new failure cases -> add to offline dataset -> refine agent -> repeat.
+
+Common Issues
+As you deploy AI agents to production, you may encounter various challenges. Here are some common issues and their potential solutions:
+
+Issue	Potential Solution
+AI Agent not performing tasks consistently	- Refine the prompt given to the AI Agent; be clear on objectives.
+- Identify where dividing the tasks into subtasks and handling them by multiple agents can help.
+AI Agent running into continuous loops	- Ensure you have clear termination terms and conditions so the Agent knows when to stop the process.
+- For complex tasks that require reasoning and planning, use a larger model that is specialized for reasoning tasks.
+AI Agent tool calls are not performing well	- Test and validate the tool’s output outside of the agent system.
+- Refine the defined parameters, prompts, and naming of tools.
+Multi-Agent system not performing consistently	- Refine prompts given to each agent to ensure they are specific and distinct from one another.
+- Build a hierarchical system using a “routing” or controller agent to determine which agent is the correct one.
+Many of these issues can be identified more effectively with observability in place. The traces and metrics we discussed earlier help pinpoint exactly where in the agent workflow problems occur, making debugging and optimization much more efficient.
+
+Managing Costs
+Here are some strategies to manage the costs of deploying AI agents to production:
+
+Using Smaller Models: Small Language Models (SLMs) can perform well on certain agentic use-cases and will reduce costs significantly. As mentioned earlier, building an evaluation system to determine and compare performance vs larger models is the best way to understand how well an SLM will perform on your use case. Consider using SLMs for simpler tasks like intent classification or parameter extraction, while reserving larger models for complex reasoning.
+
+Using a Router Model: A similar strategy is to use a diversity of models and sizes. You can use an LLM/SLM or serverless function to route requests based on complexity to the best fit models. This will also help reduce costs while also ensuring performance on the right tasks. For example, route simple queries to smaller, faster models, and only use expensive large models for complex reasoning tasks.
+
+Caching Responses: Identifying common requests and tasks and providing the responses before they go through your agentic system is a good way to reduce the volume of similar requests. You can even implement a flow to identify how similar a request is to your cached requests using more basic AI models. This strategy can significantly reduce costs for frequently asked questions or common workflows.
+
+how can we deploy AI agents to
+0:04
+production effectively what are some of
+0:07
+the common mistakes and how can we fix
+0:09
+them and what are some ways we can
+0:11
+manage the cost we're going to cover
+0:14
+these questions in the 10th lesson of
+0:16
+the AI agents for beginners course in
+0:19
+this course we take you from concept to
+0:21
+code covering the fundamentals of
+0:23
+building AI agents in this short video
+0:25
+that follows along with the written
+0:27
+lesson including translations and code
+0:30
+that you can find at the link above and
+0:32
+below this video but let's talk about
+0:35
+getting AI agents into production and
+0:37
+into our users and customers hands and
+0:40
+that Journey Begins With evaluations of
+0:42
+your AI agents to evaluate AI agents
+0:46
+properly you need to look at the entire
+0:48
+system that the AI agent operates in and
+0:51
+set up evaluation points at each Stu
+0:53
+this includes but not limited to the
+0:56
+initial request to the large language
+0:57
+model or servers making sure you have a
+1:00
+proper connection response times and
+1:02
+model selection and how this might
+1:04
+affect affect responses over
+1:14
+time then the agent's ability to
+1:17
+identify the intent of the user which is
+1:20
+helpful to make sure your agent has the
+1:22
+ability to complete the task that's been
+1:24
+requested
+1:31
+then the agent's ability to identify the
+1:34
+right tools to perform that task so that
+1:36
+the agent is achieving the goal of the
+1:44
+user also the tools response to the
+1:47
+agent request things to consider here
+1:50
+are any errors or malform responses from
+1:53
+those tools or perhaps uptime issues
+1:55
+with the service if you're using an
+1:56
+external service
+2:04
+then also being able to collect the
+2:05
+feedback of the agent response is also a
+2:08
+part of evaluations this includes
+2:11
+providing a UI Fe or feedback mechanisms
+2:14
+in the UI like a thumbs up thumbs down
+2:17
+or how the users are satisfied with the
+2:19
+responses as well as using manual
+2:21
+evaluation as well as n llm to judge
+2:24
+responses
+2:34
+and having evaluation at every step of
+2:36
+the workflow enables us to both see
+2:39
+changes over time and it allows us to
+2:41
+make changes to our agentic system
+2:44
+things like changing the model or
+2:45
+different services for tools and we can
+2:47
+better identify the effects of these
+2:50
+changes because we're evaluating at
+2:52
+every step and the next step of this
+2:54
+lesson like all the other lessons before
+2:56
+it is to head over to our code enter and
+2:59
+see this in action
+Code sample and demonstration
+3:01
+okay so welcome to chapter 10 and this
+3:04
+code sample which again can be found at
+3:06
+the top of the get a repo the link above
+3:08
+and below this video so you've probably
+3:11
+seen this code there's a sample before
+3:13
+if you followed along with all the
+3:14
+lessons uh because we have this kernel
+3:17
+fun this kernel function or function
+3:19
+call that we have which is about getting
+3:20
+destinations so these are destinations
+3:22
+available and we also have this get
+3:24
+flight times but the difference of this
+3:26
+one and I want to kind of mimic scenario
+3:28
+that you might experience when launching
+3:30
+AI agents into production is that when
+3:33
+we make this call we're actually going
+3:35
+to get this HTTP error for four uh
+3:39
+because flight times are currently
+3:40
+available so again if we're using an
+3:42
+external service we might experience
+3:44
+this because maybe our credentials are
+3:47
+expired or the service is down so we
+3:49
+need to make sure that we have a way to
+3:51
+then allow the agent to continue to
+3:54
+operate and continue to use whatever
+3:57
+tools that are available in this case
+3:59
+we're essentially going to just replace
+4:00
+that with a get flight times backup that
+4:04
+should have also the same or you know
+4:06
+the flight times that we expect uh when
+4:08
+a user ask that then you can maybe even
+4:10
+also as instructions on what you know
+4:12
+even directing the agent if the service
+4:14
+is down how to handle those errors in
+4:16
+this case what we we we are going to do
+4:19
+is actually Define this get flight times
+4:21
+function as well as this get flight
+4:23
+times backup and Define this as a backup
+4:25
+function uh for flight times and then
+4:28
+you know if flight times Services down
+4:30
+we're also going to make sure uh that it
+4:32
+knows that it can start using those
+4:33
+backup fly times so again we're not
+4:36
+you establishing Grand rules in terms of
+4:39
+error handling but you can do that in
+4:41
+terms of espe when you're operating with
+4:43
+multiple different Services out there so
+4:46
+what this interaction should look like
+4:48
+is you know we have this user input
+4:50
+which is book me a flight to Barcelona
+4:53
+so again this is the request from the
+4:54
+user and we can actually see a drill
+4:57
+down here about the function costs that
+4:59
+it makes so first is going to try the
+5:01
+get flight times uh you know passing in
+5:03
+the destination Barcelona and what whoa
+5:07
+we get this httv 444 error so the next
+5:11
+request is to get flight times back up
+5:14
+which luckily that service isn't down or
+5:16
+has no errors so then we're going to get
+5:18
+this flight times back up and these
+5:19
+flight times and be able to send that to
+5:21
+the user so this is just one scenario
+5:24
+and one type of um you know scenario you
+5:26
+should prepare for when you're working
+5:27
+with AI agents in production we have
+5:30
+have a list the written lesson of other
+5:31
+things that you might wanted to look out
+5:33
+for when launching I agents production
+5:36
+and this will conclude at least in our
+5:38
+initial chapters so uh 10 lessons on AI
+5:41
+agents for beginners but we wish you the
+5:43
+best of luck and we will continue to
+5:45
+improve this course and add more
+5:46
+materials as the world of AI agents
+5:49
+continues to expand but thank you for
+5:51
+watching the lessons
