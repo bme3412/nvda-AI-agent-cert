@@ -588,6 +588,10 @@
   justify-content: center;
   width: 28px;
   height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .progressCategoryToggle:hover {
@@ -687,6 +691,9 @@
   text-align: left;
   width: 100%;
   font-family: 'Work Sans', sans-serif;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
 }
 
 .progressCategoryFile:hover {
@@ -922,6 +929,11 @@
 
   .empty {
     padding: 32px 20px;
+    align-items: flex-start;
+  }
+
+  .emptyContent {
+    padding-top: 0;
   }
 
   .emptyIcon {
@@ -937,6 +949,108 @@
   .emptyDescription {
     font-size: 16px;
     margin-bottom: 32px;
+  }
+
+  .progressSection {
+    padding: 20px 16px;
+    margin-bottom: 32px;
+    margin-top: 16px;
+  }
+
+  .progressTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .progressNumberLarge {
+    font-size: 42px;
+  }
+
+  .progressText {
+    font-size: 14px;
+  }
+
+  .progressRead,
+  .progressTotal {
+    font-size: 16px;
+  }
+
+  .progressBar {
+    height: 8px;
+  }
+
+  .progressCategories {
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  .progressCategoriesTitle {
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+
+  .progressCategory {
+    padding: 12px;
+  }
+
+  .progressCategoryHeader {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .progressCategoryInfo {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .progressCategoryName {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .progressCategoryPercent {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .progressCategoryToggle {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+    font-size: 16px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .progressCategoryBar {
+    height: 4px;
+  }
+
+  .progressCategoryDropdown {
+    max-height: min(280px, calc(100vh - 350px));
+    margin-top: 10px;
+    padding-top: 10px;
+    gap: 4px;
+  }
+
+  .progressCategoriesList > .progressCategory:first-child .progressCategoryDropdown {
+    max-height: min(250px, calc(100vh - 380px));
+  }
+
+  .progressCategoryFile {
+    padding: 10px;
+    gap: 8px;
+    min-height: 44px;
+  }
+
+  .progressCategoryCheckbox {
+    width: 18px;
+    height: 18px;
+  }
+
+  .progressCategoryFileName {
+    font-size: 12px;
+    line-height: 1.4;
   }
 
   .emptyFeatures {
@@ -970,8 +1084,9 @@
   }
 
   .progressSection {
-    padding: 24px 20px;
+    padding: 20px 16px;
     margin-bottom: 32px;
+    margin-top: 16px;
   }
 
   .progressTitle {
@@ -984,7 +1099,7 @@
   }
 
   .progressText {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .progressRead,
@@ -997,8 +1112,8 @@
   }
 
   .progressCategories {
-    margin-top: 24px;
-    padding-top: 24px;
+    margin-top: 20px;
+    padding-top: 20px;
   }
 
   .progressCategoriesTitle {
@@ -1010,12 +1125,93 @@
     padding: 12px;
   }
 
+  .progressCategoryHeader {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .progressCategoryInfo {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
   .progressCategoryName {
     font-size: 13px;
+    line-height: 1.4;
   }
 
   .progressCategoryPercent {
     font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .progressCategoryToggle {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .progressCategoryBar {
+    height: 4px;
+  }
+
+  .progressCategoryDropdown {
+    max-height: min(280px, calc(100vh - 350px));
+    margin-top: 10px;
+    padding-top: 10px;
+    gap: 4px;
+  }
+
+  .progressCategoriesList > .progressCategory:first-child .progressCategoryDropdown {
+    max-height: min(250px, calc(100vh - 380px));
+  }
+
+  .progressCategoryFile {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .progressCategoryCheckbox {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .progressCategoryFileName {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .emptyFeatures {
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .feature {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .featureIcon {
+    font-size: 24px;
+  }
+
+  .featureTitle {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .featureText {
+    font-size: 12px;
+  }
+
+  .emptyCta {
+    margin-top: 24px;
+  }
+
+  .emptyCtaText {
+    font-size: 14px;
   }
 }
 

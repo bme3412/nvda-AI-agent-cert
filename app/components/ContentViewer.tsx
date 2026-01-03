@@ -605,7 +605,7 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
   }
 
   const { title, sections } = formatContent(content);
-  const fileName = filePath.split('/').pop()?.replace('.txt', '') || '';
+  const fileName = filePath ? filePath.split('/').pop()?.replace('.txt', '') || '' : '';
   const isReview = fileName.toLowerCase() === 'review';
 
   // Build breadcrumbs
