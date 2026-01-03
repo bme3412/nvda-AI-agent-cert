@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './Sidebar.module.css';
 
 export interface SummaryItem {
@@ -47,6 +47,56 @@ export default function Sidebar({ onFileSelect, selectedPath, isOpen = false }: 
   const [structure, setStructure] = useState<SummaryItem[]>([]);
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
+  const [readFiles, setReadFiles] = useState<Set<string>>(new Set());
+
+  // Check if a file is read
+  const isFileRead = (path: string): boolean => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem(`read:${path}`) === 'true';
+  };
+
+  // Load read status for all files
+  const updateReadStatus = useCallback(() => {
+    if (typeof window === 'undefined' || structure.length === 0) return;
+    const read = new Set<string>();
+    const checkItems = (items: SummaryItem[]) => {
+      items.forEach((item) => {
+        if (item.type === 'file' && isFileRead(item.path)) {
+          read.add(item.path);
+        }
+        if (item.children) {
+          checkItems(item.children);
+        }
+      });
+    };
+    checkItems(structure);
+    setReadFiles(read);
+  }, [structure]);
+
+  // Update read status when structure changes
+  useEffect(() => {
+    updateReadStatus();
+  }, [updateReadStatus]);
+
+  // Listen for storage changes (when checkbox is toggled)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const handleStorageChange = () => {
+      updateReadStatus();
+    };
+
+    // Listen for storage events (cross-tab)
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also listen for custom events (for same-window updates)
+    window.addEventListener('readStatusChanged', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('readStatusChanged', handleStorageChange);
+    };
+  }, [updateReadStatus]);
 
   useEffect(() => {
     fetch('/api/summaries')
@@ -118,15 +168,17 @@ export default function Sidebar({ onFileSelect, selectedPath, isOpen = false }: 
         </div>
       );
     } else {
+      const isRead = readFiles.has(fullPath);
       return (
         <div
           key={fullPath}
-          className={`${styles.fileItem} ${isSelected ? styles.selected : ''} ${isReview ? styles.reviewFile : ''}`}
+          className={`${styles.fileItem} ${isSelected ? styles.selected : ''} ${isReview ? styles.reviewFile : ''} ${isRead ? styles.read : ''}`}
           style={{ paddingLeft: `${depth * 16 + 8}px` }}
           onClick={() => onFileSelect(fullPath)}
         >
           <span className={styles.fileIcon}>{isReview ? '📋' : '📄'}</span>
           <span className={styles.fileName}>{displayName}</span>
+          {isRead && <span className={styles.readIndicator}>✓</span>}
         </div>
       );
     }

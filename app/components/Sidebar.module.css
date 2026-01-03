@@ -147,6 +147,27 @@
   color: var(--accent-primary);
 }
 
+.fileItem {
+  position: relative;
+}
+
+.readIndicator {
+  margin-left: auto;
+  color: var(--accent-primary);
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.fileItem.read .fileName {
+  opacity: 0.7;
+}
+
+.fileItem.read.selected .fileName {
+  opacity: 1;
+}
+
 .loading {
   padding: 20px;
   text-align: center;

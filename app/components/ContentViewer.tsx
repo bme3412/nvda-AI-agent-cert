@@ -120,6 +120,41 @@ export default function ContentViewer({ filePath }: ContentViewerProps) {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isRead, setIsRead] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+
+  // Load read status from localStorage
+  useEffect(() => {
+    if (!filePath) {
+      setIsRead(false);
+      return;
+    }
+    
+    const readStatus = localStorage.getItem(`read:${filePath}`);
+    setIsRead(readStatus === 'true');
+  }, [filePath]);
+
+  // Handle checkbox change
+  const handleReadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!filePath) return;
+    
+    const checked = e.target.checked;
+    setIsRead(checked);
+    localStorage.setItem(`read:${filePath}`, checked.toString());
+    
+    // Dispatch custom event to notify Sidebar
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('readStatusChanged'));
+    }
+    
+    // Show celebration animation when marked as read
+    if (checked) {
+      setShowCelebration(true);
+      setTimeout(() => {
+        setShowCelebration(false);
+      }, 2000);
+    }
+  };
 
   useEffect(() => {
     if (!filePath) {
@@ -181,8 +216,27 @@ export default function ContentViewer({ filePath }: ContentViewerProps) {
 
   return (
     <main className={styles.viewer}>
+      {showCelebration && (
+        <div className={styles.celebration}>
+          <div className={styles.celebrationContent}>
+            <span className={styles.celebrationIcon}>🎉</span>
+            <span className={styles.celebrationText}>Great job! Article marked as read</span>
+          </div>
+        </div>
+      )}
       <div className={`${styles.header} ${isReview ? styles.reviewHeader : ''}`}>
-        <h1 className={styles.title}>{title || fileName}</h1>
+        <div className={styles.headerTop}>
+          <h1 className={styles.title}>{title || fileName}</h1>
+          <label className={styles.readCheckbox}>
+            <input
+              type="checkbox"
+              checked={isRead}
+              onChange={handleReadChange}
+              className={styles.checkboxInput}
+            />
+            <span className={styles.checkboxLabel}>Mark as read</span>
+          </label>
+        </div>
         <div className={styles.path}>{filePath}</div>
       </div>
       <div className={styles.content}>
