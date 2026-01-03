@@ -20,7 +20,7 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleFileSelect = (path: string) => {
+  const handleFileSelect = (path: string | undefined) => {
     setSelectedPath(path);
     if (window.innerWidth <= 768) {
       setSidebarOpen(false);
@@ -47,7 +47,7 @@ export default function Home() {
         selectedPath={selectedPath}
         isOpen={sidebarOpen}
       />
-      <ContentViewer filePath={selectedPath} />
+      <ContentViewer filePath={selectedPath} onFileSelect={handleFileSelect} />
     </div>
   );
 }

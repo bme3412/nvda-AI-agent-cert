@@ -38,7 +38,7 @@ function formatDisplayName(name: string): string {
 }
 
 interface SidebarProps {
-  onFileSelect: (path: string) => void;
+  onFileSelect: (path: string | undefined) => void;
   selectedPath?: string;
   isOpen?: boolean;
 }

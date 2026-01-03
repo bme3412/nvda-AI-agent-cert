@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'NVDA Summaries Viewer',
+  title: 'Home',
   description: 'View and navigate NVDA agentic certification summaries',
 };
 
