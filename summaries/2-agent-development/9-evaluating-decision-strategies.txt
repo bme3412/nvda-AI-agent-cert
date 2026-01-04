@@ -1,0 +1,184 @@
+Evaluating and Refining Agent Decision-Making Strategies
+
+Evaluating and refining agent decision-making strategies represents the critical process of systematically assessing how well your AI agents make choices, identifying weaknesses in their reasoning and actions, and iteratively improving their performance over time. Unlike traditional software where logic is explicit and deterministic, AI agents make probabilistic decisions based on language model reasoning, tool selection, and environmental context. This introduces fundamental challenges: decisions may be correct in one context but wrong in similar-seeming situations, quality can be subjective and stakeholder-dependent, and the reasoning behind decisions isn't always transparent or easily debugged. Effective evaluation and refinement requires combining quantitative metrics with qualitative assessment, automated testing with human judgment, controlled experiments with production monitoring, and short-term fixes with long-term systematic improvements. Mastering these techniques transforms agent development from guesswork into rigorous engineering, enabling you to build systems that consistently make good decisions across diverse scenarios.
+
+Understanding Agent Decision-Making Fundamentals
+
+Agent decision-making encompasses all the choices an AI system makes during task execution: understanding user intent and extracting relevant parameters, determining which tools or capabilities to invoke and in what sequence, deciding what information is relevant versus extraneous, choosing how to phrase responses and at what level of detail, handling ambiguity and incomplete information, and adapting strategies when initial approaches fail. Each decision point represents an opportunity for the agent to succeed or fail at its objectives, and the quality of these decisions determines overall system performance.
+
+The complexity of agent decision-making stems from operating in open-ended environments with incomplete information. Unlike chess programs that operate within perfectly defined rules, agents face messy real-world scenarios where: user intent may be ambiguous or contradictory, available information may be incomplete or unreliable, multiple reasonable approaches might exist with unclear tradeoffs, success criteria themselves might be subjective or context-dependent, and unforeseen situations require generalizing from past experience. This uncertainty means perfect decision-making is impossible—the goal is making good decisions most of the time while handling edge cases gracefully.
+
+Decision-making strategies exist at multiple levels within agent systems. At the highest level, you have meta-strategies that govern overall agent behavior—should the agent ask clarifying questions or make reasonable assumptions, should it favor speed or thoroughness, should it explain its reasoning or just provide results. At the middle level, you have tactical strategies for specific scenarios—how to handle conflicting information from multiple sources, when to invoke expensive tools versus using faster approximations, how to prioritize among competing objectives. At the lowest level, you have implementation details like prompt phrasing, parameter settings, and parsing logic. Evaluation and refinement must address all these levels because weaknesses at any layer can undermine overall performance.
+
+Establishing Evaluation Frameworks
+
+Systematic evaluation requires frameworks that define what good decision-making looks like, how to measure it, and how to compare alternatives. Without clear evaluation frameworks, you're left with anecdotal impressions and intuition rather than rigorous assessment.
+
+Success criteria must be explicitly defined before evaluation begins. What does success look like for your agent? For a customer service agent, success might include resolving customer issues within specified timeframes, maintaining high customer satisfaction scores, correctly routing to appropriate departments, and adhering to company policies. For a research assistant, success might include finding relevant and accurate information, properly citing sources, acknowledging uncertainty when appropriate, and presenting information at appropriate technical levels. These criteria should be measurable, specific to your domain, aligned with user and business objectives, and comprehensive enough to capture different dimensions of quality.
+
+Creating evaluation datasets forms the foundation for rigorous testing. These datasets should include representative examples of tasks the agent should handle well, edge cases and boundary conditions that stress the system, known failure modes from previous versions or similar systems, and adversarial examples designed to expose weaknesses. Diversity across multiple dimensions—task complexity, domain topics, user interaction styles, and environmental conditions—ensures evaluation captures real-world variability. High-quality evaluation datasets are carefully curated, continuously expanded as new scenarios emerge, version controlled to enable comparison across system versions, and documented with ground truth labels or expected behaviors.
+
+Metrics selection involves identifying quantifiable measures that correlate with success criteria. These typically span multiple categories: accuracy metrics measuring correctness of outputs (task completion rate, information accuracy, appropriate tool selection), efficiency metrics measuring resource usage (latency, API costs, number of tool calls), user experience metrics measuring satisfaction (conversation length, retry rates, explicit feedback), and robustness metrics measuring consistency (performance variance across similar inputs, graceful degradation under errors). No single metric captures everything, so comprehensive evaluation uses dashboards of complementary metrics that together provide holistic quality pictures.
+
+Quantitative Evaluation Approaches
+
+Quantitative evaluation uses numerical metrics to objectively assess agent performance, enabling statistical comparison between different strategies and tracking performance over time.
+
+Automated testing against labeled datasets provides scalable, repeatable evaluation. You construct datasets where each example has known correct answers or expected behaviors, run the agent against these examples, and compute metrics comparing actual to expected outcomes. For a customer support agent, this might involve test conversations with labeled intents, expected tool invocations, and correct resolutions. You measure what percentage of intents are correctly identified, whether appropriate tools are invoked, whether resolutions match expected outcomes, and how consistently the agent performs across similar examples. Automated testing enables rapid iteration—you can test hundreds or thousands of scenarios in minutes, making it practical to evaluate every code change.
+
+Benchmark comparisons measure agent performance against standardized tests that enable comparing across systems or research results. Industry benchmarks for various capabilities—question answering, reasoning, tool use, multi-step planning—provide external validation of agent quality. Running your agent against established benchmarks reveals how it stacks up against state-of-the-art systems, identifies relative strengths and weaknesses across different capability areas, and tracks whether improvements move you closer to or further from frontier performance. When using benchmarks, understand what they measure and their limitations—high benchmark scores don't guarantee good real-world performance if benchmarks don't capture actual usage patterns.
+
+Statistical significance testing determines whether observed performance differences are meaningful or just random variation. When comparing two agent versions, you might observe that version B achieves 85% accuracy versus version A's 82%. Is this 3% difference real or could it occur by chance? Running statistical tests (t-tests, chi-square tests, bootstrap confidence intervals) quantifies confidence that differences are genuine. This prevents misinterpreting noise as signal and helps prioritize changes that meaningfully improve performance. Proper statistical practice requires sufficient sample sizes, appropriate test selection based on data characteristics, correction for multiple comparisons when testing many hypotheses, and understanding statistical versus practical significance.
+
+Performance profiling identifies bottlenecks and inefficiencies in agent execution. Beyond measuring whether agents produce correct outputs, profiling reveals how they use resources: which tools consume most time or cost, where agents waste effort on unnecessary operations, which decision points introduce highest variance in performance, and where errors most commonly occur. This analysis guides optimization efforts toward highest-impact improvements. Tools like distributed tracing, detailed logging, and performance dashboards make profiling practical at scale. The NVIDIA Agent Intelligence Toolkit (AIQ) provides framework-agnostic profiling that instruments entire workflows, collecting token usage, timing, tool invocations, and forecasting future patterns using time-series models.
+
+Qualitative Evaluation Methods
+
+While quantitative metrics provide objectivity and scale, qualitative evaluation captures nuances that numbers miss—whether responses feel natural and helpful, whether reasoning is sound, and whether the agent exhibits problematic behaviors that metrics don't measure.
+
+Human evaluation involves people assessing agent outputs along various dimensions. Evaluators might rate responses for helpfulness, accuracy, tone appropriateness, and completeness. They might identify specific problems like hallucinations, inappropriate tool use, or poor explanations. They might compare multiple agent versions side-by-side, choosing which performs better. Human evaluation provides ground truth about user experience since humans are the ultimate judges of whether agents are helpful. However, human evaluation is expensive, slow, and introduces subjectivity. Mitigate these limitations through careful evaluator training on rating criteria and examples, multiple evaluators per example to capture agreement and disagreement, detailed rubrics that make criteria explicit, and statistical analysis of inter-rater reliability.
+
+Think-aloud protocols ask users to verbalize their thoughts while interacting with agents. This reveals not just what users do but why—what they find confusing, what delights them, what frustrates them. Think-aloud sessions identify usability issues, mismatches between agent behavior and user expectations, points where users lose confidence in the agent, and opportunities for improvement that wouldn't show up in usage logs. These sessions are particularly valuable early in development when establishing basic interaction patterns.
+
+Expert reviews engage domain experts to assess whether agent decisions demonstrate appropriate expertise. For a medical information agent, healthcare professionals might evaluate whether information is accurate, appropriately caveated, and presented at suitable depth. For financial analysis agents, investment professionals assess whether analysis considers relevant factors and reaches sound conclusions. Expert review catches errors that require specialized knowledge to identify and validates that agents meet professional standards, not just user satisfaction.
+
+Failure analysis systematically examines cases where agents performed poorly. Rather than just tracking aggregate metrics, dive deep into individual failures to understand root causes. Did the agent misunderstand user intent? Select inappropriate tools? Make logical errors? Lack necessary information? Each failure mode suggests different remediation strategies. Categorizing failures reveals patterns—perhaps the agent struggles with a particular class of queries, fails when certain tools are unavailable, or makes consistent reasoning errors. This analysis directly informs refinement priorities.
+
+A/B Testing and Experimentation
+
+A/B testing evaluates changes empirically by deploying different agent versions to user subsets and comparing outcomes. This approach grounds evaluation in real-world usage rather than test datasets, revealing how changes affect actual user experience.
+
+Experiment design determines what to test and how. Clear hypotheses specify expected improvements: "Increasing tool description detail will improve tool selection accuracy" or "Implementing retry logic will reduce error-related user frustration." Experiments randomly assign users to control (current system) or treatment (modified system) groups, ensuring comparable populations. You define success metrics that will determine whether the hypothesis is confirmed—perhaps tool selection accuracy, user satisfaction ratings, or task completion rates. Sample size calculations ensure enough users in each group to detect meaningful differences. Running experiments for appropriate durations captures usage pattern variations across time.
+
+Variant deployment requires infrastructure that routes users to appropriate agent versions while maintaining consistent experiences per user. Each user should consistently interact with the same variant throughout their session to avoid confusion. Your deployment system tracks which variant serves each request, logs relevant metrics and outcomes, maintains fairness in random assignment to prevent bias, and supports gradual rollouts where changes deploy to progressively larger user percentages as confidence grows.
+
+Metric tracking during experiments captures both primary metrics (the main outcomes you're trying to improve) and guardrail metrics (other important dimensions that shouldn't degrade). If testing a change to improve response speed, you'd track latency as the primary metric but also monitor accuracy, user satisfaction, and cost as guardrails. Changes that improve primary metrics while degrading guardrails require careful consideration—is the tradeoff worthwhile? Comprehensive metric tracking prevents optimizing one dimension at the expense of others.
+
+Statistical analysis determines whether observed differences are significant and practically meaningful. Calculate effect sizes that quantify improvement magnitude, confidence intervals that indicate uncertainty ranges, p-values that measure statistical significance, and segment analysis revealing whether effects vary across user groups. Be cautious of p-hacking—testing multiple hypotheses until finding significance by chance. Use appropriate statistical corrections for multiple comparisons and pre-register hypotheses when possible.
+
+Prompt Engineering and Refinement
+
+Since much of agent decision-making stems from how prompts shape language model behavior, systematically evaluating and refining prompts is central to improving decision quality.
+
+Prompt variation testing compares different prompt formulations to find what works best. You might test different instruction phrasings, varying levels of detail in explanations, alternative example selections for few-shot learning, different ordering of prompt components, and various tone or style specifications. Run each variant against your evaluation dataset, measuring performance on relevant metrics. Often, seemingly minor prompt changes significantly impact decision quality—reordering instructions, adding clarifying phrases, or including specific examples can shift success rates by 10-20% or more.
+
+Systematic prompt optimization treats prompt engineering as a search problem: you have a space of possible prompts and want to find ones that optimize performance metrics. Approaches include manual iteration where developers craft variants based on intuition and failure analysis, genetic algorithms that evolve prompts through mutation and selection, and reinforcement learning approaches that optimize prompts based on reward signals. More sophisticated methods use language models themselves to generate and refine prompts, creating meta-learning loops where AI helps improve AI.
+
+Component ablation studies determine which prompt elements actually contribute to performance. If your prompt includes role definitions, detailed instructions, examples, constraints, and formatting specifications, ablation testing removes each component individually and measures impact. This reveals what's essential versus superfluous, preventing prompt bloat that wastes tokens and potentially confuses the model. You might discover that certain examples significantly improve performance while others provide no benefit, or that verbose instructions don't outperform concise ones.
+
+Prompt debugging for specific failures involves examining cases where the agent made poor decisions and understanding how the prompt contributed. Perhaps the prompt's instructions were ambiguous, allowing misinterpretation. Maybe examples demonstrated patterns that generalized poorly. Possibly constraints conflicted, creating no-win scenarios. Careful debugging reveals how to refine prompts to prevent similar failures. This iterative debugging cycle—identify failures, analyze prompt's role, refine prompt, re-test—gradually improves decision quality.
+
+Tool Selection and Orchestration Refinement
+
+Agents often have multiple tools available, and choosing which tools to use, in what order, and with what parameters significantly impacts outcomes. Evaluating and refining these orchestration decisions improves agent effectiveness.
+
+Tool usage analysis examines patterns in how agents employ available tools. Metrics include tool invocation rates (which tools are used frequently versus rarely), tool success rates (which tools fail often, suggesting poor selection or implementation), tool sequences (common patterns of tool chaining), parameter quality (whether tools are invoked with appropriate parameters), and unused tool identification (tools defined but never selected, suggesting poor descriptions or redundancy). These patterns reveal optimization opportunities—perhaps certain tools should have better descriptions, some should be combined into higher-level tools, or some are unnecessary and add confusion.
+
+Decision tree mapping visualizes the paths agents take through decision spaces. For multi-step tasks, map out which decisions lead where—when does the agent choose approach A versus B, what triggers tool invocation, how does it handle errors and retry. Visualizing these trees reveals patterns like: certain decision paths consistently lead to success while others consistently fail, the agent gets trapped in cycles where it repeatedly tries failing approaches, or unexpected decision branches that shouldn't be possible. This visibility enables targeted improvements to decision logic.
+
+Tool competition experiments compare agent behavior with different tool configurations. What happens if you remove a particular tool—does the agent adapt successfully or fail? What if you add an alternative tool for the same capability—does the agent choose wisely between them? What if you modify tool descriptions—does tool selection improve or degrade? These controlled experiments isolate how tool availability and description quality affect decision-making, guiding tool ecosystem design.
+
+Parameter sensitivity testing evaluates how tools perform across parameter ranges. If a tool accepts numeric parameters like confidence thresholds or result counts, test systematically across ranges to find optimal values. Plot performance as a function of parameters, identifying sweet spots and understanding failure modes at extremes. This empirical approach finds parameter settings that maximize tool utility.
+
+Reasoning Quality Assessment
+
+For agents that explain their reasoning or employ chain-of-thought approaches, evaluating reasoning quality beyond just final outputs provides insights into decision-making processes.
+
+Logical consistency checking verifies that agent reasoning doesn't contain contradictions or non-sequiturs. Automated logic checkers can identify blatant contradictions where the agent asserts X and not-X. Human reviewers assess whether reasoning steps follow logically from each other, whether conclusions are supported by premises, whether the agent considers relevant factors, and whether the reasoning would convince a domain expert. Inconsistent or illogical reasoning suggests prompt refinement needs or indicates when the model is outside its reliable knowledge domain.
+
+Transparency evaluation measures whether agent explanations help users understand decisions. Good explanations should identify key factors influencing decisions, acknowledge uncertainty appropriately, describe alternative approaches considered, and be comprehensible to target users. Testing explanation quality involves showing explanations to representative users and assessing whether they understand and trust the agent's reasoning. Poor explanations—even when decisions are correct—reduce user trust and make debugging difficult.
+
+Counterfactual reasoning tests probe whether agents understand causal relationships. After making a decision, ask "what if" questions: "If the user had specified a different budget, how would your recommendation change?" or "If this data point were different, would your conclusion change?" Agents that can coherently answer such questions demonstrate deeper understanding than those that can't. This testing reveals whether agents truly reason about problems or just pattern match.
+
+Verification procedures double-check critical decisions through independent means. For decisions with high stakes, implement verification steps where the agent's decision is validated through alternative approaches—using different tools, applying different reasoning strategies, or having different model configurations tackle the same problem. Agreement across approaches increases confidence; disagreement flags decisions for special attention or human review.
+
+Cost-Quality Tradeoff Analysis
+
+Agent decisions often involve tradeoffs between quality and cost (both computational and financial). Evaluating these tradeoffs informs strategic choices about where to invest resources.
+
+Response quality versus latency analysis measures how decision quality varies with allowed processing time. Faster decisions use cheaper models, fewer tool calls, or less extensive reasoning. Slower decisions can employ more powerful models, comprehensive tool use, and thorough analysis. Plotting quality against latency reveals diminishing returns—perhaps 80% quality comes from 2 seconds of processing while reaching 90% requires 10 seconds. Understanding these curves enables setting appropriate latency targets that balance user experience with quality needs.
+
+Model selection optimization evaluates whether using different models for different tasks improves cost-quality tradeoffs. Perhaps routine queries work fine with efficient small models while complex analysis requires powerful large models. Implementing routing logic that matches tasks to appropriate models reduces costs without sacrificing quality where it matters. Evaluation involves comparing routed approaches against always-use-best and always-use-cheapest baselines, measuring aggregate quality and cost, and validating routing decisions themselves.
+
+Tool call economics analyzes whether tool invocations justify their costs. Each tool call adds latency and often financial cost (API fees). Does the information gained warrant these costs? Would caching recent results reduce redundant calls? Could batching calls improve efficiency? Are there cheaper tools that provide acceptable quality for some use cases? This analysis identifies opportunities to maintain quality while reducing costs or to invest more in high-value scenarios.
+
+Caching strategy evaluation tests whether storing and reusing results from expensive operations improves cost-quality tradeoffs. Measure cache hit rates, quality of cached versus fresh results, and cost savings from avoided re-computation. Test different cache invalidation policies—time-based expiration, event-based invalidation, or size-based eviction—to find optimal strategies for your usage patterns.
+
+Production Monitoring and Continuous Evaluation
+
+Evaluation doesn't end at deployment—production monitoring provides ongoing assessment of agent decision-making quality in real-world conditions. This aligns with the observability capabilities provided by tools like AIQ, which integrate with OpenTelemetry-compatible systems to create distributed tracing across nested function calls.
+
+Real-time decision quality metrics track performance continuously. Monitor success rates for common task types, average quality scores from user feedback, distribution of decision paths taken, error rates and types, and performance variance over time. Dashboards displaying these metrics enable quick identification of degradation, perhaps from API changes, data drift, or emerging usage patterns the agent wasn't designed for.
+
+Anomaly detection identifies unusual decision patterns that might indicate problems. Statistical methods can flag when metrics deviate significantly from baselines—perhaps success rates drop suddenly, certain tools start failing frequently, or response times increase. Machine learning approaches can identify subtle patterns humans might miss, like gradual quality erosion or emerging problem categories. Alerting on anomalies enables rapid investigation and response.
+
+Cohort analysis segments users or tasks and compares decision quality across segments. Perhaps the agent performs well for power users but poorly for novices, or excels on certain task types while struggling with others. Understanding these variations guides targeted improvements and might reveal that different user segments need different agent configurations or that certain task types require specialized capabilities.
+
+Feedback loop integration uses production feedback to continuously refine agent behavior. User ratings, corrections, and complaints provide rich signals about decision quality. Systematically analyzing this feedback identifies improvement opportunities: which types of decisions receive poor ratings, what corrections do users make, where do users abandon tasks in frustration. This analysis feeds back into prompt refinement, tool improvement, and capability expansion.
+
+Iterative Refinement Cycles
+
+Effective refinement is iterative: evaluate, identify problems, make changes, re-evaluate, repeat. This cycle requires discipline to avoid random changes without clear hypotheses or proper validation.
+
+Hypothesis-driven improvement starts with specific, testable hypotheses about what changes will improve performance. Rather than making changes and hoping for improvement, articulate clear predictions: "Adding examples of edge case handling to the prompt will reduce failures on ambiguous queries by 15%" or "Implementing semantic similarity search for tool selection will improve tool choice accuracy from 82% to 88%." This focus ensures changes target real problems and enables evaluating whether changes had intended effects.
+
+Incremental change strategy makes one significant change at a time rather than many simultaneous changes. Changing multiple things simultaneously makes it impossible to attribute improvements or regressions to specific changes. The scientific approach isolates variables, making one change, evaluating thoroughly, and committing or reverting before the next change. This discipline prevents accumulating unexplained changes that make systems opaque and difficult to debug.
+
+Rollback readiness maintains the ability to quickly revert changes that degrade performance. Version control for prompts, configuration, and code enables comparing current to previous versions. Feature flags allow enabling/disabling changes without redeployment. Canary deployments roll out changes gradually, with automated rollback if key metrics degrade. This safety net encourages bold experimentation since failures can be quickly undone.
+
+Learning documentation captures insights from evaluation and refinement cycles. Maintain records of what changes were tried, what hypotheses they tested, what evaluation results showed, what was learned, and what next steps are planned. This institutional knowledge prevents repeating past failures, helps new team members understand system evolution, and enables meta-analysis of what types of changes tend to work. Over time, this accumulated wisdom makes refinement more efficient and effective.
+
+KEY TERMS AND DEFINITIONS
+
+Evaluation Framework: A systematic structure that defines what good decision-making looks like, how to measure it, and how to compare alternatives. Includes success criteria, evaluation datasets, and metrics selection that together enable rigorous assessment rather than anecdotal impressions.
+
+Success Criteria: Explicitly defined, measurable standards that determine what success looks like for an agent in a specific domain. Should be specific, aligned with user and business objectives, and comprehensive enough to capture different dimensions of quality like accuracy, efficiency, user satisfaction, and robustness.
+
+Evaluation Dataset: A carefully curated collection of test cases including representative examples, edge cases, known failure modes, and adversarial examples. Should be diverse across task complexity, domain topics, user interaction styles, and environmental conditions, with version control and ground truth labels for comparison across system versions.
+
+Quantitative Evaluation: Assessment using numerical metrics to objectively measure agent performance, enabling statistical comparison between different strategies and tracking performance over time. Includes automated testing, benchmark comparisons, statistical significance testing, and performance profiling.
+
+Qualitative Evaluation: Assessment that captures nuances numbers miss—whether responses feel natural and helpful, whether reasoning is sound, and whether agents exhibit problematic behaviors. Includes human evaluation, think-aloud protocols, expert reviews, and failure analysis.
+
+A/B Testing: An empirical evaluation approach that deploys different agent versions to user subsets and compares outcomes, grounding evaluation in real-world usage rather than test datasets. Requires clear hypotheses, random assignment, comprehensive metric tracking, and statistical analysis.
+
+Prompt Engineering: The systematic process of crafting and refining prompts that shape language model behavior, including variation testing, systematic optimization, component ablation studies, and debugging for specific failures. Since prompts significantly influence agent decision-making, prompt refinement is central to improving decision quality.
+
+Tool Usage Analysis: Examination of patterns in how agents employ available tools, including invocation rates, success rates, tool sequences, parameter quality, and identification of unused tools. Reveals optimization opportunities for tool descriptions, combinations, and ecosystem design.
+
+Reasoning Quality Assessment: Evaluation of agent reasoning processes beyond just final outputs, including logical consistency checking, transparency evaluation, counterfactual reasoning tests, and verification procedures. Provides insights into decision-making processes and identifies when agents truly reason versus pattern match.
+
+Cost-Quality Tradeoff: Analysis of tradeoffs between decision quality and computational or financial costs, including response quality versus latency analysis, model selection optimization, tool call economics, and caching strategy evaluation. Informs strategic choices about where to invest resources.
+
+REVIEW QUESTIONS
+
+1. Why is evaluating agent decision-making more challenging than evaluating traditional software, and what fundamental challenges does this introduce?
+
+2. What are the three levels at which decision-making strategies exist within agent systems, and why must evaluation address all levels?
+
+3. What components should be included in a comprehensive evaluation framework, and how do success criteria, evaluation datasets, and metrics selection work together?
+
+4. How does automated testing against labeled datasets enable rapid iteration, and what types of metrics can be computed from such testing?
+
+5. What is the relationship between statistical significance testing and practical significance, and why is it important to distinguish between them?
+
+6. How do quantitative and qualitative evaluation methods complement each other, and when should each approach be prioritized?
+
+7. What are the key components of effective A/B testing for agent evaluation, and how does variant deployment infrastructure support this?
+
+8. Why is prompt engineering central to improving agent decision quality, and what systematic approaches can be used for prompt optimization?
+
+9. How does tool usage analysis reveal optimization opportunities, and what patterns should you look for when examining tool invocation data?
+
+10. What methods can be used to assess reasoning quality beyond just evaluating final outputs, and why is this important?
+
+11. How can cost-quality tradeoff analysis inform strategic decisions about model selection, tool usage, and caching strategies?
+
+12. What role does production monitoring play in continuous evaluation, and how does it differ from pre-deployment testing?
+
+13. Why is hypothesis-driven improvement more effective than making random changes, and how does incremental change strategy support this?
+
+14. What infrastructure and tooling are needed to support sophisticated evaluation, and how do automated pipelines, visualization tools, and experiment tracking systems contribute?
+
+15. How should evaluation approaches be adapted for different application domains like safety-critical systems, creative applications, and real-time systems?
+

@@ -31,6 +31,14 @@ async function getDirectoryStructure(dirPath: string, basePath: string = ''): Pr
           // Put review.txt at the top of files
           if (a.name.toLowerCase() === 'review.txt') return -1;
           if (b.name.toLowerCase() === 'review.txt') return 1;
+          // Sort numbered files numerically (1-, 2-, etc.) before alphabetical
+          const aMatch = a.name.match(/^(\d+)-/);
+          const bMatch = b.name.match(/^(\d+)-/);
+          if (aMatch && bMatch) {
+            return parseInt(aMatch[1]) - parseInt(bMatch[1]);
+          }
+          if (aMatch) return -1;
+          if (bMatch) return 1;
           return a.name.localeCompare(b.name);
         }),
       });
