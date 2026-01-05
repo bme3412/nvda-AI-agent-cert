@@ -10,9 +10,13 @@ export interface SummaryItem {
   children?: SummaryItem[];
 }
 
-function formatDisplayName(name: string): string {
+function formatDisplayName(name: string, isFolder: boolean = false): string {
   // Remove .txt extension
   let display = name.replace(/\.txt$/, '');
+  
+  // Extract leading number if present
+  const numberMatch = display.match(/^(\d+)-/);
+  const number = numberMatch ? numberMatch[1] : null;
   
   // Remove leading numbers and hyphens (e.g., "1-agent-architecture-design" -> "agent-architecture-design")
   display = display.replace(/^\d+-/, '');
@@ -34,7 +38,14 @@ function formatDisplayName(name: string): string {
     return word.charAt(0).toUpperCase() + word.slice(1);
   });
   
-  return formatted.join(' ');
+  const formattedName = formatted.join(' ');
+  
+  // For folders, prepend the number if it exists
+  if (isFolder && number) {
+    return `${number}. ${formattedName}`;
+  }
+  
+  return formattedName;
 }
 
 interface SidebarProps {
@@ -143,7 +154,7 @@ export default function Sidebar({ onFileSelect, selectedPath, isOpen = false }: 
     const isExpanded = expandedFolders.has(fullPath);
     const isSelected = selectedPath === fullPath;
     const isReview = item.name.toLowerCase() === 'review.txt';
-    const displayName = formatDisplayName(item.name);
+    const displayName = formatDisplayName(item.name, item.type === 'folder');
 
     if (item.type === 'folder') {
       return (

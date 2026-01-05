@@ -21,7 +21,7 @@ export default function Home() {
   }, []);
 
   const handleFileSelect = (path: string | undefined) => {
-    setSelectedPath(path);
+      setSelectedPath(path);
     if (window.innerWidth <= 768) {
       setSidebarOpen(false);
     }

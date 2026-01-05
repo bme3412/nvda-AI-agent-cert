@@ -448,7 +448,7 @@ export async function GET(
     if (!fileData) {
       return NextResponse.json({ questions: [] });
     }
-    
+
     const questions = generateQuestions(fileData.content, fileData.title);
     
     return NextResponse.json({ questions });

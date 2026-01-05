@@ -60,14 +60,27 @@ export async function GET() {
     const structure = await getDirectoryStructure(summariesPath);
     
     // Sort: folders first, then files
-    // Put review.txt at the top of files in each folder
+    // Sort folders numerically by their leading number, then alphabetically
     const sorted = structure.sort((a, b) => {
       if (a.type !== b.type) {
         return a.type === 'folder' ? -1 : 1;
       }
+      
+      // For folders, sort by leading number first
+      if (a.type === 'folder') {
+        const aMatch = a.name.match(/^(\d+)-/);
+        const bMatch = b.name.match(/^(\d+)-/);
+        if (aMatch && bMatch) {
+          return parseInt(aMatch[1]) - parseInt(bMatch[1]);
+        }
+        if (aMatch) return -1;
+        if (bMatch) return 1;
+      }
+      
       // Put review.txt at the top of files
       if (a.name.toLowerCase() === 'review.txt') return -1;
       if (b.name.toLowerCase() === 'review.txt') return 1;
+      
       return a.name.localeCompare(b.name);
     });
 
