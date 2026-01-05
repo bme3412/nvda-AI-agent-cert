@@ -1232,3 +1232,10 @@
   background: #cbd5e0;
 }
 
+.quizSection {
+  margin-top: 32px;
+  margin-bottom: 48px;
+  width: 100%;
+  max-width: 840px;
+}
+

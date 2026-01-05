@@ -169,16 +169,18 @@ export default function Sidebar({ onFileSelect, selectedPath, isOpen = false }: 
       );
     } else {
       const isRead = readFiles.has(fullPath);
+      
       return (
-        <div
-          key={fullPath}
-          className={`${styles.fileItem} ${isSelected ? styles.selected : ''} ${isReview ? styles.reviewFile : ''} ${isRead ? styles.read : ''}`}
-          style={{ paddingLeft: `${depth * 16 + 8}px` }}
-          onClick={() => onFileSelect(fullPath)}
-        >
-          <span className={styles.fileIcon}>{isReview ? '📋' : '📄'}</span>
-          <span className={styles.fileName}>{displayName}</span>
-          {isRead && <span className={styles.readIndicator}>✓</span>}
+        <div key={fullPath}>
+          <div
+            className={`${styles.fileItem} ${isSelected ? styles.selected : ''} ${isReview ? styles.reviewFile : ''} ${isRead ? styles.read : ''}`}
+            style={{ paddingLeft: `${depth * 16 + 8}px` }}
+            onClick={() => onFileSelect(fullPath)}
+          >
+            <span className={styles.fileIcon}>{isReview ? '📋' : '📄'}</span>
+            <span className={styles.fileName}>{displayName}</span>
+            {isRead && <span className={styles.readIndicator}>✓</span>}
+          </div>
         </div>
       );
     }
