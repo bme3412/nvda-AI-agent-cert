@@ -1,14 +1,3 @@
-NVIDIA Agent Intelligence Toolkit FAQ
-NVIDIA Agent Intelligence (AIQ) toolkit frequently asked questions (FAQ).
-
-Do I Need to Rewrite All of my Existing Code to Use AIQ Toolkit?
-No, AIQ toolkit is 100% opt in. While we encourage users to wrap (decorate) every tool and agent to get the most out of the profiler, you have the freedom to integrate to whatever level you want - tool level, agent level, or entire workflow level. You have the freedom to start small and where you believe you’ll see the most value and expand from there.
-
-Is AIQ Toolkit another LLM or Agentic Framework?
-No, AIQ toolkit is designed to work alongside, not replace, your existing agentic frameworks — whether they are enterprise-grade systems or simple Python-based agents.
-
-Is AIQ Toolkit An Attempt to Solve Agent-to-Agent Communication?
-No, agent communication is best handled over existing protocols, such as MCP, HTTP, gRPC, and sockets.
-
-Is AIQ Toolkit an Observability Platform?
-No, while AIQ toolkit is able to collect and transmit fine-grained telemetry to help with optimization and evaluation, it does not replace your preferred observability platform and data collection application.
+The NVIDIA Agent Intelligence (AIQ) toolkit is a flexible, opt-in system designed to enhance your existing agentic workflows without requiring major code rewrites. You can integrate it at whatever level makes sense for your needs—whether that's wrapping individual tools, entire agents, or complete workflows. While NVIDIA encourages users to decorate every tool and agent to maximize the profiler's benefits, you have complete freedom to start small, focusing on areas where you expect the most value, and then expand your integration from there.
+It's important to understand what AIQ toolkit is not. It's not a new LLM or agentic framework attempting to replace what you're already using. It's not trying to solve agent-to-agent communication, which is better handled through established protocols like MCP, HTTP, gRPC, and sockets. And while it can collect and transmit detailed telemetry data, it's not an observability platform meant to replace your existing monitoring and data collection tools.
+Instead, AIQ toolkit is designed as a supplementary layer that works alongside your current infrastructure. It complements both enterprise-grade systems and simple Python-based agents, providing profiling capabilities and fine-grained telemetry to help with optimization and evaluation. The toolkit integrates with what you already have in place, giving you insights and analysis without disrupting your existing setup or requiring you to abandon the frameworks and tools you're already invested in.Claude is AI and can make mistakes. Please double-check responses. Sonnet 4.5

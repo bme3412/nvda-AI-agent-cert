@@ -4435,6 +4435,1470 @@ const QUIZ_DATA: QuizSet = {
       correctAnswer: 3,
       explanation: 'Transparent communication, strategic guidance, increased AI literacy, and updated interaction models can mitigate anxieties about perceived loss of control and ethical concerns. These elements help align autonomous decisions with organizational values and build trust.'
     }
+  ],
+  
+  '4-deployment-scaling/1-agentic-AI-factory.txt': [
+    {
+      id: 'q1',
+      question: 'What foundational technology provides agility, scalability, and resilience for the Enterprise AI Factory?',
+      options: [
+        'Traditional virtual machine hypervisors managing dedicated compute resources for each AI workload independently',
+        'Proprietary cloud platforms requiring vendor-specific infrastructure and limiting deployment flexibility across environments',
+        'Enterprise Cloud Native Platform with Kubernetes orchestrating containers and managing microservice-based agent architectures',
+        'Monolithic application servers running all AI services on single physical machines without containerization'
+      ],
+      correctAnswer: 2,
+      explanation: 'The Enterprise Cloud Native Platform, with Kubernetes at its core, provides agility, scalability, and resilience. Kubernetes orchestrates containers, manages microservice-based agent architectures, and enables dynamic automation including deployment, scaling, self-healing, and resource management for GPU resources.'
+    },
+    {
+      id: 'q2',
+      question: 'What are the two levels of NVIDIA-Certified Storage program certification?',
+      options: [
+        'Foundation for PCIe-optimized configurations and Enterprise for HGX reference configurations',
+        'Basic for small deployments and Advanced for large-scale enterprise implementations',
+        'Standard for CPU-based systems and Premium for GPU-accelerated infrastructure',
+        'Developer for testing environments and Production for live operational deployments'
+      ],
+      correctAnswer: 0,
+      explanation: 'The NVIDIA-Certified Storage program offers Foundation-level certification for PCIe-optimized reference configurations (specifically for NVIDIA RTX PRO 6000 Blackwell Server Edition) and Enterprise-level certification for HGX reference configurations (particularly for NVIDIA HGX B200).'
+    },
+    {
+      id: 'q3',
+      question: 'What role does the artifact repository serve in on-premises Enterprise AI Factory setups following GitOps principles?',
+      options: [
+        'Exclusively hosting public container images without any local caching or version control capabilities',
+        'Only storing source code repositories without any support for containerized applications or models',
+        'Primarily managing user authentication credentials and access control policies for platform services',
+        'Serving as secure, version-controlled local hub for NVIDIA AI Enterprise artifacts like NIMs and models'
+      ],
+      correctAnswer: 3,
+      explanation: 'The artifact repository serves as a secure, version-controlled local hub for essential NVIDIA AI Enterprise artifacts, including containerized NVIDIA NIM microservices, AI models, libraries, and tools. It enables security scanning, reliable access without public registries, dependency management, and reproducible deployments.'
+    },
+    {
+      id: 'q4',
+      question: 'How does a GitOps controller maintain system consistency in the Enterprise AI Factory?',
+      options: [
+        'It manually deploys configurations based on administrator approval without any automated reconciliation processes',
+        'It continuously monitors desired state in Git and automatically reconciles differences with actual system state',
+        'It exclusively handles network routing without involvement in application deployment or configuration management',
+        'It only validates syntax of configuration files without actually applying changes to infrastructure'
+      ],
+      correctAnswer: 1,
+      explanation: 'A GitOps controller continuously monitors the desired state stored in Git repositories and ensures the actual state matches by automatically reconciling any differences. It operates as a Kubernetes controller running a reconciliation loop to maintain consistency between Git and the cluster.'
+    },
+    {
+      id: 'q5',
+      question: 'What does Time To First Token (TTFT) measure in AI agent observability?',
+      options: [
+        'The delay before the agent produces its initial response token after receiving a request',
+        'The total duration required to process all tokens in the complete response sequence',
+        'The average time between consecutive token generations throughout the entire response',
+        'The latency for loading model weights into GPU memory before beginning inference'
+      ],
+      correctAnswer: 0,
+      explanation: 'TTFT (Time To First Token) measures the delay before the agent produces its initial response token after receiving a request. This is a critical latency metric distinct from overall throughput or end-to-end latency measurements.'
+    },
+    {
+      id: 'q6',
+      question: 'What observability metrics specifically measure the quality and correctness of AI agent outputs?',
+      options: [
+        'Exclusively latency measurements including TTFT, TPS, and end-to-end response timing',
+        'Only resource utilization tracking GPU, CPU, and memory consumption during operations',
+        'Task completion rate, accuracy/relevance, faithfulness to sources, and reasoning step correctness',
+        'Primarily error rates and fault frequencies across different agent workflow components'
+      ],
+      correctAnswer: 2,
+      explanation: 'Accuracy and faithfulness metrics include task completion rate (percentage of successfully completed tasks), accuracy/relevance of responses (particularly for RAG systems), faithfulness to provided sources, and correctness of individual reasoning steps or tool outputs.'
+    },
+    {
+      id: 'q7',
+      question: 'What security approach does the Enterprise AI Factory implement at the network level?',
+      options: [
+        'Relying exclusively on perimeter firewalls without any internal network segmentation or traffic controls',
+        'Defense-in-depth strategies using network policies to control traffic flow and isolate workloads',
+        'Completely open internal networks trusting all services to implement their own security measures',
+        'Single-layer encryption at the application level without any network-based traffic restrictions'
+      ],
+      correctAnswer: 1,
+      explanation: 'The first line of defense uses defense-in-depth strategies, primarily utilizing network policies native to the container orchestration platform. These policies control traffic flow between services and pods, isolating workloads and restricting communication to authorized pathways only.'
+    },
+    {
+      id: 'q8',
+      question: 'At what levels is Role-Based Access Control (RBAC) implemented in the Enterprise AI Factory?',
+      options: [
+        'Only at the operating system level without any application or platform-specific controls',
+        'Exclusively within database systems without orchestration or AI platform RBAC implementations',
+        'Solely in the network layer without involvement in application or data access management',
+        'Orchestration platform RBAC, integrated AI/ML platform RBAC, and database-level RBAC for granular data access'
+      ],
+      correctAnswer: 3,
+      explanation: 'RBAC is implemented at multiple levels: orchestration platform RBAC (controlling cluster resources), integrated platform RBAC (AI/ML platform-specific functionalities), and database-level RBAC (fine-grained access to data elements like datasets, tables, or collections).'
+    },
+    {
+      id: 'q9',
+      question: 'What is the primary responsibility of the IT Admin role regarding the enterprise cloud native platform?',
+      options: [
+        'Platform Admin & Provisioning managing OS, hardware, orchestration lifecycle, and ensuring GPU resource availability',
+        'Exclusively configuring network policies without any involvement in compute or storage provisioning',
+        'Only monitoring system logs without any administrative privileges for infrastructure changes',
+        'Developing AI models and applications without any platform infrastructure management responsibilities'
+      ],
+      correctAnswer: 0,
+      explanation: 'The IT Admin role handles Platform Admin & Provisioning, which includes managing OS, hardware, orchestration lifecycle, and compute resources (especially GPUs). This role ensures stability and resource availability for the AI Factory infrastructure.'
+    },
+    {
+      id: 'q10',
+      question: 'What emerging standard aims to provide structured ways for AI agents to discover and interact with external data sources?',
+      options: [
+        'OpenTelemetry protocol exclusively designed for observability and tracing without data access capabilities',
+        'Kubernetes Custom Resource Definitions for declaring AI agent configurations and permissions',
+        'Model Context Protocol (MCP) enabling structured agent interaction with external data and tools',
+        'NVIDIA NIM microservices providing standardized deployment APIs without data connector functionality'
+      ],
+      correctAnswer: 2,
+      explanation: 'Model Context Protocol (MCP) is an emerging standard that aims to provide structured ways for AI agents to discover and interact with external data sources and tools, facilitating better integration with enterprise systems.'
+    },
+    {
+      id: 'q11',
+      question: 'What capabilities does NVIDIA NeMo provide within the AI platform?',
+      options: [
+        'Exclusively GPU driver management without any model development or training capabilities',
+        'Cloud-native, end-to-end framework for building, training, and deploying LLMs and AI models',
+        'Only inference optimization without any support for model training or customization',
+        'Solely observability and monitoring tools without model development or deployment features'
+      ],
+      correctAnswer: 1,
+      explanation: 'NVIDIA NeMo provides a cloud-native, end-to-end framework for building, training, and deploying large language models (LLMs) and other AI models. This enables organizations to efficiently develop and customize generative AI systems within the AI platform.'
+    },
+    {
+      id: 'q12',
+      question: 'What does NVIDIA\'s Mega Omniverse Blueprint enable for supply chain optimization?',
+      options: [
+        'Simulating warehouse operations using physics-informed digital twins and reinforcement learning techniques',
+        'Exclusively managing inventory databases without any simulation or optimization capabilities',
+        'Only visualizing existing warehouse layouts without any operational optimization features',
+        'Primarily handling shipping logistics without warehouse operations or physics-based modeling'
+      ],
+      correctAnswer: 0,
+      explanation: 'The Mega Omniverse Blueprint simulates warehouse operations for supply chain optimization using physics-informed digital twins and reinforcement learning. This enables enterprises to test and optimize warehouse configurations before physical implementation.'
+    },
+    {
+      id: 'q13',
+      question: 'How does the storage solution address the challenge of becoming a bottleneck in AI workflows?',
+      options: [
+        'Using exclusively local SSDs without any network-attached storage to minimize access latency',
+        'Implementing only sequential read optimization without supporting random access patterns',
+        'Relying solely on public cloud storage without any on-premises infrastructure components',
+        'Utilizing tiered storage architecture with NVIDIA-Certified Storage meeting performance and reliability standards'
+      ],
+      correctAnswer: 3,
+      explanation: 'The Enterprise AI Factory\'s storage solution utilizes a tiered storage architecture including NVIDIA-Certified Storage, which adheres to stringent performance and reliability standards specifically for AI tasks. This ensures efficient data access for large model weights, Vector Database I/O, and knowledgebases.'
+    },
+    {
+      id: 'q14',
+      question: 'What functionality does the Digital Human Blueprint provide using avatar animation and speech AI?',
+      options: [
+        'Warehouse simulation and supply chain optimization through physics-based digital twins',
+        'Marketing content generation using multimodal extraction and hybrid vector search',
+        'Virtual customer service assistants with multimodal reasoning capabilities',
+        'Code generation and software development automation for enterprise applications'
+      ],
+      correctAnswer: 2,
+      explanation: 'The Digital Human Blueprint uses avatar animation, speech AI, and multimodal reasoning to create virtual customer service assistants. This enables more natural and engaging interactions with customers through AI-powered digital humans.'
+    },
+    {
+      id: 'q15',
+      question: 'What security mechanisms are employed for AI agent and model security in the Enterprise AI Factory?',
+      options: [
+        'Relying exclusively on network firewalls without any application-level security controls',
+        'Tools like NVIDIA NeMo Guardrails ensuring input validation, output filtering, and secure execution',
+        'Only database encryption without any validation of inputs or outputs from models',
+        'Exclusively using access control lists without any content filtering or validation mechanisms'
+      ],
+      correctAnswer: 1,
+      explanation: 'Tools such as NVIDIA NeMo Guardrails and partner solutions are employed for AI agent and model security. These tools ensure input validation, output filtering, and secure execution, adhering to internally validated best practices for safe AI operations.'
+    }
+  ],
+  
+  '4-deployment-scaling/2-TensorRTLLM-Github.txt': [
+    {
+      id: 'q1',
+      question: 'What foundational framework is TensorRT LLM architected on to provide its optimization capabilities?',
+      options: [
+        'TensorFlow with custom operators designed specifically for efficient inference on NVIDIA hardware',
+        'JAX with XLA compilation optimizing models automatically for GPU execution and deployment',
+        'PyTorch providing high-level Python LLM API supporting wide range of inference setups',
+        'Pure C++ implementation with custom CUDA kernels without any high-level framework dependencies'
+      ],
+      correctAnswer: 2,
+      explanation: 'TensorRT LLM is architected on PyTorch and provides a high-level Python LLM API that supports a wide range of inference setups from single-GPU to multi-GPU or multi-node deployments. This PyTorch-native architecture allows developers to experiment and extend functionality easily.'
+    },
+    {
+      id: 'q2',
+      question: 'What state-of-the-art optimizations does TensorRT LLM provide for efficient LLM inference?',
+      options: [
+        'Exclusively model compression techniques without any runtime optimization or batching capabilities',
+        'Only quantization support without custom kernels, caching mechanisms, or batching strategies',
+        'Solely GPU memory management without attention optimizations or speculative decoding features',
+        'Custom attention kernels, inflight batching, paged KV caching, quantization, and speculative decoding'
+      ],
+      correctAnswer: 3,
+      explanation: 'TensorRT LLM provides state-of-the-art optimizations including custom attention kernels, inflight batching, paged KV caching, quantization (FP8, FP4, INT4 AWQ, INT8 SmoothQuant), speculative decoding, and more. These optimizations enable efficient inference on NVIDIA GPUs.'
+    },
+    {
+      id: 'q3',
+      question: 'What quantization formats does TensorRT LLM support for model optimization?',
+      options: [
+        'FP8, FP4, INT4 AWQ, and INT8 SmoothQuant for various precision-performance tradeoffs',
+        'Exclusively FP16 and FP32 floating-point formats without any integer quantization support',
+        'Only INT8 quantization without support for lower precision or floating-point formats',
+        'Solely FP8 precision without any integer quantization or lower bit-width options'
+      ],
+      correctAnswer: 0,
+      explanation: 'TensorRT LLM supports multiple quantization formats including FP8, FP4, INT4 AWQ, and INT8 SmoothQuant. These various precision options allow developers to choose appropriate tradeoffs between model accuracy and inference performance.'
+    },
+    {
+      id: 'q4',
+      question: 'What is TensorRT LLM\'s deprecation policy migration period after features are marked as deprecated?',
+      options: [
+        '1-month migration period requiring rapid updates to avoid breaking changes in deployments',
+        '6-month migration period allowing extended time for developers to update their implementations',
+        '3-month migration period during which deprecated features continue working but trigger warnings',
+        '12-month migration period providing maximum stability for production systems and gradual transitions'
+      ],
+      correctAnswer: 2,
+      explanation: 'TensorRT LLM provides a 3-month migration period after deprecation. During this period, deprecated APIs, tools, or parameters continue to work but trigger warnings, giving developers time to migrate before removal.'
+    },
+    {
+      id: 'q5',
+      question: 'What impressive performance milestone did TensorRT LLM achieve running Llama 4 on B200 GPUs?',
+      options: [
+        'Processing over 40,000 tokens per second demonstrating exceptional throughput on latest GPU hardware',
+        'Achieving approximately 10,000 tokens per second with standard optimization techniques on consumer GPUs',
+        'Reaching about 25,000 tokens per second using aggressive quantization and batching strategies',
+        'Delivering roughly 30,000 tokens per second through model parallelism across multiple devices'
+      ],
+      correctAnswer: 0,
+      explanation: 'TensorRT LLM can run Llama 4 at over 40,000 tokens per second on B200 GPUs. This demonstrates the exceptional performance capabilities of TensorRT LLM when combined with NVIDIA\'s latest Blackwell architecture.'
+    },
+    {
+      id: 'q6',
+      question: 'What barrier did Blackwell GPUs break when running Meta\'s Llama 4 Maverick with TensorRT LLM?',
+      options: [
+        'The 500 tokens per second per user barrier enabling real-time conversational AI experiences',
+        'The 1,000 tokens per second per user barrier delivering unprecedented throughput for users',
+        'The 750 tokens per second per user threshold allowing efficient multi-user deployments',
+        'The 2,000 tokens per second per user milestone achieving extreme performance optimization'
+      ],
+      correctAnswer: 1,
+      explanation: 'Blackwell breaks the 1,000 TPS (tokens per second) per user barrier with Meta\'s Llama 4 Maverick. This represents a significant milestone in per-user throughput for LLM inference.'
+    },
+    {
+      id: 'q7',
+      question: 'With which NVIDIA technologies does TensorRT LLM\'s LLM API integrate seamlessly?',
+      options: [
+        'NVIDIA Dynamo and Triton Inference Server as part of broader inference ecosystem',
+        'Exclusively NVIDIA GPUs without any software framework or inference server integrations',
+        'Only Triton Inference Server without support for other NVIDIA software ecosystem components',
+        'Solely CUDA toolkit without integration with higher-level deployment or serving platforms'
+      ],
+      correctAnswer: 0,
+      explanation: 'The LLM API integrates seamlessly with the broader inference ecosystem, including NVIDIA Dynamo and the Triton Inference Server. This integration enables comprehensive deployment and serving capabilities.'
+    },
+    {
+      id: 'q8',
+      question: 'What deployment configurations does TensorRT LLM\'s high-level Python API support?',
+      options: [
+        'Wide range from single-GPU to multi-GPU or multi-node deployments with parallelism strategies',
+        'Only single-GPU setups without any distributed computing or multi-device deployment capabilities',
+        'Exclusively multi-node clusters requiring minimum of eight GPUs for any operational deployment',
+        'Solely edge devices with limited compute resources without datacenter-scale deployment support'
+      ],
+      correctAnswer: 0,
+      explanation: 'TensorRT LLM provides a high-level Python LLM API that supports a wide range of inference setups from single-GPU to multi-GPU or multi-node deployments. It includes built-in support for various parallelism strategies.'
+    },
+    {
+      id: 'q9',
+      question: 'What advantage does TensorRT LLM\'s PyTorch-native architecture provide for developers?',
+      options: [
+        'Rigid structure requiring developers to use only pre-defined models without modification options',
+        'Modular design allowing developers to experiment with runtime or extend functionality easily',
+        'Complete abstraction from underlying implementation preventing any customization or experimentation',
+        'Exclusively compiled execution without any dynamic modification or extension capabilities'
+      ],
+      correctAnswer: 1,
+      explanation: 'TensorRT LLM is designed to be modular and easy to modify. Its PyTorch-native architecture allows developers to experiment with the runtime or extend functionality, and several popular models can be customized using native PyTorch code.'
+    },
+    {
+      id: 'q10',
+      question: 'What does TensorRT LLM\'s "Day-0 support" refer to in the context of new model releases?',
+      options: [
+        'Delivering immediate support for latest open-weights models upon or shortly after release',
+        'Supporting models only after extensive testing period following their public release and validation',
+        'Providing optimization support for models within weeks of their initial publication and availability',
+        'Exclusively supporting models after they achieve widespread adoption in the developer community'
+      ],
+      correctAnswer: 0,
+      explanation: 'TensorRT LLM delivers Day-0 support for latest models like OpenAI\'s GPT-OSS-120B and GPT-OSS-20B, LG AI Research\'s EXAONE 4.0, and others. This means support is available immediately upon or very shortly after model release.'
+    },
+    {
+      id: 'q11',
+      question: 'What advanced batching technique does TensorRT LLM implement for improved inference efficiency?',
+      options: [
+        'Inflight batching enabling efficient request processing and resource utilization during inference',
+        'Static batching requiring all requests to wait until batch is full before processing begins',
+        'Simple dynamic batching grouping requests without any sophisticated scheduling or optimization',
+        'Exclusively offline batching processing pre-collected requests without real-time capabilities'
+      ],
+      correctAnswer: 0,
+      explanation: 'TensorRT LLM implements inflight batching as one of its state-of-the-art optimizations. This technique enables more efficient processing of requests and better resource utilization compared to traditional batching approaches.'
+    },
+    {
+      id: 'q12',
+      question: 'How does TensorRT LLM communicate deprecation notices to developers using the library?',
+      options: [
+        'Documentation in Release Notes, source code statements, and runtime deprecation warnings',
+        'Exclusively through email notifications sent to registered developers without any code-level warnings',
+        'Only via social media announcements without any formal documentation or in-code notifications',
+        'Solely through third-party changelog aggregators without official NVIDIA communication channels'
+      ],
+      correctAnswer: 0,
+      explanation: 'Deprecation notices are documented in Release Notes, deprecated APIs include statements in source code indicating when they were deprecated, and if used, they issue runtime deprecation warnings. This multi-channel approach ensures developers are well-informed.'
+    },
+    {
+      id: 'q13',
+      question: 'What performance achievement did NVIDIA announce for DeepSeek-R1 inference on Blackwell GPUs?',
+      options: [
+        'World-record DeepSeek-R1 inference performance demonstrating breakthrough capabilities with TensorRT LLM',
+        'Baseline performance matching previous generation GPUs without significant optimization advantages',
+        'Moderate performance improvements showing incremental gains over previous generation hardware',
+        'Competitive performance reaching parity with alternative inference frameworks on same hardware'
+      ],
+      correctAnswer: 0,
+      explanation: 'NVIDIA Blackwell delivers world-record DeepSeek-R1 inference performance with TensorRT LLM. This represents breakthrough performance for this specific model on NVIDIA\'s latest GPU architecture.'
+    },
+    {
+      id: 'q14',
+      question: 'What memory optimization technique does TensorRT LLM use for managing key-value caches?',
+      options: [
+        'Paged KV caching enabling efficient memory utilization and management during inference',
+        'Contiguous memory allocation requiring pre-allocation of maximum possible cache size',
+        'Simple dynamic allocation without any sophisticated memory management or paging strategies',
+        'Exclusively static buffers fixed at model initialization without runtime flexibility'
+      ],
+      correctAnswer: 0,
+      explanation: 'TensorRT LLM uses paged KV caching as one of its state-of-the-art optimizations. This technique enables more efficient memory utilization for key-value caches during inference compared to contiguous allocation approaches.'
+    },
+    {
+      id: 'q15',
+      question: 'What happens after the 3-month migration period ends for deprecated TensorRT LLM features?',
+      options: [
+        'Deprecated APIs, tools, or parameters are removed consistent with semantic versioning practices',
+        'Deprecated features continue indefinitely with warnings but remain fully functional for backward compatibility',
+        'Features are disabled but remain in codebase for potential re-enablement in future releases',
+        'All deprecated functionality is immediately deleted without any versioning or compatibility considerations'
+      ],
+      correctAnswer: 0,
+      explanation: 'After the 3-month migration period ends, deprecated APIs, tools, or parameters are removed in a manner consistent with semantic versioning. Major version changes may include these breaking removals.'
+    }
+  ],
+  
+  '4-deployment-scaling/3-measure-improve-AI-workload.txt': [
+    {
+      id: 'q1',
+      question: 'What is the primary purpose of NVIDIA DGX Cloud Benchmarking beyond comparing raw GPU specifications?',
+      options: [
+        'Assessing real-world, end-to-end AI workload performance and total cost of ownership across platforms',
+        'Exclusively measuring individual GPU floating-point operations without considering infrastructure or software factors',
+        'Only comparing hourly cost per GPU across different cloud providers without performance analysis',
+        'Primarily validating hardware specifications match manufacturer datasheets without application-level testing'
+      ],
+      correctAnswer: 0,
+      explanation: 'DGX Cloud Benchmarking assesses training and inference performance across AI workloads and platforms, accounting for infrastructure software, cloud platforms, and application configurations—not just GPUs. It focuses on real-world, end-to-end performance and total cost of ownership.'
+    },
+    {
+      id: 'q2',
+      question: 'What impressive performance improvement was achieved when training Llama 3 70B by scaling GPU count?',
+      options: [
+        'Up to 97% reduction in time to train 1 trillion tokens for only 2.6% cost increase',
+        'Approximately 50% reduction in training time with proportional 50% increase in overall costs',
+        'About 75% reduction in time to solution requiring 80% additional investment in resources',
+        'Nearly 85% faster training completion but with 60% higher total cost of ownership'
+      ],
+      correctAnswer: 0,
+      explanation: 'When training Llama 3 70B, scaling GPU count achieved up to a 97% reduction in time to train 1 trillion tokens (from 115.4 days to 3.8 days) for a cost increase of only 2.6%, demonstrating exceptional efficiency.'
+    },
+    {
+      id: 'q3',
+      question: 'Why does perfect linear scaling rarely occur when increasing GPU counts for AI training?',
+      options: [
+        'Increased communication overhead at higher GPU counts causes slight deviation from perfect linearity',
+        'Hardware limitations in GPU memory bandwidth prevent any scaling beyond eight devices',
+        'Software frameworks inherently cannot support more than 64 GPUs in single training job',
+        'Cloud providers intentionally throttle performance to maintain consistent pricing across configurations'
+      ],
+      correctAnswer: 0,
+      explanation: 'While well-optimized AI workloads can come very close to perfect linear scaling, the slight deviation at higher GPU counts is typically due to increased communication overhead between GPUs during distributed training operations.'
+    },
+    {
+      id: 'q4',
+      question: 'What key advantage does FP8 precision provide compared to BF16 for AI model training?',
+      options: [
+        'Significantly increased throughput and cost-efficiency due to higher math throughput and lower memory requirements',
+        'FP8 eliminates all numerical stability concerns making it universally superior to BF16',
+        'FP8 provides identical performance to BF16 but requires less storage for checkpoints',
+        'Only marginal performance gains insufficient to justify the complexity of implementation'
+      ],
+      correctAnswer: 0,
+      explanation: 'FP8 precision significantly increases throughput and cost-efficiency compared to BF16 due to higher math or communication throughput and lower memory bandwidth requirements. This can also enable training larger models on fewer GPUs.'
+    },
+    {
+      id: 'q5',
+      question: 'What challenge does FP8 precision introduce that requires specialized mitigation techniques?',
+      options: [
+        'Narrower dynamic range that can cause instability or divergence requiring per-tensor scaling techniques',
+        'FP8 requires completely different optimizer algorithms that are incompatible with existing training pipelines',
+        'FP8 consumes more GPU memory than BF16 despite offering higher computational throughput',
+        'Complete incompatibility with modern GPU architectures limiting adoption to legacy systems'
+      ],
+      correctAnswer: 0,
+      explanation: 'FP8 training introduces challenges such as narrower dynamic range that can cause instability or divergence. Specialized techniques providing per-tensor or sub-block scaling for conversions between BF16 and FP8 are required to maintain numerical stability.'
+    },
+    {
+      id: 'q6',
+      question: 'How does Transformer Engine in Hopper and Blackwell architectures help developers use FP8?',
+      options: [
+        'Enabling selective FP8 use on per-layer basis, using reduced precision only where it won\'t affect accuracy',
+        'By completely eliminating the need for any BF16 computations throughout entire training process',
+        'Automatically converting all operations to FP8 without requiring any developer intervention or configuration',
+        'Exclusively handling inference workloads without providing any benefits during model training phases'
+      ],
+      correctAnswer: 0,
+      explanation: 'Transformer Engine in Hopper and Blackwell architectures helps developers use FP8 selectively on a per-layer basis, using reduced precision only where it will not adversely affect model accuracy and training stability.'
+    },
+    {
+      id: 'q7',
+      question: 'What performance improvement did NeMo Framework optimization achieve in 2024?',
+      options: [
+        'About 25% increase in overall platform performance with proportional cost savings due to hardware-software co-engineering',
+        'Approximately 10% increase in platform performance through minor efficiency improvements and bug fixes',
+        'Nearly 50% performance boost requiring significant changes to existing training workflows and configurations',
+        'Roughly 15% improvement limited to specific model architectures without broader applicability'
+      ],
+      correctAnswer: 0,
+      explanation: 'In 2024, NeMo software optimization resulted in a 25% increase in overall platform performance with proportional cost savings to users. This was achieved through deep hardware and software co-engineering efforts.'
+    },
+    {
+      id: 'q8',
+      question: 'Why does framework selection significantly impact training performance even with identical models and hardware?',
+      options: [
+        'Frameworks differ in workload infrastructure fingerprint, communication patterns, and continuous optimization efforts',
+        'Only licensing costs vary between frameworks without any actual performance differences in training',
+        'Framework selection exclusively affects user interface without influencing underlying computation efficiency',
+        'Differences are negligible making framework choice irrelevant for performance optimization considerations'
+      ],
+      correctAnswer: 0,
+      explanation: 'Framework choice affects performance due to differences in workload infrastructure fingerprint (how it interacts with infrastructure), communication patterns (efficiency of data exchange), and continuous optimization efforts by framework developers.'
+    },
+    {
+      id: 'q9',
+      question: 'What advantage does training models in FP8 provide for subsequent inference deployment?',
+      options: [
+        'Models can be deployed directly for FP8 inference reducing inference costs without additional quantization',
+        'FP8-trained models require mandatory quantization before any inference deployment can begin',
+        'FP8 training provides no inference benefits requiring full BF16 precision for deployment',
+        'Inference performance remains identical regardless of training precision used during development'
+      ],
+      correctAnswer: 0,
+      explanation: 'Training a model in FP8 can additionally reduce inference costs since the model can be deployed directly for FP8 inference without requiring additional quantization steps or post-training modifications.'
+    },
+    {
+      id: 'q10',
+      question: 'What is the objective of NVIDIA DGX Cloud Benchmarking Performance Explorer for GPU count optimization?',
+      options: [
+        'Identifying ideal GPU count that minimizes both total training time and costs for given workloads',
+        'Always recommending maximum available GPU count regardless of workload characteristics or budget constraints',
+        'Exclusively minimizing costs without considering training time or throughput requirements for projects',
+        'Only analyzing single-GPU performance without any multi-GPU or distributed training considerations'
+      ],
+      correctAnswer: 0,
+      explanation: 'The Performance Explorer helps users identify the ideal GPU count that minimizes both total training time and costs. The objective is finding the right number of GPUs that maximizes throughput and minimizes expenses across projects.'
+    },
+    {
+      id: 'q11',
+      question: 'What benefit does completing training work sooner provide beyond just faster iteration cycles?',
+      options: [
+        'Faster time to market where trained model can be deployed to generate value for organization',
+        'Slower time to market delaying when trained models can be deployed to generate organizational value',
+        'Training completion speed has no relationship to business value generation or deployment timelines',
+        'Only technical benefits without any impact on business outcomes or revenue generation potential'
+      ],
+      correctAnswer: 0,
+      explanation: 'Completing training work sooner means faster time to market where the trained model can be deployed to generate value for the organization. This represents a significant business benefit beyond just technical efficiency.'
+    },
+    {
+      id: 'q12',
+      question: 'Which organizations are early adopters of DGX Cloud Benchmarking Performance Recipes?',
+      options: [
+        'Leading cloud providers AWS, Google Cloud, Microsoft Azure, Oracle Cloud, and partners CoreWeave, Crusoe, Nebius',
+        'Exclusively academic institutions and research laboratories without any commercial cloud provider participation',
+        'Only NVIDIA\'s internal teams without external validation or adoption by industry partners',
+        'Primarily small startups without involvement from major cloud infrastructure providers or enterprises'
+      ],
+      correctAnswer: 0,
+      explanation: 'Early adopters include leading cloud providers AWS, Google Cloud, Microsoft Azure, and Oracle Cloud, as well as NVIDIA cloud partners CoreWeave, Crusoe, and Nebius, demonstrating broad industry adoption.'
+    },
+    {
+      id: 'q13',
+      question: 'What approach does NVIDIA take to ensure DGX Cloud Benchmarking optimizations remain practical?',
+      options: [
+        'Characterizing real user workloads through Benchmarking Recipes to ground optimizations in practical scenarios',
+        'Exclusively using synthetic benchmarks without considering real-world application scenarios or workloads',
+        'Focusing solely on theoretical maximum performance without validation against actual usage patterns',
+        'Only testing with NVIDIA\'s internal workloads without external validation or customer input'
+      ],
+      correctAnswer: 0,
+      explanation: 'By leveraging DGX Cloud Benchmarking Recipes, NVIDIA characterizes real user workloads to ensure optimizations are grounded in practical scenarios. This ensures recommendations are relevant to actual deployment situations.'
+    },
+    {
+      id: 'q14',
+      question: 'Why does DGX Cloud Benchmarking emphasize continuous performance assessment beyond initial validation?',
+      options: [
+        'Ensuring delivered throughput closely matches theoretical specifications throughout infrastructure lifecycle',
+        'Initial validation provides sufficient data making ongoing assessment redundant and unnecessary overhead',
+        'Hardware specifications never change making continuous monitoring wasteful use of engineering resources',
+        'Only required for compliance purposes without any technical or performance optimization benefits'
+      ],
+      correctAnswer: 0,
+      explanation: 'Continuous performance assessment, beyond initial infrastructure validation, ensures that delivered throughput closely matches theoretical specifications. This ongoing validation helps identify when performance degrades or optimization opportunities arise.'
+    },
+    {
+      id: 'q15',
+      question: 'How does DGX Cloud Benchmarking evolve to remain relevant for AI industry needs?',
+      options: [
+        'Regular updates incorporating new models, emerging hardware platforms, and innovative software optimizations',
+        'Remaining static after initial release to maintain consistency and comparability across time periods',
+        'Exclusively focusing on legacy hardware without adapting to new GPU architectures or frameworks',
+        'Only updating pricing information without changing performance testing methodologies or model coverage'
+      ],
+      correctAnswer: 0,
+      explanation: 'DGX Cloud Benchmarking is designed to evolve alongside the AI industry with regular updates incorporating new models, emerging hardware platforms, and innovative software optimizations. This ensures users have access to most relevant and up-to-date insights.'
+    }
+  ],
+  
+  '4-deployment-scaling/4-Kubernetes-glossary.txt': [
+    {
+      id: 'q1',
+      question: 'What foundational concept did Kubernetes introduce to enable multiple containers to share resources without conflict?',
+      options: [
+        'Pods grouping multiple containers on host machines with shared services like directories, IP addresses, or storage',
+        'Virtual machines providing complete isolation through hardware virtualization without any resource sharing capabilities',
+        'Namespaces creating virtual clusters within clusters for logical separation of workloads across teams',
+        'Microservices architecture decomposing monolithic applications into independently deployable distributed service components'
+      ],
+      correctAnswer: 0,
+      explanation: 'Kubernetes introduced the "pod" concept that enables multiple containers to run on a host machine and share resources without risk of conflict. A pod can define shared services like directories, IP addresses, or storage and expose them to all containers in the pod.'
+    },
+    {
+      id: 'q2',
+      question: 'How do containers differ from virtual machines in terms of virtualization approach and resource efficiency?',
+      options: [
+        'Containers virtualize hardware like VMs but require significantly more system resources for operation',
+        'Virtual machines virtualize operating systems while containers virtualize complete hardware stacks for isolation',
+        'Containers virtualize the operating system instead of hardware, making them more lightweight and portable',
+        'Both approaches use identical virtualization techniques without any meaningful differences in resource consumption'
+      ],
+      correctAnswer: 2,
+      explanation: 'Containers virtualize the operating system instead of hardware, making them more lightweight than virtual machines. They are more portable, take up less space, use far fewer system resources, and can be spun up in seconds.'
+    },
+    {
+      id: 'q3',
+      question: 'What organization serves as the vendor-neutral home for Kubernetes and other cloud-native open source projects?',
+      options: [
+        'Docker Foundation established to govern container technology standards and prevent proprietary implementations',
+        'Open Container Initiative focusing exclusively on container image format specifications and runtime standards',
+        'Cloud Native Computing Foundation (CNCF) created as Linux Foundation project to drive cloud-native adoption',
+        'Kubernetes Foundation operating independently to manage the orchestration platform without external governance'
+      ],
+      correctAnswer: 2,
+      explanation: 'The Cloud Native Computing Foundation (CNCF) was established as a Linux Foundation project in 2015 to drive adoption of cloud-native technologies. The CNCF serves as the vendor-neutral home for Kubernetes and many fastest-growing open source projects.'
+    },
+    {
+      id: 'q4',
+      question: 'What component in Kubernetes manages pods, containers, and images at the node level?',
+      options: [
+        'Master controller exclusively handling all pod operations across entire cluster without node-level agents',
+        'Node agent called kubelet managing pods, containers, and images on individual host machines',
+        'Container runtime directly managing all orchestration without any Kubernetes-specific management components',
+        'Scheduler responsible for pod placement decisions without involvement in ongoing container management'
+      ],
+      correctAnswer: 1,
+      explanation: 'A node agent called a kubelet manages the pods, containers, and images at the individual node level. Kubernetes controllers then manage clusters of pods to ensure adequate resources are allocated for desired scalability and performance.'
+    },
+    {
+      id: 'q5',
+      question: 'What key services does Kubernetes automate to simplify clustered environment management?',
+      options: [
+        'Exclusively handles storage provisioning without any networking, discovery, or deployment automation capabilities',
+        'Only manages container placement without monitoring health, implementing rollouts, or handling sensitive information',
+        'Automates service discovery, load balancing, storage mounting, rollouts/rollbacks, and health monitoring',
+        'Primarily focuses on security without providing any automation for deployment, scaling, or resource management'
+      ],
+      correctAnswer: 2,
+      explanation: 'Kubernetes automates service discovery and load balancing, automatically mounts storage systems, automates rollouts and rollbacks, monitors container health, restarts failed containers, and enables safe storage of sensitive information like passwords and encryption keys.'
+    },
+    {
+      id: 'q6',
+      question: 'Why did containers quickly become popular and create need for orchestration tools like Kubernetes?',
+      options: [
+        'Containers required less developer training than virtual machines making them immediately accessible to teams',
+        'Organizations rapidly scaled to thousands of containers creating need to automate management at scale',
+        'Container technology was mandated by cloud providers forcing rapid adoption across enterprise environments',
+        'Virtual machines were completely deprecated making containers the only viable deployment option available'
+      ],
+      correctAnswer: 1,
+      explanation: 'Because of their benefits, containers became an immediate hit and quickly popular for cloud deployment. Organizations soon ran thousands of them, creating a need to automate management, which drove Kubernetes adoption and made containers mainstream.'
+    },
+    {
+      id: 'q7',
+      question: 'What namespace feature in Kubernetes enables teams to share physical infrastructure without conflicts?',
+      options: [
+        'Physical partitioning dividing hardware into dedicated segments for each team with complete isolation',
+        'Virtual cluster within cluster allowing operations and development teams to share machines and services',
+        'Container segregation preventing any communication between different teams\' workloads on shared infrastructure',
+        'Hardware allocation requiring separate physical servers for each team to prevent any resource contention'
+      ],
+      correctAnswer: 1,
+      explanation: 'Kubernetes namespaces create virtual clusters within clusters. This enables operations and development teams to share the same set of physical machines and access the same services without creating conflicts.'
+    },
+    {
+      id: 'q8',
+      question: 'How does Kubernetes benefit data scientists in creating reproducible machine learning experiments?',
+      options: [
+        'Kubernetes exclusively handles model training without providing any support for experiment tracking or reproducibility',
+        'Data scientists must manually configure all dependencies without any automation or containerization benefits',
+        'Containers enable repeatable pipelines with coordinated stages and declarative configurations describe service connections',
+        'Kubernetes only supports production deployment without any capabilities for development or experimentation workflows'
+      ],
+      correctAnswer: 2,
+      explanation: 'Containers offer the ability to create repeatable pipelines with multiple coordinated stages that work reproducibly. Declarative configurations in Kubernetes describe connections between services, and microservices architectures enable easier debugging and improved team collaboration.'
+    },
+    {
+      id: 'q9',
+      question: 'What functionality does Kubeflow provide for machine learning workflows in Kubernetes environments?',
+      options: [
+        'Exclusively handles data storage without any support for training pipelines or model deployment',
+        'Only manages compute resources without providing any ML-specific workflow or pipeline capabilities',
+        'Streamlines setting up and maintaining machine learning workflows and pipelines in Kubernetes',
+        'Primarily focuses on model serving without any support for training or development workflows'
+      ],
+      correctAnswer: 2,
+      explanation: 'Kubeflow streamlines the process of setting up and maintaining machine learning workflows and pipelines in Kubernetes. Combined with the orchestrator\'s portability benefits, data scientists can develop on laptops and deploy anywhere.'
+    },
+    {
+      id: 'q10',
+      question: 'What service mesh layer makes it easy to create networks of deployed services with automated features?',
+      options: [
+        'Docker Swarm providing basic orchestration without advanced networking or traffic management capabilities',
+        'Kubernetes native networking exclusively handling pod-to-pod communication without service mesh features',
+        'CoreDNS only providing DNS resolution without any traffic management or service-to-service authentication',
+        'Istio offering configurable service mesh with load balancing, authentication, and monitoring with minimal code changes'
+      ],
+      correctAnswer: 3,
+      explanation: 'Istio is a configurable, open-source service-mesh layer that makes it easy to create networks with automated load balancing, service-to-service authentication, and monitoring with little or no code changes. It provides fine-grained traffic control, routing rules, retries, failovers, and fault injection.'
+    },
+    {
+      id: 'q11',
+      question: 'How does NVIDIA device plug-in enable GPU support within Kubernetes environments?',
+      options: [
+        'GPUs are automatically detected without requiring any plug-ins or special configuration for Kubernetes',
+        'NVIDIA plug-ins exclusively handle monitoring without enabling actual GPU allocation to containers',
+        'Device plug-ins only support CPU resources without any capabilities for specialized hardware like GPUs',
+        'Device plug-ins enable pods access to GPU hardware features and expose them as schedulable resources'
+      ],
+      correctAnswer: 3,
+      explanation: 'Device plug-ins enable pods to access specialized hardware features such as GPUs and expose them as schedulable resources. This makes it easy to configure and use GPU resources for accelerating data science, machine learning, and deep learning workloads.'
+    },
+    {
+      id: 'q12',
+      question: 'What key capabilities does Kubernetes on NVIDIA GPUs provide for heterogeneous GPU clusters?',
+      options: [
+        'Only supports homogeneous GPU clusters without any capabilities for mixed GPU types or configurations',
+        'Exclusively handles GPU monitoring without enabling specification of GPU attributes or deployment requirements',
+        'Enables GPU plug-in support, specifies GPU attributes like type and memory, and allows visualization of GPU metrics',
+        'Provides GPU allocation but without any monitoring, metrics visualization, or attribute specification capabilities'
+      ],
+      correctAnswer: 2,
+      explanation: 'Kubernetes on NVIDIA GPUs enables GPU support using NVIDIA device plug-in, specifies GPU attributes such as GPU type and memory requirements for heterogeneous clusters, and allows visualization and monitoring of GPU metrics with integrated stack of NVIDIA DCGM, Prometheus, and Grafana.'
+    },
+    {
+      id: 'q13',
+      question: 'What is NVIDIA Triton\'s role in abstracting hardware within Kubernetes-managed nodes?',
+      options: [
+        'Triton exclusively handles cluster orchestration while Kubernetes manages individual node hardware abstraction',
+        'Triton only provides monitoring capabilities without any model serving or hardware abstraction features',
+        'Kubernetes handles all hardware abstraction making Triton unnecessary for GPU-based inference workloads',
+        'Open-source inference serving platform deploying AI models on any GPU/CPU, abstracting hardware within nodes'
+      ],
+      correctAnswer: 3,
+      explanation: 'NVIDIA Triton is an open-source inference serving platform that enables deploying AI training models on any GPU or CPU-based interface. Triton handles hardware abstraction within the node, while Kubernetes orchestrates the cluster, enabling effective scale-out.'
+    },
+    {
+      id: 'q14',
+      question: 'What breakthrough capability does Multi-Instance GPU (MIG) provide on NVIDIA A100 GPUs?',
+      options: [
+        'MIG exclusively improves training performance without providing any benefits for inference or deployment',
+        'MIG combines multiple physical GPUs into single logical unit for increased memory capacity',
+        'Only supports single workload per GPU without any partitioning or instance isolation capabilities',
+        'Single A100 GPU can be segmented into seven smaller GPUs enabling finer-grained application scaling'
+      ],
+      correctAnswer: 3,
+      explanation: 'MIG enables a single A100 GPU to be segmented into seven smaller GPUs, similar to CPU core segmentation. This allows users to automatically scale applications with much greater granularity, with a single A100 now supporting up to seven smaller nodes.'
+    },
+    {
+      id: 'q15',
+      question: 'How does the CNCF\'s work benefit the Kubernetes ecosystem regarding code base fragmentation?',
+      options: [
+        'CNCF encourages multiple incompatible forks to promote innovation and competitive development approaches',
+        'CNCF exclusively manages licensing without any involvement in technical direction or code governance',
+        'Multiple fragmented versions exist despite CNCF efforts making cross-platform compatibility challenging',
+        'Vendor-neutral governance credited with preventing Kubernetes code base forks from emerging across implementations'
+      ],
+      correctAnswer: 3,
+      explanation: 'The CNCF\'s work has been credited with helping to prevent forks of the Kubernetes code base from emerging. As a result, every major computing platform and cloud provider now supports the same Kubernetes code base, despite branded versions like Red Hat OpenShift or Amazon EKS.'
+    }
+  ],
+  
+  '4-deployment-scaling/5-NVDA-NSight.txt': [
+    {
+      id: 'q1',
+      question: 'What is the primary purpose of NVIDIA Nsight Systems as a performance analysis tool?',
+      options: [
+        'System-wide performance analysis visualizing application algorithms to identify optimization opportunities across CPUs and GPUs',
+        'Exclusively profiling GPU shader code without any system-wide analysis or CPU interaction visualization',
+        'Only debugging application crashes without providing any performance profiling or optimization capabilities',
+        'Solely managing GPU memory allocation without analyzing workload execution or performance characteristics'
+      ],
+      correctAnswer: 0,
+      explanation: 'Nsight Systems is a system-wide performance analysis tool designed to visualize an application\'s algorithms, identify the largest opportunities to optimize, and tune to scale efficiently across any quantity or size of CPUs and GPUs, from large servers to smallest SoCs.'
+    },
+    {
+      id: 'q2',
+      question: 'How does Nsight Systems help developers understand system-wide application performance?',
+      options: [
+        'Visualizes unbiased, system-wide activity data on unified timeline allowing investigation of correlations, dependencies, and bottlenecks',
+        'Provides only text-based reports without any visual timeline or graphical representation of events',
+        'Exclusively monitors GPU metrics without showing any CPU activity or cross-component interactions',
+        'Generates summary statistics at application completion without detailed chronological event visualization'
+      ],
+      correctAnswer: 0,
+      explanation: 'Nsight Systems visualizes unbiased, system-wide activity data on a unified timeline, allowing developers to investigate correlations, dependencies, activity, bottlenecks, and resource allocation to ensure hardware components work harmoniously.'
+    },
+    {
+      id: 'q3',
+      question: 'What range of NVIDIA platforms does Nsight Systems support for application development?',
+      options: [
+        'Only high-end datacenter systems like DGX without support for edge or automotive platforms',
+        'Wide range from NVIDIA DGX to RTX workstations, including NVIDIA DRIVE and Jetson platforms',
+        'Exclusively desktop RTX workstations without capabilities for server or embedded device profiling',
+        'Solely cloud-based environments without any support for on-premises or edge deployment scenarios'
+      ],
+      correctAnswer: 1,
+      explanation: 'Nsight Systems is the universal tool for developing applications on NVIDIA platforms. It scales across a wide range including NVIDIA DGX, RTX workstations, NVIDIA DRIVE for automotive, and NVIDIA Jetson for edge AI and robotics.'
+    },
+    {
+      id: 'q4',
+      question: 'What type of overhead does Nsight Systems maintain while providing comprehensive performance analysis?',
+      options: [
+        'High overhead requiring dedicated profiling hardware without impacting application execution significantly',
+        'Low-overhead performance analysis accurately visualizing events and metrics without significantly affecting execution',
+        'Moderate overhead acceptable only for development environments without production profiling capabilities',
+        'Zero overhead achieved through hardware-only sampling without any software instrumentation requirements'
+      ],
+      correctAnswer: 1,
+      explanation: 'Nsight Systems offers low-overhead performance analysis that visualizes otherwise hidden layers of events and metrics. With low overhead, data can be visualized accurately and in parallel for ease of understanding.'
+    },
+    {
+      id: 'q5',
+      question: 'What detailed GPU information can GPU Metrics Sampling expose in Nsight Systems?',
+      options: [
+        'SM utilization, Tensor Core activity, instruction throughput, warp occupancy, and PCIe/DRAM activity',
+        'Exclusively GPU temperature and power consumption without any computational or memory activity details',
+        'Only high-level GPU utilization percentages without detailed throughput or architectural metrics',
+        'Solely error rates and crash diagnostics without performance metrics or resource utilization data'
+      ],
+      correctAnswer: 0,
+      explanation: 'GPU Metrics Sampling plots low-level I/O activity such as PCIe throughput, NVLink, and DRAM activity. It also exposes SM utilization, Tensor Core activity, instruction throughput, and warp occupancy for comprehensive GPU performance analysis.'
+    },
+    {
+      id: 'q6',
+      question: 'Which CUDA libraries does Nsight Systems support for tracing compute workloads?',
+      options: [
+        'CUDA API tracing including cuBLAS, cuDNN, and NVIDIA TensorRT libraries for compute tasks',
+        'Only custom CUDA kernels without support for any standard library tracing or API analysis',
+        'Exclusively basic CUDA runtime without advanced library support like cuBLAS or cuDNN',
+        'Solely host-side CUDA code without any device library or GPU kernel tracing capabilities'
+      ],
+      correctAnswer: 0,
+      explanation: 'For compute tasks, Nsight Systems supports investigating the CUDA API and tracing CUDA libraries, including cuBLAS, cuDNN, and NVIDIA TensorRT. This enables comprehensive analysis of GPU-accelerated computing workloads.'
+    },
+    {
+      id: 'q7',
+      question: 'What graphics APIs does Nsight Systems support for profiling graphics computing applications?',
+      options: [
+        'Vulkan, OpenGL, DirectX 11, DirectX 12, DXR, and NVIDIA OptiX APIs',
+        'Only proprietary NVIDIA APIs without support for industry-standard graphics programming interfaces',
+        'Exclusively OpenGL without any DirectX, Vulkan, or ray-tracing API profiling capabilities',
+        'Solely legacy DirectX 9 and OpenGL 2.0 without modern graphics API support'
+      ],
+      correctAnswer: 0,
+      explanation: 'For graphics computing, Nsight Systems supports profiling Vulkan, OpenGL, DirectX 11, DirectX 12, DXR, and NVIDIA OptiX APIs. This comprehensive support covers modern graphics and ray-tracing workloads.'
+    },
+    {
+      id: 'q8',
+      question: 'What capability does multi-node profiling in Nsight Systems provide for large-scale deployments?',
+      options: [
+        'Multi-node profiling automatically diagnoses performance limiters across many nodes simultaneously with network metrics',
+        'Only supports single-node analysis requiring manual correlation of data across multiple systems',
+        'Exclusively profiles CPU clusters without any GPU or DPU performance analysis capabilities',
+        'Solely collects data from multiple nodes without providing any automatic analysis or diagnosis'
+      ],
+      correctAnswer: 0,
+      explanation: 'Nsight Systems supports multi-node profiling to resolve performance limiters at data center and cluster scale. Multi-node analysis automatically diagnoses performance limiters across many nodes simultaneously, including network metrics and internode communication.'
+    },
+    {
+      id: 'q9',
+      question: 'How does Nsight Systems support Python application optimization for deep learning workloads?',
+      options: [
+        'Backtraces and automatic call stack sampling allow fine-tuning performance for deep learning applications',
+        'Python applications are not supported requiring developers to rewrite code in C++ for profiling',
+        'Only provides basic execution timing without detailed call stack or GPU utilization analysis',
+        'Exclusively profiles Python syntax errors without any performance optimization or GPU utilization insights'
+      ],
+      correctAnswer: 0,
+      explanation: 'Nsight Systems helps write Python applications that maximize GPU utilization. Backtraces and automatic call stack sampling allow developers to fine-tune performance for deep learning applications, with integration for Jupyter Lab enabling direct profiling.'
+    },
+    {
+      id: 'q10',
+      question: 'What functionality does Jupyter Lab integration provide for Nsight Systems users?',
+      options: [
+        'Profile Python and supported languages directly in Jupyter, including detailed analysis with full Nsight Systems GUI',
+        'Only displays static reports without interactive analysis or detailed GUI access for investigations',
+        'Exclusively exports profiling data to external tools without any in-Jupyter visualization or analysis',
+        'Solely provides basic timing statistics without comprehensive profiling or performance metric collection'
+      ],
+      correctAnswer: 0,
+      explanation: 'Integration with Jupyter Lab allows profiling Python and other supported languages directly in Jupyter, including detailed analysis with the full Nsight Systems GUI. This enables seamless workflow for data scientists and AI developers.'
+    },
+    {
+      id: 'q11',
+      question: 'What frame performance issues does Nsight Systems automatically detect for game developers?',
+      options: [
+        'Automatically detects slow frames and local stutter frames, reporting CPU times and API calls causing stutters',
+        'Only detects application crashes without identifying frame timing issues or performance inconsistencies',
+        'Exclusively monitors average frame rates without detecting individual slow frames or stutter patterns',
+        'Solely profiles GPU memory usage without analyzing frame timing, stutters, or frame-to-frame consistency'
+      ],
+      correctAnswer: 0,
+      explanation: 'Nsight Systems automatically detects slow frames (highlighting frame times higher than target) and local stutter frames (highlighting frames with higher times than neighbors). It also reports CPU times per frame and API calls likely causing stutters.'
+    },
+    {
+      id: 'q12',
+      question: 'What is NVIDIA Nsight Compute\'s primary specialization within the Nsight Developer Tools suite?',
+      options: [
+        'Interactive kernel profiler for CUDA applications providing detailed performance metrics and API debugging',
+        'System-wide multi-GPU profiling focusing on distributed computing workloads across clusters',
+        'Graphics debugging exclusively for DirectX and Vulkan without any compute profiling capabilities',
+        'Crash dump generation for GPU failures without any live profiling or performance analysis features'
+      ],
+      correctAnswer: 0,
+      explanation: 'Nsight Compute is an interactive kernel profiler for CUDA applications. It provides detailed performance metrics and API debugging via a user interface and command-line tool, with customizable, data-driven user interface and metric collection.'
+    },
+    {
+      id: 'q13',
+      question: 'What impressive GPU utilization improvement did Tracxpoint achieve using Nsight Systems?',
+      options: [
+        'Achieved over 90% GPU utilization reducing training time from 600 minutes to only 90 minutes',
+        'Improved from 50% to 60% GPU utilization with minimal impact on training time',
+        'Increased utilization from 70% to 75% with moderate performance gains in model training',
+        'Reached 80% GPU utilization cutting training duration approximately in half from baseline'
+      ],
+      correctAnswer: 0,
+      explanation: 'Tracxpoint achieved over 90% GPU utilization using Nsight Systems. A deep learning model that previously took 600 minutes to train now takes only 90 minutes, representing a dramatic 6.7x speedup.'
+    },
+    {
+      id: 'q14',
+      question: 'What specific challenge did Microsoft Azure HPC+AI team address using Nsight Systems?',
+      options: [
+        'Performed detailed analysis to optimize GPU-accelerated AI software, identifying top time-consuming functions and cold spots',
+        'Only managed hardware procurement without any software optimization or performance analysis activities',
+        'Exclusively handled billing and cost allocation without performance profiling or optimization work',
+        'Solely monitored system uptime without analyzing workload performance characteristics or optimization opportunities'
+      ],
+      correctAnswer: 0,
+      explanation: 'Microsoft Azure HPC+AI team used Nsight Systems to perform detailed analysis and optimize GPU-accelerated AI software. The tool painted a clear picture of events on CPUs, GPUs, NICs, and OS, allowing them to quickly identify top time-consuming functions and cold spots.'
+    },
+    {
+      id: 'q15',
+      question: 'What does NVIDIA Nsight Aftermath SDK specifically provide for game developers?',
+      options: [
+        'Library integrating into crash reporter to generate GPU mini-dumps when exceptions or TDRs occur',
+        'Real-time performance profiling during gameplay without any crash analysis or debugging capabilities',
+        'Exclusively optimizes shader compilation without providing any crash investigation or debugging features',
+        'Only provides post-mortem frame analysis without any crash dump or exception handling functionality'
+      ],
+      correctAnswer: 0,
+      explanation: 'Nsight Aftermath SDK is a library that integrates into a D3D12 or Vulkan game\'s crash reporter to generate GPU "mini-dumps" when an exception or TDR (Timeout Detection and Recovery) occurs, exposing pipeline information to resolve unexpected crashes.'
+    }
+  ],
+  
+  '4-deployment-scaling/6-Kube-Prometheus.txt': [
+    {
+      id: 'q1',
+      question: 'What is the primary purpose of implementing Prometheus and Grafana in GPU-accelerated computing environments?',
+      options: [
+        'Providing comprehensive monitoring, visualization, and analysis of GPU performance metrics and cluster health',
+        'Exclusively managing GPU driver installations and updates across distributed computing infrastructure',
+        'Only handling resource allocation decisions without any performance monitoring or metrics collection capabilities',
+        'Primarily optimizing GPU workload scheduling without collecting or displaying any telemetry data'
+      ],
+      correctAnswer: 0,
+      explanation: 'Prometheus and Grafana provide a complete monitoring stack for GPU-accelerated environments. Prometheus collects and stores metrics while Grafana visualizes them, enabling teams to monitor GPU performance, identify bottlenecks, and ensure efficient resource utilization across clusters.'
+    },
+    {
+      id: 'q2',
+      question: 'How do Prometheus Operator and Helm package manager simplify cluster monitoring deployment?',
+      options: [
+        'They eliminate all configuration requirements by automatically detecting optimal settings without user input',
+        'They only support basic CPU monitoring without any GPU or specialized hardware capabilities',
+        'They provide standardized configurations and automated deployment reducing manual setup complexity significantly',
+        'They exclusively handle storage management without simplifying deployment or configuration processes'
+      ],
+      correctAnswer: 2,
+      explanation: 'The Prometheus Operator provides standard configurations and dashboards, while Helm enables packaged deployment. Together they automate much of the complex setup, allowing teams to deploy a full cluster monitoring solution efficiently rather than manually configuring each component.'
+    },
+    {
+      id: 'q3',
+      question: 'What role does DCGM (Data Center GPU Manager) play in NVIDIA GPU monitoring infrastructure?',
+      options: [
+        'DCGM exclusively manages GPU power consumption and thermal throttling without metrics collection',
+        'DCGM only handles GPU memory allocation without providing any performance monitoring capabilities',
+        'It primarily focuses on driver compatibility testing without real-time telemetry or monitoring features',
+        'It serves as the primary interface collecting GPU telemetry and exposing metrics to monitoring systems'
+      ],
+      correctAnswer: 3,
+      explanation: 'DCGM collects comprehensive GPU telemetry including utilization, memory usage, temperature, and other performance metrics. It exposes this data to monitoring systems like Prometheus, serving as the bridge between NVIDIA GPUs and observability platforms.'
+    },
+    {
+      id: 'q4',
+      question: 'Why is real-time GPU metrics monitoring particularly important for AI and machine learning workloads?',
+      options: [
+        'GPU utilization directly impacts training time, cost efficiency, and ability to identify performance bottlenecks',
+        'ML workloads consume minimal GPU resources making monitoring unnecessary for optimization purposes',
+        'Monitoring only matters for debugging crashes without providing any optimization or efficiency insights',
+        'AI applications automatically optimize themselves eliminating any need for human monitoring or intervention'
+      ],
+      correctAnswer: 0,
+      explanation: 'GPU utilization directly affects training duration and infrastructure costs in AI workloads. Real-time monitoring helps identify underutilized resources, performance bottlenecks, and optimization opportunities, enabling teams to maximize expensive GPU investments and reduce time-to-solution.'
+    },
+    {
+      id: 'q5',
+      question: 'What advantage does visualizing GPU metrics on a timeline provide for performance analysis?',
+      options: [
+        'It enables correlating GPU activity with application events to identify performance patterns and issues',
+        'Timeline visualization only shows historical data without enabling real-time monitoring or analysis',
+        'Timelines exclusively display errors without showing utilization, memory usage, or throughput metrics',
+        'Visualization provides aesthetics without offering any practical debugging or optimization value'
+      ],
+      correctAnswer: 0,
+      explanation: 'Timeline visualization allows teams to correlate GPU metrics with application behavior, helping identify when and why performance issues occur. This temporal context makes it easier to understand workload patterns, spot anomalies, and diagnose the root causes of inefficiencies.'
+    },
+    {
+      id: 'q6',
+      question: 'How does containerized monitoring with Kubernetes benefit GPU-accelerated infrastructure management?',
+      options: [
+        'Kubernetes orchestration enables scalable, automated monitoring deployment across heterogeneous GPU clusters',
+        'Containers eliminate all monitoring overhead making GPU tracking completely free in resource terms',
+        'Containerization only supports CPU monitoring without any GPU-specific metric collection capabilities',
+        'Monitoring containers require dedicated GPUs reducing available compute resources for applications'
+      ],
+      correctAnswer: 0,
+      explanation: 'Kubernetes orchestration allows monitoring components to be deployed, scaled, and managed automatically across clusters. This is particularly valuable for GPU infrastructure where monitoring needs to work consistently across diverse hardware configurations and deployment scales.'
+    },
+    {
+      id: 'q7',
+      question: 'What operational insight does monitoring GPU memory allocation provide for workload optimization?',
+      options: [
+        'Tracking memory usage helps identify whether workloads are appropriately sized for available GPU resources',
+        'Memory metrics only indicate total capacity without revealing utilization patterns or optimization opportunities',
+        'GPU memory monitoring exclusively detects hardware failures without providing performance optimization guidance',
+        'Memory allocation metrics are irrelevant since applications automatically optimize their memory consumption'
+      ],
+      correctAnswer: 0,
+      explanation: 'Monitoring GPU memory allocation reveals whether workloads efficiently use available resources. Underutilization suggests opportunities to increase batch sizes or run concurrent jobs, while memory pressure indicates need for optimization or larger GPUs.'
+    },
+    {
+      id: 'q8',
+      question: 'Why is it important to monitor both GPU utilization and CPU activity simultaneously?',
+      options: [
+        'Simultaneous monitoring reveals data transfer bottlenecks and ensures balanced utilization across system components',
+        'CPU and GPU activities are completely independent requiring separate monitoring without any correlation analysis',
+        'Modern GPUs operate autonomously making CPU monitoring irrelevant for GPU-accelerated applications',
+        'Monitoring both components doubles overhead without providing additional debugging or optimization insights'
+      ],
+      correctAnswer: 0,
+      explanation: 'Many performance issues arise from CPU-GPU interactions, such as data transfer bottlenecks or CPU preprocessing delays. Monitoring both simultaneously helps identify whether GPUs are starved by slow CPU operations or if the bottleneck lies elsewhere in the pipeline.'
+    },
+    {
+      id: 'q9',
+      question: 'What business value does comprehensive GPU monitoring provide to organizations running AI workloads?',
+      options: [
+        'It enables cost optimization, capacity planning, and ROI measurement for expensive GPU infrastructure investments',
+        'Monitoring only benefits researchers without providing any value to business operations or financial planning',
+        'Business value is negligible since monitoring focuses exclusively on technical metrics without financial implications',
+        'GPU monitoring exclusively prevents hardware failures without contributing to efficiency or cost management'
+      ],
+      correctAnswer: 0,
+      explanation: 'Comprehensive monitoring helps organizations optimize GPU spending by identifying underutilization, plan capacity needs based on usage trends, and measure ROI on infrastructure investments. This visibility is essential for justifying and managing expensive GPU resources.'
+    },
+    {
+      id: 'q10',
+      question: 'How does dashboard customization benefit different stakeholders in GPU-accelerated computing environments?',
+      options: [
+        'Different roles need different metrics: developers want performance details while executives need utilization summaries',
+        'Customization serves only aesthetic purposes without providing any practical benefits for different roles',
+        'Single standardized dashboard works optimally for all users eliminating any need for customization',
+        'Customization exclusively benefits administrators without providing value to developers or business stakeholders'
+      ],
+      correctAnswer: 0,
+      explanation: 'Different stakeholders have different needs: data scientists want detailed performance metrics to optimize models, DevOps needs resource utilization for capacity planning, and executives need high-level cost and efficiency summaries. Customizable dashboards serve all these needs effectively.'
+    },
+    {
+      id: 'q11',
+      question: 'What challenge does monitoring help address when running multiple AI workloads on shared GPU infrastructure?',
+      options: [
+        'It helps ensure fair resource allocation and identify workloads consuming disproportionate GPU resources',
+        'Monitoring prevents multiple workloads from running simultaneously by enforcing strict isolation policies',
+        'Shared infrastructure monitoring is impossible requiring dedicated GPUs for each individual workload',
+        'Multiple workloads automatically balance themselves making monitoring unnecessary for resource management'
+      ],
+      correctAnswer: 0,
+      explanation: 'In shared environments, monitoring reveals which workloads consume resources and helps ensure fair allocation. This visibility enables teams to identify resource-intensive jobs, detect inefficient utilization patterns, and make informed decisions about scheduling and prioritization.'
+    },
+    {
+      id: 'q12',
+      question: 'Why is metric retention and historical analysis important for GPU infrastructure management?',
+      options: [
+        'Trend analysis reveals usage patterns enabling better capacity planning and budget forecasting',
+        'Historical data only consumes storage without providing any actionable insights for future planning',
+        'Real-time metrics are sufficient making historical data retention unnecessary for operations',
+        'Historical analysis exclusively supports compliance requirements without operational or planning benefits'
+      ],
+      correctAnswer: 0,
+      explanation: 'Historical metrics reveal trends in GPU usage over time, helping predict future capacity needs, budget for infrastructure expansion, and identify seasonal or project-based usage patterns. This long-term visibility is essential for strategic planning and investment decisions.'
+    },
+    {
+      id: 'q13',
+      question: 'How does monitoring support debugging and troubleshooting in GPU-accelerated applications?',
+      options: [
+        'Metric correlation helps identify performance degradation causes like memory bottlenecks or data transfer issues',
+        'Monitoring only shows symptoms without providing any diagnostic information for root cause analysis',
+        'Debugging requires specialized tools making general monitoring systems completely irrelevant for troubleshooting',
+        'Modern applications self-diagnose issues eliminating any need for external monitoring or metrics analysis'
+      ],
+      correctAnswer: 0,
+      explanation: 'Monitoring provides visibility into system behavior that aids troubleshooting. By correlating metrics like GPU utilization, memory usage, and data transfer rates with application performance, teams can pinpoint issues like CPU bottlenecks, memory constraints, or inefficient data pipelines.'
+    },
+    {
+      id: 'q14',
+      question: 'What role does alerting play in proactive GPU infrastructure management?',
+      options: [
+        'Proactive alerts on anomalies enable intervention before issues impact applications or user experience',
+        'Alerts exclusively notify about complete system failures without detecting performance degradation early',
+        'Alerting systems create unnecessary noise making manual dashboard checking more effective for monitoring',
+        'Modern systems self-heal automatically making alerting redundant for GPU infrastructure management'
+      ],
+      correctAnswer: 0,
+      explanation: 'Alerting enables proactive management by notifying teams when metrics exceed thresholds or exhibit unusual patterns. This allows intervention before minor issues become critical problems, reducing downtime and maintaining performance for users and applications.'
+    },
+    {
+      id: 'q15',
+      question: 'How does standardized monitoring across heterogeneous GPU infrastructure benefit operations teams?',
+      options: [
+        'Consistent monitoring framework enables unified visibility across diverse GPU types and vendor platforms',
+        'Standardization only works with identical hardware making it useless for heterogeneous environments',
+        'Heterogeneous environments require completely different monitoring tools preventing any standardization benefits',
+        'Standardized monitoring reduces flexibility making customized per-GPU monitoring more effective'
+      ],
+      correctAnswer: 0,
+      explanation: 'Standardized monitoring provides consistent visibility across diverse GPU types (different models, generations, or vendors). This unified approach simplifies operations, enables cross-platform comparison, and reduces the learning curve for teams managing complex, heterogeneous infrastructure.'
+    }
+  ],
+  
+  '4-deployment-scaling/7-scaling-LLM-Kubernetes.txt': [
+    {
+      id: 'q1',
+      question: 'What primary business challenge does autoscaling LLM deployments with Kubernetes address for enterprises?',
+      options: [
+        'Handling variable inference request volumes during peak and non-peak hours while optimizing total cost',
+        'Eliminating all infrastructure costs by running models exclusively on free cloud tier resources',
+        'Preventing any need for GPU hardware by using CPU-only inference for all workloads',
+        'Completely automating model training without requiring any data scientist involvement or oversight'
+      ],
+      correctAnswer: 0,
+      explanation: 'Autoscaling enables enterprises to handle different volumes of inference requests during peak and non-peak hours with flexibility, while benefiting from reduced total cost compared to purchasing maximum hardware resources to handle peak workloads continuously.'
+    },
+    {
+      id: 'q2',
+      question: 'How do TensorRT-LLM and Triton Inference Server complement each other in LLM deployment?',
+      options: [
+        'Both tools perform identical functions providing redundancy in case one component fails',
+        'TensorRT-LLM handles inference serving while Triton exclusively manages model training workflows',
+        'Triton optimizes models for deployment while TensorRT-LLM only monitors performance metrics',
+        'TensorRT-LLM optimizes models with techniques like quantization while Triton serves optimized models in production'
+      ],
+      correctAnswer: 3,
+      explanation: 'TensorRT-LLM provides optimizations such as kernel fusion, quantization, in-flight batch, and paged attention to make models efficient. Triton Inference Server then deploys these optimized models in production, serving inference requests across multiple frameworks and platforms.'
+    },
+    {
+      id: 'q3',
+      question: 'What fundamental optimization techniques does TensorRT-LLM provide to improve LLM inference performance?',
+      options: [
+        'Exclusively focuses on data preprocessing without any model-level or runtime optimizations',
+        'Kernel fusion, quantization, in-flight batching, and paged attention for efficient GPU execution',
+        'Only handles model compression without addressing memory management or batching strategies',
+        'Primarily optimizes network bandwidth usage without improving computational efficiency or latency'
+      ],
+      correctAnswer: 1,
+      explanation: 'TensorRT-LLM provides multiple optimizations including kernel fusion, quantization, in-flight batch, and paged attention. These techniques enable inference using optimized models to be performed efficiently on NVIDIA GPUs with improved throughput and reduced latency.'
+    },
+    {
+      id: 'q4',
+      question: 'Why is Horizontal Pod Autoscaler (HPA) particularly valuable for LLM inference workloads?',
+      options: [
+        'HPA eliminates GPU requirements by automatically converting workloads to run on CPUs',
+        'It dynamically adjusts deployment scale based on inference demand, optimizing resource utilization and costs',
+        'HPA exclusively handles data storage scaling without affecting compute resource allocation',
+        'It only works during scheduled maintenance windows without supporting real-time scaling'
+      ],
+      correctAnswer: 1,
+      explanation: 'HPA automatically scales the number of Pods (and therefore GPUs) based on metrics like queue-to-compute ratio. This enables the system to handle thousands of real-time requests during peaks and scale down during low-demand periods, optimizing both performance and cost.'
+    },
+    {
+      id: 'q5',
+      question: 'What role does Prometheus play in the autoscaling architecture for LLM deployments?',
+      options: [
+        'Prometheus exclusively manages GPU driver updates without collecting any performance or application metrics',
+        'Prometheus only handles log aggregation without supporting metrics collection or autoscaling integration',
+        'It primarily focuses on security monitoring without involvement in performance metrics or scaling',
+        'It scrapes Triton metrics and provides data to HPA for making intelligent scaling decisions'
+      ],
+      correctAnswer: 3,
+      explanation: 'Prometheus scrapes Triton metrics from Pods and provides this data to the Horizontal Pod Autoscaler. HPA uses these metrics to make decisions on scaling up or down the number of deployments and GPUs based on inference request volume.'
+    },
+    {
+      id: 'q6',
+      question: 'What is the "queue-to-compute ratio" metric and why is it useful for autoscaling?',
+      options: [
+        'Ratio of failed requests to successful requests indicating overall system reliability',
+        'Queue time divided by compute time reflecting response time and indicating when scaling is needed',
+        'Number of queued models divided by active models showing deployment readiness',
+        'Percentage of GPU memory allocated versus available measuring resource saturation'
+      ],
+      correctAnswer: 1,
+      explanation: 'The queue-to-compute ratio is defined as queue time divided by compute time for an inference request. It reflects response time—when the ratio is high (queue time exceeds compute time), it indicates insufficient replicas to respond quickly, triggering scale-up.'
+    },
+    {
+      id: 'q7',
+      question: 'How does tensor parallelism (TP) enable deployment of large models that don\'t fit on single GPUs?',
+      options: [
+        'TP compresses models to fit any GPU size without requiring multiple devices',
+        'TP exclusively handles data parallelism without addressing model partitioning across devices',
+        'It only improves training speed without providing any benefits for inference deployment',
+        'It partitions model across multiple GPUs allowing each Pod to use several GPUs for larger models'
+      ],
+      correctAnswer: 3,
+      explanation: 'Tensor parallelism (TP) allows models to be partitioned across multiple GPUs. For models needing multiple GPUs, you can configure TP accordingly (e.g., TP=2 for models requiring two GPUs), and each Kubernetes Pod will utilize multiple GPUs for deployment.'
+    },
+    {
+      id: 'q8',
+      question: 'Why is storing TensorRT engine files on the host node beneficial for scaled deployments?',
+      options: [
+        'Host storage eliminates all GPU memory requirements making deployment possible on CPU-only nodes',
+        'Stored files automatically improve model accuracy without requiring any retraining or optimization',
+        'Host storage exclusively benefits security without providing any efficiency or performance advantages',
+        'It avoids regenerating identical files when scaling up additional Pods on the same node'
+      ],
+      correctAnswer: 3,
+      explanation: 'Storing generated TensorRT engine and plan files on the host node and remapping them to all Pods on that node eliminates the need to regenerate the same files when additional Pods are scaled up, saving time and computational resources.'
+    },
+    {
+      id: 'q9',
+      question: 'What advantages does using foundation models with techniques like RAG and fine-tuning provide?',
+      options: [
+        'Foundation models eliminate all need for domain-specific data or customization efforts',
+        'Foundation models exclusively work for general tasks without supporting any specialized applications',
+        'These techniques only reduce costs without providing any accuracy or time-to-deployment benefits',
+        'Developers avoid expensive training from scratch while achieving higher accuracy for specific tasks quickly'
+      ],
+      correctAnswer: 3,
+      explanation: 'Foundation models like Llama, Gemma, and GPT demonstrate human-like understanding, allowing developers to avoid expensive training from scratch. Techniques like RAG, prompt engineering, and fine-tuning customize these models to achieve higher accuracy for specific tasks in much shorter time.'
+    },
+    {
+      id: 'q10',
+      question: 'How does Triton Inference Server\'s multi-framework support benefit deployment flexibility?',
+      options: [
+        'Multi-framework support exclusively improves security without affecting deployment options or compatibility',
+        'Triton only supports NVIDIA-specific frameworks limiting deployment to proprietary infrastructure',
+        'Framework support solely affects training without providing any benefits for inference serving',
+        'It enables serving models from TensorRT, TensorFlow, PyTorch, and ONNX on diverse hardware platforms'
+      ],
+      correctAnswer: 3,
+      explanation: 'Triton supports multiple deep learning frameworks including TensorRT, TensorFlow, PyTorch, and ONNX. It can run across cloud, data center, edge, and embedded devices on NVIDIA GPUs, x86 and ARM CPUs, providing exceptional deployment flexibility.'
+    },
+    {
+      id: 'q11',
+      question: 'What purpose does a load balancer serve in scaled LLM deployment architectures?',
+      options: [
+        'Load balancers exclusively handle authentication without distributing any inference workload across Pods',
+        'Load balancers only manage storage access patterns without affecting compute workload distribution',
+        'They primarily monitor performance metrics without actively routing or distributing any traffic',
+        'They distribute inference requests among running Pods ensuring balanced utilization and high availability'
+      ],
+      correctAnswer: 3,
+      explanation: 'Load balancers distribute inference workload among all running Pods. They operate at either Layer 4 (transport level, network-based) or Layer 7 (application level, content-based), ensuring requests are balanced across available Triton servers for optimal resource utilization.'
+    },
+    {
+      id: 'q12',
+      question: 'Why is monitoring individual Pod metrics important when autoscaling LLM deployments?',
+      options: [
+        'Pod-level metrics exclusively track errors without providing any performance or utilization insights',
+        'Monitoring only benefits debugging without contributing to autoscaling decisions or resource optimization',
+        'Individual Pod metrics are irrelevant since cluster-wide averages provide sufficient scaling information',
+        'HPA uses average metrics across Pods to make informed scaling decisions based on actual workload'
+      ],
+      correctAnswer: 3,
+      explanation: 'HPA takes the average of metrics like queue-to-compute ratio across all Pods. This aggregated view helps HPA determine whether to increase replicas (when average ratio is too high) or decrease them (when ratio is low), ensuring scaling decisions reflect actual system-wide demand.'
+    },
+    {
+      id: 'q13',
+      question: 'What operational challenge does Kubernetes help address when scaling LLM inference across heterogeneous GPU infrastructure?',
+      options: [
+        'Kubernetes eliminates all need for GPUs by automatically converting workloads to CPU-only execution',
+        'Kubernetes exclusively handles data storage without addressing compute orchestration or GPU scheduling',
+        'It only supports identical GPU configurations preventing any deployment on heterogeneous infrastructure',
+        'It provides automated orchestration, discovery, and scheduling across diverse GPU types and configurations'
+      ],
+      correctAnswer: 3,
+      explanation: 'Kubernetes with GPU plugins enables automatic discovery of GPU-equipped nodes and makes them available to containers. It orchestrates deployment across diverse GPU types, automating scheduling, scaling, and resource management for heterogeneous infrastructure.'
+    },
+    {
+      id: 'q14',
+      question: 'How does the combination of custom metrics and HPA enable more intelligent autoscaling than CPU-based scaling?',
+      options: [
+        'Custom metrics only provide aesthetic dashboards without affecting actual autoscaling behavior or decisions',
+        'CPU-based scaling is always superior making custom metrics unnecessary for any workloads',
+        'Custom metrics exclusively benefit debugging without contributing to scaling decision accuracy or relevance',
+        'Application-specific metrics like queue-to-compute ratio reflect actual user experience better than generic CPU utilization'
+      ],
+      correctAnswer: 3,
+      explanation: 'Custom metrics like queue-to-compute ratio directly reflect inference response time and user experience. This is more meaningful than generic CPU utilization for LLM workloads, where inference queue times better indicate whether additional capacity is needed to maintain service quality.'
+    },
+    {
+      id: 'q15',
+      question: 'What business value does automated LLM scaling provide compared to static GPU allocation?',
+      options: [
+        'Automated scaling eliminates all infrastructure costs by sharing resources across unlimited users',
+        'Static allocation always provides better performance making automated scaling counterproductive for businesses',
+        'Automated scaling only benefits development environments without production or business value',
+        'It optimizes costs by matching resources to demand while maintaining performance during variable workloads'
+      ],
+      correctAnswer: 3,
+      explanation: 'Automated scaling enables handling peak loads without permanently provisioning for maximum capacity. Organizations avoid the total cost of purchasing enough hardware for peak workloads while still serving thousands of real-time requests with low latency during high-demand periods and scaling down during quieter times.'
+    }
+  ],
+  
+  '4-deployment-scaling/8-TensorRT-performance-analysis.txt': [
+    {
+      id: 'q1',
+      question: 'Why is performance profiling particularly important for Large Language Model (LLM) applications?',
+      options: [
+        'Long runtimes and diverse workloads during inference make understanding performance critical for optimization',
+        'LLMs always run at optimal performance without requiring any analysis or optimization efforts',
+        'Profiling exclusively benefits hardware vendors without providing value to application developers',
+        'LLM performance is entirely deterministic making profiling unnecessary for production deployments'
+      ],
+      correctAnswer: 0,
+      explanation: 'Given the potential long runtimes of LLMs and the diversity of workloads a model may experience during a single inference pass or binary execution, performance profiling is essential. It helps understand application behavior and identify optimization opportunities.'
+    },
+    {
+      id: 'q2',
+      question: 'What key advantage does toggling the CUDA profiler on and off provide for LLM performance analysis?',
+      options: [
+        'It allows focusing on specific regions of interest while producing smaller, more manageable profile files',
+        'Toggling eliminates all profiling overhead making it completely free in terms of resources',
+        'Profiler toggling exclusively improves accuracy without affecting file size or analysis focus',
+        'Toggling only benefits visualization aesthetics without providing practical analysis advantages'
+      ],
+      correctAnswer: 0,
+      explanation: 'Toggling the CUDA profiler allows users to know specifically what the profiled region corresponds to and results in smaller files to post-process. This makes analysis more focused and manageable, especially for long-running LLM workloads.'
+    },
+    {
+      id: 'q3',
+      question: 'Why might profiling only specific iterations be preferable to profiling an entire LLM execution?',
+      options: [
+        'Limiting profiling reduces file size and focuses analysis on representative or problematic execution periods',
+        'Specific iterations always contain all performance issues making full profiling redundant',
+        'Full profiling is technically impossible for any application requiring iteration-based selective profiling',
+        'Iteration-specific profiling exclusively benefits storage costs without improving analysis quality'
+      ],
+      correctAnswer: 0,
+      explanation: 'Profiling specific iterations reduces the profile file size and allows controlling which iterations are collected. This is particularly valuable for understanding representative behavior or investigating specific performance issues without overwhelming data volumes.'
+    },
+    {
+      id: 'q4',
+      question: 'What purpose do NVTX (NVIDIA Tools Extension) markers serve in performance analysis?',
+      options: [
+        'They annotate code regions enabling correlation between application logic and performance metrics in timelines',
+        'NVTX markers exclusively handle memory allocation without providing any performance visibility',
+        'Markers only improve compilation speed without contributing to runtime performance analysis',
+        'NVTX exclusively benefits security monitoring without any performance profiling applications'
+      ],
+      correctAnswer: 0,
+      explanation: 'NVTX markers provide annotations that help users understand which regions of code correspond to observed performance behavior. They enable correlating application-level logic with low-level performance metrics in profiling tools like Nsight Systems.'
+    },
+    {
+      id: 'q5',
+      question: 'How does Nsight Systems provide a "middle-ground" between timing analysis and kernel-level profiling?',
+      options: [
+        'Metric sampling provides application-level insights with more detail than timing but less depth than kernel profiling',
+        'It exclusively focuses on high-level timing without any detailed metrics or kernel information',
+        'Nsight Systems only performs kernel-level analysis without any application-level capabilities',
+        'The middle-ground approach eliminates all need for other profiling tools or analysis methods'
+      ],
+      correctAnswer: 0,
+      explanation: 'Nsight Systems reports at the application level with metric sampling capabilities provide a clean middle-ground between simple timing analysis and deep kernel-level dives with Nsight Compute. This offers balanced insight without overwhelming detail.'
+    },
+    {
+      id: 'q6',
+      question: 'What benefit does PyTorch profiler integration provide when analyzing PyTorch-based LLM workflows?',
+      options: [
+        'It helps users understand performance breakdown within the model with framework-specific insights',
+        'PyTorch profiler exclusively handles data loading without any model execution performance analysis',
+        'Integration only supports training analysis without providing any inference profiling capabilities',
+        'PyTorch profiler eliminates need for CUDA profiling by replacing all lower-level analysis'
+      ],
+      correctAnswer: 0,
+      explanation: 'The PyTorch profiler helps users analyze the performance breakdown in the model, providing framework-specific insights. Combined with toggling capabilities, it results in focused, smaller files for post-processing while maintaining valuable analysis detail.'
+    },
+    {
+      id: 'q7',
+      question: 'Why is understanding "which regions to focus on" important for effective LLM performance analysis?',
+      options: [
+        'Identifying bottleneck regions enables targeted optimization efforts where they\'ll have greatest impact',
+        'All regions of LLM execution have identical performance characteristics making focus irrelevant',
+        'Regional focus only benefits visualization without improving actual optimization effectiveness',
+        'LLMs automatically optimize themselves eliminating any need for focused performance analysis'
+      ],
+      correctAnswer: 0,
+      explanation: 'Providing means to understand which regions users may want to focus on enables targeted analysis. Not all parts of LLM execution contribute equally to performance issues, so identifying critical regions makes optimization efforts more efficient and effective.'
+    },
+    {
+      id: 'q8',
+      question: 'What challenge does profiling file size present for long-running LLM applications?',
+      options: [
+        'Massive files can be difficult to post-process for metric extraction and may overwhelm analysis tools',
+        'Large profile files exclusively consume storage without affecting analysis capabilities or workflows',
+        'File size is completely irrelevant since all modern systems handle unlimited data volumes',
+        'Smaller files always contain insufficient information making size reduction counterproductive'
+      ],
+      correctAnswer: 0,
+      explanation: 'Long-running LLM applications can generate very large profile files. Selective profiling results in smaller files to post-process for metric extraction or similar analysis, making the data more manageable and analysis more practical.'
+    },
+    {
+      id: 'q9',
+      question: 'How does coordinating profiling tools with application execution improve analysis quality?',
+      options: [
+        'Synchronized profiling captures relevant execution phases ensuring collected data represents intended workload behavior',
+        'Coordination exclusively improves aesthetics without affecting data quality or analysis accuracy',
+        'Independent profiling without coordination always produces superior results for all applications',
+        'Tool coordination only benefits automated scripts without improving manual analysis workflows'
+      ],
+      correctAnswer: 0,
+      explanation: 'Coordinating profiling tools (like Nsight Systems) with application execution ensures that profiling captures the intended execution phases. This synchronization guarantees that collected data represents the workload behavior you want to analyze and optimize.'
+    },
+    {
+      id: 'q10',
+      question: 'What role does garbage collection (GC) profiling play in understanding Python-based LLM performance?',
+      options: [
+        'GC markers reveal memory management overhead that can significantly impact overall application performance',
+        'GC profiling exclusively tracks memory leaks without revealing any performance impact information',
+        'Garbage collection has no performance impact making GC profiling unnecessary for optimization',
+        'GC profiling only benefits memory capacity planning without affecting performance analysis'
+      ],
+      correctAnswer: 0,
+      explanation: 'Enabling garbage collection NVTX markers allows understanding memory management overhead. In Python-based LLM applications, GC can significantly impact performance, so visualizing when and how often it occurs helps identify optimization opportunities.'
+    },
+    {
+      id: 'q11',
+      question: 'Why might analyzing the Global Interpreter Lock (GIL) be relevant for PyTorch LLM performance?',
+      options: [
+        'GIL contention can limit parallelism in Python, affecting overall application throughput and efficiency',
+        'GIL exclusively affects network communication without impacting any computational performance',
+        'Modern Python completely eliminated GIL making its analysis irrelevant for all applications',
+        'GIL only matters for training without affecting inference performance or optimization'
+      ],
+      correctAnswer: 0,
+      explanation: 'The GIL can limit parallelism in Python applications. Including GIL information in NVTX markers helps identify when the GIL is causing contention or limiting multi-threaded performance in PyTorch-based LLM workflows.'
+    },
+    {
+      id: 'q12',
+      question: 'What advantage does visualizing profiling results in timeline format provide for LLM analysis?',
+      options: [
+        'Temporal correlation between events helps identify dependencies, bottlenecks, and optimization opportunities',
+        'Timeline visualization only provides aesthetic appeal without any practical debugging advantages',
+        'Timelines exclusively show errors without revealing any performance patterns or optimization insights',
+        'Statistical summaries always provide superior insights making timeline visualization unnecessary'
+      ],
+      correctAnswer: 0,
+      explanation: 'Timeline visualization enables seeing when events occur and how they relate temporally. This helps identify dependencies between operations, understand where time is spent, and correlate application-level events with low-level performance metrics for effective optimization.'
+    },
+    {
+      id: 'q13',
+      question: 'How does selective metric collection benefit post-profiling analysis workflows?',
+      options: [
+        'Focusing on relevant metrics reduces data volume and speeds analysis without sacrificing critical insights',
+        'Collecting all possible metrics always produces better results making selective collection counterproductive',
+        'Metric selection exclusively affects storage costs without improving analysis speed or effectiveness',
+        'Selective collection eliminates all valuable data making comprehensive profiling always superior'
+      ],
+      correctAnswer: 0,
+      explanation: 'Selective profiling and metric collection produces smaller, more focused datasets. This makes post-processing for metric extraction faster and more manageable while still capturing the critical performance information needed for optimization decisions.'
+    },
+    {
+      id: 'q14',
+      question: 'What insight does understanding performance breakdown within a model provide to developers?',
+      options: [
+        'It reveals which model components consume most time, guiding where optimization efforts should focus',
+        'Breakdown analysis only identifies what components exist without revealing any optimization opportunities',
+        'Performance breakdown exclusively benefits researchers without providing value to production deployments',
+        'All model components contribute equally to runtime making breakdown analysis unnecessary'
+      ],
+      correctAnswer: 0,
+      explanation: 'Understanding performance breakdown within the model helps identify which components or operations consume the most time. This guides developers to focus optimization efforts where they\'ll have the greatest impact on overall application performance.'
+    },
+    {
+      id: 'q15',
+      question: 'Why is the combination of application-level and kernel-level profiling tools valuable for LLM optimization?',
+      options: [
+        'Different profiling levels provide complementary perspectives from high-level patterns to low-level kernel details',
+        'Multiple profiling tools only create redundant data without providing complementary insights',
+        'Single-level profiling always provides sufficient information making multi-level analysis wasteful',
+        'Tool combination exclusively benefits academic research without practical optimization value'
+      ],
+      correctAnswer: 0,
+      explanation: 'Application-level tools like Nsight Systems show overall patterns and workflows, while kernel-level tools like Nsight Compute provide detailed GPU operation analysis. Together, they offer complementary perspectives enabling both strategic optimization decisions and tactical kernel improvements.'
+    }
   ]
 };
 
