@@ -1940,21 +1940,21 @@ const QUIZ_DATA: QuizSet = {
       id: 'q1',
       question: 'What fundamental task does a language model perform?',
       options: [
-        'It translates text between different languages',
         'It provides a probability distribution of which word is valid in a sequence of words',
+        'It translates text between different languages',
         'It generates images from text descriptions',
         'It compresses text data for storage efficiency'
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation: 'A language model\'s fundamental job is to predict which word is the best fit in a sentence by providing a probability distribution of words being valid in a sequence. This is the core capability that enables all other language model functions. While LLMs can perform translation and generation tasks, these are applications built upon this fundamental predictive capability rather than the primary function itself.'
     },
     {
       id: 'q2',
       question: 'What distinguishes a Large Language Model (LLM) from smaller language models like BERT?',
       options: [
-        'LLMs can only perform generative tasks while smaller models perform classification',
-        'LLMs exhibit emergent abilities that appear with increased scale across parameters, training data, and compute',
         'LLMs are always faster at inference than smaller models',
+        'LLMs exhibit emergent abilities that appear with increased scale across parameters, training data, and compute',
+        'LLMs can only perform generative tasks while smaller models perform classification',
         'LLMs require less training data than smaller models'
       ],
       correctAnswer: 1,
@@ -1964,10 +1964,10 @@ const QUIZ_DATA: QuizSet = {
       id: 'q3',
       question: 'What is a significant operational challenge of using ensembles of smaller models compared to using a single LLM?',
       options: [
-        'Ensembles always have higher inference costs',
+        'Ensembles require more training data than LLMs',
         'Each model in every ensemble requires its own MLOps pipeline and regular fine-tuning',
-        'Ensembles cannot perform multiple tasks',
-        'Ensembles require more training data than LLMs'
+        'Ensembles always have higher inference costs',
+        'Ensembles cannot perform multiple tasks'
       ],
       correctAnswer: 1,
       explanation: 'A major operational challenge with ensembles is that each model requires its own MLOps pipeline for deployment, monitoring, and maintenance. Additionally, each model must be fine-tuned regularly as data drifts over time. This creates significant maintenance overhead and complexity. While ensembles might appear cheaper from an inference cost perspective, the engineering time, maintenance costs, and complexity of managing multiple specialized models often outweighs the benefits compared to using a single flexible LLM.'
@@ -1976,9 +1976,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q4',
       question: 'What is a zero-shot prompt?',
       options: [
-        'A prompt that provides multiple examples before asking the actual question',
-        'A prompt that asks the model to perform a task without any examples of expected behavior',
         'A prompt that includes step-by-step reasoning',
+        'A prompt that asks the model to perform a task without any examples of expected behavior',
+        'A prompt that provides multiple examples before asking the actual question',
         'A prompt that requires no response from the model'
       ],
       correctAnswer: 1,
@@ -1988,9 +1988,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q5',
       question: 'How does a few-shot prompt help overcome limitations observed in zero-shot prompting?',
       options: [
-        'It reduces the computational requirements of the model',
-        'It provides examples that help the model understand the task format and context',
         'It automatically fine-tunes the model for the specific task',
+        'It provides examples that help the model understand the task format and context',
+        'It reduces the computational requirements of the model',
         'It increases the maximum token limit for responses'
       ],
       correctAnswer: 1,
@@ -2000,9 +2000,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q6',
       question: 'What is the purpose of chain-of-thought prompting?',
       options: [
-        'To reduce the length of the model\'s response',
-        'To enable the model to show its reasoning process and answer logically complex questions',
         'To make the model respond faster',
+        'To enable the model to show its reasoning process and answer logically complex questions',
+        'To reduce the length of the model\'s response',
         'To eliminate the need for training data'
       ],
       correctAnswer: 1,
@@ -2012,10 +2012,10 @@ const QUIZ_DATA: QuizSet = {
       id: 'q7',
       question: 'What is a key limitation of prompt engineering that P-tuning addresses?',
       options: [
-        'Prompt engineering cannot work with LLMs over 1B parameters',
+        'Prompt engineering only works for text-based tasks',
         'Examples must be pre-appended to each prompt, consuming the token budget and limiting the number of examples',
-        'Prompt engineering requires expensive GPU hardware',
-        'Prompt engineering only works for text-based tasks'
+        'Prompt engineering cannot work with LLMs over 1B parameters',
+        'Prompt engineering requires expensive GPU hardware'
       ],
       correctAnswer: 1,
       explanation: 'Prompt engineering has two main limitations: only a small number of examples can be used (limiting control), and these examples must be pre-appended to every prompt, which consumes the token budget. P-tuning solves this by using a small trainable model to generate task-specific virtual tokens that can be stored in a lookup table and reused, eliminating the need to include examples in every prompt while providing more extensive customization than few-shot examples alone.'
@@ -2024,9 +2024,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q8',
       question: 'How does P-tuning differ from traditional fine-tuning of an LLM?',
       options: [
-        'P-tuning modifies all parameters of the LLM while fine-tuning modifies only some',
-        'P-tuning trains a small model to generate virtual tokens while the LLM remains frozen',
         'P-tuning is only used for image generation tasks',
+        'P-tuning trains a small model to generate virtual tokens while the LLM remains frozen',
+        'P-tuning modifies all parameters of the LLM while fine-tuning modifies only some',
         'P-tuning requires more computational resources than full fine-tuning'
       ],
       correctAnswer: 1,
@@ -2036,9 +2036,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q9',
       question: 'What happens to the small model used during P-tuning after the tuning process is complete?',
       options: [
-        'It remains in the inference pipeline for all future predictions',
-        'The virtual tokens it generated are stored in a lookup table, replacing the need for the small model',
         'It is discarded entirely and cannot be reused',
+        'The virtual tokens it generated are stored in a lookup table, replacing the need for the small model',
+        'It remains in the inference pipeline for all future predictions',
         'It is merged with the LLM to create a new unified model'
       ],
       correctAnswer: 1,
@@ -2048,9 +2048,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q10',
       question: 'Why might an organization choose LLMs over ensembles despite potentially higher inference costs?',
       options: [
-        'LLMs always produce more accurate results than ensembles',
-        'LLMs eliminate engineering complexity, reduce time-to-market, and avoid per-model data acquisition challenges',
         'LLMs never require any fine-tuning or customization',
+        'LLMs eliminate engineering complexity, reduce time-to-market, and avoid per-model data acquisition challenges',
+        'LLMs always produce more accurate results than ensembles',
         'LLMs are easier to deploy on mobile devices'
       ],
       correctAnswer: 1,
@@ -2060,9 +2060,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q11',
       question: 'What role does prompt quality play in LLM responses?',
       options: [
-        'Prompts have minimal impact since LLMs are pre-trained on large datasets',
-        'The quality and relevance of the model\'s response is heavily dependent on prompt quality',
         'Only the length of the prompt matters, not its content',
+        'The quality and relevance of the model\'s response is heavily dependent on prompt quality',
+        'Prompts have minimal impact since LLMs are pre-trained on large datasets',
         'Prompts are only important for image generation models'
       ],
       correctAnswer: 1,
@@ -2072,9 +2072,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q12',
       question: 'What flexibility advantage do LLMs have over purpose-built ensembles?',
       options: [
-        'LLMs can only perform one task extremely well',
-        'LLMs can handle a wide variety of tasks due to generation capabilities and diverse training data',
         'LLMs require less electricity to operate',
+        'LLMs can handle a wide variety of tasks due to generation capabilities and diverse training data',
+        'LLMs can only perform one task extremely well',
         'LLMs work offline without internet connectivity'
       ],
       correctAnswer: 1,
@@ -2084,9 +2084,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q13',
       question: 'In the context of prompt engineering, what can prompts include to guide model responses?',
       options: [
-        'Only simple questions',
-        'Instructions, questions, constraints on tone, style, length, and specific requirements',
         'Just keywords without any structure',
+        'Instructions, questions, constraints on tone, style, length, and specific requirements',
+        'Only simple questions',
         'Only numerical data'
       ],
       correctAnswer: 1,
@@ -2096,9 +2096,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q14',
       question: 'What is a key benefit of P-tuning for organizations managing multiple use cases?',
       options: [
-        'P-tuning eliminates the need for any training data',
-        'Models p-tuned on different tasks can be saved separately without requiring large memory, enabling easy task-switching',
         'P-tuning makes the base LLM smaller and faster',
+        'Models p-tuned on different tasks can be saved separately without requiring large memory, enabling easy task-switching',
+        'P-tuning eliminates the need for any training data',
         'P-tuning only works with image-based models'
       ],
       correctAnswer: 1,
@@ -2108,9 +2108,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q15',
       question: 'What does the term "emergent abilities" refer to in the context of large language models?',
       options: [
-        'The ability to generate images from text',
-        'Additional capabilities that appear when models reach sufficient scale that weren\'t present in smaller models',
         'The speed at which models can process queries',
+        'Additional capabilities that appear when models reach sufficient scale that weren\'t present in smaller models',
+        'The ability to generate images from text',
         'The model\'s ability to work without internet connectivity'
       ],
       correctAnswer: 1,
@@ -2123,22 +2123,22 @@ const QUIZ_DATA: QuizSet = {
       id: 'q1',
       question: 'What is the primary purpose of Retrieval Augmented Generation (RAG) in the context of large language models?',
       options: [
-        'To reduce the size of language models for faster processing',
         'To enhance LLMs by providing access to external, up-to-date knowledge for more accurate responses',
+        'To reduce the size of language models for faster processing',
         'To eliminate the need for training data',
         'To convert all data types into images for processing'
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation: 'RAG enhances large language models by giving them access to external, up-to-date knowledge. This process allows systems to provide responses that are both general and specific to particular data sources, combining retrieval and generation for more accurate and contextual answers. Rather than relying solely on the model\'s training data, RAG enables the system to pull relevant information from a knowledge base and use it to ground responses in current, specific information.'
     },
     {
       id: 'q2',
       question: 'In the multimodal RAG pipeline described, what strategy is used to handle different types of data (text, images, charts)?',
       options: [
-        'Processing each modality separately with different models throughout the entire pipeline',
+        'Using separate RAG pipelines for each data type',
         'Grounding all modalities into a single form (text) before proceeding through the RAG pipeline',
-        'Converting everything to images for uniform processing',
-        'Using separate RAG pipelines for each data type'
+        'Processing each modality separately with different models throughout the entire pipeline',
+        'Converting everything to images for uniform processing'
       ],
       correctAnswer: 1,
       explanation: 'The approach described grounds all modalities into a single one—text. Vision Language Models are used to convert visual data (images, charts) into textual descriptions. Once this conversion is complete, the rest of the pipeline remains the same as a traditional RAG pipeline. This unified approach simplifies the architecture by standardizing all inputs into text format, which can then be embedded and searched uniformly.'
@@ -2147,21 +2147,21 @@ const QUIZ_DATA: QuizSet = {
       id: 'q3',
       question: 'What is the role of Vision Language Models in the multimodal RAG system?',
       options: [
-        'To generate images from text descriptions',
-        'To convert visual information from images and charts into textual descriptions for processing',
         'To compress images for faster storage',
-        'To translate text between different languages'
+        'To translate text between different languages',
+        'To convert visual information from images and charts into textual descriptions for processing',
+        'To generate images from text descriptions'
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation: 'Vision Language Models serve as the bridge between visual and textual data in this system. They process visual data and convert it into textual descriptions that can be integrated into the knowledge base. The system uses specialized models for different types of visual content: Neva 22B (NVIDIA\'s fine-tuned variant of LAVA) for general image understanding, and DEOT by Google for charts and plots. This conversion allows all information to flow through a unified text-based RAG pipeline.'
     },
     {
       id: 'q4',
       question: 'What advantage does GPU acceleration provide for vector databases like Milvus in RAG applications?',
       options: [
-        'It reduces electricity consumption during operation',
-        'It enables faster indexing and querying, with reduced latency and maximum throughput compared to CPU processing',
         'It allows the database to store more data',
+        'It enables faster indexing and querying, with reduced latency and maximum throughput compared to CPU processing',
+        'It reduces electricity consumption during operation',
         'It eliminates the need for embedding models'
       ],
       correctAnswer: 1,
@@ -2171,9 +2171,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q5',
       question: 'What is the purpose of NeMo Data Curator in NVIDIA\'s open-source ecosystem?',
       options: [
-        'To train new language models from scratch',
-        'To simplify data curation by extracting, deduplicating, and filtering information from unstructured data',
         'To generate synthetic training data',
+        'To simplify data curation by extracting, deduplicating, and filtering information from unstructured data',
+        'To train new language models from scratch',
         'To compress models for deployment'
       ],
       correctAnswer: 1,
@@ -2183,21 +2183,21 @@ const QUIZ_DATA: QuizSet = {
       id: 'q6',
       question: 'What functionality does NeMo Guard R provide in AI applications?',
       options: [
-        'It optimizes model inference speed',
-        'It implements safety measures and controls for model output to prevent inappropriate responses',
         'It compresses models for deployment',
-        'It generates training data automatically'
+        'It generates training data automatically',
+        'It implements safety measures and controls for model output to prevent inappropriate responses',
+        'It optimizes model inference speed'
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation: 'NeMo Guard R implements safety measures and controls for model output, allowing developers to add guards that prevent inappropriate or harmful responses. This enhances the reliability and safety of AI applications by providing a layer of content filtering and control. This is particularly important for production deployments where ensuring appropriate model behavior is critical for user safety and trust.'
     },
     {
       id: 'q7',
       question: 'Why might an organization choose to process multiple document types (PDFs, PowerPoints, images) through a unified pipeline?',
       options: [
-        'It reduces the need for storage space',
-        'It enables a single knowledge base where all information types can be searched and retrieved uniformly',
         'It eliminates the need for embedding models',
+        'It enables a single knowledge base where all information types can be searched and retrieved uniformly',
+        'It reduces the need for storage space',
         'It makes the system faster by skipping processing steps'
       ],
       correctAnswer: 1,
@@ -2207,9 +2207,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q8',
       question: 'What role does an embedding model like NV Embed play in a RAG system?',
       options: [
-        'It generates final responses to user queries',
-        'It transforms text into high-dimensional vectors that can be compared for similarity',
         'It stores documents in the database',
+        'It transforms text into high-dimensional vectors that can be compared for similarity',
+        'It generates final responses to user queries',
         'It converts images to text descriptions'
       ],
       correctAnswer: 1,
@@ -2219,10 +2219,10 @@ const QUIZ_DATA: QuizSet = {
       id: 'q9',
       question: 'In the context of the multimodal RAG system, what is the purpose of having specialized Vision Language Models for different visual content types?',
       options: [
-        'To reduce processing time by using smaller models',
+        'To reduce memory usage during processing',
         'Different visual content types require specialized understanding—general images need different processing than charts and graphs',
-        'To comply with licensing requirements',
-        'To reduce memory usage during processing'
+        'To reduce processing time by using smaller models',
+        'To comply with licensing requirements'
       ],
       correctAnswer: 1,
       explanation: 'Different types of visual content benefit from specialized processing. General images require understanding of objects, scenes, and contexts, while charts and graphs require understanding of data visualization conventions, axes, scales, and numerical relationships. Using specialized models (Neva 22B for general images, DEOT for charts/plots) ensures more accurate extraction of information from each content type. This specialization leads to better textual descriptions and ultimately more accurate responses from the RAG system.'
@@ -2231,9 +2231,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q10',
       question: 'What is the benefit of using NVIDIA\'s NIM API for accessing large language models?',
       options: [
-        'It eliminates the need for internet connectivity',
-        'It provides GPU-optimized access to state-of-the-art language models through a convenient API interface',
         'It allows unlimited free usage of all models',
+        'It provides GPU-optimized access to state-of-the-art language models through a convenient API interface',
+        'It eliminates the need for internet connectivity',
         'It automatically trains models on custom data'
       ],
       correctAnswer: 1,
@@ -2243,9 +2243,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q11',
       question: 'What is the purpose of orchestration tools like LLaMA Index in a RAG application?',
       options: [
-        'To store vector embeddings in the database',
-        'To coordinate the entire process from query processing to information retrieval and response generation',
         'To train new language models',
+        'To coordinate the entire process from query processing to information retrieval and response generation',
+        'To store vector embeddings in the database',
         'To convert images to text'
       ],
       correctAnswer: 1,
@@ -2255,10 +2255,10 @@ const QUIZ_DATA: QuizSet = {
       id: 'q12',
       question: 'Why is it valuable to extract context around images and tables when processing documents for a RAG system?',
       options: [
-        'To reduce the file size of processed documents',
+        'To eliminate the need for Vision Language Models',
         'Surrounding text provides additional context that helps interpret visual elements more accurately',
-        'To meet regulatory compliance requirements',
-        'To eliminate the need for Vision Language Models'
+        'To reduce the file size of processed documents',
+        'To meet regulatory compliance requirements'
       ],
       correctAnswer: 1,
       explanation: 'Text surrounding images and tables often provides crucial context for interpreting the visual content. For example, a caption might explain what a chart represents, or preceding paragraphs might provide background that makes an image\'s significance clear. By extracting and preserving this contextual information along with the visual element descriptions, the RAG system can provide more accurate and complete answers when that visual content is relevant to a user\'s query.'
@@ -2267,10 +2267,10 @@ const QUIZ_DATA: QuizSet = {
       id: 'q13',
       question: 'What advantage does NVIDIA\'s full-stack ecosystem provide for building LLM applications?',
       options: [
-        'It requires using only proprietary NVIDIA tools',
+        'It only works with NVIDIA hardware',
         'It offers flexibility by integrating seamlessly with open-source tools while providing GPU-accelerated performance',
-        'It eliminates the need for programming knowledge',
-        'It only works with NVIDIA hardware'
+        'It requires using only proprietary NVIDIA tools',
+        'It eliminates the need for programming knowledge'
       ],
       correctAnswer: 1,
       explanation: 'NVIDIA\'s ecosystem provides both proprietary and open-source tools that integrate well with popular frameworks and technologies. This gives developers flexibility to choose components based on their needs while benefiting from GPU acceleration across the stack. The ecosystem includes tools like NeMo for training, Triton for inference serving, and integrations with frameworks like LLaMA Index, all optimized for performance while maintaining compatibility with the broader AI community\'s tools and standards.'
@@ -2279,9 +2279,9 @@ const QUIZ_DATA: QuizSet = {
       id: 'q14',
       question: 'In a multimodal RAG system, why is the vector database a critical component?',
       options: [
-        'It stores the original document files',
-        'It enables efficient similarity search across embedded content, allowing quick retrieval of relevant information',
         'It generates responses to user queries',
+        'It enables efficient similarity search across embedded content, allowing quick retrieval of relevant information',
+        'It stores the original document files',
         'It converts text to images'
       ],
       correctAnswer: 1,
@@ -2291,10 +2291,10 @@ const QUIZ_DATA: QuizSet = {
       id: 'q15',
       question: 'What is the primary workflow difference between traditional document processing and multimodal document processing?',
       options: [
-        'Multimodal processing is always slower than traditional processing',
+        'Traditional processing provides more accurate results',
         'Multimodal processing must convert and integrate multiple data types (text, images, charts) while traditional processing handles only text',
-        'Multimodal processing requires less storage space',
-        'Traditional processing provides more accurate results'
+        'Multimodal processing is always slower than traditional processing',
+        'Multimodal processing requires less storage space'
       ],
       correctAnswer: 1,
       explanation: 'Traditional document processing typically handles text-only content, while multimodal processing must handle and integrate multiple data types including text, images, charts, and potentially other formats. This requires additional steps like using Vision Language Models to convert visual content to textual descriptions, processing different document formats (PDFs, PowerPoints), and extracting both text and visual elements. The challenge lies in effectively integrating these diverse data types into a unified, searchable knowledge base while preserving the information\'s meaning and context.'
@@ -3213,6 +3213,1227 @@ const QUIZ_DATA: QuizSet = {
       ],
       correctAnswer: 1,
       explanation: 'Safety-critical applications like medical or financial advice require exceptionally rigorous evaluation. Standard accuracy metrics must be complemented by measures like worst-case performance, consistency across rephrased queries, appropriate uncertainty acknowledgment, and adherence to regulatory requirements. Evaluation must specifically test failure modes that could cause harm—hallucinations in medical contexts or inappropriate financial advice. The stakes are higher, so evaluation must be more thorough, with external expert review and extensive monitoring essential.'
+    }
+  ],
+  
+  '3-evaluation-tuning/4-agent-intelligence-toolkit-FAQ.txt': [
+    {
+      id: 'q1',
+      question: 'What is required to begin using AIQ toolkit with existing codebases?',
+      options: [
+        'Nothing mandatory - the toolkit is fully opt-in at any integration level, from individual tools to complete workflows',
+        'Complete rewrite of all agent and tool implementations to conform to NVIDIA\'s proprietary architecture standards and design patterns',
+        'Migration to NVIDIA-specific programming frameworks exclusively, replacing all existing framework dependencies with NVIDIA-approved alternatives',
+        'Replacement of existing LLM providers with NVIDIA models and conversion of all agent logic to NVIDIA-compatible formats'
+      ],
+      correctAnswer: 0,
+      explanation: 'AIQ toolkit is 100% opt-in, meaning you don\'t need to rewrite any existing code to begin using it. This is a fundamental design principle that respects the significant investments organizations have already made in their agent architectures and codebases. Users have complete freedom to integrate at whatever level they want—whether that\'s at the tool level (decorating individual functions), agent level (wrapping entire agents), or entire workflow level (instrumenting complete systems). You can start small where you believe you\'ll see the most value and expand coverage from there based on demonstrated benefits. While the documentation encourages wrapping (decorating) every tool and agent to get the most comprehensive data from the profiler and to maximize observability, this is a recommendation rather than a requirement. The toolkit provides value even with partial adoption, allowing teams to prove benefits in limited contexts before broader rollout. This opt-in design significantly reduces adoption friction, protects existing technology investments, minimizes organizational change management challenges, and enables learning-driven adoption strategies where teams can experiment with low risk. The architecture explicitly avoids lock-in, ensuring that organizations maintain full control over their implementation choices and can integrate AIQ toolkit capabilities incrementally as their needs and confidence grow.'
+    },
+    {
+      id: 'q2',
+      question: 'How does AIQ toolkit relate to existing agentic frameworks like LangChain or LlamaIndex?',
+      options: [
+        'It works alongside them as a complementary layer without requiring replacement of existing framework implementations',
+        'It replaces them entirely with a proprietary NVIDIA framework that requires migrating all existing agent code and logic',
+        'It only supports NVIDIA-developed frameworks exclusively, requiring abandonment of third-party or open-source alternatives',
+        'It requires migrating to new framework architectures designed specifically for NVIDIA GPU infrastructure and optimization'
+      ],
+      correctAnswer: 0,
+      explanation: 'AIQ toolkit is explicitly not another LLM or agentic framework—it\'s fundamentally designed to work alongside, not replace, your existing agentic frameworks, whether they are sophisticated enterprise-grade systems, popular open-source frameworks like LangChain or LlamaIndex, or even simple custom Python-based agents you\'ve built yourself. This complementary approach is central to the toolkit\'s value proposition and differentiates it from frameworks that require you to rebuild your entire system using their abstractions and patterns. The toolkit adds powerful capabilities like comprehensive profiling, systematic evaluation, advanced observability, and performance optimization on top of whatever framework you\'re already using successfully. This means you can enhance your current technology stack with NVIDIA\'s specialized tools for agent development without the significant cost, risk, and disruption of replatforming your entire system. The design respects your existing architecture decisions and the substantial investments you\'ve made in learning and building with your chosen frameworks. Whether you\'ve standardized on LangChain for its extensive ecosystem, LlamaIndex for its data connectivity features, CrewAI for multi-agent orchestration, Microsoft Semantic Kernel for enterprise integration, or custom Python implementations tailored to your specific needs, AIQ toolkit integrates seamlessly. This framework-agnostic approach also future-proofs your investment—as new frameworks emerge or your needs evolve, AIQ toolkit continues providing value without requiring you to start over.'
+    },
+    {
+      id: 'q3',
+      question: 'What is AIQ toolkit\'s approach to handling agent-to-agent communication?',
+      options: [
+        'Delegating communication to existing proven protocols like MCP, HTTP, gRPC, and sockets rather than creating new standards',
+        'Implementing a proprietary protocol specifically designed for NVIDIA agents with custom serialization and routing mechanisms',
+        'Creating a new industry standard specifically for NVIDIA agents that other frameworks would need to adopt',
+        'Requiring all agents to use identical communication methods and data formats defined by NVIDIA specifications'
+      ],
+      correctAnswer: 0,
+      explanation: 'AIQ toolkit explicitly is not an attempt to solve agent-to-agent communication, recognizing that this is a well-addressed problem with mature, proven solutions already available. Instead, the toolkit acknowledges that agent communication is best handled over existing, widely-adopted protocols such as MCP (Model Context Protocol), HTTP (the foundation of web services), gRPC (Google\'s high-performance RPC framework), and traditional sockets (for low-level networking). This pragmatic decision reflects several important principles. First, protocol proliferation is a real problem in software ecosystems—introducing yet another communication standard would fragment the ecosystem and create interoperability challenges rather than solving them. Second, the existing protocols have years or decades of real-world usage, hardening, tooling support, and developer familiarity; recreating this would be wasteful and unlikely to produce better results. Third, by leveraging standard protocols, AIQ toolkit ensures that agents built with the toolkit can seamlessly communicate with agents built using other frameworks, technologies, and even different programming languages, promoting true interoperability across the broader AI agent ecosystem. Fourth, developers already understand these protocols, infrastructure already supports them, and security teams have established policies for them. Rather than spending resources reinventing communication, AIQ toolkit focuses its innovation on areas where it can provide unique value like profiling, evaluation, and observability—capabilities that truly differentiate the toolkit and address gaps in the current agent development ecosystem.'
+    },
+    {
+      id: 'q4',
+      question: 'What is the relationship between AIQ toolkit and observability platforms?',
+      options: [
+        'It collects and transmits fine-grained telemetry to help with optimization but doesn\'t replace existing observability platforms',
+        'AIQ toolkit completely replaces existing observability solutions with a comprehensive NVIDIA-specific monitoring and analytics platform',
+        'AIQ toolkit requires using NVIDIA\'s proprietary monitoring tools exclusively and disables integration with third-party systems',
+        'It prevents integration with third-party observability systems to ensure consistency with NVIDIA\'s monitoring standards'
+      ],
+      correctAnswer: 0,
+      explanation: 'While AIQ toolkit is capable of collecting and transmitting fine-grained telemetry data to help with optimization and evaluation of agent systems, it explicitly does not replace your preferred observability platform and data collection applications. The toolkit complements existing observability solutions by providing specialized, agent-specific telemetry that captures the unique aspects of agent behavior—things like tool invocation patterns, decision-making paths, reasoning quality, token usage, intermediate steps in agent workflows, and performance characteristics specific to agentic AI systems. This specialized telemetry can be sent to whatever observability platform you already use, whether that\'s commercial solutions like Datadog, New Relic, or Dynatrace, open-source platforms like Prometheus and Grafana, cloud-native services like AWS CloudWatch or Azure Monitor, or specialized AI observability tools like Weights & Biases or Phoenix. This design philosophy maintains compatibility with enterprise observability stacks that organizations have carefully selected, configured, and integrated into their operations, while adding the specialized capabilities needed for agent monitoring and profiling. The toolkit recognizes that observability is a complex, mature domain with established solutions that organizations have invested significantly in, and rather than competing with these proven platforms, AIQ toolkit enhances them by providing the agent-specific instrumentation and telemetry that general observability tools don\'t naturally capture. This allows teams to maintain their unified observability strategy across all systems while gaining the deep agent insights that AIQ toolkit uniquely provides.'
+    },
+    {
+      id: 'q5',
+      question: 'What flexibility does AIQ toolkit provide regarding profiler integration depth?',
+      options: [
+        'Users choose their preferred integration level ranging from individual tools to agent-level to complete workflow scope',
+        'All tools and agents must be comprehensively decorated for the profiler functionality to work at any level',
+        'Only complete workflow decoration is supported by the profiler, requiring full instrumentation before any benefits',
+        'The profiler automatically decorates all code without requiring user control or explicit integration decisions'
+      ],
+      correctAnswer: 0,
+      explanation: 'AIQ toolkit gives users complete freedom to integrate at whatever level they want—whether that\'s at the granular tool level (decorating individual functions and utilities), the agent level (wrapping entire agent implementations), or the entire workflow level (instrumenting complete end-to-end systems). While the toolkit\'s documentation actively encourages wrapping (decorating) every tool and agent throughout your system to get the most comprehensive and detailed data out of the profiler—enabling the deepest insights into performance bottlenecks, decision-making patterns, and optimization opportunities—this comprehensive instrumentation is presented as a recommendation for maximum value rather than a strict requirement for basic functionality. Users can start small, focusing on areas where they believe they\'ll see the most immediate value or where they have the most pressing performance questions, and then progressively expand their instrumentation coverage from there as they gain confidence and see concrete benefits. This flexibility allows teams to adopt incrementally rather than requiring a big-bang implementation, which is particularly valuable in large, complex systems where full instrumentation might represent a significant undertaking. Teams might start by instrumenting just the most critical or problematic agents, or perhaps focus on specific high-value workflows, gather insights and demonstrate value to stakeholders, and then expand coverage systematically. The profiler provides meaningful insights even with partial coverage, though naturally the comprehensiveness and depth of analysis improves as instrumentation coverage increases. This graduated adoption approach lowers barriers to entry, reduces risk, allows learning and adjustment along the way, and respects that different organizations and teams have different priorities, constraints, and starting points for their agent development maturity.'
+    },
+    {
+      id: 'q6',
+      question: 'What approach does AIQ toolkit take toward technology stack compatibility?',
+      options: [
+        'Working seamlessly with both enterprise-grade frameworks and simple custom agents, supporting diverse development contexts',
+        'Requiring migration to NVIDIA-specific infrastructure exclusively, including specialized hardware and software dependencies',
+        'Supporting only Python-based agents without framework dependencies, limiting compatibility to simple implementations',
+        'Enforcing standardization across all agent implementations to ensure consistent behavior and performance characteristics'
+      ],
+      correctAnswer: 0,
+      explanation: 'AIQ toolkit is designed with broad compatibility in mind, working alongside existing agentic frameworks whether they are sophisticated, enterprise-grade systems deployed at scale in production environments with complex orchestration and governance requirements, or simple, straightforward Python-based agents that might be quick prototypes or specialized tools serving specific narrow purposes. This inclusive approach means the toolkit doesn\'t force architectural decisions, doesn\'t require sophisticated infrastructure, and doesn\'t mandate that you adopt particular design patterns or organizational structures. Whether you\'re running complex enterprise systems with multi-agent orchestration, extensive tool libraries, sophisticated evaluation pipelines, and enterprise integration requirements, or straightforward Python scripts that perform focused tasks with minimal dependencies, AIQ toolkit can add value through its profiling, evaluation, and observability capabilities. The toolkit meets developers where they are rather than requiring them to meet specific prerequisites or architectural standards. This flexibility is particularly important given the diversity of agent development contexts across organizations—startups might favor simple, fast-moving implementations while enterprises require robust, governed systems; research teams might prioritize experimentation while production teams emphasize reliability. AIQ toolkit provides value across this entire spectrum, allowing teams with different maturity levels, different constraints, and different goals to benefit from its capabilities. The toolkit\'s modular design means you can use just the pieces that make sense for your context—perhaps just profiling for a prototype, or comprehensive evaluation and observability for production systems. This approach lowers adoption barriers significantly, making AIQ toolkit accessible to a much broader audience than tools that assume specific architectural patterns or infrastructure capabilities.'
+    },
+    {
+      id: 'q7',
+      question: 'What is AIQ toolkit\'s stance on replacing existing development tools and frameworks?',
+      options: [
+        'It works alongside existing tools as an enhancement layer without requiring replacement of any current components',
+        'It requires complete replacement of all existing frameworks and tools with NVIDIA equivalents for proper functionality',
+        'It selectively replaces frameworks based on performance benchmarks, requiring migration of underperforming components',
+        'It only supplements tools that lack specific features, requiring partial replacement for comprehensive coverage'
+      ],
+      correctAnswer: 0,
+      explanation: 'A consistent and fundamental theme running throughout the entire FAQ and AIQ toolkit documentation is that the toolkit is not designed to replace anything—not LLM frameworks like those from OpenAI or Anthropic, not agentic frameworks like LangChain or LlamaIndex, not observability platforms like Datadog or New Relic, and not communication protocols like HTTP or gRPC. Instead, AIQ toolkit explicitly works alongside all existing tools to enhance their capabilities with specialized features for agent development. This "enhancement not replacement" philosophy is deeply embedded in the toolkit\'s design and reflects a pragmatic understanding that organizations have made substantial investments in their current tools, frameworks, and platforms—investments in licensing, training, integration, customization, and operational processes that shouldn\'t be discarded lightly. By positioning itself as a complementary layer rather than a replacement, AIQ toolkit dramatically reduces adoption friction since teams don\'t need to make difficult decisions about abandoning working systems. It protects and leverages existing investments rather than rendering them obsolete. It enables gradual integration where teams can add AIQ toolkit capabilities incrementally without disrupting working systems or requiring risky big-bang migrations. Organizations can continue using their chosen frameworks, platforms, and tools while augmenting them with AIQ toolkit\'s specialized capabilities for profiling agent performance, evaluating decision-making quality, providing deep observability into agent behavior, and optimizing resource usage. This approach recognizes that the agent development ecosystem is diverse and pluralistic, with different tools excelling at different aspects, and that providing value doesn\'t require monopolizing the entire stack—it just requires doing specific things exceptionally well that other tools don\'t address comprehensively.'
+    },
+    {
+      id: 'q8',
+      question: 'For optimal profiler benefits, what does AIQ toolkit recommend but not require?',
+      options: [
+        'Wrapping every tool and agent in your system with decorators to enable comprehensive instrumentation and profiling',
+        'Migrating all agent logic to NVIDIA infrastructure and replacing existing implementations with NVIDIA-optimized versions',
+        'Using only NVIDIA models for all LLM calls throughout the system, eliminating non-NVIDIA providers',
+        'Implementing custom communication protocols specifically designed for NVIDIA agents to ensure proper telemetry collection'
+      ],
+      correctAnswer: 0,
+      explanation: 'While AIQ toolkit actively encourages and recommends that users wrap (decorate) every tool and agent throughout their system to get the most comprehensive, detailed, and valuable data out of the profiler—enabling deep insights into performance characteristics, bottlenecks, decision-making patterns, token usage, tool invocation patterns, and optimization opportunities across the entire agent workflow—this comprehensive instrumentation is explicitly presented as a strong recommendation for maximizing value rather than a mandatory requirement for using the toolkit at all. This recommendation-not-requirement approach acknowledges several important realities. First, comprehensive decoration provides maximum visibility and profiling benefits, allowing the profiler to track every decision point, measure every operation, and provide complete end-to-end visibility into agent behavior. Second, it respects that teams may want or need to start smaller, perhaps focusing initially on specific high-value areas, critical workflows, or known problem areas before expanding to comprehensive coverage. Third, it recognizes that in large, complex systems, instrumenting everything might represent a significant undertaking that needs to be staged and prioritized. Fourth, it allows teams to prove value in limited contexts before making larger investments in broader instrumentation. The toolkit remains useful and provides meaningful insights even with partial adoption—you\'ll get profiling data for whatever you\'ve instrumented, though naturally the comprehensiveness and depth of analysis improves as instrumentation coverage increases. This graduated approach reduces adoption barriers, enables learning-driven expansion where teams can see benefits before committing to comprehensive instrumentation, and respects that different organizations have different starting points, priorities, and constraints around how much effort they can invest in instrumentation.'
+    },
+    {
+      id: 'q9',
+      question: 'What does AIQ toolkit\'s opt-in design philosophy enable for development teams?',
+      options: [
+        'Gradual adoption strategies starting with highest-value areas and expanding based on demonstrated benefits and learnings',
+        'Mandatory standardization across all agent implementations to ensure consistent patterns and architectural approaches',
+        'Immediate full-scale deployment requirements across all systems to achieve consistency and comprehensive coverage',
+        'Exclusive use of NVIDIA-developed components throughout the entire agent stack to ensure compatibility and support'
+      ],
+      correctAnswer: 0,
+      explanation: 'The 100% opt-in nature of AIQ toolkit fundamentally enables gradual adoption strategies where teams can start small in areas where they believe they\'ll see the most immediate value, prove benefits in those limited contexts with concrete metrics and outcomes, learn what works well for their specific use cases and organizational context, and then scale adoption systematically based on demonstrated benefits and growing confidence. This approach is particularly valuable in enterprise environments where large-scale changes require careful validation, risk management, and stakeholder buy-in. Teams can begin by instrumenting just the most critical workflows, the most problematic agents, or the highest-value use cases—perhaps a production customer service agent that handles significant volume, a complex research assistant with sophisticated tool use, or a high-stakes decision-making agent where optimization would have measurable business impact. They can gather detailed profiling data from these initial implementations, identify concrete optimization opportunities and bottlenecks, make improvements and measure their impact, and present clear ROI evidence to stakeholders and leadership. This proven value then justifies expanding instrumentation to additional agents and workflows, creating a virtuous cycle where each success builds confidence and momentum for broader adoption. This gradual approach significantly reduces organizational change management challenges since it doesn\'t require convincing everyone to adopt everything all at once. It allows learning and adjustment along the way—if initial implementations reveal that certain integration patterns work better than others, subsequent rollouts can incorporate those learnings. It reduces risk since problems with initial implementations affect limited scope rather than entire systems. It enables experimentation with low stakes, allowing teams to try different approaches and find what works best for their specific context before committing broadly.'
+    },
+    {
+      id: 'q10',
+      question: 'How does AIQ toolkit\'s approach to agent communication differ from creating new standards?',
+      options: [
+        'It leverages existing proven protocols like MCP, HTTP, and gRPC rather than introducing yet another standard',
+        'It builds proprietary protocols optimized for NVIDIA hardware to achieve superior performance and lower latency',
+        'It requires all agents use identical communication methods defined by comprehensive NVIDIA specifications',
+        'It creates new industry standards specifically designed for future-proofing against evolving agent architectures'
+      ],
+      correctAnswer: 0,
+      explanation: 'Rather than attempting to solve agent-to-agent communication by creating new proprietary protocols, inventing yet another standard that the industry would need to learn and adopt, or defining NVIDIA-specific communication patterns that would fragment the ecosystem, AIQ toolkit takes a deliberately pragmatic approach by recognizing that communication is best handled over existing, mature, widely-adopted protocols such as MCP (Model Context Protocol for AI-specific communications), HTTP (the foundation of web services and RESTful APIs), gRPC (Google\'s high-performance RPC framework with efficient serialization), and traditional sockets (for low-level networking needs). This decision reflects several important and well-reasoned principles about software ecosystem development and avoiding unnecessary fragmentation. First, protocol proliferation is a well-documented problem in software ecosystems—introducing yet another communication standard, even a technically excellent one, would fragment rather than unify the ecosystem, creating interoperability challenges, increasing learning curves, and requiring bridging code to connect systems using different protocols. Second, the existing protocols have accumulated years or even decades of real-world usage, battle-hardening through countless production deployments, extensive tooling and library support across virtually all programming languages and platforms, comprehensive documentation and community knowledge, and deep developer familiarity that dramatically reduces learning curves and implementation time. Third, by building on standard protocols rather than proprietary ones, AIQ toolkit ensures that agents built with the toolkit can seamlessly communicate with agents built using completely different frameworks, technologies, programming languages, or vendors, promoting true interoperability across the broader AI agent ecosystem rather than creating walled gardens. Fourth, developers, operations teams, and security professionals already deeply understand these protocols, existing infrastructure already supports them comprehensively, security teams have established policies and best practices for them, and monitoring tools can already observe and analyze them. Rather than spending valuable engineering resources and community mindshare on reinventing communication—a problem that isn\'t meaningfully unsolved—AIQ toolkit focuses its innovation efforts on areas where it can provide truly unique value that addresses real gaps in the current agent development ecosystem, such as comprehensive profiling of agent performance characteristics, systematic evaluation of decision-making quality, deep observability into agent reasoning processes, and intelligent optimization of resource usage patterns.'
+    }
+  ],
+  
+  '3-evaluation-tuning/5-launching-agent-intelligence-toolkit.txt': [
+    {
+      id: 'q1',
+      question: 'What command is used to start the AIQ toolkit server with a specific configuration?',
+      options: [
+        'aiq serve --config_file=path/to/config.yml to launch the server using the designated configuration',
+        'aiq start --config_file=path/to/config.yml to initialize the server with specified workflow settings',
+        'aiq launch --config_file=path/to/config.yml to begin server operations with custom parameters',
+        'aiq run --config_file=path/to/config.yml to execute the server process with configuration directives'
+      ],
+      correctAnswer: 0,
+      explanation: 'The correct command is aiq serve --config_file=examples/simple_calculator/configs/config.yml. The serve subcommand specifically launches the AIQ toolkit server, which then runs on http://localhost:8000 by default. The config file specifies the workflow, models, tools, and other settings the server will use.'
+    },
+    {
+      id: 'q2',
+      question: 'What prerequisite software must be installed to launch the AIQ toolkit web user interface?',
+      options: [
+        'Node.js version 18 or higher to run the web development server and install dependencies',
+        'Python version 3.8 or higher with pip package manager and virtual environment support',
+        'Docker Desktop for containerization along with docker-compose for orchestration capabilities',
+        'Java Runtime Environment version 11 or newer to execute the frontend compilation process'
+      ],
+      correctAnswer: 0,
+      explanation: 'Launching the AIQ toolkit UI requires Node.js v18+ to be installed. The UI is a Node.js-based web application located in the external/aiqtoolkit-opensource-ui subdirectory. After navigating to this directory, you run npm install to install dependencies and npm run dev to start the development server.'
+    },
+    {
+      id: 'q3',
+      question: 'What is the default port on which the AIQ toolkit server runs after launching?',
+      options: [
+        'Port 8000, which is where Uvicorn hosts the AIQ toolkit server by default for API requests',
+        'Port 8080, which is the standard alternative HTTP port commonly used for development servers',
+        'Port 3000, which is the typical port for Node.js applications and web development servers',
+        'Port 5000, which is the conventional port for Flask and lightweight Python web applications'
+      ],
+      correctAnswer: 0,
+      explanation: 'The server runs on http://localhost:8000 as shown in the startup output: "Uvicorn running on http://localhost:8000". This is the port where you send API requests like POST to /generate. The web UI (which is separate) runs on port 3000 by default.'
+    },
+    {
+      id: 'q4',
+      question: 'Which HTTP endpoint is recommended for receiving intermediate results streaming from the server?',
+      options: [
+        '/chat/stream for streaming intermediate results, which is the recommended endpoint for real-time updates',
+        '/generate for basic request-response interactions without any streaming of intermediate processing steps',
+        '/websocket for persistent bidirectional connections that maintain state across multiple interactions',
+        '/api/stream for generic streaming responses that provide continuous data flow during processing'
+      ],
+      correctAnswer: 0,
+      explanation: 'The documentation specifically notes "It is recommended to select /chat/stream for intermediate results streaming." This endpoint allows you to see the agent\'s intermediate steps and reasoning in real-time as it processes your request, rather than waiting for the complete final response.'
+    },
+    {
+      id: 'q5',
+      question: 'What alternative port does the AIQ toolkit UI use if the default port is already in use?',
+      options: [
+        'Port 3001 as an alternative if port 3000 is already occupied by another running application',
+        'Port 8001 as the automatic fallback when the primary port encounters conflicts with other services',
+        'Port 8080 which serves as the standard backup port for all Node.js development servers',
+        'Port 5000 as the secondary option when the default configuration cannot bind successfully'
+      ],
+      correctAnswer: 0,
+      explanation: 'The documentation states "Port 3001 is an alternative port if port 3000 (default) is in use." The UI\'s development server automatically attempts to use port 3001 if it cannot bind to port 3000, ensuring you can still run the interface even if another application is using the default port.'
+    },
+    {
+      id: 'q6',
+      question: 'Where is the AIQ toolkit user interface code located within the repository structure?',
+      options: [
+        'In a git submodule at external/aiqtoolkit-opensource-ui that must be explicitly initialized and updated',
+        'In the src/ui directory at the root level alongside other core source code components',
+        'In the web-ui folder under the main examples directory containing demonstration implementations',
+        'In a separate npm package that must be installed globally using npm install -g commands'
+      ],
+      correctAnswer: 0,
+      explanation: 'The UI is located in a git submodule at external/aiqtoolkit-opensource-ui. Before using it, you must run git submodule update --init --recursive to check out the submodule. This approach keeps the UI code separate and allows independent versioning and updates.'
+    },
+    {
+      id: 'q7',
+      question: 'What are the available HTTP API endpoint options for chat completion in AIQ toolkit?',
+      options: [
+        '/generate, /generate/stream, /chat, and /chat/stream endpoints supporting both standard and streaming interactions',
+        'Only /generate and /chat endpoints without any streaming capabilities for real-time responses',
+        'Exclusively WebSocket-based endpoints for all communication requiring persistent bidirectional connections',
+        '/api/v1/chat and /api/v1/generate following RESTful versioning conventions for backward compatibility'
+      ],
+      correctAnswer: 0,
+      explanation: 'The settings panel shows four HTTP endpoint options: /generate (basic request), /generate/stream (streaming generation), /chat (basic chat), and /chat/stream (streaming chat with recommended intermediate results). These provide flexibility in how you interact with the agent depending on whether you need streaming updates.'
+    },
+    {
+      id: 'q8',
+      question: 'What method can be used to verify that the AIQ toolkit server is running correctly?',
+      options: [
+        'Making a POST request to an endpoint like /generate with appropriate JSON payload and headers',
+        'Checking the server logs for error messages and confirming all services initialized without failures',
+        'Opening the web browser and navigating directly to http://localhost:8000 to view the interface',
+        'Running a health check command aiq status to query the server\'s current operational state'
+      ],
+      correctAnswer: 0,
+      explanation: 'The documentation shows verifying the server by making a curl POST request to http://localhost:8000/generate with JSON data. A successful response confirms the server is running and processing requests. The web UI is separate and runs on port 3000, not 8000.'
+    },
+    {
+      id: 'q9',
+      question: 'What UI features does the AIQ toolkit user interface provide for workflow interaction?',
+      options: [
+        'Chat history, HTTP and WebSocket interaction options, and control over intermediate step visibility',
+        'Only basic text input with no ability to view conversation history or intermediate processing steps',
+        'Exclusively file upload capabilities for document processing without any conversational interface elements',
+        'Simple command-line interface wrapper without graphical elements for configuration or monitoring'
+      ],
+      correctAnswer: 0,
+      explanation: 'The UI provides multiple features: chat history for reviewing conversations, interaction via HTTP API or WebSocket, ability to enable/disable workflow intermediate steps, option to expand all intermediate steps by default, and capability to override intermediate steps with the same ID. These features provide rich interaction and debugging capabilities.'
+    },
+    {
+      id: 'q10',
+      question: 'What is the purpose of the WebSocket connection option in the AIQ toolkit UI settings?',
+      options: [
+        'To establish persistent bidirectional communication with the running AIQ toolkit server for real-time interaction',
+        'To enable file uploads and downloads between the client browser and the server infrastructure',
+        'To provide authentication mechanisms for securing connections between multiple concurrent users',
+        'To enable distributed processing across multiple server instances for improved performance scaling'
+      ],
+      correctAnswer: 0,
+      explanation: 'The WebSocket URL setting allows connecting to the AIQ toolkit server using WebSocket protocol, which provides persistent bidirectional communication. This is useful for real-time streaming of agent responses and intermediate steps, maintaining stateful connections, and reducing latency compared to repeated HTTP requests.'
+    },
+    {
+      id: 'q11',
+      question: 'What information does the server startup output provide to confirm successful initialization?',
+      options: [
+        'Process ID, registered handlers, agent graph initialization status, and the URL where server is accessible',
+        'Only the port number without any details about registered components or initialization sequence',
+        'Memory usage statistics, performance benchmarks, and expected response times for common operations',
+        'Database connection strings, API keys validation results, and external service health checks'
+      ],
+      correctAnswer: 0,
+      explanation: 'The startup output shows the process ID (47250), Langchain callback handler registration, prompt variable filling, ReAct Agent Graph initialization, graph compilation success, and the Uvicorn URL (http://localhost:8000). This comprehensive output confirms all components initialized correctly before the server begins accepting requests.'
+    },
+    {
+      id: 'q12',
+      question: 'What configuration option allows users to choose between light and dark visual themes?',
+      options: [
+        'The theme option in the UI settings panel accessible from the bottom left corner icon',
+        'The appearance setting in the system preferences that automatically syncs with operating system theme',
+        'The color-scheme parameter in the configuration YAML file that controls server-side rendering',
+        'The display mode toggle in the browser\'s developer tools that overrides all stylesheet preferences'
+      ],
+      correctAnswer: 0,
+      explanation: 'The Settings panel (accessed via the icon in the bottom left corner) includes a "Theme: Light or Dark Theme" option. This allows users to choose their preferred visual appearance for the web interface independently of system settings or server configuration.'
+    },
+    {
+      id: 'q13',
+      question: 'What does the "use_knowledge_base" parameter control in the API request payload?',
+      options: [
+        'Whether the agent should retrieve information from configured vector databases or knowledge sources',
+        'Which specific database instance to query from among multiple configured knowledge base options',
+        'The maximum number of knowledge base entries to retrieve before generating the response',
+        'Whether to cache knowledge base results for future requests to improve performance'
+      ],
+      correctAnswer: 0,
+      explanation: 'The example request includes "use_knowledge_base": true in the JSON payload. This parameter indicates whether the agent should utilize configured knowledge sources (like vector databases) when processing the request, allowing the agent to access additional context beyond its base capabilities.'
+    },
+    {
+      id: 'q14',
+      question: 'What must be done before accessing the AIQ toolkit UI code if it\'s not already present?',
+      options: [
+        'Execute git submodule update --init --recursive to initialize and check out the UI submodule',
+        'Run npm install from the repository root to download all frontend dependencies automatically',
+        'Clone a separate repository containing the UI code and manually link it to the main project',
+        'Download a pre-built UI distribution package from the official NVIDIA developer portal'
+      ],
+      correctAnswer: 0,
+      explanation: 'Because the UI is in a git submodule (not regular repository files), you must explicitly initialize it with git submodule update --init --recursive. This command fetches the submodule content from its repository. Only after this can you navigate to the UI directory and run npm commands.'
+    },
+    {
+      id: 'q15',
+      question: 'What does the "Override intermediate steps with the same ID" feature allow users to do?',
+      options: [
+        'Replace or update intermediate step results sharing the same identifier during workflow execution',
+        'Permanently delete duplicate intermediate steps from the workflow execution history and logs',
+        'Prevent multiple agents from executing identical steps simultaneously to avoid resource conflicts',
+        'Merge redundant processing steps into a single operation for improved performance optimization'
+      ],
+      correctAnswer: 0,
+      explanation: 'This UI feature allows overriding intermediate steps that have the same ID, meaning if multiple intermediate steps share an identifier, you can replace or update their results. This is useful for debugging, testing alternative approaches, or manually correcting agent behavior without rerunning entire workflows.'
+    }
+  ],
+  
+  '3-evaluation-tuning/6-NVDA-NEMO-agent.txt': [
+    {
+      id: 'q1',
+      question: 'What was the previous name of NVIDIA NeMo Agent Toolkit before its recent rebranding?',
+      options: [
+        'Both Agent Intelligence (AIQ) toolkit and AgentIQ were previous names for this library',
+        'NVIDIA Agent Intelligence Toolkit or AIQ toolkit, which was the intermediate naming convention',
+        'NVIDIA AgentIQ, which later evolved into Agent Intelligence toolkit before the final rename',
+        'NVIDIA Agent Development Kit or ADK, which was used during the early beta releases'
+      ],
+      correctAnswer: 0,
+      explanation: 'The library was previously known as both Agent Intelligence (AIQ) toolkit and AgentIQ before being renamed to NeMo Agent Toolkit. The rename better reflects the toolkit\'s purpose and aligns with the NVIDIA NeMo family of products, while the core technologies and API remain fully compatible with previous releases.'
+    },
+    {
+      id: 'q2',
+      question: 'What is the primary architectural philosophy of NeMo Agent Toolkit regarding existing frameworks?',
+      options: [
+        'It works side-by-side with existing frameworks like LangChain without requiring replatforming efforts',
+        'It requires complete migration to NVIDIA-specific frameworks and abandonment of existing implementations',
+        'It selectively replaces underperforming frameworks while maintaining compatibility with efficient ones',
+        'It creates abstraction layers that isolate applications from underlying framework implementation details'
+      ],
+      correctAnswer: 0,
+      explanation: 'NeMo Agent Toolkit is framework agnostic and works side-by-side with existing agentic frameworks such as LangChain, LlamaIndex, CrewAI, and Microsoft Semantic Kernel. This allows you to use your current technology stack without replatforming, complementing whatever framework or memory tool you\'re already using.'
+    },
+    {
+      id: 'q3',
+      question: 'Which new feature allows automatic optimization of agent parameters and prompts for performance?',
+      options: [
+        'Automatic Hyperparameter Tuning that maximizes performance, minimizes cost, and increases accuracy automatically',
+        'Dynamic Parameter Optimization that adjusts settings in real-time based on observed performance metrics',
+        'Intelligent Configuration Management that learns optimal settings from successful workflow executions',
+        'Adaptive Prompt Engineering that continuously refines prompts based on user feedback patterns'
+      ],
+      correctAnswer: 0,
+      explanation: 'Automatic Hyperparameter Tuning is a new feature that automatically tunes the parameters and prompts of agents, tools, and workflows. This optimization aims to maximize performance, minimize cost, and increase accuracy without manual intervention.'
+    },
+    {
+      id: 'q4',
+      question: 'What Python versions are supported for installing and using NeMo Agent Toolkit?',
+      options: [
+        'Python versions 3.11, 3.12, and 3.13 which are the currently supported versions',
+        'Python versions 3.8, 3.9, and 3.10 which represent the most stable releases',
+        'Python versions 3.9 through 3.12 covering the broadest compatibility range possible',
+        'Python version 3.10 exclusively to ensure maximum compatibility with all dependencies'
+      ],
+      correctAnswer: 0,
+      explanation: 'NeMo Agent Toolkit requires Python 3.11, 3.12, or 3.13 to be installed on your system. These are the officially supported Python versions for the toolkit\'s current release.'
+    },
+    {
+      id: 'q5',
+      question: 'How does NeMo Agent Toolkit\'s approach to profiler integration differ from mandatory requirements?',
+      options: [
+        'Users can integrate at any level they choose, from individual tools to complete workflows',
+        'All tools and agents must be decorated comprehensively before any profiling capabilities become available',
+        'The profiler automatically instruments all code without requiring any explicit user decoration actions',
+        'Only workflow-level integration is supported, requiring full instrumentation for profiling to function'
+      ],
+      correctAnswer: 0,
+      explanation: 'While the toolkit encourages wrapping (decorating) every tool and agent for maximum profiler benefit, you have freedom to integrate to whatever level you want. You can start small where you\'ll see the most value and expand from there.'
+    },
+    {
+      id: 'q6',
+      question: 'What capability does Model Context Protocol (MCP) support provide in NeMo Agent Toolkit?',
+      options: [
+        'MCP allows the toolkit to function as both client and server for tool sharing',
+        'MCP enables encrypted communication between distributed agents across multiple data centers and regions',
+        'MCP provides standardized data serialization formats for improved interoperability across platforms',
+        'MCP implements authentication protocols specifically designed for enterprise agent deployments'
+      ],
+      correctAnswer: 0,
+      explanation: 'NeMo Agent Toolkit has full MCP support, allowing it to function as an MCP client to connect to and use tools from remote MCP servers, and as an MCP server to publish tools via MCP. The toolkit now also supports MCP authorization for the streamable HTTP protocol.'
+    },
+    {
+      id: 'q7',
+      question: 'What new organizational feature allows packaging multiple related functions together in the toolkit?',
+      options: [
+        'Function Groups that package related functions together sharing configuration, context, and resources',
+        'Function Collections that bundle similar operations with shared execution contexts and resource pools',
+        'Function Modules that organize operations hierarchically with inheritance and dependency management',
+        'Function Bundles that aggregate operations with common performance characteristics and scaling behavior'
+      ],
+      correctAnswer: 0,
+      explanation: 'Function Groups is a new feature that allows packaging multiple related functions together to share configuration, context, and resources. This organizational capability helps manage related functionality more effectively within your workflows.'
+    },
+    {
+      id: 'q8',
+      question: 'Which observability platforms are specifically mentioned as having dedicated integrations?',
+      options: [
+        'Phoenix, Weave, and Langfuse plus compatibility with OpenTelemetry-based observability platforms',
+        'Datadog, New Relic, and Prometheus with native integration support for comprehensive monitoring',
+        'Grafana, Splunk, and Elastic Stack with custom adapters for agent-specific telemetry collection',
+        'CloudWatch, Azure Monitor, and Google Cloud Operations with cloud-native integration capabilities'
+      ],
+      correctAnswer: 0,
+      explanation: 'NeMo Agent Toolkit provides dedicated integrations for Phoenix, Weave, and Langfuse, plus compatibility with any OpenTelemetry-based observability platform. These integrations allow you to monitor and debug workflows while tracking performance and gaining insights into agent behaviors.'
+    },
+    {
+      id: 'q9',
+      question: 'What command is used to run a workflow using the nat CLI tool?',
+      options: [
+        'nat run --config_file workflow.yml --input "your question" to execute the specified workflow',
+        'nat execute --config_file workflow.yml --input "your question" to run configured workflows',
+        'nat start --config_file workflow.yml --input "your question" to initialize workflow execution',
+        'nat launch --config_file workflow.yml --input "your question" to begin processing queries'
+      ],
+      correctAnswer: 0,
+      explanation: 'The correct command is nat run --config_file workflow.yml --input "your question". This runs the workflow defined in the configuration file with the provided input and outputs results to the console.'
+    },
+    {
+      id: 'q10',
+      question: 'Which framework support was recently added to NeMo Agent Toolkit according to the new features?',
+      options: [
+        'Google\'s Agent Development Kit (ADK) framework for users of Google\'s agent tooling',
+        'Microsoft AutoGen framework for building conversational agents with multiple personas and roles',
+        'OpenAI\'s Assistants API framework for direct integration with GPT-based agent capabilities',
+        'Anthropic\'s Claude framework for leveraging Claude-specific features and optimizations'
+      ],
+      correctAnswer: 0,
+      explanation: 'Google ADK Support is a new feature that extends NeMo Agent Toolkit compatibility to users of Google\'s Agent Development Kit (ADK) framework. This expands the range of frameworks that can work with the toolkit.'
+    },
+    {
+      id: 'q11',
+      question: 'What is the purpose of the reusability principle in NeMo Agent Toolkit\'s design?',
+      options: [
+        'To allow building agents and tools once and reusing them across different scenarios',
+        'To reduce licensing costs by enabling shared components across multiple enterprise deployments',
+        'To enable automatic code generation from high-level specifications without manual implementation',
+        'To facilitate sharing of trained models between different organizations using standard formats'
+      ],
+      correctAnswer: 0,
+      explanation: 'The reusability principle means every agent, tool, and workflow exists as a function call that works together in complex applications. The composability between these components allows you to build once and reuse in different scenarios.'
+    },
+    {
+      id: 'q12',
+      question: 'What environment variable must be set to run examples that use NVIDIA NIMs?',
+      options: [
+        'NVIDIA_API_KEY with your API key obtained by creating an account at build.nvidia.com',
+        'NVIDIA_MODEL_KEY with your personal access token obtained from the developer portal',
+        'NIM_ACCESS_TOKEN with your authentication credentials from the NVIDIA cloud services',
+        'NVIDIA_AUTH_KEY with your enterprise license key for commercial NIM deployments'
+      ],
+      correctAnswer: 0,
+      explanation: 'You must set the NVIDIA_API_KEY environment variable to allow examples to use NVIDIA NIMs. An API key can be obtained by visiting build.nvidia.com and creating an account.'
+    },
+    {
+      id: 'q13',
+      question: 'How can users install NeMo Agent Toolkit with LangChain framework support specifically?',
+      options: [
+        'pip install "nvidia-nat[langchain]" using bracket notation to include the LangChain plugin',
+        'pip install nvidia-nat-langchain as a separate package with framework-specific dependencies',
+        'pip install nvidia-nat --with-langchain using command-line flags for optional dependencies',
+        'pip install nvidia-nat && pip install langchain-plugin to add framework support separately'
+      ],
+      correctAnswer: 0,
+      explanation: 'To install NeMo Agent Toolkit with LangChain support, use pip install "nvidia-nat[langchain]". Optional dependencies are grouped by framework and can be installed with the core package using bracket notation.'
+    },
+    {
+      id: 'q14',
+      question: 'What Amazon service integration was recently added to NeMo Agent Toolkit?',
+      options: [
+        'Amazon Bedrock AgentCore runtime for building Strands Agents and secure deployment',
+        'Amazon SageMaker integration for deploying agents on managed ML infrastructure with auto-scaling',
+        'Amazon Lambda functions for serverless agent execution with event-driven architectures',
+        'Amazon ECS integration for containerized agent deployments with orchestration capabilities'
+      ],
+      correctAnswer: 0,
+      explanation: 'NeMo Agent Toolkit now supports building agents using the Strands Agents framework and deploying them securely on Amazon Bedrock AgentCore runtime. This integration enables secure enterprise deployment on Amazon\'s infrastructure.'
+    },
+    {
+      id: 'q15',
+      question: 'Where can users run simple workflows and examples without local setup according to the documentation?',
+      options: [
+        'In Google Colab notebooks with no setup required, accessible via provided links',
+        'On NVIDIA\'s cloud platform with pre-configured environments accessible through the developer portal',
+        'Through GitHub Codespaces with automatically configured development containers',
+        'On Jupyter Hub instances hosted by NVIDIA specifically for agent development'
+      ],
+      correctAnswer: 0,
+      explanation: 'The documentation mentions it\'s possible to run simple workflows and examples in Google Colab with no setup. Users can click provided links to open introduction notebooks directly in Colab.'
+    }
+  ],
+  
+  '3-evaluation-tuning/7-agentic-AI-next-big-thing.txt': [
+    {
+      id: 'q1',
+      question: 'What distinguishes agentic AI from traditional AI systems in terms of operational autonomy?',
+      options: [
+        'Agentic AI can make autonomous decisions toward goals with minimal oversight, planning and executing steps independently',
+        'Agentic AI requires constant human supervision and prompting for each individual decision and action',
+        'Traditional AI systems have greater autonomy while agentic AI follows stricter rule-based protocols',
+        'Agentic AI exclusively processes predefined inputs without any capability for independent decision-making'
+      ],
+      correctAnswer: 0,
+      explanation: 'Agentic AI can make autonomous decisions based on both past performance and current assessment of what\'s needed to accomplish tasks, operating with minimal human oversight. Unlike traditional AI locked into input/output models, agentic AI can take complex steps toward goals, checking in with humans only when required.'
+    },
+    {
+      id: 'q2',
+      question: 'Using the manager versus technician analogy, how does agentic AI differ from specialized AI agents?',
+      options: [
+        'Agentic AI acts like a manager deploying various techniques and making decisions, while agents are like technicians doing set tasks',
+        'Specialized AI agents manage multiple systems while agentic AI performs single focused tasks like technicians',
+        'Both operate identically with no meaningful distinction between their operational capabilities and decision-making authority',
+        'Agentic AI requires more training data than specialized agents which can function with minimal supervision'
+      ],
+      correctAnswer: 0,
+      explanation: 'Specialized AI agents are trained to do set tasks based on external inputs, like skilled technicians assigned to jobs. Agentic AI can deploy various AI techniques while making autonomous decisions, like a manager deciding which technicians are necessary to complete a project.'
+    },
+    {
+      id: 'q3',
+      question: 'What represents the "third wave" of AI development according to the article?',
+      options: [
+        'The ability to bring disparate elements together under autonomous choice and decision-making capabilities',
+        'The introduction of recommendation engines and auto-fill text that analyze large datasets for correlations',
+        'The development of algorithms enabling AI to generate creative content including text, images, and music',
+        'The integration of quantum computing with traditional neural networks for exponential processing improvements'
+      ],
+      correctAnswer: 0,
+      explanation: 'The third wave of AI focuses on bringing disparate elements and abilities together under the umbrella of choice. Agentic AI analyzes paths to goals and makes decisions on the best way to complete tasks autonomously.'
+    },
+    {
+      id: 'q4',
+      question: 'How do agentic AI systems differ from individual AI agents in terms of scope and capability?',
+      options: [
+        'Agentic AI systems weave together individual AI agents and tools into cohesive wholes for larger objectives',
+        'Individual agents are more powerful than agentic systems which simply coordinate basic operations between components',
+        'Both terms describe identical concepts with no practical distinction in their architecture or implementation',
+        'AI agents handle complex strategic decisions while agentic systems perform narrowly defined tactical operations'
+      ],
+      correctAnswer: 0,
+      explanation: 'Agentic AI systems go bigger by weaving together individual AI agents and other appropriate systems or tools into a cohesive whole. For example, an agentic system can use data from individual agents to help multiple departments adapt offerings.'
+    },
+    {
+      id: 'q5',
+      question: 'In the fraud detection example, how does agentic AI improve upon traditional AI approaches?',
+      options: [
+        'Agentic AI can gather additional contextual information from external systems like weather data for better decisions',
+        'Traditional AI provides more context by analyzing broader patterns while agentic AI focuses narrowly',
+        'Traditional AI makes autonomous decisions while agentic AI strictly follows predefined detection rules',
+        'Agentic AI processes transactions faster but with lower accuracy than traditional rule-based systems'
+      ],
+      correctAnswer: 0,
+      explanation: 'Agentic AI can communicate with other systems to gather further details, such as requesting weather information that might explain unusual purchasing patterns. This additional context enables better-informed decisions compared to traditional AI\'s predefined task execution.'
+    },
+    {
+      id: 'q6',
+      question: 'What is the key difference between generative AI and agentic AI in terms of workflow?',
+      options: [
+        'Generative AI focuses on content creation from prompts while agentic AI focuses on autonomous decision-making toward goals',
+        'Generative AI operates autonomously without prompts while agentic AI requires constant human input and supervision',
+        'Both technologies function identically with no meaningful distinction in their operational characteristics or purposes',
+        'Generative AI makes strategic decisions while agentic AI exclusively handles content generation and creative tasks'
+      ],
+      correctAnswer: 0,
+      explanation: 'Generative AI focuses on content generation and still requires prompts (data in/data out workflow). Agentic AI focuses on decision-making and actions, autonomously refining outputs and communicating with multiple sources to achieve goals.'
+    },
+    {
+      id: 'q7',
+      question: 'Using the real-world analogy, how does agentic AI compare to generative AI and individual AI agents?',
+      options: [
+        'GenAI is a toolkit for DIY, AI agents are individual contractors, and agentic AI is a general contractor coordinating specialists',
+        'GenAI is like hiring a general contractor, AI agents are plumbers, and agentic AI is a basic toolkit',
+        'All three function as identical toolkits with no differentiation in capability or coordination requirements',
+        'GenAI coordinates all activities, AI agents provide tools, and agentic AI performs manual implementation tasks'
+      ],
+      correctAnswer: 0,
+      explanation: 'GenAI is like a toolkit to DIY fix a leak, an AI agent is like bringing in a plumber to fix and explore related issues, and agentic AI is like a general contractor who can direct specialists and coordinate across multiple domains.'
+    },
+    {
+      id: 'q8',
+      question: 'What healthcare application demonstrates agentic AI\'s autonomous decision-making capabilities?',
+      options: [
+        'Processing patient data from multiple sources to identify emerging patterns and autonomously gather additional information',
+        'Following strict protocols to input patient information into electronic health record systems without deviation',
+        'Generating medical images from text descriptions provided by healthcare professionals during diagnostic procedures',
+        'Translating medical documents between languages while maintaining exact terminology without contextual interpretation'
+      ],
+      correctAnswer: 0,
+      explanation: 'Agentic AI can quickly process all incoming patient data from wearables, blood results, and vitals to identify emerging patterns. The agent has autonomy to grab additional data as needed to identify issues and produce reports for physicians.'
+    },
+    {
+      id: 'q9',
+      question: 'How does agentic AI improve supply chain management beyond traditional optimization?',
+      options: [
+        'By interfacing with multiple systems to consider weather, traffic, and political factors for route optimization',
+        'By strictly following predetermined logistics routes without considering external variables or contextual factors',
+        'By generating synthetic data to simulate supply chain scenarios without accessing real-time information',
+        'By replacing human decision-makers entirely and operating without any oversight or intervention mechanisms'
+      ],
+      correctAnswer: 0,
+      explanation: 'In transportation management, AI agents can interface with other systems to consider route optimization based on weather, traffic, political stability, and national holidays. This autonomous data gathering and analysis enables agent-generated adjustments for optimal delivery routes.'
+    },
+    {
+      id: 'q10',
+      question: 'What key benefit distinguishes agentic AI\'s "always-on operations" from traditional AI systems?',
+      options: [
+        'Agentic AI works autonomously toward goals without needing input after completing tasks, enabling continuous operations',
+        'Traditional AI can work continuously without breaks while agentic AI requires regular maintenance downtime',
+        'Both systems require identical levels of human intervention and supervision throughout their operational lifecycle',
+        'Agentic AI consumes less power than traditional systems allowing for extended continuous operation periods'
+      ],
+      correctAnswer: 0,
+      explanation: 'Agentic AI goes beyond nonagentic AI\'s need for input upon finishing tasks and instead works toward goals autonomously. This decision-making autonomy enables always-on operations for data processing, research, customer responses, and other functions.'
+    },
+    {
+      id: 'q11',
+      question: 'What challenge does "accuracy" present for newly deployed agentic AI systems?',
+      options: [
+        'Bad data can lead to undesirable outcomes, requiring monitoring like a new employee until consistently correct',
+        'Agentic systems always produce perfect results but are extremely slow in processing decisions',
+        'Accuracy is never a concern because agentic AI inherently self-corrects without any human oversight',
+        'Traditional AI systems are always more accurate than agentic systems regardless of training data quality'
+      ],
+      correctAnswer: 0,
+      explanation: 'Agentic systems generally improve on human-level accuracy, but bad data can lead to undesirable outcomes. Like new employees, businesses should monitor newly deployed systems until results are consistently correct, starting with low-risk tasks.'
+    },
+    {
+      id: 'q12',
+      question: 'Why is transparency particularly important for agentic AI systems compared to traditional AI?',
+      options: [
+        'Agents should explain decisions and conclusions, with logic and evaluation methods made accessible for verification',
+        'Traditional AI requires no explanation while agentic AI must document every calculation for compliance',
+        'Transparency is irrelevant because agentic AI systems operate in completely isolated environments',
+        'Agentic AI decisions are always correct and therefore require no explanation or justification mechanisms'
+      ],
+      correctAnswer: 0,
+      explanation: 'Agents should be developed with means to explain decisions and conclusions. Key elements like the agent\'s logic and evaluation methods should be accessible so they can be confirmed as well-founded or corrected if needed.'
+    },
+    {
+      id: 'q13',
+      question: 'What is the recommended first step when implementing an agentic AI project?',
+      options: [
+        'Define clear objectives to focus team efforts and inform what prebuilt system to start with',
+        'Immediately deploy the most advanced agentic system available without preliminary planning or assessment',
+        'Purchase expensive hardware infrastructure before determining what the system will actually accomplish',
+        'Hire additional staff members specifically dedicated to manually supervising every AI decision made'
+      ],
+      correctAnswer: 0,
+      explanation: 'Until the desired objective is defined, teams can\'t focus on building a system based on available resources. Objectives can also inform what prebuilt system to start with, making this the critical first step.'
+    },
+    {
+      id: 'q14',
+      question: 'Why should initial tasks for agentic AI systems be "low risk and easily fixable"?',
+      options: [
+        'Starting with low-risk tasks allows monitoring and trust-building, similar to onboarding new employees',
+        'Complex tasks are impossible for agentic AI systems regardless of their training or capabilities',
+        'Agentic AI performs better on simple tasks and deteriorates rapidly when handling complex operations',
+        'High-risk tasks require traditional AI systems which are inherently more reliable than agentic approaches'
+      ],
+      correctAnswer: 0,
+      explanation: 'Just like a new employee, trust should be earned for agentic AI systems. Early tasks should be low risk and easily fixable, allowing businesses to monitor systems until results are consistently correct before expanding to higher-stakes applications.'
+    },
+    {
+      id: 'q15',
+      question: 'What future development area focuses on addressing AI\'s "greatest challenges" for agentic systems?',
+      options: [
+        'Energy efficiency to reduce the power consumption footprint of complex agentic AI processes',
+        'Integration into enterprise systems with more adaptable and customizable entry points across functions',
+        'Improving accuracy through reinforcement learning and better filtering and validation techniques',
+        'Achieving proper balance of autonomy, functionality, and control without requiring human oversight'
+      ],
+      correctAnswer: 0,
+      explanation: 'Power consumption is one of AI\'s greatest challenges. Agentic AI, with inherently more complex processes and self-directed research, is projected to use more resources than previous AI use cases, making energy efficiency key to long-term success.'
+    }
+  ],
+  
+  '3-evaluation-tuning/8-agentic-AI-challenges.txt': [
+    {
+      id: 'q1',
+      question: 'According to Gartner\'s prediction, what percentage of day-to-day work decisions will be made autonomously by agentic AI by 2028?',
+      options: [
+        'At least 15% of day-to-day work decisions, up from 0% in 2024 showing rapid adoption',
+        'At least 5% of day-to-day work decisions, representing a modest but significant initial adoption phase',
+        'At least 25% of day-to-day work decisions, indicating mainstream enterprise integration and deployment',
+        'At least 35% of day-to-day work decisions, demonstrating complete transformation of workplace operations'
+      ],
+      correctAnswer: 0,
+      explanation: 'Gartner predicts that by 2028, at least 15% of day-to-day work decisions will be made autonomously by agentic AI, up from 0% in 2024. This represents a significant and rapid adoption of agentic AI technology in enterprise environments.'
+    },
+    {
+      id: 'q2',
+      question: 'How does agentic AI differ from generative AI in terms of operational complexity?',
+      options: [
+        'Agentic AI engages in complex multi-step processes interacting with different systems, unlike generative AI\'s one-step process',
+        'Generative AI handles multi-step processes while agentic AI focuses on simple one-step prompt-response interactions',
+        'Both technologies operate identically with no meaningful distinction in their process complexity or capabilities',
+        'Generative AI requires complex orchestration while agentic AI simply responds to straightforward user prompts'
+      ],
+      correctAnswer: 0,
+      explanation: 'With agentic AI, we\'re not just prompting models and receiving answers in a simple one-step process. The AI engages in complex multi-step processes, often interacting with different systems to achieve desired outcomes.'
+    },
+    {
+      id: 'q3',
+      question: 'What role does the "critical thinker" function play in agentic AI systems?',
+      options: [
+        'It provides feedback on the planner\'s output and different agents\' execution, improving results through insights',
+        'It writes the initial code that programmers use to build the foundational agent architecture and infrastructure',
+        'It handles all customer-facing interactions while other agents focus exclusively on internal operations',
+        'It monitors system performance metrics and automatically scales computational resources based on demand patterns'
+      ],
+      correctAnswer: 0,
+      explanation: 'The critical thinker model offers feedback on the output of the planner and the different agents executing those instructions. The more feedback created, the more insights the model has, and the better the outputs become.'
+    },
+    {
+      id: 'q4',
+      question: 'What training challenge does the critical thinker model face before it can function effectively?',
+      options: [
+        'It requires hundreds or thousands of iterations with specific goals, plans, actions, and results before adequate training',
+        'It needs only a few dozen examples to understand complex reasoning patterns and decision-making processes',
+        'It must be trained exclusively on synthetic data to avoid bias from real-world examples and scenarios',
+        'It can function immediately without training by leveraging pre-trained foundation models from external providers'
+      ],
+      correctAnswer: 0,
+      explanation: 'The critical thinker needs training data closely grounded in reality with information on specific goals, plans, actions, and results. This can require many iterations—running through hundreds or even thousands of plans and results before the model has enough data.'
+    },
+    {
+      id: 'q5',
+      question: 'How does the programming paradigm shift with agentic AI compared to traditional software development?',
+      options: [
+        'With agentic AI, we specify the outcome and let the agent determine how to reach the goal autonomously',
+        'Traditional software is unpredictable while agentic AI systems follow exact step-by-step instructions from engineers',
+        'Agentic AI follows predetermined scripts while traditional programming allows for autonomous decision-making capabilities',
+        'Both traditional programming and agentic AI require identical approaches with no fundamental differences in methodology'
+      ],
+      correctAnswer: 0,
+      explanation: 'With traditional software, engineers write code telling computers exactly what to do step by step. With agentic AI, we lead with the outcome we want to achieve, and the agent determines how to reach the goal with some degree of autonomy.'
+    },
+    {
+      id: 'q6',
+      question: 'What similar challenge did early generative AI systems face that agentic AI now confronts?',
+      options: [
+        'Inconsistent and random outputs requiring fine-tuning, human feedback, and consistent training efforts for reliability',
+        'Excessive energy consumption requiring specialized cooling systems and dedicated power infrastructure for operation',
+        'Inability to process natural language inputs requiring users to learn specialized query languages and syntax',
+        'Limited access to training data forcing developers to rely exclusively on synthetic datasets for model development'
+      ],
+      correctAnswer: 0,
+      explanation: 'Early ChatGPT and LLM-based generative AI systems had consistency issues with outputs. Considerable improvements came from fine-tuning, human feedback loops, and consistent training efforts, which agentic AI will also need.'
+    },
+    {
+      id: 'q7',
+      question: 'Why are data privacy and security concerns potentially more serious for agentic AI than generative AI?',
+      options: [
+        'Software agents with high autonomy accessing many systems create increased risk of exposing private data from more sources',
+        'Generative AI uses stronger encryption protocols that agentic AI systems cannot implement due to performance constraints',
+        'Agentic AI stores all data permanently while generative AI automatically deletes information after processing requests',
+        'Agentic AI requires internet connectivity while generative AI operates entirely offline within secure environments'
+      ],
+      correctAnswer: 0,
+      explanation: 'While generative AI embeds information in models permanently, software agents have access to many different systems with high autonomy. This increased access creates greater risk of exposing private data from multiple sources.'
+    },
+    {
+      id: 'q8',
+      question: 'What approach is recommended for companies to address data privacy concerns when implementing agentic AI?',
+      options: [
+        'Start small with containerized data and anonymize information by stripping personally identifiable details before processing',
+        'Immediately deploy across all systems to maximize efficiency and return on investment with minimal preparation',
+        'Avoid using any real customer or employee data, relying exclusively on synthetic datasets for all operations',
+        'Grant unlimited system access to agents to maximize their effectiveness and autonomous decision-making capabilities'
+      ],
+      correctAnswer: 0,
+      explanation: 'Companies need to start small, containerizing data as much as possible to ensure it\'s not exposed beyond where needed. It\'s critical to anonymize data by obscuring users and stripping personally identifiable information before sending prompts to models.'
+    },
+    {
+      id: 'q9',
+      question: 'What distinguishes "Consumer agentic AI" in terms of business control and security implications?',
+      options: [
+        'Companies have zero control over the AI itself, only over the data and prompts they send to external models',
+        'Companies have complete control over both the AI model and all data that flows through the system',
+        'Companies control the AI model but have no control over what data users choose to input',
+        'Companies have full control over model training but limited control over inference and output generation'
+      ],
+      correctAnswer: 0,
+      explanation: 'Consumer agentic AI typically involves an internal user interface with an external AI model. As a company, we have zero control over the AI itself, only over the data and prompts we send to it.'
+    },
+    {
+      id: 'q10',
+      question: 'What risk does "Employee agentic AI" pose even though it\'s built internally for internal use?',
+      options: [
+        'Exposing highly private information to nonqualified users within the company who shouldn\'t have access to it',
+        'External hackers can easily access internal systems due to insufficient external security measures and protocols',
+        'Employees will become overly dependent on AI and lose all critical thinking and problem-solving capabilities',
+        'Internal models always perform worse than external models, leading to poor decision-making and reduced productivity'
+      ],
+      correctAnswer: 0,
+      explanation: 'While employee agentic AI has less risk than consumer-facing systems, it still poses the risk of exposing highly private information to nonqualified users within the company, even when built for internal use only.'
+    },
+    {
+      id: 'q11',
+      question: 'What fundamental data challenge do agentic AI systems face beyond what generative AI encounters?',
+      options: [
+        'Needing to access relevant, quality data across a wide variety of different platforms and sources simultaneously',
+        'Agentic AI only works with structured data while generative AI handles all data types seamlessly',
+        'Agentic AI requires manually labeled training data while generative AI uses completely unsupervised learning approaches',
+        'Generative AI processes data faster than agentic AI which experiences significant performance bottlenecks'
+      ],
+      correctAnswer: 0,
+      explanation: 'Generative AI models often fail when disconnected from accurate, current data. Agentic AI systems face additional issues because they need to access data across a wide variety of different platforms and sources for their multi-step processes.'
+    },
+    {
+      id: 'q12',
+      question: 'How can data streaming platforms (DSP) help address agentic AI\'s data quality challenges?',
+      options: [
+        'DSPs provide tools like Kafka Connect and Apache Flink to bring in data from disparate sources and communicate with models',
+        'DSPs automatically generate synthetic training data to supplement insufficient real-world datasets for model training',
+        'DSPs eliminate the need for any data preprocessing or cleaning by automatically correcting all quality issues',
+        'DSPs store all historical data permanently, allowing agents to access complete information from any time period'
+      ],
+      correctAnswer: 0,
+      explanation: 'Data streaming platforms provide engineers with tools to enable relevant answers using high-quality data. Developers can use Apache Kafka and Kafka Connect to bring in data from disparate sources, and Apache Flink to communicate with other models.'
+    },
+    {
+      id: 'q13',
+      question: 'What infrastructure investments are required for companies to implement agentic AI successfully?',
+      options: [
+        'Purchasing new hardware and GPUs, creating data infrastructure with specialized memory management and inference models',
+        'Only software licensing fees with no hardware requirements since agentic AI runs exclusively in cloud environments',
+        'Minimal investment since agentic AI reuses all existing infrastructure without requiring any new capabilities or resources',
+        'Simple API integrations with existing systems requiring no additional computational resources or storage capacity'
+      ],
+      correctAnswer: 0,
+      explanation: 'AI requires companies to purchase new hardware and GPUs, create new data infrastructure with memory management for caching and storage, and build inference models in-house. This represents significant upfront investment.'
+    },
+    {
+      id: 'q14',
+      question: 'What talent-related challenge do companies face when adopting agentic AI technology?',
+      options: [
+        'Hiring new talent with specialized AI skills or training existing workers on AI technologies and methodologies',
+        'An oversupply of AI specialists makes hiring difficult due to candidates having too many competing offers',
+        'AI specialists refuse to work on agentic AI projects preferring to focus exclusively on generative AI applications',
+        'Automated tools eliminate all need for human talent, creating organizational resistance from existing employees'
+      ],
+      correctAnswer: 0,
+      explanation: 'Companies need to hire new talent with specialized AI skills or train existing workers on AI technologies. This talent requirement, combined with infrastructure needs, means return on investment will take time, especially for early adopters.'
+    },
+    {
+      id: 'q15',
+      question: 'What evolution in Microsoft Copilot demonstrates the shift toward agentic AI capabilities?',
+      options: [
+        'Moving from automating certain code processes to acting agentically by writing and testing code autonomously',
+        'Transitioning from cloud-based services to exclusively on-premises deployment models for enhanced security measures',
+        'Shifting from enterprise focus to consumer applications targeting individual users rather than business customers',
+        'Evolving from text-based interactions to exclusively voice-controlled interfaces for improved accessibility'
+      ],
+      correctAnswer: 0,
+      explanation: 'Microsoft Copilot has evolved from simply automating certain code processes to acting in an agentic way to write and test code. This demonstrates how AI technology vendors are moving toward agentic capabilities.'
+    }
+  ],
+  
+  '3-evaluation-tuning/9-AI-agents-beginners.txt': [
+    {
+      id: 'q1',
+      question: 'What do traces and spans represent in agent observability tools like Langfuse?',
+      options: [
+        'Traces represent complete agent tasks from start to finish while spans are individual steps within traces',
+        'Traces show individual tool calls while spans represent the complete workflow from beginning to end',
+        'Both traces and spans are identical concepts referring to the same level of execution granularity',
+        'Traces track user interactions while spans exclusively monitor external API calls and service dependencies'
+      ],
+      correctAnswer: 0,
+      explanation: 'Traces represent complete agent tasks from start to finish (like handling a user query), while spans are individual steps within the trace (like calling a language model or retrieving data). This hierarchical structure enables detailed analysis of agent behavior.'
+    },
+    {
+      id: 'q2',
+      question: 'Why is observability considered critical rather than "nice-to-have" in production environments?',
+      options: [
+        'It enables debugging, cost management, trust/compliance, and continuous improvement loops essential for production reliability',
+        'Observability only matters during initial development and becomes less important once agents are deployed',
+        'Production environments require less observability than development since agents are already tested and validated',
+        'Observability tools automatically fix all agent issues without requiring any human intervention or analysis'
+      ],
+      correctAnswer: 0,
+      explanation: 'Observability is critical for debugging and root-cause analysis, latency and cost management, trust/safety/compliance, and continuous improvement loops. These capabilities are essential for production environments where agents face real-world challenges and requirements.'
+    },
+    {
+      id: 'q3',
+      question: 'What metaphor describes the transformation that observability provides for AI agents?',
+      options: [
+        'From "black box" agents with opaque behavior to "glass box" systems offering vital transparency',
+        'From "white box" systems with full transparency to "black box" systems with enhanced security',
+        'From "gray box" partially observable systems to "opaque box" fully encrypted implementations',
+        'From "transparent box" open systems to "locked box" secure implementations with restricted access'
+      ],
+      correctAnswer: 0,
+      explanation: 'Without observability, AI agents feel like "black boxes" with opaque internal state and reasoning. With observability, agents become "glass boxes," offering transparency vital for building trust and ensuring they operate as intended.'
+    },
+    {
+      id: 'q4',
+      question: 'Why is tracking latency particularly important for AI agents in production?',
+      options: [
+        'Long response times negatively impact user experience, requiring measurement to identify optimization opportunities',
+        'Latency has no impact on user experience since users expect AI systems to be slow',
+        'Latency tracking is only relevant for debugging and has no relationship to operational costs',
+        'Faster agents always produce lower quality results making latency optimization counterproductive'
+      ],
+      correctAnswer: 0,
+      explanation: 'Latency measures how quickly agents respond, and long waiting times negatively impact user experience. Tracing agent runs helps identify slow operations, enabling optimization through faster models or parallel execution strategies.'
+    },
+    {
+      id: 'q5',
+      question: 'What insight can cost tracking provide beyond just monitoring expenses?',
+      options: [
+        'It can identify excessive API calls from bugs, assess if multiple LLM calls justify quality improvements',
+        'Cost tracking exclusively monitors spending without providing any actionable insights for system optimization',
+        'Cost monitoring only matters for small startups and is irrelevant for established enterprises',
+        'Tracking costs reduces agent accuracy by limiting the computational resources available for reasoning'
+      ],
+      correctAnswer: 0,
+      explanation: 'Cost tracking reveals if frequent tool usage or multiple prompts rapidly increase expenses. It helps assess whether multiple LLM calls justify quality improvements, identify bugs causing excessive API loops, and determine if cheaper models could work.'
+    },
+    {
+      id: 'q6',
+      question: 'What is the difference between explicit and implicit user feedback for agent evaluation?',
+      options: [
+        'Explicit feedback includes ratings and comments while implicit feedback comes from behaviors like query rephrasing',
+        'Implicit feedback is always more accurate than explicit feedback which can be biased and unreliable',
+        'Explicit feedback tracks system performance while implicit feedback exclusively monitors user demographics',
+        'Both feedback types provide identical information with no meaningful distinction in evaluation value'
+      ],
+      correctAnswer: 0,
+      explanation: 'Explicit user feedback includes ratings (thumbs up/down, stars) or textual comments. Implicit feedback comes from user behaviors like immediate question rephrasing, repeated queries, or clicking retry buttons, which provide indirect signals about agent performance.'
+    },
+    {
+      id: 'q7',
+      question: 'What is OpenTelemetry\'s role in agent observability?',
+      options: [
+        'It\'s an industry standard providing APIs, SDKs, and tools for generating and exporting telemetry data',
+        'OpenTelemetry is a proprietary NVIDIA tool exclusively designed for GPU monitoring in agent systems',
+        'OpenTelemetry only works with specific cloud providers and cannot be used in on-premises deployments',
+        'It exclusively monitors network performance without any capabilities for application-level tracing or metrics'
+      ],
+      correctAnswer: 0,
+      explanation: 'OpenTelemetry (OTel) has emerged as an industry standard for LLM observability. It provides APIs, SDKs, and tools for generating, collecting, and exporting telemetry data, with instrumentation libraries wrapping existing agent frameworks.'
+    },
+    {
+      id: 'q8',
+      question: 'What advantage do manual spans provide beyond automatic instrumentation libraries?',
+      options: [
+        'They allow enriching spans with custom attributes like user_id, session_id, or business-specific data',
+        'Manual spans are always faster and consume fewer resources than automatic instrumentation approaches',
+        'Manual instrumentation eliminates the need for any automatic tracing or monitoring capabilities',
+        'Automatic instrumentation provides more detailed information making manual spans completely unnecessary'
+      ],
+      correctAnswer: 0,
+      explanation: 'While instrumentation libraries provide good baselines, manual spans enable adding custom application logic and enriching spans with custom attributes (metadata) including business-specific data, intermediate computations, or debugging context like user_id or model_version.'
+    },
+    {
+      id: 'q9',
+      question: 'What distinguishes offline evaluation from online evaluation for AI agents?',
+      options: [
+        'Offline uses test datasets in controlled settings while online evaluates real-world production performance',
+        'Offline uses live user queries in production while online uses curated test datasets in controlled settings',
+        'Both evaluation approaches are identical with no meaningful differences in methodology or data sources',
+        'Offline evaluation is more accurate than online evaluation which always produces unreliable results'
+      ],
+      correctAnswer: 0,
+      explanation: 'Offline evaluation uses curated test datasets with known expected outputs in controlled settings, often during development. Online evaluation monitors live production performance with real user interactions, capturing real-world behavior patterns and edge cases.'
+    },
+    {
+      id: 'q10',
+      question: 'What is the key challenge with relying solely on offline evaluation?',
+      options: [
+        'Test datasets may not be comprehensive or stay relevant to real-world production query patterns',
+        'Offline evaluation is too expensive and time-consuming to be practical for most development teams',
+        'Offline evaluation always produces more errors than online evaluation making it completely unreliable',
+        'Development teams lack the technical expertise required to construct appropriate offline test datasets'
+      ],
+      correctAnswer: 0,
+      explanation: 'The key challenge is ensuring test datasets are comprehensive and stay relevant. Agents might perform well on fixed test sets but encounter very different queries in production, requiring updated test sets with new edge cases reflecting real-world scenarios.'
+    },
+    {
+      id: 'q11',
+      question: 'How do online and offline evaluations complement each other in practice?',
+      options: [
+        'Insights from online monitoring improve offline datasets, while offline testing enables confident deployment for online monitoring',
+        'Teams should choose one approach exclusively since combining them creates conflicting and contradictory results',
+        'Offline evaluation replaces the need for online monitoring once agents achieve acceptable test performance',
+        'Online evaluation eliminates the value of offline testing which becomes obsolete in production environments'
+      ],
+      correctAnswer: 0,
+      explanation: 'The approaches are highly complementary. Online insights (like new failure cases) improve offline test datasets. Agents performing well offline can be confidently deployed and monitored online, creating a continuous improvement loop: evaluate offline → deploy → monitor → refine.'
+    },
+    {
+      id: 'q12',
+      question: 'What strategy addresses AI agents running into continuous loops?',
+      options: [
+        'Ensure clear termination conditions so agents know when to stop, and use larger reasoning models for complex tasks',
+        'Increase computational resources and allow agents unlimited time to explore all possible solution paths',
+        'Continuous loops are beneficial for agent learning and should be encouraged rather than prevented',
+        'Reduce the number of available tools since tool access is the primary cause of all looping behaviors'
+      ],
+      correctAnswer: 0,
+      explanation: 'To prevent continuous loops, ensure clear termination terms and conditions so agents know when to stop. For complex tasks requiring reasoning and planning, use larger models specialized for reasoning tasks to improve decision-making quality.'
+    },
+    {
+      id: 'q13',
+      question: 'How can smaller language models (SLMs) help manage costs in agent deployments?',
+      options: [
+        'SLMs can perform well on certain agentic use-cases like simple tasks, reducing costs while maintaining performance',
+        'SLMs always produce identical results to large models while consuming significantly less computational resources',
+        'Using SLMs eliminates the need for any evaluation since smaller models are inherently more reliable',
+        'SLMs should never be used in production since they consistently underperform on all tasks compared to large models'
+      ],
+      correctAnswer: 0,
+      explanation: 'Small Language Models can perform well on certain agentic use-cases and significantly reduce costs. Consider using SLMs for simpler tasks like intent classification or parameter extraction, while reserving larger models for complex reasoning requiring more capability.'
+    },
+    {
+      id: 'q14',
+      question: 'What is the purpose of implementing a router model in multi-model agent architectures?',
+      options: [
+        'A router directs requests based on complexity to appropriate model sizes, optimizing cost and performance',
+        'Routers exclusively handle network traffic without any involvement in model selection or request routing',
+        'Router models eliminate the need for evaluation by automatically selecting the perfect model for every scenario',
+        'Routing increases costs by adding an extra processing layer without providing any efficiency benefits'
+      ],
+      correctAnswer: 0,
+      explanation: 'Using a router model or serverless function to route requests based on complexity ensures the best fit models are used. Route simple queries to smaller, faster models, and reserve expensive large models for complex reasoning tasks.'
+    },
+    {
+      id: 'q15',
+      question: 'What evaluation strategy is demonstrated in the flight booking code example?',
+      options: [
+        'It demonstrates handling external service failures with backup functions and allowing agents to continue operating',
+        'The example shows how to prevent all errors by thoroughly testing tools before any production deployment',
+        'The code prevents agents from ever encountering errors by validating all inputs before processing',
+        'It shows that agents should immediately stop all operations when any single tool experiences failures'
+      ],
+      correctAnswer: 0,
+      explanation: 'The example shows handling HTTP errors when flight times service is unavailable by having a backup function. Rather than failing completely, the agent can continue operating using available tools, demonstrating production resilience strategies for external service failures.'
+    }
+  ],
+  
+  '3-evaluation-tuning/10-navigating-challenges.txt': [
+    {
+      id: 'q1',
+      question: 'According to the 2024 survey, what percentage of organizations need to upgrade their technology stack to deploy AI agents?',
+      options: [
+        '66% of organizations must upgrade their technology infrastructure while maintaining current organizational structures',
+        '86% of organizations need to upgrade existing technology stack and reevaluate their structures and processes',
+        '76% of organizations need to upgrade existing infrastructure and completely reevaluate their structures and processes',
+        '96% of organizations require comprehensive technology upgrades along with fundamental restructuring of operational workflows'
+      ],
+      correctAnswer: 1,
+      explanation: 'The 2024 survey revealed that 86% of organizations need to upgrade their existing technology stack and reevaluate their structures and processes to deploy AI agents effectively. This demonstrates that agentic AI requires more than just plug-and-play technology solutions.'
+    },
+    {
+      id: 'q2',
+      question: 'What is the primary risk of taking a technology-only approach to agentic AI adoption?',
+      options: [
+        'Technology-only approaches are the most cost-effective method for implementing agentic AI in enterprise environments',
+        'Focusing solely on technology while ignoring broader organizational context like strategy and workforce development leads to breakdowns',
+        'Technology-focused approaches always produce better results than holistic strategies involving multiple organizational dimensions',
+        'Prioritizing technology eliminates the need for change management or employee training in AI implementations'
+      ],
+      correctAnswer: 1,
+      explanation: 'Treating agentic AI as merely a plug-and-play solution often leads to breakdowns. Successful AI transformation requires a holistic approach encompassing strategy, capabilities, ethical standards, and workforce development, not just technology.'
+    },
+    {
+      id: 'q3',
+      question: 'What components should organizational readiness assessments evaluate before implementing agentic AI?',
+      options: [
+        'Only financial budgets and projected return on investment timelines for the implementation project',
+        'Technical and data preparedness, leadership alignment, AI literacy, support systems, and governance frameworks',
+        'Exclusively technical infrastructure capacity without considering human factors or organizational culture elements',
+        'Primarily employee satisfaction scores and existing technology vendor relationships within the organization'
+      ],
+      correctAnswer: 1,
+      explanation: 'Organizational readiness assessments should evaluate technical and data preparedness (data availability and quality), leadership alignment, AI literacy, support systems, and governance frameworks. This comprehensive evaluation identifies gaps needing improvement for successful adoption.'
+    },
+    {
+      id: 'q4',
+      question: 'What statistic reveals the challenge leaders face in demonstrating AI value?',
+      options: [
+        'More than 90% of IT executives implemented AI, yet nearly half aren\'t sure how to demonstrate the value',
+        'Approximately 75% of IT executives have implemented AI and all can clearly demonstrate measurable value',
+        'Less than 50% of IT executives have attempted any AI implementation due to unclear value propositions',
+        'Around 60% of IT executives implemented AI but most can easily quantify returns on investment'
+      ],
+      correctAnswer: 0,
+      explanation: 'Recent data shows more than 90% of IT executives have implemented at least one instance of AI, yet nearly half aren\'t sure how to demonstrate the value. This highlights the critical importance of establishing clear ROI expectations.'
+    },
+    {
+      id: 'q5',
+      question: 'Why is strong leadership alignment particularly critical for agentic AI adoption?',
+      options: [
+        'Leaders only need to approve budgets without understanding capabilities, limitations, or implementation details',
+        'Leadership involvement is unnecessary since technical teams can independently handle all adoption decisions',
+        'Leaders must understand AI capabilities, limitations, risks, and how it aligns with organizational goals and values',
+        'Leaders should delegate all AI decisions to data scientists without providing strategic direction or oversight'
+      ],
+      correctAnswer: 2,
+      explanation: 'For agentic AI to effectively support strategic goals and values, leaders must understand its capabilities, limitations, and potential risks. They need to know how AI makes decisions, expected outcomes, and how to implement it responsibly and ethically.'
+    },
+    {
+      id: 'q6',
+      question: 'What percentage of AI-driven breakdowns come from leadership\'s unrealistic ROI timelines?',
+      options: [
+        'More than half of AI-driven breakdowns in enterprise come from leadership\'s unrealistic timelines for ROI',
+        'Approximately 35% of AI-driven enterprise breakdowns result from leadership setting unrealistic ROI expectations',
+        'Around 40% of AI implementation failures trace back to unrealistic leadership timelines for returns',
+        'Nearly 25% of AI adoption challenges stem from leadership establishing impossible timeline expectations'
+      ],
+      correctAnswer: 0,
+      explanation: 'More than half of AI-driven breakdowns in enterprise come from leadership\'s unrealistic timelines for ROI. This underscores why upskilling leadership in AI governance is critical for successful adoption.'
+    },
+    {
+      id: 'q7',
+      question: 'How does AI literacy impact employee acceptance and trust in agentic AI systems?',
+      options: [
+        'AI literacy has no measurable impact on employee acceptance since trust develops naturally over time',
+        'Lower AI literacy actually increases trust because employees ask fewer questions about AI operations',
+        'Employees with higher AI literacy are less likely to harbor misconceptions and more likely to accept and trust AI',
+        'AI literacy exclusively benefits technical staff without affecting general employee acceptance or adoption rates'
+      ],
+      correctAnswer: 2,
+      explanation: 'Employees with higher AI literacy are less likely to harbor misconceptions and more likely to accept and trust AI. Conversely, low AI literacy can significantly hinder adoption, limiting AI\'s transformative potential within organizations.'
+    },
+    {
+      id: 'q8',
+      question: 'What role did driver feedback and AI training play in UPS\'s ORION routing agent success?',
+      options: [
+        'Driver training delayed implementation but eventually reduced costs by approximately $50 million annually',
+        'Driver feedback loops and training on AI systems were major contributors to success and $300 million annual savings',
+        'Driver involvement was minimal and had negligible impact on the routing agent\'s performance outcomes',
+        'UPS succeeded by implementing the routing agent without any driver input or training programs'
+      ],
+      correctAnswer: 1,
+      explanation: 'UPS\'s ORION routing agent example shows that drivers\' feedback loops and training on AI systems were major contributors to AI success and a $300 million annual cost savings. This demonstrates the value of empowering employees with AI literacy.'
+    },
+    {
+      id: 'q9',
+      question: 'What percentage of AI adoption failures trace back to process or people issues rather than technical problems?',
+      options: [
+        'About 70% of AI adoption failures trace back to process or people issues rather than technical problems',
+        'Approximately 50% of AI adoption failures result from process or people challenges instead of technology',
+        'Around 60% of AI implementation failures stem from human factors rather than technical shortcomings',
+        'Nearly 80% of AI deployment failures are caused by organizational factors instead of technological limitations'
+      ],
+      correctAnswer: 0,
+      explanation: 'Recent data shows that 70% of AI adoption failures trace back to process or people issues rather than technical shortcomings. This emphasizes the critical importance of engaging employees and addressing human factors in AI adoption.'
+    },
+    {
+      id: 'q10',
+      question: 'Why is early and continuous employee involvement crucial for agentic AI adoption success?',
+      options: [
+        'Employee involvement is only necessary during initial planning phases and becomes irrelevant during implementation',
+        'Continuous involvement slows adoption processes and should be minimized to accelerate deployment timelines',
+        'Employee engagement matters exclusively for user interface design without affecting broader adoption outcomes',
+        'Early engagement allows employees to identify risks, enhancing their confidence and understanding of AI\'s benefits'
+      ],
+      correctAnswer: 3,
+      explanation: 'Early and continuous employee involvement from pilot phases to full-scale implementation mitigates both practical and psychological barriers. Engaging employees allows them to identify and address potential risks, enhancing their confidence and understanding of AI\'s benefits.'
+    },
+    {
+      id: 'q11',
+      question: 'What approach helps reduce perceived risks and build employee confidence in using AI?',
+      options: [
+        'Immediately deploying fully autonomous agents without any gradual introduction or training period for staff',
+        'Preventing employee interaction with AI systems until they complete extensive certification programs',
+        'Providing AI "co-pilot" modes before going fully autonomous, enabling staff to observe and learn from AI behavior',
+        'Restricting AI access to senior management while keeping general employees completely isolated from systems'
+      ],
+      correctAnswer: 2,
+      explanation: 'Some firms provide AI "co-pilot" modes before going fully autonomous, enabling staff to observe and learn from AI behavior. Experimenting with autonomous agents and offering feedback on outcomes reduces perceived risks and builds confidence.'
+    },
+    {
+      id: 'q12',
+      question: 'According to the late-2024 study, what do tech leaders cite as the top challenge in deploying AI agents?',
+      options: [
+        'Security concerns are cited by 53% of tech leaders as the top challenge in deploying AI agents',
+        'High implementation costs and insufficient budget allocation represent the primary obstacles to deployment',
+        'Lack of technical expertise and difficulty recruiting qualified AI talent create the biggest challenges',
+        'Integration complexity with legacy systems poses the greatest difficulty for most organizations'
+      ],
+      correctAnswer: 0,
+      explanation: 'A late-2024 study found 53% of tech leaders cite security as the top challenge in deploying AI agents. This underscores the importance of robust governance and addressing security concerns for successful adoption.'
+    },
+    {
+      id: 'q13',
+      question: 'What governance approach do many enterprises implement for early agentic AI deployments?',
+      options: [
+        'Fully autonomous operations without any human oversight to maximize efficiency and deployment speed',
+        'Minimal governance frameworks that evolve only after significant adoption and operational experience',
+        'AI governance committees and requiring human-in-the-loop approach, especially for early deployments',
+        'Delegating all governance decisions to external consultants without internal committee involvement'
+      ],
+      correctAnswer: 2,
+      explanation: 'Many enterprises are setting up AI governance committees and requiring a human-in-the-loop approach, especially for early deployments. This provides appropriate oversight while building trust and ensuring responsible AI implementation.'
+    },
+    {
+      id: 'q14',
+      question: 'What human role transitions are necessary as AI agents take on decision-making tasks?',
+      options: [
+        'Humans must focus exclusively on manual data entry and routine administrative tasks AI cannot handle',
+        'Human roles become completely eliminated as AI agents achieve full autonomy in all organizational functions',
+        'Humans shift entirely to technical programming roles maintaining and debugging AI agent systems exclusively',
+        'Humans transition to more strategic, supervisory, and creative roles requiring critical thinking and problem-solving skills'
+      ],
+      correctAnswer: 3,
+      explanation: 'As AI agents increasingly take on decision-making tasks, humans must transition to more strategic, supervisory, and creative roles, while broadening skills in critical thinking, complex problem-solving, and collaboration with autonomous systems.'
+    },
+    {
+      id: 'q15',
+      question: 'What elements can help mitigate employee anxiety about autonomous AI decision-making?',
+      options: [
+        'Limiting information about AI systems to prevent employees from understanding how decisions are made',
+        'Accelerating deployment without addressing concerns to demonstrate AI capabilities through immediate results',
+        'Restricting AI access to senior leadership while keeping most employees isolated from systems',
+        'Transparent communication, strategic guidance, increased AI literacy, and updated interaction models'
+      ],
+      correctAnswer: 3,
+      explanation: 'Transparent communication, strategic guidance, increased AI literacy, and updated interaction models can mitigate anxieties about perceived loss of control and ethical concerns. These elements help align autonomous decisions with organizational values and build trust.'
     }
   ]
 };
