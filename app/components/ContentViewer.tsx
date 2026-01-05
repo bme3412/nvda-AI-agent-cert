@@ -6499,7 +6499,8 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
       const words = name.split('-').filter(w => w.length > 2);
       // Remove common prefixes/suffixes
       return words.filter(w => 
-        !['design', 'implement', 'config', 'manage', 'orchestrate', 'apply', 'ensure', 'user', 'interfaces'].includes(w)
+        !['design', 'implement', 'config', 'manage', 'orchestrate', 'apply', 'ensure', 'user', 'interfaces', 
+          'overview', 'tutorials', 'faq', 'launching', 'intro', 'introductory'].includes(w.toLowerCase())
       );
     };
     
@@ -6541,7 +6542,18 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
         baseWords.filter(bw => keyWords.some(kw => bw === kw || bw.includes(kw) || kw.includes(bw))).length >= 
         Math.min(2, Math.min(baseWords.length, keyWords.length));
       
-      if (exactMatch || substringMatch || keywordOverlap || wordOverlap) {
+      // Special handling for agent intelligence toolkit files - match based on core keywords
+      // Files like "agent-intelligence-toolkit-overview" should match "agent-intelligence-toolkit-FAQ"
+      // if they're in the same directory category
+      const coreAgentTerms = ['agent', 'intelligence', 'toolkit'];
+      const baseHasCoreTerms = coreAgentTerms.every(term => normalizedBase.includes(term));
+      const keyHasCoreTerms = coreAgentTerms.every(term => normalizedKey.includes(term));
+      
+      // If both files contain the core agent intelligence toolkit terms, they're related
+      // This allows overview/tutorials files to match FAQ/launching quiz data in the same category
+      const agentIntelligenceMatch = baseHasCoreTerms && keyHasCoreTerms;
+      
+      if (exactMatch || substringMatch || keywordOverlap || wordOverlap || agentIntelligenceMatch) {
         console.log('Quiz found: fuzzy match for', path, '->', key, 
           '(normalized:', normalizedBase, 'vs', normalizedKey, 
           ', keywords:', baseKeywords, 'vs', keyKeywords, ')');
