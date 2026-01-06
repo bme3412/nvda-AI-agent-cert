@@ -4808,24 +4808,24 @@ const QUIZ_DATA: QuizSet = {
       id: 'q1',
       question: 'What is the primary purpose of NVIDIA DGX Cloud Benchmarking beyond comparing raw GPU specifications?',
       options: [
-        'Assessing real-world, end-to-end AI workload performance and total cost of ownership across platforms',
         'Exclusively measuring individual GPU floating-point operations without considering infrastructure or software factors',
         'Only comparing hourly cost per GPU across different cloud providers without performance analysis',
-        'Primarily validating hardware specifications match manufacturer datasheets without application-level testing'
+        'Primarily validating hardware specifications match manufacturer datasheets without application-level testing',
+        'Assessing real-world, end-to-end AI workload performance and total cost of ownership across platforms'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'DGX Cloud Benchmarking assesses training and inference performance across AI workloads and platforms, accounting for infrastructure software, cloud platforms, and application configurations—not just GPUs. It focuses on real-world, end-to-end performance and total cost of ownership.'
     },
     {
       id: 'q2',
       question: 'What impressive performance improvement was achieved when training Llama 3 70B by scaling GPU count?',
       options: [
-        'Up to 97% reduction in time to train 1 trillion tokens for only 2.6% cost increase',
         'Approximately 50% reduction in training time with proportional 50% increase in overall costs',
         'About 75% reduction in time to solution requiring 80% additional investment in resources',
-        'Nearly 85% faster training completion but with 60% higher total cost of ownership'
+        'Nearly 85% faster training completion but with 60% higher total cost of ownership',
+        'Up to 97% reduction in time to train 1 trillion tokens for only 2.6% cost increase'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'When training Llama 3 70B, scaling GPU count achieved up to a 97% reduction in time to train 1 trillion tokens (from 115.4 days to 3.8 days) for a cost increase of only 2.6%, demonstrating exceptional efficiency.'
     },
     {
@@ -4844,12 +4844,12 @@ const QUIZ_DATA: QuizSet = {
       id: 'q4',
       question: 'What key advantage does FP8 precision provide compared to BF16 for AI model training?',
       options: [
-        'Significantly increased throughput and cost-efficiency due to higher math throughput and lower memory requirements',
         'FP8 eliminates all numerical stability concerns making it universally superior to BF16',
         'FP8 provides identical performance to BF16 but requires less storage for checkpoints',
-        'Only marginal performance gains insufficient to justify the complexity of implementation'
+        'Only marginal performance gains insufficient to justify the complexity of implementation',
+        'Significantly increased throughput and cost-efficiency due to higher math throughput and lower memory requirements'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'FP8 precision significantly increases throughput and cost-efficiency compared to BF16 due to higher math or communication throughput and lower memory bandwidth requirements. This can also enable training larger models on fewer GPUs.'
     },
     {
@@ -4868,120 +4868,120 @@ const QUIZ_DATA: QuizSet = {
       id: 'q6',
       question: 'How does Transformer Engine in Hopper and Blackwell architectures help developers use FP8?',
       options: [
-        'Enabling selective FP8 use on per-layer basis, using reduced precision only where it won\'t affect accuracy',
         'By completely eliminating the need for any BF16 computations throughout entire training process',
         'Automatically converting all operations to FP8 without requiring any developer intervention or configuration',
-        'Exclusively handling inference workloads without providing any benefits during model training phases'
+        'Exclusively handling inference workloads without providing any benefits during model training phases',
+        'Enabling selective FP8 use on per-layer basis, using reduced precision only where it won\'t affect accuracy'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Transformer Engine in Hopper and Blackwell architectures helps developers use FP8 selectively on a per-layer basis, using reduced precision only where it will not adversely affect model accuracy and training stability.'
     },
     {
       id: 'q7',
       question: 'What performance improvement did NeMo Framework optimization achieve in 2024?',
       options: [
-        'About 25% increase in overall platform performance with proportional cost savings due to hardware-software co-engineering',
         'Approximately 10% increase in platform performance through minor efficiency improvements and bug fixes',
         'Nearly 50% performance boost requiring significant changes to existing training workflows and configurations',
-        'Roughly 15% improvement limited to specific model architectures without broader applicability'
+        'Roughly 15% improvement limited to specific model architectures without broader applicability',
+        'About 25% increase in overall platform performance with proportional cost savings due to hardware-software co-engineering'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'In 2024, NeMo software optimization resulted in a 25% increase in overall platform performance with proportional cost savings to users. This was achieved through deep hardware and software co-engineering efforts.'
     },
     {
       id: 'q8',
       question: 'Why does framework selection significantly impact training performance even with identical models and hardware?',
       options: [
-        'Frameworks differ in workload infrastructure fingerprint, communication patterns, and continuous optimization efforts',
         'Only licensing costs vary between frameworks without any actual performance differences in training',
         'Framework selection exclusively affects user interface without influencing underlying computation efficiency',
-        'Differences are negligible making framework choice irrelevant for performance optimization considerations'
+        'Differences are negligible making framework choice irrelevant for performance optimization considerations',
+        'Frameworks differ in workload infrastructure fingerprint, communication patterns, and continuous optimization efforts'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Framework choice affects performance due to differences in workload infrastructure fingerprint (how it interacts with infrastructure), communication patterns (efficiency of data exchange), and continuous optimization efforts by framework developers.'
     },
     {
       id: 'q9',
       question: 'What advantage does training models in FP8 provide for subsequent inference deployment?',
       options: [
-        'Models can be deployed directly for FP8 inference reducing inference costs without additional quantization',
         'FP8-trained models require mandatory quantization before any inference deployment can begin',
         'FP8 training provides no inference benefits requiring full BF16 precision for deployment',
-        'Inference performance remains identical regardless of training precision used during development'
+        'Inference performance remains identical regardless of training precision used during development',
+        'Models can be deployed directly for FP8 inference reducing inference costs without additional quantization'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Training a model in FP8 can additionally reduce inference costs since the model can be deployed directly for FP8 inference without requiring additional quantization steps or post-training modifications.'
     },
     {
       id: 'q10',
       question: 'What is the objective of NVIDIA DGX Cloud Benchmarking Performance Explorer for GPU count optimization?',
       options: [
-        'Identifying ideal GPU count that minimizes both total training time and costs for given workloads',
         'Always recommending maximum available GPU count regardless of workload characteristics or budget constraints',
         'Exclusively minimizing costs without considering training time or throughput requirements for projects',
-        'Only analyzing single-GPU performance without any multi-GPU or distributed training considerations'
+        'Only analyzing single-GPU performance without any multi-GPU or distributed training considerations',
+        'Identifying ideal GPU count that minimizes both total training time and costs for given workloads'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'The Performance Explorer helps users identify the ideal GPU count that minimizes both total training time and costs. The objective is finding the right number of GPUs that maximizes throughput and minimizes expenses across projects.'
     },
     {
       id: 'q11',
       question: 'What benefit does completing training work sooner provide beyond just faster iteration cycles?',
       options: [
-        'Faster time to market where trained model can be deployed to generate value for organization',
         'Slower time to market delaying when trained models can be deployed to generate organizational value',
         'Training completion speed has no relationship to business value generation or deployment timelines',
-        'Only technical benefits without any impact on business outcomes or revenue generation potential'
+        'Only technical benefits without any impact on business outcomes or revenue generation potential',
+        'Faster time to market where trained model can be deployed to generate value for organization'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Completing training work sooner means faster time to market where the trained model can be deployed to generate value for the organization. This represents a significant business benefit beyond just technical efficiency.'
     },
     {
       id: 'q12',
       question: 'Which organizations are early adopters of DGX Cloud Benchmarking Performance Recipes?',
       options: [
-        'Leading cloud providers AWS, Google Cloud, Microsoft Azure, Oracle Cloud, and partners CoreWeave, Crusoe, Nebius',
         'Exclusively academic institutions and research laboratories without any commercial cloud provider participation',
         'Only NVIDIA\'s internal teams without external validation or adoption by industry partners',
-        'Primarily small startups without involvement from major cloud infrastructure providers or enterprises'
+        'Primarily small startups without involvement from major cloud infrastructure providers or enterprises',
+        'Leading cloud providers AWS, Google Cloud, Microsoft Azure, Oracle Cloud, and partners CoreWeave, Crusoe, Nebius'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Early adopters include leading cloud providers AWS, Google Cloud, Microsoft Azure, and Oracle Cloud, as well as NVIDIA cloud partners CoreWeave, Crusoe, and Nebius, demonstrating broad industry adoption.'
     },
     {
       id: 'q13',
       question: 'What approach does NVIDIA take to ensure DGX Cloud Benchmarking optimizations remain practical?',
       options: [
-        'Characterizing real user workloads through Benchmarking Recipes to ground optimizations in practical scenarios',
         'Exclusively using synthetic benchmarks without considering real-world application scenarios or workloads',
         'Focusing solely on theoretical maximum performance without validation against actual usage patterns',
-        'Only testing with NVIDIA\'s internal workloads without external validation or customer input'
+        'Only testing with NVIDIA\'s internal workloads without external validation or customer input',
+        'Characterizing real user workloads through Benchmarking Recipes to ground optimizations in practical scenarios'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'By leveraging DGX Cloud Benchmarking Recipes, NVIDIA characterizes real user workloads to ensure optimizations are grounded in practical scenarios. This ensures recommendations are relevant to actual deployment situations.'
     },
     {
       id: 'q14',
       question: 'Why does DGX Cloud Benchmarking emphasize continuous performance assessment beyond initial validation?',
       options: [
-        'Ensuring delivered throughput closely matches theoretical specifications throughout infrastructure lifecycle',
         'Initial validation provides sufficient data making ongoing assessment redundant and unnecessary overhead',
         'Hardware specifications never change making continuous monitoring wasteful use of engineering resources',
-        'Only required for compliance purposes without any technical or performance optimization benefits'
+        'Only required for compliance purposes without any technical or performance optimization benefits',
+        'Ensuring delivered throughput closely matches theoretical specifications throughout infrastructure lifecycle'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Continuous performance assessment, beyond initial infrastructure validation, ensures that delivered throughput closely matches theoretical specifications. This ongoing validation helps identify when performance degrades or optimization opportunities arise.'
     },
     {
       id: 'q15',
       question: 'How does DGX Cloud Benchmarking evolve to remain relevant for AI industry needs?',
       options: [
-        'Regular updates incorporating new models, emerging hardware platforms, and innovative software optimizations',
         'Remaining static after initial release to maintain consistency and comparability across time periods',
         'Exclusively focusing on legacy hardware without adapting to new GPU architectures or frameworks',
-        'Only updating pricing information without changing performance testing methodologies or model coverage'
+        'Only updating pricing information without changing performance testing methodologies or model coverage',
+        'Regular updates incorporating new models, emerging hardware platforms, and innovative software optimizations'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'DGX Cloud Benchmarking is designed to evolve alongside the AI industry with regular updates incorporating new models, emerging hardware platforms, and innovative software optimizations. This ensures users have access to most relevant and up-to-date insights.'
     }
   ],
@@ -5174,12 +5174,12 @@ const QUIZ_DATA: QuizSet = {
       id: 'q1',
       question: 'What is the primary purpose of NVIDIA Nsight Systems as a performance analysis tool?',
       options: [
-        'System-wide performance analysis visualizing application algorithms to identify optimization opportunities across CPUs and GPUs',
         'Exclusively profiling GPU shader code without any system-wide analysis or CPU interaction visualization',
         'Only debugging application crashes without providing any performance profiling or optimization capabilities',
-        'Solely managing GPU memory allocation without analyzing workload execution or performance characteristics'
+        'Solely managing GPU memory allocation without analyzing workload execution or performance characteristics',
+        'System-wide performance analysis visualizing application algorithms to identify optimization opportunities across CPUs and GPUs'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Nsight Systems is a system-wide performance analysis tool designed to visualize an application\'s algorithms, identify the largest opportunities to optimize, and tune to scale efficiently across any quantity or size of CPUs and GPUs, from large servers to smallest SoCs.'
     },
     {
@@ -5198,12 +5198,12 @@ const QUIZ_DATA: QuizSet = {
       id: 'q3',
       question: 'What range of NVIDIA platforms does Nsight Systems support for application development?',
       options: [
-        'Only high-end datacenter systems like DGX without support for edge or automotive platforms',
         'Wide range from NVIDIA DGX to RTX workstations, including NVIDIA DRIVE and Jetson platforms',
+        'Only high-end datacenter systems like DGX without support for edge or automotive platforms',
         'Exclusively desktop RTX workstations without capabilities for server or embedded device profiling',
         'Solely cloud-based environments without any support for on-premises or edge deployment scenarios'
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation: 'Nsight Systems is the universal tool for developing applications on NVIDIA platforms. It scales across a wide range including NVIDIA DGX, RTX workstations, NVIDIA DRIVE for automotive, and NVIDIA Jetson for edge AI and robotics.'
     },
     {
@@ -5222,12 +5222,12 @@ const QUIZ_DATA: QuizSet = {
       id: 'q5',
       question: 'What detailed GPU information can GPU Metrics Sampling expose in Nsight Systems?',
       options: [
-        'SM utilization, Tensor Core activity, instruction throughput, warp occupancy, and PCIe/DRAM activity',
         'Exclusively GPU temperature and power consumption without any computational or memory activity details',
         'Only high-level GPU utilization percentages without detailed throughput or architectural metrics',
-        'Solely error rates and crash diagnostics without performance metrics or resource utilization data'
+        'Solely error rates and crash diagnostics without performance metrics or resource utilization data',
+        'SM utilization, Tensor Core activity, instruction throughput, warp occupancy, and PCIe/DRAM activity'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'GPU Metrics Sampling plots low-level I/O activity such as PCIe throughput, NVLink, and DRAM activity. It also exposes SM utilization, Tensor Core activity, instruction throughput, and warp occupancy for comprehensive GPU performance analysis.'
     },
     {
@@ -5246,60 +5246,60 @@ const QUIZ_DATA: QuizSet = {
       id: 'q7',
       question: 'What graphics APIs does Nsight Systems support for profiling graphics computing applications?',
       options: [
-        'Vulkan, OpenGL, DirectX 11, DirectX 12, DXR, and NVIDIA OptiX APIs',
         'Only proprietary NVIDIA APIs without support for industry-standard graphics programming interfaces',
         'Exclusively OpenGL without any DirectX, Vulkan, or ray-tracing API profiling capabilities',
-        'Solely legacy DirectX 9 and OpenGL 2.0 without modern graphics API support'
+        'Solely legacy DirectX 9 and OpenGL 2.0 without modern graphics API support',
+        'Vulkan, OpenGL, DirectX 11, DirectX 12, DXR, and NVIDIA OptiX APIs'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'For graphics computing, Nsight Systems supports profiling Vulkan, OpenGL, DirectX 11, DirectX 12, DXR, and NVIDIA OptiX APIs. This comprehensive support covers modern graphics and ray-tracing workloads.'
     },
     {
       id: 'q8',
       question: 'What capability does multi-node profiling in Nsight Systems provide for large-scale deployments?',
       options: [
-        'Multi-node profiling automatically diagnoses performance limiters across many nodes simultaneously with network metrics',
         'Only supports single-node analysis requiring manual correlation of data across multiple systems',
         'Exclusively profiles CPU clusters without any GPU or DPU performance analysis capabilities',
-        'Solely collects data from multiple nodes without providing any automatic analysis or diagnosis'
+        'Solely collects data from multiple nodes without providing any automatic analysis or diagnosis',
+        'Multi-node profiling automatically diagnoses performance limiters across many nodes simultaneously with network metrics'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Nsight Systems supports multi-node profiling to resolve performance limiters at data center and cluster scale. Multi-node analysis automatically diagnoses performance limiters across many nodes simultaneously, including network metrics and internode communication.'
     },
     {
       id: 'q9',
       question: 'How does Nsight Systems support Python application optimization for deep learning workloads?',
       options: [
-        'Backtraces and automatic call stack sampling allow fine-tuning performance for deep learning applications',
         'Python applications are not supported requiring developers to rewrite code in C++ for profiling',
         'Only provides basic execution timing without detailed call stack or GPU utilization analysis',
-        'Exclusively profiles Python syntax errors without any performance optimization or GPU utilization insights'
+        'Exclusively profiles Python syntax errors without any performance optimization or GPU utilization insights',
+        'Backtraces and automatic call stack sampling allow fine-tuning performance for deep learning applications'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Nsight Systems helps write Python applications that maximize GPU utilization. Backtraces and automatic call stack sampling allow developers to fine-tune performance for deep learning applications, with integration for Jupyter Lab enabling direct profiling.'
     },
     {
       id: 'q10',
       question: 'What functionality does Jupyter Lab integration provide for Nsight Systems users?',
       options: [
-        'Profile Python and supported languages directly in Jupyter, including detailed analysis with full Nsight Systems GUI',
         'Only displays static reports without interactive analysis or detailed GUI access for investigations',
         'Exclusively exports profiling data to external tools without any in-Jupyter visualization or analysis',
-        'Solely provides basic timing statistics without comprehensive profiling or performance metric collection'
+        'Solely provides basic timing statistics without comprehensive profiling or performance metric collection',
+        'Profile Python and supported languages directly in Jupyter, including detailed analysis with full Nsight Systems GUI'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Integration with Jupyter Lab allows profiling Python and other supported languages directly in Jupyter, including detailed analysis with the full Nsight Systems GUI. This enables seamless workflow for data scientists and AI developers.'
     },
     {
       id: 'q11',
       question: 'What frame performance issues does Nsight Systems automatically detect for game developers?',
       options: [
-        'Automatically detects slow frames and local stutter frames, reporting CPU times and API calls causing stutters',
         'Only detects application crashes without identifying frame timing issues or performance inconsistencies',
         'Exclusively monitors average frame rates without detecting individual slow frames or stutter patterns',
-        'Solely profiles GPU memory usage without analyzing frame timing, stutters, or frame-to-frame consistency'
+        'Solely profiles GPU memory usage without analyzing frame timing, stutters, or frame-to-frame consistency',
+        'Automatically detects slow frames and local stutter frames, reporting CPU times and API calls causing stutters'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Nsight Systems automatically detects slow frames (highlighting frame times higher than target) and local stutter frames (highlighting frames with higher times than neighbors). It also reports CPU times per frame and API calls likely causing stutters.'
     },
     {
@@ -5318,36 +5318,36 @@ const QUIZ_DATA: QuizSet = {
       id: 'q13',
       question: 'What impressive GPU utilization improvement did Tracxpoint achieve using Nsight Systems?',
       options: [
-        'Achieved over 90% GPU utilization reducing training time from 600 minutes to only 90 minutes',
         'Improved from 50% to 60% GPU utilization with minimal impact on training time',
         'Increased utilization from 70% to 75% with moderate performance gains in model training',
-        'Reached 80% GPU utilization cutting training duration approximately in half from baseline'
+        'Reached 80% GPU utilization cutting training duration approximately in half from baseline',
+        'Achieved over 90% GPU utilization reducing training time from 600 minutes to only 90 minutes'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Tracxpoint achieved over 90% GPU utilization using Nsight Systems. A deep learning model that previously took 600 minutes to train now takes only 90 minutes, representing a dramatic 6.7x speedup.'
     },
     {
       id: 'q14',
       question: 'What specific challenge did Microsoft Azure HPC+AI team address using Nsight Systems?',
       options: [
-        'Performed detailed analysis to optimize GPU-accelerated AI software, identifying top time-consuming functions and cold spots',
         'Only managed hardware procurement without any software optimization or performance analysis activities',
         'Exclusively handled billing and cost allocation without performance profiling or optimization work',
-        'Solely monitored system uptime without analyzing workload performance characteristics or optimization opportunities'
+        'Solely monitored system uptime without analyzing workload performance characteristics or optimization opportunities',
+        'Performed detailed analysis to optimize GPU-accelerated AI software, identifying top time-consuming functions and cold spots'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Microsoft Azure HPC+AI team used Nsight Systems to perform detailed analysis and optimize GPU-accelerated AI software. The tool painted a clear picture of events on CPUs, GPUs, NICs, and OS, allowing them to quickly identify top time-consuming functions and cold spots.'
     },
     {
       id: 'q15',
       question: 'What does NVIDIA Nsight Aftermath SDK specifically provide for game developers?',
       options: [
-        'Library integrating into crash reporter to generate GPU mini-dumps when exceptions or TDRs occur',
         'Real-time performance profiling during gameplay without any crash analysis or debugging capabilities',
         'Exclusively optimizes shader compilation without providing any crash investigation or debugging features',
-        'Only provides post-mortem frame analysis without any crash dump or exception handling functionality'
+        'Only provides post-mortem frame analysis without any crash dump or exception handling functionality',
+        'Library integrating into crash reporter to generate GPU mini-dumps when exceptions or TDRs occur'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Nsight Aftermath SDK is a library that integrates into a D3D12 or Vulkan game\'s crash reporter to generate GPU "mini-dumps" when an exception or TDR (Timeout Detection and Recovery) occurs, exposing pipeline information to resolve unexpected crashes.'
     }
   ],
@@ -5357,72 +5357,72 @@ const QUIZ_DATA: QuizSet = {
       id: 'q1',
       question: 'What is the primary purpose of implementing Prometheus and Grafana in GPU-accelerated computing environments?',
       options: [
-        'Providing comprehensive monitoring, visualization, and analysis of GPU performance metrics and cluster health',
         'Exclusively managing GPU driver installations and updates across distributed computing infrastructure',
         'Only handling resource allocation decisions without any performance monitoring or metrics collection capabilities',
-        'Primarily optimizing GPU workload scheduling without collecting or displaying any telemetry data'
+        'Primarily optimizing GPU workload scheduling without collecting or displaying any telemetry data',
+        'Providing comprehensive monitoring, visualization, and analysis of GPU performance metrics and cluster health'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Prometheus and Grafana provide a complete monitoring stack for GPU-accelerated environments. Prometheus collects and stores metrics while Grafana visualizes them, enabling teams to monitor GPU performance, identify bottlenecks, and ensure efficient resource utilization across clusters.'
     },
     {
       id: 'q2',
       question: 'How do Prometheus Operator and Helm package manager simplify cluster monitoring deployment?',
       options: [
+        'They provide standardized configurations and automated deployment reducing manual setup complexity significantly',
         'They eliminate all configuration requirements by automatically detecting optimal settings without user input',
         'They only support basic CPU monitoring without any GPU or specialized hardware capabilities',
-        'They provide standardized configurations and automated deployment reducing manual setup complexity significantly',
         'They exclusively handle storage management without simplifying deployment or configuration processes'
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation: 'The Prometheus Operator provides standard configurations and dashboards, while Helm enables packaged deployment. Together they automate much of the complex setup, allowing teams to deploy a full cluster monitoring solution efficiently rather than manually configuring each component.'
     },
     {
       id: 'q3',
       question: 'What role does DCGM (Data Center GPU Manager) play in NVIDIA GPU monitoring infrastructure?',
       options: [
+        'It serves as the primary interface collecting GPU telemetry and exposing metrics to monitoring systems',
         'DCGM exclusively manages GPU power consumption and thermal throttling without metrics collection',
         'DCGM only handles GPU memory allocation without providing any performance monitoring capabilities',
-        'It primarily focuses on driver compatibility testing without real-time telemetry or monitoring features',
-        'It serves as the primary interface collecting GPU telemetry and exposing metrics to monitoring systems'
+        'It primarily focuses on driver compatibility testing without real-time telemetry or monitoring features'
       ],
-      correctAnswer: 3,
+      correctAnswer: 0,
       explanation: 'DCGM collects comprehensive GPU telemetry including utilization, memory usage, temperature, and other performance metrics. It exposes this data to monitoring systems like Prometheus, serving as the bridge between NVIDIA GPUs and observability platforms.'
     },
     {
       id: 'q4',
       question: 'Why is real-time GPU metrics monitoring particularly important for AI and machine learning workloads?',
       options: [
-        'GPU utilization directly impacts training time, cost efficiency, and ability to identify performance bottlenecks',
         'ML workloads consume minimal GPU resources making monitoring unnecessary for optimization purposes',
         'Monitoring only matters for debugging crashes without providing any optimization or efficiency insights',
-        'AI applications automatically optimize themselves eliminating any need for human monitoring or intervention'
+        'AI applications automatically optimize themselves eliminating any need for human monitoring or intervention',
+        'GPU utilization directly impacts training time, cost efficiency, and ability to identify performance bottlenecks'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'GPU utilization directly affects training duration and infrastructure costs in AI workloads. Real-time monitoring helps identify underutilized resources, performance bottlenecks, and optimization opportunities, enabling teams to maximize expensive GPU investments and reduce time-to-solution.'
     },
     {
       id: 'q5',
       question: 'What advantage does visualizing GPU metrics on a timeline provide for performance analysis?',
       options: [
-        'It enables correlating GPU activity with application events to identify performance patterns and issues',
         'Timeline visualization only shows historical data without enabling real-time monitoring or analysis',
+        'It enables correlating GPU activity with application events to identify performance patterns and issues',
         'Timelines exclusively display errors without showing utilization, memory usage, or throughput metrics',
         'Visualization provides aesthetics without offering any practical debugging or optimization value'
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation: 'Timeline visualization allows teams to correlate GPU metrics with application behavior, helping identify when and why performance issues occur. This temporal context makes it easier to understand workload patterns, spot anomalies, and diagnose the root causes of inefficiencies.'
     },
     {
       id: 'q6',
       question: 'How does containerized monitoring with Kubernetes benefit GPU-accelerated infrastructure management?',
       options: [
-        'Kubernetes orchestration enables scalable, automated monitoring deployment across heterogeneous GPU clusters',
         'Containers eliminate all monitoring overhead making GPU tracking completely free in resource terms',
         'Containerization only supports CPU monitoring without any GPU-specific metric collection capabilities',
-        'Monitoring containers require dedicated GPUs reducing available compute resources for applications'
+        'Monitoring containers require dedicated GPUs reducing available compute resources for applications',
+        'Kubernetes orchestration enables scalable, automated monitoring deployment across heterogeneous GPU clusters'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Kubernetes orchestration allows monitoring components to be deployed, scaled, and managed automatically across clusters. This is particularly valuable for GPU infrastructure where monitoring needs to work consistently across diverse hardware configurations and deployment scales.'
     },
     {
@@ -5441,36 +5441,36 @@ const QUIZ_DATA: QuizSet = {
       id: 'q8',
       question: 'Why is it important to monitor both GPU utilization and CPU activity simultaneously?',
       options: [
-        'Simultaneous monitoring reveals data transfer bottlenecks and ensures balanced utilization across system components',
         'CPU and GPU activities are completely independent requiring separate monitoring without any correlation analysis',
         'Modern GPUs operate autonomously making CPU monitoring irrelevant for GPU-accelerated applications',
-        'Monitoring both components doubles overhead without providing additional debugging or optimization insights'
+        'Monitoring both components doubles overhead without providing additional debugging or optimization insights',
+        'Simultaneous monitoring reveals data transfer bottlenecks and ensures balanced utilization across system components'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Many performance issues arise from CPU-GPU interactions, such as data transfer bottlenecks or CPU preprocessing delays. Monitoring both simultaneously helps identify whether GPUs are starved by slow CPU operations or if the bottleneck lies elsewhere in the pipeline.'
     },
     {
       id: 'q9',
       question: 'What business value does comprehensive GPU monitoring provide to organizations running AI workloads?',
       options: [
-        'It enables cost optimization, capacity planning, and ROI measurement for expensive GPU infrastructure investments',
         'Monitoring only benefits researchers without providing any value to business operations or financial planning',
+        'It enables cost optimization, capacity planning, and ROI measurement for expensive GPU infrastructure investments',
         'Business value is negligible since monitoring focuses exclusively on technical metrics without financial implications',
         'GPU monitoring exclusively prevents hardware failures without contributing to efficiency or cost management'
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation: 'Comprehensive monitoring helps organizations optimize GPU spending by identifying underutilization, plan capacity needs based on usage trends, and measure ROI on infrastructure investments. This visibility is essential for justifying and managing expensive GPU resources.'
     },
     {
       id: 'q10',
       question: 'How does dashboard customization benefit different stakeholders in GPU-accelerated computing environments?',
       options: [
-        'Different roles need different metrics: developers want performance details while executives need utilization summaries',
         'Customization serves only aesthetic purposes without providing any practical benefits for different roles',
         'Single standardized dashboard works optimally for all users eliminating any need for customization',
-        'Customization exclusively benefits administrators without providing value to developers or business stakeholders'
+        'Customization exclusively benefits administrators without providing value to developers or business stakeholders',
+        'Different roles need different metrics: developers want performance details while executives need utilization summaries'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Different stakeholders have different needs: data scientists want detailed performance metrics to optimize models, DevOps needs resource utilization for capacity planning, and executives need high-level cost and efficiency summaries. Customizable dashboards serve all these needs effectively.'
     },
     {
@@ -5489,48 +5489,48 @@ const QUIZ_DATA: QuizSet = {
       id: 'q12',
       question: 'Why is metric retention and historical analysis important for GPU infrastructure management?',
       options: [
-        'Trend analysis reveals usage patterns enabling better capacity planning and budget forecasting',
         'Historical data only consumes storage without providing any actionable insights for future planning',
         'Real-time metrics are sufficient making historical data retention unnecessary for operations',
-        'Historical analysis exclusively supports compliance requirements without operational or planning benefits'
+        'Historical analysis exclusively supports compliance requirements without operational or planning benefits',
+        'Trend analysis reveals usage patterns enabling better capacity planning and budget forecasting'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Historical metrics reveal trends in GPU usage over time, helping predict future capacity needs, budget for infrastructure expansion, and identify seasonal or project-based usage patterns. This long-term visibility is essential for strategic planning and investment decisions.'
     },
     {
       id: 'q13',
       question: 'How does monitoring support debugging and troubleshooting in GPU-accelerated applications?',
       options: [
-        'Metric correlation helps identify performance degradation causes like memory bottlenecks or data transfer issues',
         'Monitoring only shows symptoms without providing any diagnostic information for root cause analysis',
+        'Metric correlation helps identify performance degradation causes like memory bottlenecks or data transfer issues',
         'Debugging requires specialized tools making general monitoring systems completely irrelevant for troubleshooting',
         'Modern applications self-diagnose issues eliminating any need for external monitoring or metrics analysis'
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation: 'Monitoring provides visibility into system behavior that aids troubleshooting. By correlating metrics like GPU utilization, memory usage, and data transfer rates with application performance, teams can pinpoint issues like CPU bottlenecks, memory constraints, or inefficient data pipelines.'
     },
     {
       id: 'q14',
       question: 'What role does alerting play in proactive GPU infrastructure management?',
       options: [
-        'Proactive alerts on anomalies enable intervention before issues impact applications or user experience',
         'Alerts exclusively notify about complete system failures without detecting performance degradation early',
         'Alerting systems create unnecessary noise making manual dashboard checking more effective for monitoring',
-        'Modern systems self-heal automatically making alerting redundant for GPU infrastructure management'
+        'Modern systems self-heal automatically making alerting redundant for GPU infrastructure management',
+        'Proactive alerts on anomalies enable intervention before issues impact applications or user experience'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Alerting enables proactive management by notifying teams when metrics exceed thresholds or exhibit unusual patterns. This allows intervention before minor issues become critical problems, reducing downtime and maintaining performance for users and applications.'
     },
     {
       id: 'q15',
       question: 'How does standardized monitoring across heterogeneous GPU infrastructure benefit operations teams?',
       options: [
-        'Consistent monitoring framework enables unified visibility across diverse GPU types and vendor platforms',
         'Standardization only works with identical hardware making it useless for heterogeneous environments',
         'Heterogeneous environments require completely different monitoring tools preventing any standardization benefits',
-        'Standardized monitoring reduces flexibility making customized per-GPU monitoring more effective'
+        'Standardized monitoring reduces flexibility making customized per-GPU monitoring more effective',
+        'Consistent monitoring framework enables unified visibility across diverse GPU types and vendor platforms'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Standardized monitoring provides consistent visibility across diverse GPU types (different models, generations, or vendors). This unified approach simplifies operations, enables cross-platform comparison, and reduces the learning curve for teams managing complex, heterogeneous infrastructure.'
     }
   ],
@@ -5735,72 +5735,72 @@ const QUIZ_DATA: QuizSet = {
       id: 'q2',
       question: 'What key advantage does toggling the CUDA profiler on and off provide for LLM performance analysis?',
       options: [
-        'It allows focusing on specific regions of interest while producing smaller, more manageable profile files',
         'Toggling eliminates all profiling overhead making it completely free in terms of resources',
+        'It allows focusing on specific regions of interest while producing smaller, more manageable profile files',
         'Profiler toggling exclusively improves accuracy without affecting file size or analysis focus',
         'Toggling only benefits visualization aesthetics without providing practical analysis advantages'
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation: 'Toggling the CUDA profiler allows users to know specifically what the profiled region corresponds to and results in smaller files to post-process. This makes analysis more focused and manageable, especially for long-running LLM workloads.'
     },
     {
       id: 'q3',
       question: 'Why might profiling only specific iterations be preferable to profiling an entire LLM execution?',
       options: [
-        'Limiting profiling reduces file size and focuses analysis on representative or problematic execution periods',
         'Specific iterations always contain all performance issues making full profiling redundant',
         'Full profiling is technically impossible for any application requiring iteration-based selective profiling',
+        'Limiting profiling reduces file size and focuses analysis on representative or problematic execution periods',
         'Iteration-specific profiling exclusively benefits storage costs without improving analysis quality'
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation: 'Profiling specific iterations reduces the profile file size and allows controlling which iterations are collected. This is particularly valuable for understanding representative behavior or investigating specific performance issues without overwhelming data volumes.'
     },
     {
       id: 'q4',
       question: 'What purpose do NVTX (NVIDIA Tools Extension) markers serve in performance analysis?',
       options: [
-        'They annotate code regions enabling correlation between application logic and performance metrics in timelines',
         'NVTX markers exclusively handle memory allocation without providing any performance visibility',
+        'They annotate code regions enabling correlation between application logic and performance metrics in timelines',
         'Markers only improve compilation speed without contributing to runtime performance analysis',
         'NVTX exclusively benefits security monitoring without any performance profiling applications'
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation: 'NVTX markers provide annotations that help users understand which regions of code correspond to observed performance behavior. They enable correlating application-level logic with low-level performance metrics in profiling tools like Nsight Systems.'
     },
     {
       id: 'q5',
       question: 'How does Nsight Systems provide a "middle-ground" between timing analysis and kernel-level profiling?',
       options: [
-        'Metric sampling provides application-level insights with more detail than timing but less depth than kernel profiling',
         'It exclusively focuses on high-level timing without any detailed metrics or kernel information',
         'Nsight Systems only performs kernel-level analysis without any application-level capabilities',
-        'The middle-ground approach eliminates all need for other profiling tools or analysis methods'
+        'The middle-ground approach eliminates all need for other profiling tools or analysis methods',
+        'Metric sampling provides application-level insights with more detail than timing but less depth than kernel profiling'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Nsight Systems reports at the application level with metric sampling capabilities provide a clean middle-ground between simple timing analysis and deep kernel-level dives with Nsight Compute. This offers balanced insight without overwhelming detail.'
     },
     {
       id: 'q6',
       question: 'What benefit does PyTorch profiler integration provide when analyzing PyTorch-based LLM workflows?',
       options: [
-        'It helps users understand performance breakdown within the model with framework-specific insights',
         'PyTorch profiler exclusively handles data loading without any model execution performance analysis',
+        'It helps users understand performance breakdown within the model with framework-specific insights',
         'Integration only supports training analysis without providing any inference profiling capabilities',
         'PyTorch profiler eliminates need for CUDA profiling by replacing all lower-level analysis'
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation: 'The PyTorch profiler helps users analyze the performance breakdown in the model, providing framework-specific insights. Combined with toggling capabilities, it results in focused, smaller files for post-processing while maintaining valuable analysis detail.'
     },
     {
       id: 'q7',
       question: 'Why is understanding "which regions to focus on" important for effective LLM performance analysis?',
       options: [
-        'Identifying bottleneck regions enables targeted optimization efforts where they\'ll have greatest impact',
         'All regions of LLM execution have identical performance characteristics making focus irrelevant',
         'Regional focus only benefits visualization without improving actual optimization effectiveness',
-        'LLMs automatically optimize themselves eliminating any need for focused performance analysis'
+        'LLMs automatically optimize themselves eliminating any need for focused performance analysis',
+        'Identifying bottleneck regions enables targeted optimization efforts where they\'ll have greatest impact'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Providing means to understand which regions users may want to focus on enables targeted analysis. Not all parts of LLM execution contribute equally to performance issues, so identifying critical regions makes optimization efforts more efficient and effective.'
     },
     {
@@ -5819,84 +5819,84 @@ const QUIZ_DATA: QuizSet = {
       id: 'q9',
       question: 'How does coordinating profiling tools with application execution improve analysis quality?',
       options: [
-        'Synchronized profiling captures relevant execution phases ensuring collected data represents intended workload behavior',
         'Coordination exclusively improves aesthetics without affecting data quality or analysis accuracy',
         'Independent profiling without coordination always produces superior results for all applications',
-        'Tool coordination only benefits automated scripts without improving manual analysis workflows'
+        'Tool coordination only benefits automated scripts without improving manual analysis workflows',
+        'Synchronized profiling captures relevant execution phases ensuring collected data represents intended workload behavior'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Coordinating profiling tools (like Nsight Systems) with application execution ensures that profiling captures the intended execution phases. This synchronization guarantees that collected data represents the workload behavior you want to analyze and optimize.'
     },
     {
       id: 'q10',
       question: 'What role does garbage collection (GC) profiling play in understanding Python-based LLM performance?',
       options: [
-        'GC markers reveal memory management overhead that can significantly impact overall application performance',
         'GC profiling exclusively tracks memory leaks without revealing any performance impact information',
         'Garbage collection has no performance impact making GC profiling unnecessary for optimization',
-        'GC profiling only benefits memory capacity planning without affecting performance analysis'
+        'GC profiling only benefits memory capacity planning without affecting performance analysis',
+        'GC markers reveal memory management overhead that can significantly impact overall application performance'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Enabling garbage collection NVTX markers allows understanding memory management overhead. In Python-based LLM applications, GC can significantly impact performance, so visualizing when and how often it occurs helps identify optimization opportunities.'
     },
     {
       id: 'q11',
       question: 'Why might analyzing the Global Interpreter Lock (GIL) be relevant for PyTorch LLM performance?',
       options: [
-        'GIL contention can limit parallelism in Python, affecting overall application throughput and efficiency',
         'GIL exclusively affects network communication without impacting any computational performance',
+        'GIL contention can limit parallelism in Python, affecting overall application throughput and efficiency',
         'Modern Python completely eliminated GIL making its analysis irrelevant for all applications',
         'GIL only matters for training without affecting inference performance or optimization'
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation: 'The GIL can limit parallelism in Python applications. Including GIL information in NVTX markers helps identify when the GIL is causing contention or limiting multi-threaded performance in PyTorch-based LLM workflows.'
     },
     {
       id: 'q12',
       question: 'What advantage does visualizing profiling results in timeline format provide for LLM analysis?',
       options: [
-        'Temporal correlation between events helps identify dependencies, bottlenecks, and optimization opportunities',
         'Timeline visualization only provides aesthetic appeal without any practical debugging advantages',
         'Timelines exclusively show errors without revealing any performance patterns or optimization insights',
+        'Temporal correlation between events helps identify dependencies, bottlenecks, and optimization opportunities',
         'Statistical summaries always provide superior insights making timeline visualization unnecessary'
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation: 'Timeline visualization enables seeing when events occur and how they relate temporally. This helps identify dependencies between operations, understand where time is spent, and correlate application-level events with low-level performance metrics for effective optimization.'
     },
     {
       id: 'q13',
       question: 'How does selective metric collection benefit post-profiling analysis workflows?',
       options: [
-        'Focusing on relevant metrics reduces data volume and speeds analysis without sacrificing critical insights',
         'Collecting all possible metrics always produces better results making selective collection counterproductive',
+        'Focusing on relevant metrics reduces data volume and speeds analysis without sacrificing critical insights',
         'Metric selection exclusively affects storage costs without improving analysis speed or effectiveness',
         'Selective collection eliminates all valuable data making comprehensive profiling always superior'
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation: 'Selective profiling and metric collection produces smaller, more focused datasets. This makes post-processing for metric extraction faster and more manageable while still capturing the critical performance information needed for optimization decisions.'
     },
     {
       id: 'q14',
       question: 'What insight does understanding performance breakdown within a model provide to developers?',
       options: [
-        'It reveals which model components consume most time, guiding where optimization efforts should focus',
         'Breakdown analysis only identifies what components exist without revealing any optimization opportunities',
         'Performance breakdown exclusively benefits researchers without providing value to production deployments',
-        'All model components contribute equally to runtime making breakdown analysis unnecessary'
+        'All model components contribute equally to runtime making breakdown analysis unnecessary',
+        'It reveals which model components consume most time, guiding where optimization efforts should focus'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Understanding performance breakdown within the model helps identify which components or operations consume the most time. This guides developers to focus optimization efforts where they\'ll have the greatest impact on overall application performance.'
     },
     {
       id: 'q15',
       question: 'Why is the combination of application-level and kernel-level profiling tools valuable for LLM optimization?',
       options: [
-        'Different profiling levels provide complementary perspectives from high-level patterns to low-level kernel details',
         'Multiple profiling tools only create redundant data without providing complementary insights',
         'Single-level profiling always provides sufficient information making multi-level analysis wasteful',
-        'Tool combination exclusively benefits academic research without practical optimization value'
+        'Tool combination exclusively benefits academic research without practical optimization value',
+        'Different profiling levels provide complementary perspectives from high-level patterns to low-level kernel details'
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'Application-level tools like Nsight Systems show overall patterns and workflows, while kernel-level tools like Nsight Compute provide detailed GPU operation analysis. Together, they offer complementary perspectives enabling both strategic optimization decisions and tactical kernel improvements.'
     }
   ]
