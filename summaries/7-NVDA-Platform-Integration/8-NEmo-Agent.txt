@@ -1,190 +1,85 @@
-NVIDIA NeMo Agent Toolkit
-NVIDIA NeMo™ Agent Toolkit is an open-source AI framework for building, profiling, and optimizing agents and tools from any framework, enabling unified, cross-framework integration across connected AI agent systems. By exposing hidden bottlenecks and costs and optimizing the workflow, it helps enterprises scale agentic systems efficiently while maintaining reliability.
+Overview
 
-NeMo Agent Toolkit is part of the NVIDIA NeMo software suite for managing the AI agent lifecycle, providing telemetry, orchestration, and observability tools that accelerate development, uncover bottlenecks, and streamline performance across multi-agent systems.
+What Is NVIDIA NeMo Agent Toolkit?
 
+NVIDIA NeMo Agent Toolkit represents an open-source framework for building, profiling, and optimizing AI agent systems across diverse agent frameworks, enabling unified cross-framework integration and comprehensive observability for enterprise-scale agentic deployments. The toolkit provides systematic approaches to agent development, performance optimization, and operational monitoring that address critical challenges in scaling agent systems from prototype implementations to production-grade digital workforces processing substantial workloads with reliability and efficiency requirements.
 
-See NeMo Agent Toolkit in Action
-Create Your Own AI Agent
+The framework operates as universal integration layer supporting major agent frameworks including LangChain, CrewAI, and custom implementations through standardized interfaces that enable mixing frameworks within single workflows. Framework-agnostic design allows selection of optimal frameworks for specific tasks while maintaining cohesive system operation, coordinated monitoring, and unified optimization across heterogeneous agent compositions. The abstraction proves particularly valuable for complex multi-agent systems where different agents naturally align with different framework capabilities and design patterns.
 
-18:31
-Benchmarking and Optimizing AI Agents
-11:04
-How To Develop Teams of AI Agents
-23:06
-Optimize Your AI Agent Workflows
-05:29
-How NeMo Agent Toolkit Works
-NVIDIA NeMo Agent Toolkit provides unified monitoring and optimization for AI agent systems, working across LangChain, CrewAI, and custom frameworks. It captures granular metrics on cross-agent coordination, tool usage efficiency, and computational costs, enabling data-driven optimizations through NVIDIA Accelerated Computing. It can be used to parallelize slow workflows, cache expensive operations, and maintain and evaluate system accuracy quickly. Compatible with OpenTelemetry and major agent frameworks, the toolkit reduces cloud spend and enhances performance while providing insights to scale from single agents to enterprise-grade digital workforces.
+NeMo Agent Toolkit functions as component within broader NVIDIA NeMo software suite for AI agent lifecycle management, complementing capabilities for model training, evaluation, deployment, and safety enforcement. The integrated suite approach enables organizations to build, secure, monitor, and optimize agents through unified tooling that maintains consistency across development, testing, and production environments. Lifecycle integration ensures observability and optimization considerations remain central throughout agent development rather than afterthoughts grafted onto completed systems.
 
-NeMo Agent Toolkit supports the Model Context Protocol (MCP), enabling developers to use the toolkit to access tools served by remote MCP servers, or as a server to make their own tools available to others via MCP. This means agents built with the toolkit can easily use any tool registered in an MCP registry.
+Model Context Protocol support enables toolkit integration with MCP-compliant tool ecosystems, allowing agents to access tools served by remote MCP servers and exposing toolkit-native tools to external MCP-compatible agents. The protocol integration facilitates tool reuse across diverse agent implementations, reducing duplication of common functionality and enabling ecosystem-wide tool sharing that accelerates agent development through leveraging community-contributed capabilities.
 
-Simplify Development
-Experiment and prototype new agentic AI applications quickly and easily with the toolkit’s YAML configuration builder. With universal descriptors for agents, tools, and workflows, you can flexibly choose and connect agent frameworks best suited to each task in a workflow. Access a reusable collection of tools, pipelines, and agentic workflows to ease the development of agentic AI systems.
+Benefits
 
-Accelerate Development and Improve Reliability
-Build agentic systems with ease and repeatability. In the tool registry, access the best retrieval-augmented generation (RAG) architectures, workflows, and search tools available across your organization, or leverage the AI-Q NVIDIA Blueprint, built with NVIDIA NIM™ and NeMo. With the AI-Q blueprint, developers have an example to build highly accurate, scalable multimodal ingestion and RAG pipelines that connect AI agents to enterprise data and reasoning for various use cases, including AI agents for research and reporting.
+NeMo Agent Toolkit delivers substantial advantages across development velocity, operational visibility, performance optimization, and cost management dimensions that address critical requirements for production agent deployments. Development simplification emerges from configuration-driven agent composition enabling rapid prototyping without extensive coding, reusable component libraries reducing implementation effort for common patterns, and framework flexibility supporting experimentation with diverse approaches without infrastructure lock-in.
 
-Streamline Agent Optimization
-Use the Agent Hyperparameter Optimizer to automatically select the best hyperparameters, such as the type of large language model (LLM), its temperature, and max_token, by optimizing the agentic workflow on metrics including accuracy, groundedness, latency, token counts, or custom. The toolkit also supports prompt optimization to further refine agent performance. This allows developers to quickly identify optimal settings for agents, tools, and workflows, reducing trial and error while accelerating innovation across projects.
+Operational visibility advantages stem from comprehensive telemetry capturing granular metrics across agent coordination, tool usage patterns, computational resource consumption, and workflow execution characteristics. The observability framework enables data-driven optimization decisions based on actual system behavior rather than assumptions, identification of bottlenecks limiting throughput or increasing costs, and validation of optimization effectiveness through comparative measurement. Integration with OpenTelemetry standards ensures compatibility with existing monitoring infrastructure and tooling ecosystems.
 
-Accelerate Agent Responses
-Use fine-grained telemetry to enhance agentic AI workflows. This profiling data can be used by NVIDIA NIM and NVIDIA Dynamo to optimize the performance of agentic systems. These forecasted metrics—which can include details about an inference call to an LLM for a particular agent, such as what prompt is in memory, where it might reside, and which other agents are likely to call it—can be used to drive a more efficient workflow, enabling better business outcomes without requiring an upgrade to underlying infrastructure.
+Performance optimization capabilities leverage detailed profiling data identifying opportunities for parallelization, caching, and computational efficiency improvements that reduce latency and increase throughput without requiring algorithmic redesign. The toolkit enables systematic optimization through hyperparameter tuning selecting optimal model configurations, prompt refinement improving agent effectiveness, and workflow restructuring exploiting parallelism opportunities. NVIDIA Accelerated Computing integration provides specialized optimizations leveraging GPU acceleration, optimized inference engines, and coordinated scheduling across computational resources.
 
-Increase Accuracy
-Evaluate an agentic system’s accuracy using metrics collected with NeMo Agent Toolkit, and connect them with your preferred observability and orchestration tools. Understand and debug inputs and outputs for each component in an agentic workflow, and identify areas for improvement. Swap out tools or models and use the toolkit’s YAML config to quickly reevaluate the pipeline to understand its impact.
+Cost management benefits derive from resource consumption visibility enabling identification of expensive operations requiring optimization, caching strategies reducing redundant computation, and right-sizing model selection balancing capability requirements against inference costs. Organizations achieve better cost efficiency through informed optimization targeting highest-impact opportunities, strategic caching amortizing expensive operations across multiple invocations, and empirical model selection matching capabilities to requirements without over-provisioning.
 
- A flowchart showing how NeMo Agent Toolkit works
-Introductory Blog
-Learn how to leverage AI code generation with NeMo Agent Toolkit to build a test-driven coding agent.
+Development and Prototyping Capabilities
 
-Read Blog
-Introductory Video
-Watch a video walk-through to see how you can get started with NeMo Agent Toolkit.
+YAML configuration builder enables declarative agent system composition through universal descriptors for agents, tools, and workflows without extensive imperative code. The configuration-driven approach simplifies rapid prototyping by enabling quick experimentation with different configurations, reducing boilerplate code requirements, and maintaining clear separation between system structure and implementation logic. Configuration flexibility supports iterative refinement through simple specification modifications enabling rapid reevaluation of pipeline changes when swapping tools or models to understand impact.
 
-Watch Video
-Tutorial Blog
-Take a technical deep dive to learn how to extend the toolkit by adding integration with an additional agentic framework, such as Agno.
+Tool registry architecture organizes reusable collections of tools, pipelines, and agentic workflows accessible across organizational deployments. The registry provides access to best-available retrieval-augmented generation architectures, search tools, and workflow components that agents leverage without custom development. Registry-based sharing promotes consistency across agent implementations, reduces testing burden through shared well-validated components, and enables organizational knowledge capture in reusable artifacts reducing duplication across projects.
 
-Read Blog
-Notebooks
-Through this series of notebooks, we demonstrate how you can use NeMo Agent Toolkit to build, connect, evaluate, profile, and deploy an agentic system.
+Framework interoperability enables mixing agents from different frameworks within unified workflows, selecting optimal frameworks for specific tasks based on their strengths and design patterns. LangChain agents might handle conversational interactions leveraging strong dialogue management capabilities, while CrewAI agents coordinate multi-agent collaboration exploiting specialized team coordination features, and custom implementations address unique requirements beyond framework capabilities. Universal descriptors enable flexible connection of agent frameworks best suited to each task within workflows, proving valuable for complex systems where no single framework optimally addresses all requirements.
 
-Explore Notebooks
-Get Started With NeMo Agent Toolkit
-Quick Install With Pip (Recommended)
-Bash
-Get StartedGet Started
-CopyCopy
-pip install nvidia-nat
+AI-Q Blueprint integration provides reference implementation demonstrating best practices for building highly accurate scalable multimodal ingestion and RAG pipelines connecting AI agents to enterprise data and reasoning capabilities. The blueprint showcases complete workflows for research and reporting use cases, accelerating development by providing starting points addressing substantial system complexity. Organizations customize blueprints for specific requirements while benefiting from foundational architecture validated for enterprise deployment patterns including accuracy requirements, scalability characteristics, and integration approaches.
 
+Profiling and Observability Architecture
 
-# Verify the library installation:
-nat --help
-nat --version
-Local Installer Instructions (For running examples)
-Bash
-CopyCopy
-# Clone the repo:
+Telemetry collection captures comprehensive execution metrics across agent systems including per-agent resource consumption, tool invocation patterns and costs, inter-agent communication patterns, workflow execution traces, and computational resource utilization. The granular visibility enables detailed understanding of system behavior supporting identification of inefficiencies, validation of performance characteristics, and debugging of complex interaction patterns across multi-agent systems.
 
-git clone -b main git@github.com:NVIDIA/NeMo-Agent-Toolkit.git nemo-agent-toolkit
+Execution tracing maintains detailed records of workflow progression through agent systems, capturing decision points, tool invocations, intermediate results, and timing characteristics. Trace data supports post-hoc analysis of individual executions, comparison across different runs identifying behavioral variations, and debugging of unexpected outcomes through detailed execution reconstruction. The tracing proves particularly valuable for complex multi-agent workflows where understanding emergent behavior requires visibility into detailed interaction sequences.
 
-cd nemo-agent-toolkit
+Performance profiling identifies computational bottlenecks, expensive operations consuming disproportionate resources, and optimization opportunities including parallelization potential and caching candidates. Profile data reveals which components dominate execution time, where computational resources concentrate, and how execution patterns evolve across different workload characteristics. The insights guide optimization priorities toward highest-impact opportunities rather than speculative improvements addressing non-limiting factors.
 
+Resource tracking quantifies computational costs across different system components including inference costs per model invocation, tool execution expenses, and aggregate workflow costs. Cost visibility enables informed optimization decisions trading off accuracy requirements against computational budgets, identification of unexpectedly expensive operations requiring investigation, and capacity planning for scaling projections. The tracking supports cost-conscious development where resource consumption factors into design decisions alongside functional requirements.
 
+OpenTelemetry integration ensures compatibility with existing observability infrastructure through standard telemetry export formats, enabling incorporation into enterprise monitoring systems, correlation with broader system metrics, and leveraging established visualization and alerting tooling. The standards-based approach prevents vendor lock-in while enabling sophisticated monitoring without toolkit-specific infrastructure requirements.
 
-# Initialize the Git repository:
-git submodule update --init --recursive
+Optimization Capabilities
 
-# Download the datasets:
-git lfs install
-git lfs fetch
-git lfs pull
+Agent Hyperparameter Optimizer automates search across configuration spaces identifying optimal settings for model selection including LLM type, temperature parameters, maximum token specifications, and other tunable aspects affecting agent performance. The optimization considers multiple objectives including accuracy, groundedness, latency, token consumption, and custom metrics, supporting multi-objective optimization balancing competing requirements. Automated hyperparameter selection eliminates manual trial-and-error tuning enabling developers to quickly identify optimal settings for agents, tools, and workflows while reducing experimental overhead and accelerating innovation across projects.
 
-# Create a Python environment:
+Prompt optimization refines agent instructions improving effectiveness through systematic prompt engineering guided by performance metrics. The optimization leverages profiling data identifying prompts producing suboptimal outcomes, experiments with variations measuring impact, and converges on formulations achieving desired behavior. Prompt refinement proves particularly valuable for complex agents where subtle instruction variations substantially impact effectiveness and reliability, with toolkit support enabling further performance refinement beyond hyperparameter optimization alone.
 
-uv sync --all-groups --all-extras
+Workflow parallelization identifies independent operations within sequential workflows that can execute concurrently without violating dependencies, restructuring execution to exploit available parallelism. The optimization reduces end-to-end latency by overlapping previously sequential operations, improves resource utilization through concurrent execution, and scales better across multi-core and distributed environments. Automatic parallelization analysis of slow workflows prevents manual workflow restructuring while ensuring correctness through dependency tracking.
 
-uv venv --python 3.12 --seed .venv
-source .venv/bin/activate
-uv sync --all-groups --all-extras
+Caching strategies identify expensive operations producing deterministic results suitable for result reuse, implementing intelligent caching reducing redundant computation and cloud spending. The toolkit analyzes operation costs, result reuse potential, and cache management tradeoffs, implementing caching where beneficial. Caching proves particularly effective for expensive LLM invocations, tool operations accessing external services, and computation-intensive processing steps that frequently recur with identical inputs.
 
-# Verify the library installation:
-nat --help
-nat --version
-Note: For the instructions above, you must have uv already installed. If you do not, to install uv, get started here.
+NVIDIA acceleration integration leverages specialized optimizations including NIM microservices for optimized model serving and Dynamo for workflow coordination optimization. Fine-grained telemetry profiling data enables NIM and Dynamo to optimize agentic system performance through forecasted metrics including details about inference calls to LLMs for particular agents such as what prompt resides in memory, where it might be located, and which other agents are likely to invoke it. These forecasted metrics drive more efficient workflow execution enabling better business outcomes without requiring underlying infrastructure upgrades, achieving enhanced performance through intelligent coordination rather than hardware expansion.
 
-Starter Kits
-Start developing agentic AI applications with NeMo Agent Toolkit with tutorials, best practices, and documentation. The AI-Q NVIDIA Blueprint showcases examples for building agentic workflows that use the toolkit.
+Evaluation and Quality Assurance
 
-Getting Started With NeMo Agent Toolkit
-Access the toolkit documentation, and start building, connecting, and evaluating agentic AI systems.
+Accuracy evaluation leverages collected metrics assessing agent system correctness, groundedness in source materials, and alignment with expected outputs. The evaluation framework supports both automated metrics computed from execution traces and human evaluation workflows incorporating domain expert assessment. Comprehensive evaluation ensures agent systems meet quality requirements before production deployment and maintains quality through ongoing monitoring detecting degradation.
 
-Get Quick-Start Setup Guide
-Read Troubleshooting Guide
-Read Release Notes
-NeMo Agent Toolkit Learning Library
-Tech Blog
-How To Scale Your LangGraph Agents
-NVIDIA NeMo Agent Toolkit
+Component-level debugging provides visibility into inputs and outputs for individual agents, tools, and workflow stages, enabling isolation of issues to specific components rather than treating systems as black boxes. The granular visibility supports rapid issue identification, focused debugging efforts, and validation of fixes through comparative execution. Component isolation proves essential for complex multi-agent systems where system-level symptoms may originate from specific component failures.
 
-This post will cover the tools and techniques from NVIDIA NeMo Agent Toolkit that can be used to deploy and scale an agentic AI application into production.
+Configuration experimentation enables rapid iteration testing alternative implementations, swapping components, and comparing performance across variations. YAML-based configuration supports quick modifications without code changes, while integrated evaluation provides immediate feedback on impact. The experimentation capability accelerates optimization cycles, validates hypotheses about performance improvements, and enables data-driven component selection based on empirical comparison.
 
-Video
-Benchmarking and Optimizing AI Agents
-NVIDIA NeMo Agent Toolkit
+Performance regression detection monitors metrics across system evolution, identifying degradation from changes and enabling rapid remediation. The continuous monitoring ensures performance characteristics remain stable through development, prevents unintended consequences from modifications, and maintains production service level objectives. Regression detection proves particularly valuable for actively developed systems where frequent changes risk introducing performance issues.
 
-In this step-by-step tutorial, we show you how to get started using the NeMo Agent Toolkit test time compute module with searching, editing, scoring, and selection.
+Integration and Deployment
 
-Video
-Connect MCP Tools and NVIDIA NIM for Building Optimized Agentic Systems
-NVIDIA NeMo Agent Toolkit
+Framework integration supports major agent frameworks including LangChain, CrewAI, and custom implementations through standardized adapters, enabling toolkit capabilities regardless of underlying implementation choices. The framework-agnostic design provides unified monitoring and optimization across diverse agent frameworks, working seamlessly with LangChain chain composition patterns and tool abstractions, CrewAI team coordination mechanisms, and proprietary implementations. The broad compatibility prevents framework lock-in while providing consistent observability and optimization capabilities enabling organizations to select optimal frameworks for specific tasks.
 
-Discover how the latest release of NVIDIA NeMo Agent Toolkit streamlines multi-agent interoperability through deep Model Context Protocol (MCP) integration.
+Model Context Protocol integration enables bidirectional tool interoperability where agents built with toolkit can access tools served by remote MCP servers while toolkit-native tools become available to external MCP-compatible agents. The protocol support allows developers to use toolkit to access any tool registered in MCP registries, making tools available to others via MCP server functionality. This bidirectional integration promotes ecosystem development through tool sharing reducing duplication, enabling specialization, and facilitating reuse of capabilities across diverse agent implementations regardless of underlying framework choices.
 
-Video
-How To Build Custom AI Agents
-NVIDIA NeMo Agent Toolkit
+Observability platform integration exports telemetry to major monitoring systems through OpenTelemetry compatibility, enabling incorporation into existing operational infrastructure. Standard protocol support ensures compatibility with diverse platforms while enabling developers to connect metrics with preferred observability and orchestration tools. The integration flexibility supports both greenfield deployments establishing new monitoring infrastructure and brownfield integration with existing systems, preventing vendor lock-in while enabling sophisticated monitoring without toolkit-specific infrastructure requirements.
 
-Learn how to use the toolkit to build custom AI agents and add advanced AI capabilities into your projects.
+Orchestration system integration enables coordination with workflow engines, scheduling systems, and deployment platforms managing agent system lifecycle. The integration supports production deployment patterns including containerized deployment, serverless execution, and managed service hosting. Toolkit compatibility with standard deployment approaches prevents specialized infrastructure requirements limiting deployment flexibility while enabling sophisticated coordination across distributed agent systems.
 
-Tech Blog
-Extending NeMo Agent Toolkit To Support New Agentic Frameworks
-NVIDIA NeMo Agent  Toolkit
+Scaling and Production Operation
 
-Take a technical deep dive to learn how to extend the toolkit by adding integration with an additional agentic framework, such as Agno.
+Production scalability addresses requirements for agent systems processing substantial workload volumes reliably with consistent performance characteristics. The toolkit supports scaling patterns including horizontal scaling through agent replication, vertical scaling through resource allocation optimization, and distributed execution across multiple nodes. Scaling strategies balance latency requirements, throughput objectives, and resource constraints appropriate to deployment scenarios.
 
-Video
-How To Develop Teams of AI Agents
-NVIDIA NeMo Agent Toolkit
+Reliability features ensure agent systems maintain availability and correctness under production conditions including error handling, retry logic, circuit breaking, and graceful degradation. The features prevent cascade failures from component issues, maintain partial functionality when complete operation proves impossible, and support recovery from transient failures. Production-grade reliability proves essential for business-critical applications where downtime or incorrect operation imposes substantial costs.
 
-Learn how to use NeMo Agent Toolkit Python library to build agentic AI applications in this step-by-step tutorial video.
+Resource management optimizes computational resource allocation across agents, balancing workload distribution, managing queue depths, and preventing resource exhaustion. The management considers agent-specific resource requirements, workload characteristics, and infrastructure constraints to achieve efficient utilization. Effective resource management maximizes throughput within fixed capacity, maintains acceptable latencies under varying load, and prevents resource contention degrading performance.
 
-Video
-Optimize Your AI Agent Workflows
-NVIDIA NeMo Agent Toolkit
-
-Learn how to use the toolkit profiler to get deeper insights into the performance and behavioral characteristics of your AI agent workflows.
-
-Tech Blog
-Improving AI Code Generation
-NVIDIA NeMo Agent Toolkit, USD, Cosmos
-
-Learn how to leverage AI code generation with the toolkit to build a test-driven coding agent.
-
-Documentation
-NeMo Agent Toolkit Documentation
-NVIDIA NeMo Agent Toolkit
-
-Read a troubleshooting guide, release notes, quick-start guide, and more to get started.
-
-Guide
-Building Multi-Agent Systems the Easy Way
-NVIDIA NeMo Agent Toolkit
-
-Read a hands-on guide to using the toolkit, including what you can build, what’s under the hood, and more, published by The BIG DATA guy.
-
-Tech Blog
-Scaling Synthetic Data Generation With Multi-Agent AI
-NVIDIA NeMo Agent Toolkit, USD, NVIDIA Cosmos™
-
-Learn about a multi-agent approach utilizing generative AI for the systematic, automated creation of top-tier synthetic datasets to advance physical AI development and deployment.
-
-Tech Blog
-Chat With Your Enterprise Data Through Open-Source AI-Q NVIDIA Blueprint
-NVIDIA NeMo Agent Toolkit
-
-Read how you can get started with AI-Q, a free reference implementation for building advanced AI agents.
-
-More Resources
-Decorative image representing forums
-Explore the Community
-
-Get Training and Certification
-
-Read the FAQ
-Ethical AI
-NVIDIA believes trustworthy AI is a shared responsibility, and we have established policies and practices to enable development for a wide array of AI applications. When downloaded or used in accordance with our terms of service, developers should work with their supporting model team to ensure their model meets the requirements for the relevant industry and use case and addresses unforeseen product misuse.
-
-For more detailed information on ethical considerations for this model, please see the Model Card++ Explainability, Bias, Safety and Security, and Privacy Subcards. Please report security vulnerabilities or NVIDIA AI Concerns here.
-
+Operational monitoring provides production visibility supporting incident response, performance troubleshooting, and capacity planning. Real-time dashboards display current system health, alert mechanisms notify operators of anomalies or threshold violations, and historical analysis supports trend identification and capacity forecasting. Operational tooling enables proactive management preventing issues before impacting users and supporting rapid resolution when problems occur.

@@ -1,181 +1,91 @@
-NVIDIA NeMo Speech Collection
-Latest News
-NVIDIA-Nemotron-3-Nano-30B-A3B is out with full reproducible script and recipes! Checkout NeMo Megatron-Bridge, NeMo AutoModel, NeMo-RL and NGC container to try them!(2025-12-15)
-Pivot notice: This repo will pivot to focus on speech models collections only. Please refer to NeMo Framework Github Org for the complete list of repos under NeMo Framework
-NeMo 2.0, with its support for LLMs and VLMs will be deprecated by 25.11, and replaced by NeMo Megatron-Bridge and NeMo Automodel. More details can be find in the NeMo Framework github org readme. (2025-10-10)
-Pretrain and finetune 🤗Hugging Face models via AutoModel
-Training on Blackwell using Nemo
-Training Performance on GPU Tuning Guide
-New Models Support
-NeMo Framework 2.0
-New Cosmos World Foundation Models Support
-Large Language Models and Multimodal Models
-Speech Recognition
-Introduction
-NVIDIA NeMo Framework is a scalable and cloud-native generative AI framework built for researchers and PyTorch developers working on Large Language Models (LLMs), Multimodal Models (MMs), Automatic Speech Recognition (ASR), Text to Speech (TTS), and Computer Vision (CV) domains. It is designed to help you efficiently create, customize, and deploy new generative AI models by leveraging existing code and pre-trained model checkpoints.
+Overview
 
-For technical documentation, please see the NeMo Framework User Guide.
+What Is NVIDIA NeMo Framework?
 
-What's New in NeMo 2.0
-NVIDIA NeMo 2.0 introduces several significant improvements over its predecessor, NeMo 1.0, enhancing flexibility, performance, and scalability.
+NVIDIA NeMo Framework represents scalable cloud-native generative AI development platform built for researchers and practitioners working across large language models, multimodal models, automatic speech recognition, text-to-speech synthesis, and computer vision domains. The framework enables efficient creation, customization, and deployment of generative AI models through leveraging existing code repositories and pre-trained model checkpoints, eliminating need for complete reimplementation while supporting extensive architectural modifications and domain adaptations.
 
-Python-Based Configuration - NeMo 2.0 transitions from YAML files to a Python-based configuration, providing more flexibility and control. This shift makes it easier to extend and customize configurations programmatically.
+The unified framework addresses multiple AI modalities through integrated tooling supporting language understanding and generation, visual-linguistic reasoning, speech processing including recognition and synthesis, and computer vision applications. Cross-domain integration enables multimodal model development combining capabilities from different domains, sharing infrastructure and optimization techniques across model types, and maintaining consistent development patterns despite domain diversity. The comprehensive approach proves particularly valuable for organizations deploying models across multiple AI domains.
 
-Modular Abstractions - By adopting PyTorch Lightning’s modular abstractions, NeMo 2.0 simplifies adaptation and experimentation. This modular approach allows developers to more easily modify and experiment with different components of their models.
+Platform architecture provides complete model lifecycle support encompassing training including pretraining and fine-tuning, alignment through preference optimization and reinforcement learning, optimization for inference deployment, and production serving through integrated microservices. Lifecycle integration ensures consistency from initial development through production deployment, reduces friction in model transitions between development stages, and enables iterative improvement cycles refining models based on deployment experience.
 
-Scalability - NeMo 2.0 seamlessly scaling large-scale experiments across thousands of GPUs using NeMo-Run, a powerful tool designed to streamline the configuration, execution, and management of machine learning experiments across computing environments.
+Cloud-native design supports distributed training across thousands of GPUs, containerized deployment enabling consistent environments across infrastructure types, and scalable serving handling production workload volumes. The scalability proves essential for modern generative AI where model sizes and training data volumes exceed single-device capacity while production deployments require handling substantial request rates with acceptable latency characteristics.
 
-Overall, these enhancements make NeMo 2.0 a powerful, scalable, and user-friendly framework for AI model development.
+Benefits
 
-Important
+NeMo Framework delivers substantial advantages across development efficiency, training performance, deployment flexibility, and operational maintainability dimensions addressing critical requirements for production generative AI systems. Development efficiency improvements emerge from pre-trained model availability eliminating training from scratch, example implementations demonstrating best practices and proven patterns, and modular architecture enabling focused modifications rather than complete reimplementation.
 
-NeMo 2.0 is currently supported by the LLM (large language model) and VLM (vision language model) collections.
+Training performance optimization leverages cutting-edge distributed training techniques including tensor parallelism distributing layers across devices, pipeline parallelism partitioning models into sequential stages, fully sharded data parallelism eliminating parameter replication, and mixture-of-experts architectures enabling conditional computation. The parallelism strategies enable training models exceeding single-device memory capacity while achieving near-linear scaling efficiency across hundreds or thousands of GPUs.
 
-Get Started with NeMo 2.0
-Refer to the Quickstart for examples of using NeMo-Run to launch NeMo 2.0 experiments locally and on a slurm cluster.
-For more information about NeMo 2.0, see the NeMo Framework User Guide.
-NeMo 2.0 Recipes contains additional examples of launching large-scale runs using NeMo 2.0 and NeMo-Run.
-For an in-depth exploration of the main features of NeMo 2.0, see the Feature Guide.
-To transition from NeMo 1.0 to 2.0, see the Migration Guide for step-by-step instructions.
-Get Started with Cosmos
-NeMo Curator and NeMo Framework support video curation and post-training of the Cosmos World Foundation Models, which are open and available on NGC and Hugging Face. For more information on video datasets, refer to NeMo Curator. To post-train World Foundation Models using the NeMo Framework for your custom physical AI tasks, see the Cosmos Diffusion models and the Cosmos Autoregressive models.
+Precision optimization through mixed-precision training using BFloat16 and FP8 arithmetic reduces memory consumption and accelerates computation through specialized hardware acceleration. FP8 training on Hopper GPUs through Transformer Engine integration achieves substantial speedups compared to higher-precision alternatives while maintaining convergence quality through careful scaling and numerical stability techniques. The precision reduction proves particularly valuable for large models where memory constraints fundamentally limit achievable batch sizes and model scales.
 
-LLMs and MMs Training, Alignment, and Customization
-All NeMo models are trained with Lightning. Training is automatically scalable to 1000s of GPUs. You can check the performance benchmarks using the latest NeMo Framework container here.
+Deployment flexibility supports diverse serving requirements from real-time interactive applications through batch processing scenarios, edge deployment on resource-constrained devices through data center serving on high-performance infrastructure, and cloud deployment across major providers through on-premises installations. The deployment diversity proves essential given varying application requirements, infrastructure constraints, and operational preferences across organizations.
 
-When applicable, NeMo models leverage cutting-edge distributed training techniques, incorporating parallelism strategies to enable efficient training of very large models. These techniques include Tensor Parallelism (TP), Pipeline Parallelism (PP), Fully Sharded Data Parallelism (FSDP), Mixture-of-Experts (MoE), and Mixed Precision Training with BFloat16 and FP8, as well as others.
+Operational maintainability benefits from unified framework reducing tool fragmentation, consistent patterns across domains simplifying knowledge transfer, comprehensive documentation accelerating onboarding and troubleshooting, and active development ensuring framework evolution tracks ecosystem advances. The operational advantages compound over time as organizations accumulate expertise in single framework rather than fragmenting knowledge across multiple domain-specific tools.
 
-NeMo Transformer-based LLMs and MMs utilize NVIDIA Transformer Engine for FP8 training on NVIDIA Hopper GPUs, while leveraging NVIDIA Megatron Core for scaling Transformer model training.
+Architecture Evolution
 
-NeMo LLMs can be aligned with state-of-the-art methods such as SteerLM, Direct Preference Optimization (DPO), and Reinforcement Learning from Human Feedback (RLHF). See NVIDIA NeMo Aligner for more information.
+Framework architecture transitions from YAML-based configuration in version 1.0 to Python-based configuration in version 2.0, providing enhanced flexibility and programmatic control over experimental setups. Python configuration enables dynamic parameter generation, conditional configuration based on runtime information, programmatic validation preventing configuration errors, and integration with external systems determining configuration from operational context. The transition proves particularly valuable for complex experiments requiring sophisticated configuration logic beyond static specification capabilities.
 
-In addition to supervised fine-tuning (SFT), NeMo also supports the latest parameter efficient fine-tuning (PEFT) techniques such as LoRA, P-Tuning, Adapters, and IA3. Refer to the NeMo Framework User Guide for the full list of supported models and techniques.
+Modular abstraction adoption through PyTorch Lightning integration simplifies model component customization and experimental iteration. Lightning abstractions separate training logic from model implementation, provide standard interfaces for common training patterns, and enable mixing framework-provided components with custom implementations. The modularity reduces boilerplate code implementing standard training patterns while maintaining flexibility for specialized requirements.
 
-LLMs and MMs Deployment and Optimization
-NeMo LLMs and MMs can be deployed and optimized with NVIDIA NeMo Microservices.
+Scalability infrastructure through NeMo-Run orchestration tool streamlines experiment configuration, execution coordination, and result management across diverse computing environments. Run capabilities include experiment definition through declarative specifications, automatic resource provisioning matching experiment requirements, distributed execution coordination across cluster resources, and result tracking maintaining experiment provenance. The orchestration proves essential for large-scale experiments requiring coordination across many nodes and managing complex parameter sweeps.
 
-Speech AI
-NeMo ASR and TTS models can be optimized for inference and deployed for production use cases with NVIDIA Riva.
+Migration pathways from version 1.0 to 2.0 provide systematic transition guidance enabling organizations to adopt new capabilities while maintaining existing workflows. Migration strategies include gradual adoption where compatible components transition incrementally, coexistence support enabling mixed version deployments during transition, and compatibility layers minimizing disruption for stable workflows. The migration support reduces adoption barriers enabling organizations to leverage version 2.0 advantages without forcing disruptive all-at-once transitions.
 
-NeMo Framework Launcher
-Important
+Domain-specific evolution proceeds independently across language models, multimodal models, speech processing, and computer vision with version 2.0 initially supporting language and vision-language domains while speech capabilities continue evolving separately. The independent evolution enables rapid advancement in active domains without blocking progress on architectural improvements benefiting all modalities, with speech domains eventually transitioning to version 2.0 architecture when appropriate.
 
-NeMo Framework Launcher is compatible with NeMo version 1.0 only. NeMo-Run is recommended for launching experiments using NeMo 2.0.
+Large Language Model Capabilities
 
-NeMo Framework Launcher is a cloud-native tool that streamlines the NeMo Framework experience. It is used for launching end-to-end NeMo Framework training jobs on CSPs and Slurm clusters.
+Training infrastructure supports models from few billion parameters through hundreds of billions using automatic scaling across GPU clusters. Scaling automation handles parallelism strategy selection, gradient accumulation configuration, and communication optimization based on model architecture and available infrastructure. The automation eliminates manual tuning enabling researchers to focus on model development rather than distributed training mechanics.
 
-The NeMo Framework Launcher includes extensive recipes, scripts, utilities, and documentation for training NeMo LLMs. It also includes the NeMo Framework Autoconfigurator, which is designed to find the optimal model parallel configuration for training on a specific cluster.
+Distributed training techniques enable efficient large-model training through sophisticated parallelism strategies. Tensor parallelism distributes individual layers across devices enabling models exceeding single-device memory, pipeline parallelism partitions models into sequential stages processed concurrently on different inputs, and data parallelism replicates models processing different data batches simultaneously. Combined strategies support arbitrary model scales through appropriate parallelism configuration.
 
-To get started quickly with the NeMo Framework Launcher, please see the NeMo Framework Playbooks. The NeMo Framework Launcher does not currently support ASR and TTS training, but it will soon.
+Alignment capabilities including SteerLM for attribute-based control, Direct Preference Optimization for preference learning without reinforcement learning complexity, and Reinforcement Learning from Human Feedback for learning from preference comparisons. The alignment techniques enable adapting pre-trained models to specific behavioral requirements, user preferences, and safety constraints beyond capabilities from supervised fine-tuning alone.
 
-Get Started with NeMo Framework
-Getting started with NeMo Framework is easy. State-of-the-art pretrained NeMo models are freely available on Hugging Face Hub and NVIDIA NGC. These models can be used to generate text or images, transcribe audio, and synthesize speech in just a few lines of code.
+Parameter-efficient fine-tuning through Low-Rank Adaptation, prompt tuning, adapters, and incremental adaptation reduces adaptation costs by updating small parameter subsets rather than entire models. Efficient adaptation proves particularly valuable for organizations adapting large models to specialized domains or tasks where full fine-tuning proves computationally prohibitive or unnecessary given limited adaptation data.
 
-We have extensive tutorials that can be run on Google Colab or with our NGC NeMo Framework Container. We also have playbooks for users who want to train NeMo models with the NeMo Framework Launcher.
+Multimodal Model Support
 
-For advanced users who want to train NeMo models from scratch or fine-tune existing NeMo models, we have a full suite of example scripts that support multi-GPU/multi-node training.
+Vision-language integration enables models reasoning across visual and textual modalities supporting applications including image captioning, visual question answering, and multimodal dialogue. Multimodal architecture combines vision encoders extracting visual features with language models processing textual information, enabling joint reasoning across modalities through attention mechanisms and cross-modal fusion techniques.
 
-Key Features
-Large Language Models
-Multimodal
-Automatic Speech Recognition
-Text to Speech
-Computer Vision
-Requirements
-Python 3.10 or above
-Pytorch 2.5 or above
-NVIDIA GPU (if you intend to do model training)
-Developer Documentation
-Version	Status	Description
-Latest	Documentation Status	Documentation of the latest (i.e. main) branch.
-Stable	Documentation Status	Documentation of the stable (i.e. most recent release)
-Install NeMo Framework
-The NeMo Framework can be installed in a variety of ways, depending on your needs. Depending on the domain, you may find one of the following installation methods more suitable.
+Training support for multimodal models leverages language model infrastructure extending to handle additional modality encoders, cross-modal attention, and multimodal alignment objectives. The infrastructure reuse accelerates multimodal development by building on proven language model training rather than requiring completely separate training pipelines.
 
-Conda / Pip: Install NeMo-Framework with native Pip into a virtual environment.
-Used to explore NeMo on any supported platform.
-This is the recommended method for ASR and TTS domains.
-Limited feature-completeness for other domains.
-NGC PyTorch container: Install NeMo-Framework from source with feature-completeness into a highly optimized container.
-For users that want to install from source in a highly optimized container.
-NGC NeMo container: Ready-to-go solution of NeMo-Framework
-For users that seek highest performance.
-Contains all dependencies installed and tested for performance and convergence.
-Support matrix
-NeMo-Framework provides tiers of support based on OS / Platform and mode of installation. Please refer the following overview of support levels:
+Cosmos World Foundation Models support for physical AI applications enables video understanding and generation supporting robotics, autonomous systems, and simulation. Foundation model integration provides starting points for physical AI development leveraging extensive pretraining on visual and physical interaction data, with customization support enabling adaptation to specific robotic platforms, simulation environments, or physical tasks.
 
-Fully supported: Max performance and feature-completeness.
-Limited supported: Used to explore NeMo.
-No support yet: In development.
-Deprecated: Support has reached end of life.
-Please refer to the following table for current support levels:
+Speech Processing Capabilities
 
-OS / Platform	Install from PyPi	Source into NGC container
-linux - amd64/x84_64	Limited support	Full support
-linux - arm64	Limited support	Limited support
-darwin - amd64/x64_64	Deprecated	Deprecated
-darwin - arm64	Limited support	Limited support
-windows - amd64/x64_64	No support yet	No support yet
-windows - arm64	No support yet	No support yet
-Conda / Pip
-Install NeMo in a fresh Conda environment:
+Automatic speech recognition models convert audio into text through acoustic modeling, language modeling, and decoding integrating both components. ASR capabilities support diverse languages, accents, and acoustic conditions through extensive pretraining on varied speech data and adaptation techniques specializing models for specific domains or acoustic environments.
 
-conda create --name nemo python==3.10.12
-conda activate nemo
-Pick the right version
-NeMo-Framework publishes pre-built wheels with each release. To install nemo_toolkit from such a wheel, use the following installation method:
+Text-to-speech synthesis generates natural-sounding speech from text through acoustic modeling predicting speech features and vocoding converting features to audio waveforms. TTS capabilities include multi-speaker synthesis, prosody control for expressive speech, and adaptation to new voices from limited data. The synthesis quality proves suitable for production applications including virtual assistants, accessibility tools, and content generation.
 
-pip install "nemo_toolkit[all]"
-If a more specific version is desired, we recommend a Pip-VCS install. From NVIDIA/NeMo, fetch the commit, branch, or tag that you would like to install.
-To install nemo_toolkit from this Git reference $REF, use the following installation method:
+Deployment optimization through NVIDIA Riva enables production speech processing with optimized inference, streaming support for real-time applications, and comprehensive APIs supporting diverse integration patterns. Riva integration provides path from NeMo development through production deployment maintaining model compatibility while achieving production-grade performance and reliability.
 
-git clone https://github.com/NVIDIA/NeMo
-cd NeMo
-git checkout @${REF:-'main'}
-pip install '.[all]'
-Install a specific Domain
-To install a specific domain of NeMo, you must first install the nemo_toolkit using the instructions listed above. Then, you run the following domain-specific commands:
+Deployment and Serving
 
-pip install nemo_toolkit['all'] # or pip install "nemo_toolkit['all']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
-pip install nemo_toolkit['asr'] # or pip install "nemo_toolkit['asr']@git+https://github.com/NVIDIA/NeMo@$REF:-'main'}"
-pip install nemo_toolkit['nlp'] # or pip install "nemo_toolkit['nlp']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
-pip install nemo_toolkit['tts'] # or pip install "nemo_toolkit['tts']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
-pip install nemo_toolkit['vision'] # or pip install "nemo_toolkit['vision']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
-pip install nemo_toolkit['multimodal'] # or pip install "nemo_toolkit['multimodal']@git+https://github.com/NVIDIA/NeMo@${REF:-'main'}"
-NGC PyTorch container
-NOTE: The following steps are supported beginning with 24.04 (NeMo-Toolkit 2.3.0)
+NIM microservices enable optimized model deployment through containerized inference engines, standardized APIs supporting diverse client integrations, and performance optimization achieving production throughput and latency requirements. Microservice architecture provides consistent deployment patterns across model types, simplifies scaling through horizontal replication, and enables independent model versioning and updates.
 
-We recommended that you start with a base NVIDIA PyTorch container: nvcr.io/nvidia/pytorch:25.01-py3.
+Inference optimization techniques including quantization reducing precision for faster execution, kernel fusion combining operations eliminating memory traffic, and batching aggregating requests for better hardware utilization. The optimizations substantially improve serving efficiency enabling higher throughput and lower latency compared to naive deployment approaches.
 
-If starting with a base NVIDIA PyTorch container, you must first launch the container:
+Container-based deployment ensures consistent environments across development and production, simplifies dependency management through bundled dependencies, and enables portable deployments across infrastructure types. Containerization proves essential for production reliability by eliminating environment-related failures and enabling reproducible deployments.
 
-docker run \
-  --gpus all \
-  -it \
-  --rm \
-  --shm-size=16g \
-  --ulimit memlock=-1 \
-  --ulimit stack=67108864 \
-  nvcr.io/nvidia/pytorch:${NV_PYTORCH_TAG:-'nvcr.io/nvidia/pytorch:25.01-py3'}
-From NVIDIA/NeMo, fetch the commit/branch/tag that you want to install.
-To install nemo_toolkit including all of its dependencies from this Git reference $REF, use the following installation method:
+Multi-GPU serving distributes model parameters across devices enabling serving models exceeding single-device memory while potentially improving throughput through parallel execution. Distributed serving proves necessary for largest models while providing optimization opportunities for smaller models through resource utilization improvement.
 
-cd /opt
-git clone https://github.com/NVIDIA/NeMo
-cd NeMo
-git checkout ${REF:-'main'}
-bash docker/common/install_dep.sh --library all
-pip install ".[all]"
-NGC NeMo container
-NeMo containers are launched concurrently with NeMo version updates. NeMo Framework now supports LLMs, MMs, ASR, and TTS in a single consolidated Docker container. You can find additional information about released containers on the NeMo releases page.
+Training Infrastructure
 
-To use a pre-built container, run the following code:
+Lightning integration provides standardized training abstractions including trainer coordinating training loops, callbacks implementing training customizations, and logging integrating with monitoring systems. Lightning standardization reduces boilerplate training code while maintaining flexibility for specialized training requirements through callback mechanisms and trainer customization.
 
-docker run \
-  --gpus all \
-  -it \
-  --rm \
-  --shm-size=16g \
-  --ulimit memlock=-1 \
-  --ulimit stack=67108864 \
-  nvcr.io/nvidia/pytorch:${NV_PYTORCH_TAG:-'nvcr.io/nvidia/nemo:25.02'}
+Megatron Core integration enables efficient transformer training through optimized implementations, sophisticated parallelism support, and specialized techniques for large-scale training. Core integration proves essential for achieving competitive training performance on largest models where implementation details significantly impact efficiency.
+
+Transformer Engine acceleration leverages FP8 capabilities on Hopper GPUs achieving substantial speedups through reduced precision arithmetic. Engine integration handles FP8 scaling, maintains numerical stability, and provides smooth degradation to higher precision when needed. The acceleration proves particularly impactful for transformer models where matrix multiplications dominate computation.
+
+Checkpoint management handles model state persistence, format conversions between training and deployment, and distributed checkpoint coordination across multi-device training. Robust checkpoint handling proves essential for long-running training enabling recovery from failures, experimentation with different configurations from common starting points, and model distribution for deployment or further training.
+
+Performance Optimization
+
+Automatic configuration tools determine optimal parallelism strategies, batch sizes, and other training parameters based on model architecture and available infrastructure. Configuration automation eliminates trial-and-error parameter tuning accelerating experimentation and ensuring efficient resource utilization. The automation proves particularly valuable for users without deep expertise in distributed training optimization.
+
+Performance benchmarking quantifies training throughput, memory utilization, and scaling efficiency across configurations guiding optimization efforts and validating performance expectations. Benchmark data supports infrastructure planning, configuration selection, and performance regression detection ensuring sustained efficiency.
+
+Memory optimization techniques including gradient checkpointing trading computation for memory, activation recomputation avoiding storing intermediate values, and efficient optimizer state management reducing memory overhead. Memory optimization proves essential for training largest models where memory constraints fundamentally limit achievable scales.
+
+Communication optimization through overlapping computation with data movement, using efficient collective implementations, and minimizing communication volume. Communication efficiency proves critical at scale where network bandwidth often limits scaling efficiency despite adequate computational capacity.

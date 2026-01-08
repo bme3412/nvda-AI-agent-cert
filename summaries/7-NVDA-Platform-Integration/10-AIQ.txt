@@ -1,109 +1,97 @@
-NVIDIA NeMo Agent Toolkit
-License: Apache 2.0 GitHub Release PyPI version GitHub issues GitHub pull requests GitHub Repo stars GitHub forks Open in Colab
+Overview
 
-NVIDIA NeMo Agent Toolkit is a flexible, lightweight, and unifying library that allows you to easily connect existing enterprise agents to data sources and tools across any framework.
+What Is NVIDIA NeMo Agent Toolkit?
 
-Note
+NVIDIA NeMo Agent Toolkit represents a flexible lightweight framework for connecting enterprise agents to data sources and tools across heterogeneous agent framework ecosystems. The toolkit provides unified integration layer enabling agents built with diverse frameworks to access common capabilities, share tools and workflows, and operate cohesively within complex multi-agent systems. Framework-agnostic design preserves existing technology stack investments while enabling enhanced capabilities through standardized interfaces abstracting framework-specific implementation details.
 
-NeMo Agent Toolkit was previously known as the Agent Intelligence (AIQ) toolkit, and AgentIQ. The library was renamed to better reflect the purpose of the toolkit and to align with the NVIDIA NeMo family of products. The core technologies, performance, and roadmap remain unchanged and the API is fully compatible with previous releases. Please refer to the Migration Guide for more information.
+The integration architecture operates alongside and around existing agentic frameworks including LangChain, LlamaIndex, CrewAI, Microsoft Semantic Kernel, Google Agent Development Kit, custom enterprise implementations, and simple Python-based agents without requiring framework replacement or extensive refactoring. The non-invasive integration approach allows organizations to enhance current agent deployments with toolkit capabilities while maintaining compatibility with established frameworks, development patterns, and operational practices. Framework independence ensures toolkit adoption doesn't create lock-in to particular agent development approaches, LLM provider selections, or data source technologies.
 
-🔥 New Features
-Automatic Hyperparameter Tuning: Automatically tune the parameters and prompts of your agents, tools, and workflows to maximize performance, minimize cost, and increase accuracy.
+Composability principles organize agents, tools, and workflows as reusable function calls that combine into complex software applications through standardized interfaces. The functional composition model enables building sophisticated capabilities from well-tested components, reducing implementation effort through reuse, and maintaining consistency across deployments sharing common building blocks. Components developed for specific scenarios extend naturally to different contexts through composition flexibility supporting diverse use case requirements without requiring component reimplementation.
 
-Google ADK Support: Users of Google's Agent Development Kit (ADK) framework are now supported in NeMo Agent Toolkit.
+Model Context Protocol support enables bidirectional tool interoperability where toolkit functions as MCP client accessing tools served by remote MCP servers and as MCP server publishing toolkit-native capabilities to external MCP-compatible agents. Authorization mechanisms support secure MCP interactions when using streamable HTTP protocol, enabling enterprise deployments with appropriate access controls. The protocol integration facilitates ecosystem-wide tool sharing, reduces implementation duplication across agent systems, and enables specialization where different implementations provide particular capabilities accessed through standard MCP interfaces.
 
-MCP Authorization: NeMo Agent Toolkit now supports MCP authorization. This allows you to use NeMo Agent Toolkit with MCP authorization when using the streamable HTTP protocol.
+Benefits
 
-Function Groups: NeMo Agent Toolkit now supports Function Groups, allowing you to package multiple related functions together to share configuration, context, and resources.
+NeMo Agent Toolkit delivers substantial advantages across development velocity, operational maintainability, integration flexibility, and observability dimensions addressing critical requirements for enterprise agent deployments. Framework compatibility preserves existing investments in agent development infrastructure, training, and operational knowledge while enabling enhancement through toolkit capabilities. Organizations avoid costly replatforming initiatives while gaining sophisticated functionality through lightweight integration additions that work with current technology stacks.
 
-Amazon Bedrock AgentCore and Strands Agents Support: NeMo Agent Toolkit now supports building agents using Strands Agents framework and deploying them securely on Amazon Bedrock AgentCore runtime.
+Reusability advantages emerge from component libraries providing pre-built agents, tools, and workflows that accelerate development by eliminating redundant implementation effort. The functional composition model enables building once and deploying across multiple scenarios, reducing testing burden through shared well-validated components, and maintaining consistency across implementations leveraging common building blocks. Organizational knowledge accumulates in reusable artifacts that new projects leverage rather than repeatedly implementing similar capabilities across different initiatives.
 
-✨ Key Features
-🧩 Framework Agnostic: NeMo Agent Toolkit works side-by-side and around existing agentic frameworks, such as LangChain, LlamaIndex, CrewAI, Microsoft Semantic Kernel, and Google ADK, as well as custom enterprise agentic frameworks and simple Python agents. This allows you to use your current technology stack without replatforming. NeMo Agent Toolkit complements any existing agentic framework or memory tool you're using and isn't tied to any specific agentic framework, LLM provider, or data source.
+Rapid development acceleration results from starting with pre-built implementations customized to specific requirements rather than building from scratch. Development teams move quickly by adapting existing components, focusing effort on unique requirements rather than foundational capabilities, and leveraging proven patterns reducing risk from untested approaches. The acceleration proves particularly valuable for organizations already developing with agents where toolkit integration enhances existing capabilities without requiring fundamental architectural changes or workflow disruptions.
 
-🔁 Reusability: Every agent, tool, and agentic workflow in this library exists as a function call that works together in complex software applications. The composability between these agents, tools, and workflows allows you to build once and reuse in different scenarios.
+Experimentation flexibility enables freely exploring different approaches, architectures, and optimizations without extensive implementation overhead or framework constraints. The toolkit supports starting small with limited integration and expanding to areas providing most value, enabling incremental adoption matching organizational readiness and resource availability. Gradual integration reduces adoption risk by allowing validation of benefits before comprehensive deployment commitments.
 
-⚡ Rapid Development: Start with a pre-built agent, tool, or workflow, and customize it to your needs. This allows you and your development teams to move quickly if you're already developing with agents.
+Reliability assurance across agent-driven projects emerges from consistent observability, evaluation, and optimization capabilities applicable regardless of underlying framework diversity. Organizations establish reliability standards and verification procedures applicable across entire agent portfolios rather than maintaining framework-specific quality assurance approaches. The consistency simplifies governance, reduces training requirements, and enables cross-project knowledge transfer.
 
-📈 Profiling: Use the profiler to profile entire workflows down to the tool and agent level, track input/output tokens and timings, and identify bottlenecks. While we encourage you to wrap (decorate) every tool and agent to get the most out of the profiler, you have the freedom to integrate your tools, agents, and workflows to whatever level you want. You start small and go to where you believe you'll see the most value and expand from there.
+Profiling and Performance Analysis
 
-🔎 Observability: Monitor and debug your workflows with dedicated integrations for popular observability platforms such as Phoenix, Weave, and Langfuse, plus compatibility with OpenTelemetry-based observability platforms. Track performance, trace execution flows, and gain insights into your agent behaviors.
+Comprehensive profiling capabilities track execution characteristics across complete workflows down through individual tools and agents, providing granular visibility into system behavior. Token tracking quantifies input and output token consumption for every component, enabling precise cost attribution, identification of expensive operations, and optimization targeting highest-impact opportunities. Timing measurements capture execution durations at multiple granularities revealing bottlenecks limiting throughput, components contributing excessive latency, and opportunities for parallelization or caching.
 
-🧪 Evaluation System: Validate and maintain accuracy of agentic workflows with built-in evaluation tools.
+Integration flexibility enables selective instrumentation where components wrap to desired granularity levels based on monitoring requirements and analysis objectives. Organizations instrument critical paths requiring detailed visibility while treating less important components as opaque units, balancing observability value against instrumentation overhead. The incremental approach enables starting with high-level workflow monitoring and progressively adding detail where investigation reveals needs, preventing premature comprehensive instrumentation requiring excessive effort.
 
-💬 User Interface: Use the NeMo Agent Toolkit UI chat interface to interact with your agents, visualize output, and debug workflows.
+Bottleneck identification leverages profiling data revealing where execution time concentrates, which operations consume disproportionate resources, and how execution patterns vary across different workload characteristics. The identification guides optimization priorities toward components actually limiting performance rather than speculative improvements addressing non-critical factors. Evidence-based optimization focusing on measured bottlenecks achieves better return on optimization effort compared to unfocused improvements lacking empirical foundation.
 
-🔗 Full MCP Support: Compatible with Model Context Protocol (MCP). You can use NeMo Agent Toolkit as an MCP client to connect to and use tools served by remote MCP servers. You can also use NeMo Agent Toolkit as an MCP server to publish tools via MCP.
+Performance validation through profiling enables quantitative assessment of optimization effectiveness by comparing metrics before and after changes. The validation confirms optimizations achieve intended improvements, reveals unintended consequences degrading other performance dimensions, and establishes whether optimizations justify implementation costs. Empirical validation prevents wasted effort on ineffective optimizations while building confidence in beneficial changes through measured evidence.
 
-With NeMo Agent Toolkit, you can move quickly, experiment freely, and ensure reliability across all your agent-driven projects.
+Observability and Monitoring
 
-🚀 Installation
-Before you begin using NeMo Agent Toolkit, ensure that you have Python 3.11, 3.12, or 3.13 installed on your system.
+Observability platform integration supports dedicated connections to major platforms including Phoenix for AI-specific monitoring, Weave for experiment tracking and model monitoring, and Langfuse for LLM application observability. The dedicated integrations provide enhanced capabilities optimized for specific platform features beyond generic OpenTelemetry compatibility. Organizations select platforms matching specific requirements, existing investments, and team expertise without toolkit constraints limiting options.
 
-Note
+OpenTelemetry compatibility ensures integration with any OpenTelemetry-based observability platform through standard telemetry export protocols. The standards-based approach enables connectivity with diverse platforms without toolkit-specific infrastructure requirements, prevents vendor lock-in from proprietary telemetry formats, and leverages mature observability tooling ecosystems. Organizations use established monitoring infrastructure and operational expertise rather than adopting toolkit-specific monitoring solutions requiring new tool mastery and operational procedures.
 
-For users who want to run the examples, it's required to clone the repository and install from source to get the necessary files required to run the examples. Please refer to the Examples documentation for more information.
+Execution tracing provides detailed records of workflow progression capturing decision points, tool invocations, intermediate results, and timing characteristics. The traces support post-hoc analysis of individual executions, comparison across different runs identifying behavioral variations, and debugging of unexpected outcomes through detailed execution reconstruction. Tracing proves particularly valuable for complex multi-agent workflows where understanding emergent behavior requires visibility into detailed interaction sequences.
 
-To install the latest stable version of NeMo Agent Toolkit from PyPI, run the following command:
+Performance monitoring tracks key metrics over time revealing trends, detecting anomalies indicating issues, and supporting capacity planning for scaling projections. Dashboard visualizations display current operational status, alert mechanisms notify operators of threshold violations or unusual patterns, and historical analysis identifies gradual degradation requiring investigation. Production monitoring enables proactive management preventing issues before user impact and supporting rapid response when problems occur.
 
-pip install nvidia-nat
-NeMo Agent Toolkit has many optional dependencies which can be installed with the core package. Optional dependencies are grouped by framework and can be installed with the core package. For example, to install the LangChain/LangGraph plugin, run the following:
+Debugging support through observability tooling enables investigating unexpected behavior, validating implementations against specifications, and troubleshooting production issues through detailed execution visibility. The debugging capabilities reduce time from issue detection through root cause identification to resolution, particularly for complex systems where simple inspection proves inadequate. Observability-enabled debugging proves more efficient than external debugging tools lacking agent-specific functionality and integration with toolkit semantics.
 
-pip install "nvidia-nat[langchain]"
-Or for all optional dependencies:
+Automatic Hyperparameter Tuning
 
-pip install "nvidia-nat[all]"
-Detailed installation instructions, including the full list of optional dependencies, can be found in the Installation Guide.
+Hyperparameter optimization automates search across configuration spaces identifying optimal settings for agents, tools, and workflows without manual trial-and-error experimentation. The optimization considers multiple objectives simultaneously including accuracy maximization, cost minimization measured through token consumption and computational resources, latency reduction for responsive systems, and custom metrics addressing domain-specific requirements. Multi-objective optimization identifies Pareto-optimal configurations achieving desired tradeoffs across competing objectives.
 
-🌟 Hello World Example
-Before getting started, it's possible to run this simple workflow and many other examples in Google Colab with no setup. Click here to open the introduction notebook: Open in Colab.
+Parameter tuning adjusts controllable aspects affecting agent performance including LLM selection from available model options, temperature settings controlling output randomness and creativity, maximum token limits constraining response lengths, and framework-specific parameters influencing behavior. The automated tuning systematically explores parameter spaces evaluating performance across representative workloads, identifying configurations achieving desired characteristics without requiring extensive manual experimentation consuming developer time.
 
-Ensure you have set the NVIDIA_API_KEY environment variable to allow the example to use NVIDIA NIMs. An API key can be obtained by visiting build.nvidia.com and creating an account.
+Prompt optimization refines agent instructions improving effectiveness through systematic prompt engineering guided by performance metrics. The optimization experiments with prompt variations measuring impact on accuracy, cost, and latency, converging on formulations achieving desired behavior patterns. Prompt tuning proves particularly valuable where subtle instruction variations substantially impact effectiveness and reliability, with automated approaches identifying improvements that manual experimentation might miss.
 
-export NVIDIA_API_KEY=<your_api_key>
-Create the NeMo Agent Toolkit workflow configuration file. This file will define the agents, tools, and workflows that will be used in the example. Save the following as workflow.yml:
+Performance maximization through hyperparameter tuning achieves better results than manual configuration by systematically exploring larger parameter spaces, evaluating combinations humans might not consider, and making data-driven decisions based on measured performance rather than intuition. The automation enables continuous optimization as workloads evolve, model options change, or requirements shift, maintaining optimal configurations without ongoing manual intervention.
 
-functions:
-   # Add a tool to search wikipedia
-   wikipedia_search:
-      _type: wiki_search
-      max_results: 2
+Cost minimization objectives balance performance requirements against computational expenses, identifying configurations achieving acceptable accuracy and latency within budget constraints. The optimization prevents over-provisioning using expensive models or configurations when cheaper alternatives achieve requirements, while avoiding under-provisioning degrading quality unacceptably. Automated cost-performance optimization proves increasingly valuable as organizations scale agent deployments where aggregate costs multiply across numerous workflows.
 
-llms:
-   # Tell NeMo Agent Toolkit which LLM to use for the agent
-   nim_llm:
-      _type: nim
-      model_name: meta/llama-3.1-70b-instruct
-      temperature: 0.0
+Evaluation and Quality Assurance
 
-workflow:
-   # Use an agent that 'reasons' and 'acts'
-   _type: react_agent
-   # Give it access to our wikipedia search tool
-   tool_names: [wikipedia_search]
-   # Tell it which LLM to use
-   llm_name: nim_llm
-   # Make it verbose
-   verbose: true
-   # Retry up to 3 times
-   parse_agent_response_max_retries: 3
-Run the Hello World example using the nat CLI and the workflow.yml file.
+Evaluation framework provides systematic assessment of agentic workflow accuracy, groundedness, and alignment with expected outputs through built-in tools supporting both automated and human evaluation approaches. Automated metrics compute quantitative measures of correctness, relevance, and quality from execution traces without manual intervention, enabling continuous evaluation across numerous test cases. Human evaluation workflows incorporate domain expert assessment for scenarios requiring subjective judgment or expertise beyond automated metric capabilities.
 
-nat run --config_file workflow.yml --input "List five subspecies of Aardvarks"
-This will run the workflow and output the results to the console.
+Accuracy validation ensures agent systems meet quality requirements before production deployment through comprehensive testing across representative scenarios. The validation identifies accuracy issues requiring remediation, establishes baseline quality expectations for production operation, and provides confidence in system readiness for deployment. Pre-deployment validation reduces risk from deploying inadequately tested systems potentially producing incorrect outputs affecting users or business processes.
 
-Workflow Result:
-['Here are five subspecies of Aardvarks:\n\n1. Orycteropus afer afer (Southern aardvark)\n2. O. a. adametzi  Grote, 1921 (Western aardvark)\n3. O. a. aethiopicus  Sundevall, 1843\n4. O. a. angolensis  Zukowsky & Haltenorth, 1957\n5. O. a. erikssoni  Lönnberg, 1906']
-📚 Additional Resources
-📖 Documentation: Explore the full documentation for NeMo Agent Toolkit.
-🧭 Get Started Guide: Set up your environment and start building with NeMo Agent toolkit.
-🤝 Contributing: Learn how to contribute to NeMo Agent Toolkit and set up your development environment.
-🧪 Examples: Explore examples of NeMo Agent Toolkit workflows located in the examples directory of the source repository.
-🛠️ Create and Customize NeMo Agent Toolkit Workflows: Learn how to create and customize NeMo Agent Toolkit workflows.
-🎯 Evaluate with NeMo Agent Toolkit: Learn how to evaluate your NeMo Agent Toolkit workflows.
-🆘 Troubleshooting: Get help with common issues.
-🛣️ Roadmap
- Automatic Reinforcement Learning (RL) to fine-tune LLMs for a specific agent.
- Integration with NeMo Guardrails to secure any function in an agent workflow.
- End-to-end acceleration using intelligent integrations with NVIDIA Dynamo.
-💬 Feedback
+Quality maintenance through continuous evaluation detects degradation from system changes, evolving workload characteristics, or data distribution shifts. The monitoring reveals when accuracy falls below acceptable thresholds, identifies specific failure modes requiring investigation, and triggers remediation workflows preventing continued operation with degraded quality. Ongoing quality assurance ensures production systems maintain standards throughout operational lifetime despite evolution in code, configuration, and operating environment.
+
+Workflow validation capabilities support rapid configuration experimentation by enabling immediate quality assessment after component swaps, parameter changes, or architecture modifications. The rapid feedback loop accelerates optimization cycles, validates hypotheses about improvements, and enables data-driven decisions based on empirical comparison rather than assumptions. Configuration validation proves essential during development where frequent iterations benefit from quick quality verification.
+
+User Interface and Interaction
+
+Chat interface provides conversational interaction with agents enabling testing during development, debugging of unexpected behavior, and demonstration for stakeholder engagement. The interface supports natural language interaction with agents, displays intermediate results and reasoning traces, and enables exploration of agent capabilities without building custom interaction layers. Chat-based testing proves particularly valuable during iterative development where rapid feedback cycles accelerate refinement.
+
+Output visualization exposes workflow execution patterns including agent invocation sequences, tool usage, decision points, and data flow across components. The visual representations support understanding complex multi-agent coordination, identifying bottlenecks through execution timeline analysis, and communicating system behavior to stakeholders. Visualization proves especially valuable for complex workflows where textual descriptions inadequately convey interaction patterns and timing relationships.
+
+Debugging capabilities through interface tooling enable detailed examination of agent responses, intermediate results, and reasoning traces supporting validation of implementation correctness. The debugging features reveal what agents considered during decision-making, what information they accessed, and how they arrived at particular conclusions. Interface-integrated debugging reduces investigation time compared to external debugging approaches requiring separate setup and lacking agent-specific functionality.
+
+Interactive workflow development leverages interface capabilities for rapid prototyping, immediate feedback on changes, and exploratory development without implementing complete applications. Developers test agent behaviors, validate tool integrations, and experiment with workflow structures through interface interactions before committing to production implementations. The interactive approach accelerates development by enabling quick validation reducing iteration cycles.
+
+Advanced Integration Capabilities
+
+Function Groups organize related functions together sharing configuration, context, and resources, simplifying management of cohesive capability sets. The grouping mechanism reduces configuration duplication, ensures consistency across related functions, and enables coordinated lifecycle management for dependent components. Function groups prove particularly valuable for complex workflows with numerous related tools requiring common setup or resource access.
+
+Framework extension support enables integration with additional agentic frameworks beyond standard integrations, allowing organizations to leverage toolkit capabilities with proprietary or specialized frameworks. The extension mechanisms follow standardized patterns enabling consistent integration approaches, reducing implementation effort through provided abstractions, and maintaining compatibility with core toolkit features. Framework extensibility ensures toolkit relevance despite framework ecosystem evolution introducing new options.
+
+Amazon Bedrock AgentCore integration enables deploying agents built with toolkit onto Amazon Bedrock AgentCore runtime, supporting secure enterprise deployments on AWS infrastructure. Strands Agents framework support extends toolkit applicability to additional agent development patterns, broadening the range of approaches compatible with toolkit capabilities. The integrations demonstrate toolkit flexibility across diverse deployment environments and development frameworks.
+
+Google ADK support extends framework compatibility to Google's Agent Development Kit, enabling toolkit benefits for organizations using Google's agent development approach. The ADK integration maintains consistency with other framework integrations through standardized patterns while supporting framework-specific features. Broad framework support prevents toolkit from constraining framework selection, allowing organizations to choose optimal frameworks for specific requirements while maintaining consistent observability and optimization capabilities.
+
+Model Context Protocol Integration
+
+MCP client functionality enables toolkit-based agents to access tools served by remote MCP servers, expanding available capabilities without implementing tools locally. The client integration discovers available tools through MCP registry mechanisms, invokes remote tools through standardized protocols, and handles response marshaling transparently to agent implementations. Client capabilities enable leveraging ecosystem tool developments rather than requiring comprehensive internal tool implementation.
+
+MCP server functionality publishes toolkit-native tools to external MCP-compatible agents, enabling tool sharing across diverse implementations and frameworks. The server integration exposes tool interfaces through MCP protocols, handles request routing and parameter marshaling, and integrates with toolkit profiling and observability infrastructure. Server capabilities enable organizations to share internal tool developments with broader ecosystems or different teams using MCP-compatible agent frameworks.
+
+Authorization support for MCP interactions ensures secure tool access when using streamable HTTP protocol, enabling enterprise deployments with appropriate access controls. The authorization mechanisms integrate with existing security infrastructure, support standard authentication patterns, and maintain security boundaries across tool sharing scenarios. Secure MCP integration proves essential for enterprise deployments where tool access requires authorization enforcement preventing unauthorized usage.
+
+Bidirectional integration supporting both client and server roles enables sophisticated tool ecosystem participation where organizations both consume external tools and contribute internal developments. The bidirectional approach maximizes value from MCP ecosystem through accessing external innovations while sharing internal capabilities, reduces overall ecosystem duplication through specialization and sharing, and enables collaborative tool development across organizational boundaries.

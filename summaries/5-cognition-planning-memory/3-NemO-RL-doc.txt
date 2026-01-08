@@ -1,223 +1,35 @@
 Overview
-NeMo RL is an open-source post-training library within the NeMo Framework, designed to streamline and scale reinforcement learning methods for multimodal models (LLMs, VLMs, etc.). Designed for flexibility, reproducibility, and scale, NeMo RL enables both small-scale experiments and massive multi-GPU, multi-node deployments for fast experimentation in research and production environments.
+
+NeMo RL is an open-source post-training library within the NeMo Framework, designed to streamline and scale reinforcement learning methods for multimodal models, including LLMs and VLMs. Designed for flexibility, reproducibility, and scale, NeMo RL enables both small-scale experiments and massive multi-GPU, multi-node deployments for fast experimentation in research and production environments.
 
 What You Can Expect
-Flexibility with a modular design that allows easy integration and customization.
 
-Efficient resource management using Ray, enabling scalable and flexible deployment across different hardware configurations.
+NeMo RL provides several key capabilities that make it suitable for a wide range of reinforcement learning applications. The library offers flexibility with a modular design that allows easy integration and customization, enabling researchers and developers to adapt the framework to their specific needs. Efficient resource management is achieved using Ray, enabling scalable and flexible deployment across different hardware configurations. The framework is hackable with native PyTorch-only paths for quick research prototypes, allowing rapid iteration and experimentation. High performance is delivered through Megatron Core, supporting various parallelism techniques for large models and large context lengths. Seamless integration with Hugging Face provides ease of use, allowing users to leverage a wide range of pre-trained models and tools. The library includes comprehensive documentation that is both detailed and user-friendly, with practical examples to guide implementation.
 
-Hackable with native PyTorch-only paths for quick research prototypes.
-
-High performance with Megatron Core, supporting various parallelism techniques for large models and large context lengths.
-
-Seamless integration with Hugging Face for ease of use, allowing users to leverage a wide range of pre-trained models and tools.
-
-Comprehensive documentation that is both detailed and user-friendly, with practical examples.
-
-For more details on the architecture and design philosophy, see the design documents.
 Quick Start
-Use this quick start to get going with either the native PyTorch DTensor or Megatron Core training backends.
 
-Note
+The quick start guide enables users to get started with either the native PyTorch DTensor or Megatron Core training backends. Both training backends are independent, meaning users can install and use either one on its own. To begin, users should clone the repository and create the environment by running git clone, navigating to the directory, updating submodules, and creating a virtual environment. If users previously ran without checking out the submodules, they may need to rebuild virtual environments by setting NRL_FORCE_REBUILD_VENVS=true.
 
-Both training backends are independent — you can install and use either one on its own.
+For the native PyTorch DTensor backend, users can run GRPO by executing the command uv run python examples/run_grpo_math.py. For the Megatron Core backend, users can run GRPO using the command uv run examples/run_grpo_math.py with the configuration file examples/configs/grpo_math_1B_megatron.yaml. For more examples and setup details, users should continue to the Prerequisites section.
 
-For more examples and setup details, continue to the Prerequisites section.
+Features and Roadmap
 
-Quick Start Options
-Native PyTorch (DTensor)
+NeMo RL provides a comprehensive set of features currently available, with additional capabilities planned for future releases. Available now, the library includes distributed training with Ray-based infrastructure, enabling scalable deployment across multiple nodes and GPUs. Environment support and isolation provides support for multi-environment training and dependency isolation between components. Worker isolation ensures process isolation between RL Actors, eliminating concerns about global state. The library supports multiple learning algorithms including GRPO, GSPO, SFT, and DPO. Multi-turn RL enables multi-turn generation and training for RL with tool use, games, and other complex scenarios. Advanced parallelism with DTensor supports PyTorch FSDP2, TP, CP, and SP for efficient training. Larger model support with longer sequences is achieved through performant parallelisms with Megatron Core, including TP, PP, CP, SP, EP, and FSDP. MoE models are supported, including DeepSeekV3 and Qwen-3 MoE models through the Megatron backend. Sequence packing is available in both DTensor and Megatron Core for significant training performance gains. Fast generation is provided through the vLLM backend for optimized inference. Hugging Face integration works with models ranging from 1B to 70B parameters, including Qwen and Llama models.
 
-Megatron Core
+Coming in version 0.4, the library will include Megatron Inference for fast Day-0 support for new Megatron models, avoiding weight conversion. Async RL will provide support for asynchronous rollouts and replay buffers for off-policy training, enabling a fully asynchronous GRPO. Vision Language Models (VLM) support will enable SFT and GRPO on VLMs through the DTensor path. Improved native performance will enhance training time for native PyTorch models. Improved large MoE performance will enhance Megatron Core training performance and generation performance. End-to-end FP8 low-precision training will provide support for Megatron Core FP8 training and FP8 vLLM generation. Megatron Bridge integration will integrate Megatron Bridge to enable training features from Megatron Core. NeMo Automodel integration will integrate NeMo Automodel to power the DTensor path. New models will include gpt-oss. Algorithm expansion will add DAPO, GSPO, and On-policy Distillation. GB200 container support will be added for GB200 hardware.
 
-Clone and create the environment
-
-git clone git@github.com:NVIDIA-NeMo/RL.git nemo-rl
-cd nemo-rl
-git submodule update --init --recursive
-uv venv
-Note
-
-If you previously ran without checking out the submodules, you may need to rebuild virtual environments by setting NRL_FORCE_REBUILD_VENVS=true. See Tips and Tricks.
-
-Native PyTorch (DTensor)
-
-Megatron Core
-
-Run GRPO (DTensor)
-
-Run GRPO (Megatron)
-
-# DTensor
-uv run python examples/run_grpo_math.py
-# Megatron
-uv run examples/run_grpo_math.py \
-  --config examples/configs/grpo_math_1B_megatron.yaml
-  Features and Roadmap
-Available now | Coming in v0.4
-
-Coming in v0.4
-Megatron Inference - Megatron Inference for fast Day-0 support for new Megatron models (avoid weight conversion)
-
-Async RL - Support for asynchronous rollouts and replay buffers for off-policy training, and enable a fully asynchronous GRPO
-
-Vision Language Models (VLM) - Support SFT and GRPO on VLMs through the DTensor path
-
-Improved Native Performance - Improve training time for native PyTorch models
-
-Improved Large MoE Performance - Improve Megatron Core training performance and generation performance
-
-End-to-End FP8 Low-Precision Training - Support for Megatron Core FP8 training and FP8 vLLM generation
-
-Megatron Bridge Integration - Integrate Megatron Bridge to enable training features from Megatron Core
-
-NeMo Automodel Integration - Integrate NeMo Automodel to power the DTensor path
-
-New Models - gpt-oss
-
-Expand Algorithms - DAPO, GSPO, On-policy Distillation
-
-GB200 - Add container support for GB200
-
-Available Now
-Distributed Training - Ray-based infrastructure
-
-Environment Support and Isolation - Support for multi-environment training and dependency isolation between components
-
-Worker Isolation - Process isolation between RL Actors (no worries about global state)
-
-Learning Algorithms - GRPO/GSPO, SFT, and DPO
-
-Multi-Turn RL - Multi-turn generation and training for RL with tool use, games, etc
-
-Advanced Parallelism with DTensor - PyTorch FSDP2, TP, CP, and SP for efficient training
-
-Larger Model Support with Longer Sequences - Performant parallelisms with Megatron Core (TP/PP/CP/SP/EP/FSDP)
-
-MoE Models - Support for DeepSeekV3 and Qwen-3 MoE models (Megatron)
-
-Sequence Packing - Sequence packing in both DTensor and Megatron Core for huge training performance gains
-
-Fast Generation - vLLM backend for optimized inference
-
-Hugging Face Integration - Works with 1B–70B models (Qwen, Llama)
 Training and Generation Backends
-Training Backends
-NeMo RL supports multiple training backends to accommodate different model sizes and hardware configurations:
 
-PyTorch - This leverages NeMo AutoModel to provide accelerated PyTorch training with improved memory efficiency (PyTorch-native TP, SP, PP, CP, and FSDP2)
+NeMo RL supports multiple training backends to accommodate different model sizes and hardware configurations. The PyTorch backend leverages NeMo AutoModel to provide accelerated PyTorch training with improved memory efficiency, supporting PyTorch-native TP, SP, PP, CP, and FSDP2. The Megatron backend provides NVIDIA's high-performance training framework for scaling to large models with 6D parallelisms. The training backend is automatically determined based on YAML configuration settings. For detailed information on backend selection, configuration, and examples, users should refer to the Training Backends documentation.
 
-Megatron - NVIDIA’s high-performance training framework for scaling to large models with 6D parallelisms
-
-The training backend is automatically determined based on your YAML configuration settings. For detailed information on backend selection, configuration, and examples, see the Training Backends documentation.
-
-Generation Backends
-NeMo RL supports multiple generation/rollout backends to accommodate different model sizes and hardware configurations:
-
-vLLM - A high-throughput and memory-efficient popular inference and serving engine
-
-Megatron - A high-performance Megatron-native inference backend which eliminates weight conversion between training and inference
-
-For detailed information on backend selection, configuration, and examples, see the Generation Backends documentation.
+NeMo RL also supports multiple generation and rollout backends to accommodate different model sizes and hardware configurations. The vLLM backend provides a high-throughput and memory-efficient popular inference and serving engine. The Megatron backend provides a high-performance Megatron-native inference backend which eliminates weight conversion between training and inference. For detailed information on backend selection, configuration, and examples, users should refer to the Generation Backends documentation.
 
 Algorithms
-NeMo RL supports multiple training algorithms for post-training large language models.
 
-Support Matrix
-Algorithms
-
-Single Node
-
-Multi-node
-
-GRPO
-
-GRPO Single Node
-
-GRPO Multi-node: GRPO Qwen2.5-32B, GRPO Multi-Turn
-
-DAPO (dapo.md)
-
-similar to GRPO example
-
-similar to GRPO example
-
-DAPO
-
-DAPO Single Node
-
-DAPO Multi-node
-
-On-policy Distillation
-
-Distillation Single Node
-
-Distillation Multi-node
-
-Supervised Fine-Tuning (SFT)
-
-SFT Single Node
-
-SFT Multi-node
-
-DPO
-
-DPO Single Node
-
-DPO Multi-node
-
-RM
-
-RM Single Node
-
-RM Multi-node
-
-On-policy distillation is also supported in the PyTorch DTensor path.
-
-
+NeMo RL supports multiple training algorithms for post-training large language models. The library provides comprehensive support for various algorithms across both single-node and multi-node configurations. GRPO is supported on both single-node and multi-node setups, with examples including GRPO Qwen2.5-32B and GRPO Multi-Turn. DAPO is supported with similar examples to GRPO for both single-node and multi-node configurations. On-policy distillation is supported on both single-node and multi-node setups, and is also supported in the PyTorch DTensor path. Supervised Fine-Tuning (SFT) is available for both single-node and multi-node deployments. DPO is supported across both single-node and multi-node configurations. Reward Model (RM) training is available for both single-node and multi-node setups. This comprehensive algorithm support matrix enables users to select the appropriate algorithm and deployment configuration based on their specific requirements and infrastructure.
 
 Evaluation
-We provide evaluation tools to assess model capabilities.
 
-Convert Model Format (Optional)
-If you have trained a model and saved the checkpoint in the PyTorch DCP format, you first need to convert it to the Hugging Face format before running evaluation:
+NeMo RL provides evaluation tools to assess model capabilities. If users have trained a model and saved the checkpoint in the PyTorch DCP format, they first need to convert it to the Hugging Face format before running evaluation. For example, for a GRPO checkpoint at step 170, users can run the conversion script with the configuration file, DCP checkpoint path, and target Hugging Face checkpoint path. If users have a model saved in Megatron format, they can use a conversion command to convert it to Hugging Face format prior to running evaluation. This script requires Megatron Core, so users must make sure they launch with the mcore extra. Users should adjust the paths according to their training output directory structure. For an in-depth explanation of checkpointing, users should refer to the Checkpointing documentation.
 
-# Example for a GRPO checkpoint at step 170
-uv run python examples/converters/convert_dcp_to_hf.py \
-    --config results/grpo/step_170/config.yaml \
-    --dcp-ckpt-path results/grpo/step_170/policy/weights/ \
-    --hf-ckpt-path results/grpo/hf
-If you have a model saved in Megatron format, you can use the following command to convert it to Hugging Face format prior to running evaluation. This script requires Megatron Core, so make sure you launch with the mcore extra:
-
-# Example for a GRPO checkpoint at step 170
-uv run --extra mcore python examples/converters/convert_megatron_to_hf.py \
-    --config results/grpo/step_170/config.yaml \
-    --megatron-ckpt-path results/grpo/step_170/policy/weights/iter_0000000 \
-    --hf-ckpt-path results/grpo/hf
-Note
-
-Adjust the paths according to your training output directory structure.
-
-For an in-depth explanation of checkpointing, refer to the Checkpointing documentation.
-
-Run Evaluation
-Run the evaluation script with the converted model:
-
-uv run python examples/run_eval.py generation.model_name=$PWD/results/grpo/hf
-Run the evaluation script with custom settings:
-
-# Example: Evaluation of DeepScaleR-1.5B-Preview on MATH-500 using 8 GPUs
-#          Pass@1 accuracy averaged over 16 samples for each problem
-uv run python examples/run_eval.py \
-    --config examples/configs/evals/math_eval.yaml \
-    generation.model_name=agentica-org/DeepScaleR-1.5B-Preview \
-    generation.temperature=0.6 \
-    generation.top_p=0.95 \
-    generation.vllm_cfg.max_model_len=32768 \
-    data.dataset_name=math500 \
-    eval.num_tests_per_prompt=16 \
-    cluster.gpus_per_node=8
-Note
-
-Evaluation results may vary slightly due to various factors, such as sampling parameters, random seed, inference engine version, and inference engine settings.
-
-Refer to examples/configs/evals/eval.yaml for a full list of parameters that can be overridden. For an in-depth explanation of evaluation, refer to the Evaluation documentation.
+To run evaluation, users can execute the evaluation script with the converted model, specifying the model name path. Users can also run the evaluation script with custom settings, such as evaluating a specific model on a particular dataset with custom generation parameters. For example, users can evaluate DeepScaleR-1.5B-Preview on MATH-500 using 8 GPUs, with Pass@1 accuracy averaged over 16 samples for each problem, by specifying the configuration file, model name, temperature, top_p, maximum model length, dataset name, number of tests per prompt, and GPUs per node. Evaluation results may vary slightly due to various factors, such as sampling parameters, random seed, inference engine version, and inference engine settings. Users should refer to the evaluation configuration file for a full list of parameters that can be overridden. For an in-depth explanation of evaluation, users should refer to the Evaluation documentation.

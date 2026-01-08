@@ -1,112 +1,36 @@
-What is AI agent memory?
-AI Agents
-Welcome
-Introduction
-Components
 Overview
-Agentic workflows
-Communication
-Learning
-Memory
-Perception
-Planning
-Reasoning
-Tool calling
-Architecture
-Protocols
-Multi-agent systems
-Frameworks
-Governance
-Agentic RAG
-Use cases / Applications
-Authors
-Cole
-Cole Stryker
-Staff Editor, AI Models
 
-IBM Think
+What Is AI Agent Memory?
 
-AI agent memory refers to an artificial intelligence (AI) system’s ability to store and recall past experiences to improve decision-making, perception and overall performance.
+AI agent memory refers to an artificial intelligence system's ability to store an recall past experiences to improve decision-making, perception and overall performance. Unlike traditional AI models that process each task independently, AI agents with memory can retain context, recognize patterns over time and adapt based on past interactions. This capability is essential for goal-oriented AI applications, where feedback loops, knowledge bases and adaptive learning are required.
 
-Unlike traditional AI models that process each task independently, AI agents with memory can retain context, recognize patterns over time and adapt based on past interactions. This capability is essential for goal-oriented AI applications, where feedback loops, knowledge bases and adaptive learning are required.
+Memory systems allow AI agents to go beyond simple reflex behaviors. While basic systems like thermostats can operate without memory, advanced "smart" thermostats use memory to learn patterns, adapt to user behavior and optimize energy efficiency. Large language models (LLMs) cannot inherently remember things—the memory component must be added separately. One of the biggest challenges in AI memory design is optimizing retrieval efficiency, as storing excessive data can lead to slower response times.
 
-Memory is a system that remembers something about previous interactions. AI agents do not necessarily need memory systems. Simple reflex agents, for example, perceive real-time information about their environment and act on it or pass that information along.
+Benefits
 
-A basic thermostat does not need to remember what the temperature was yesterday. But a more advanced “smart” thermostat with memory can go beyond simple on or off temperature regulation by learning patterns, adapting to user behavior and optimizing energy efficiency. Instead of reacting only to the current temperature, it can store and analyze past data to make more intelligent decisions.
+AI agent memory provides several key benefits for intelligent system development. Enhanced contextual understanding enables agents to maintain coherence across multiple interactions, improving user experience in conversational AI and customer service applications. Personalization capabilities allow agents to tailor responses based on historical interactions, creating more relevant and effective engagements over time.
 
-Large language models (LLMs) cannot, by themselves, remember things. The memory component must be added. However, one of the biggest challenges in AI memory design is optimizing retrieval efficiency, as storing excessive data can lead to slower response times.
+Memory systems enable continuous learning and adaptation, allowing agents to improve performance through experience rather than requiring complete retraining. Pattern recognition across time enables better decision-making by identifying trends and relationships in historical data. Efficiency improvements result from storing learned procedures and skills, reducing computation time for repeated tasks. These capabilities make memory-enabled agents suitable for complex applications requiring long-term context, personalization, and adaptive behavior.
 
-Optimized memory management helps ensure that AI systems store only the most relevant information while maintaining low-latency processing for real-time applications.
+Memory Types
 
-Industry newsletter
+Researchers categorize agentic memory similarly to human memory types, following frameworks like the Cognitive Architectures for Language Agents (CoALA) paper from Princeton University. Each memory type serves specific functions in agent cognition and behavior.
+        
+Short-term memory (STM) enables agents to remember recent inputs for immediate decision-making, essential in conversational AI where maintaining context across exchanges is required. STM is typically implemented using rolling buffers or context windows that hold limited recent data before being overwritten. While this improves continuity in short interactions, it doesn't retain information beyond sessions, making it unsuitable for long-term personalization.
+         
+Long-term memory (LTM) allows agents to store and recall information across different sessions, enabling personalization and intelligence over time. LTM uses permanent storage through databases, knowledge graphs or vector embeddings, crucial for applications requiring historical knowledge like personalized assistants and recommendation systems. Retrieval augmented generation (RAG) is an effective technique for implementing LTM, where agents fetch relevant information from stored knowledge bases to enhance responses.
 
-The latest AI trends, brought to you by experts
-Get curated insights on the most important—and intriguing—AI news. Subscribe to our weekly Think newsletter. See the IBM Privacy Statement.
+Episodic memory enables agents to recall specific past experiences, similar to human event memory. This supports case-based reasoning where agents learn from past events to make better future decisions. Implementation involves logging key events, actions and outcomes in structured formats accessible during decision-making. This memory type is essential in robotics and autonomous systems where agents must recall past actions for efficient navigation.
 
-Business email
-johndoe@yourdomain.com
-Subscribe
+Semantic memory stores structured factual knowledge for reasoning, containing generalized information like facts, definitions and rules rather than specific events. Implementation uses knowledge bases, symbolic AI or vector embeddings for efficient information processing and retrieval. This type supports domain expertise applications like legal AI assistants, medical diagnostic tools and enterprise knowledge management systems.
 
-Types of agentic memory
-Researchers categorize agentic memory in much the same way that psychologists categorize human memory. The influential Cognitive Architectures for Language Agents (CoALA) paper1 from a team at Princeton University describes different types of memory as:
+Procedural memory stores skills, rules and learned behaviors enabling automatic task performance without explicit reasoning each time. Inspired by human procedural memory for actions like riding a bike, this helps agents improve efficiency by automating complex action sequences. Agents learn procedures through training, often using reinforcement learning to optimize performance over time, reducing computation time for repeated tasks.
 
-Short-term memory
-Short-term memory (STM) enables an AI agent to remember recent inputs for immediate decision-making. This type of memory is useful in conversational AI, where maintaining context across multiple exchanges is required.
+Implementation Frameworks
 
-For example, a chatbot that remembers previous messages within a session can provide coherent responses instead of treating each user input in isolation, improving user experience. For example, OpenAI’s ChatGPT retains chat history within a single session, helping to ensure smoother and more context-aware conversations.
+Developers implement memory using external storage, specialized architectures and feedback mechanisms. Since AI agents vary in complexity from simple reflex agents to advanced learning agents, memory implementation depends on architecture, use case and required adaptability.
 
-STM is typically implemented using a rolling buffer or a context window, which holds a limited amount of recent data before being overwritten. While this approach improves continuity in short interactions, it does not retain information beyond the session, making it unsuitable for long-term personalization or learning.
+LangChain facilitates integration of memory, APIs and reasoning workflows for building memory-enabled AI agents. Combined with vector databases, agents can efficiently store and retrieve large volumes of past interactions, enabling more coherent responses over time. LangGraph allows developers to construct hierarchical memory graphs, improving agents' ability to track dependencies and learn over time.
 
-Long-term memory
-Long-term memory (LTM) allows AI agents to store and recall information across different sessions, making them more personalized and intelligent over time.
-
-Unlike short-term memory, LTM is designed for permanent storage, often implemented using databases, knowledge graphs or vector embeddings. This type of memory is crucial for AI applications that require historical knowledge, such as personalized assistants and recommendation systems.
-
-For example, an AI-powered customer support agent can remember previous interactions with a user and tailor responses accordingly, improving the overall customer experience.
-
-One of the most effective techniques for implementing LTM is retrieval augmented generation (RAG), where the agent fetches relevant information from a stored knowledge base to enhance its responses.
-
-Episodic memory
-Episodic memory allows AI agents to recall specific past experiences, similar to how humans remember individual events. This type of memory is useful for case-based reasoning, where an AI learns from past events to make better decisions in the future.
-
-Episodic memory is often implemented by logging key events, actions and their outcomes in a structured format that the agent can access when making decisions.
-
-For example, an AI-powered financial advisor might remember a user's past investment choices and use that history to provide better recommendations. This memory type is also essential in robotics and autonomous systems, where an agent must recall past actions to navigate efficiently.
-
-Semantic memory
-Semantic memory is responsible for storing structured factual knowledge that an AI agent can retrieve and use for reasoning. Unlike episodic memory, which deals with specific events, semantic memory contains generalized information such as facts, definitions and rules.
-
-AI agents typically implement semantic memory using knowledge bases, symbolic AI or vector embeddings, allowing them to process and retrieve relevant information efficiently. This type of memory is used in real-world applications that require domain expertise, such as legal AI assistants, medical diagnostic tools and enterprise knowledge management systems.
-
-For example, an AI legal assistant can use its knowledge base to retrieve case precedents and provide accurate legal advice.
-
-Procedural memory
-Procedural memory in AI agents refers to the ability to store and recall skills, rules and learned behaviors that enable an agent to perform tasks automatically without explicit reasoning each time.
-
-It is inspired by human procedural memory, which allows people to perform actions such as riding a bike or typing without consciously thinking about each step. In AI, procedural memory helps agents improve efficiency by automating complex sequences of actions based on prior experiences.
-
-AI agents learn sequences of actions through training, often using reinforcement learning to optimize performance over time. By storing task-related procedures, AI agents can reduce computation time and respond faster to specific tasks without reprocessing data from scratch.
-
-AI agents
-
-IN 5 Types of AI Agents: Autonomous Functions & Real-World Applications
-5 Types of AI Agents: Autonomous Functions & Real-World Applications
-Learn how goal-driven and utility-based AI adapt to workflows and complex environments.
-
-Build, deploy and monitor AI agents 
-Frameworks for agentic AI memory
-Developers implement memory using external storage, specialized architectures and feedback mechanisms. Since AI agents vary in complexity—ranging from simple reflex agents to advanced learning agents—memory implementation depends on the agent’s architecture, use case and required adaptability.
-
-LangChain
-One key agent framework for building memory-enabled AI agents is LangChain, which facilitates the integration of memory, APIs and reasoning workflows. By combining LangChain with vector databases, AI agents can efficiently store and retrieve large volumes of past interactions, enabling more coherent responses over time.
-
-LangGraph
-LangGraph allows developers to construct hierarchical memory graphs for AI agents, improving their ability to track dependencies and learn over time.
-
-By integrating vector databases, agentic systems can efficiently store embeddings of previous interactions, enabling contextual recall. This is useful for AI-driven docs generation, where an agent must remember user preferences and past modifications.
-
-Other open source offerings
-The rise of open source frameworks has accelerated the development of memory-enhanced AI agents. Platforms such as GitHub host numerous repositories that provide tools and templates for integrating memory into AI workflows.
-
-Additionally, Hugging Face offers pretrained models that can be fine-tuned with memory components to improve AI recall capabilities. Python, a dominant language in AI development, provides libraries for handling orchestration, memory storage and retrieval mechanisms, making it a go-to choice for implementing AI memory systems.
+Open source frameworks have accelerated memory-enhanced AI agent development. Platforms like GitHub host repositories providing tools and templates for integrating memory into AI workflows. Hugging Face offers pretrained models that can be fine-tuned with memory components to improve recall capabilities. Python provides libraries for handling orchestration, memory storage and retrieval mechanisms, making it a primary choice for implementing AI memory systems.
 

@@ -1,202 +1,109 @@
-How to Make Your LLM More Accurate with RAG & Fine-Tuning
-And when to use which one
+Overview
 
-Sarah Schürch
-Mar 11, 2025
-12 min read
-Share
+What Are RAG and Fine-Tuning?
 
-Own visualization — Illustrations from unDraw.co
-Imagine studying a module at university for a semester. At the end, after an intensive learning phase, you take an exam – and you can recall the most important concepts without looking them up.
+Retrieval Augmented Generation and Fine-Tuning represent two fundamental approaches for enhancing Large Language Model capabilities and adapting them to specific tasks, domains, and organizational requirements. Both methods address critical limitations of base language models, particularly their temporal knowledge constraints and inability to access proprietary or domain-specific information. Models trained at specific points in time lack knowledge of subsequent events, while standard architectures cannot easily incorporate company-specific information such as internal guidelines, technical documentation, or organizational policies.
 
-Now imagine the second situation: You are asked a question about a new topic. You don’t know the answer straight away, so you pick up a book or browse a wiki to find the right information for the answer.
+Retrieval Augmented Generation extends language models during the inference phase by providing access to external knowledge sources, enabling retrieval of information not stored in model parameters. The base model remains unchanged while gaining capability to incorporate current and specific information through dynamic retrieval processes. This approach allows models to remain current without requiring retraining, maintaining accuracy through continuous access to updated information sources.
 
-These two analogies represent two of the most important methods for improving the basic model of an LLM or adapting it to specific tasks and areas: Retrieval Augmented Generation (RAG) and Fine-Tuning. 
+Fine-Tuning adapts language models during the training phase by further training existing base models with domain-specific data sets. The process adjusts model weights to internalize specialized knowledge, technical terminology, and specific content patterns while preserving general language understanding capabilities. Fine-tuned models store enhanced knowledge directly in parameters, enabling generation of expert-level responses without requiring external sources during inference.
 
-But which example belongs to which method?
+Benefits
 
-That’s exactly what I’ll explain in this article: After that, you’ll know what RAG and fine-tuning are, the most important differences and which method is suitable for which application.
+Retrieval Augmented Generation delivers significant advantages for dynamic information scenarios and resource-constrained environments. The approach provides exceptional flexibility by enabling continuous access to current data without model retraining, ensuring responses reflect the latest available information. Systems maintain accuracy for rapidly evolving knowledge domains including news, technical documentation, policy updates, and organizational information that changes frequently. Resource efficiency emerges from minimal upfront computational requirements, as the base model remains unchanged and no extensive training processes are necessary.
 
-Let’s dive in!
+The methodology supports cost-effective deployment by avoiding expensive retraining cycles when information updates, enabling organizations to maintain current systems through simple knowledge base updates. RAG implementations demonstrate strong transparency through explicit source attribution, allowing users to verify information origins and understand response foundations. The approach excels in handling vast knowledge domains where comprehensive parameter encoding would be impractical, enabling access to extensive document collections, databases, and information repositories that far exceed typical context window limitations.
 
-Table of contents
+Fine-Tuning provides distinct advantages for specialized domain applications and consistent task optimization. The approach enables deep domain expertise by permanently encoding specialized knowledge, technical vocabulary, industry-specific patterns, and task-relevant understanding directly into model parameters. Systems achieve faster inference performance through elimination of external retrieval steps, as all necessary knowledge resides internally within model weights. This self-contained architecture reduces operational complexity by removing dependencies on external databases, search systems, and retrieval infrastructure.
 
-1. Basics: What is RAG? What is fine-tuning?
-2. Differences between RAG and fine-tuning
-3. Ways to build a RAG model 
-4. Options for fine-tuning a model
-5. When is RAG recommended? When is fine-tuning recommended?
-Final Thoughts
-Where can you continue learning?
-1. Basics: What is RAG? What is fine-tuning?
-Large Language Models (LLMs) such as ChatGPT from OpenAI, Gemini from Google, Claude from Anthropics or Deepseek are incredibly powerful and have established themselves in everyday work over an extremely short time.
+Fine-tuned models deliver consistent response quality and style through internalized patterns that ensure uniform behavior across interactions without variation from external source availability or retrieval quality. The methodology proves particularly effective for closed-domain applications where knowledge requirements are well-defined and relatively stable, enabling precise optimization for specific use cases. Models demonstrate improved task-specific performance through targeted training that aligns behavior with exact requirements, response formats, and output characteristics desired for particular applications.
 
-One of their biggest limitations is that their knowledge is limited to training. A model that was trained in 2024 does not know events from 2025. If we ask the 4o model from ChatGPT who the current US President is and give the clear instruction that the Internet should not be used, we see that it cannot answer this question with certainty:
+Retrieval Augmented Generation Architecture
 
+RAG systems implement sophisticated pipelines that combine embedding generation, similarity search, context integration, and language model inference to provide information-grounded responses. The architecture maintains separation between static model capabilities and dynamic knowledge access, enabling flexible adaptation to changing information requirements without model modifications.
 
-Screenshot taken by the author
-In addition, the models cannot easily access company-specific information, such as internal guidelines or current technical documentation. 
+Query Processing and Embedding
 
-This is exactly where RAG and fine-tuning come into play.
+The RAG pipeline initiates with query embedding where user requests are converted into vector representations using specialized embedding models. Common implementations leverage models such as text-embedding-ada-002 from OpenAI or all-MiniLM-L6-v2 from Hugging Face to transform natural language queries into dense numerical vectors. This vectorization enables semantic similarity computation rather than simple keyword matching, allowing systems to identify conceptually related information even when exact term matches do not exist.
 
-Both methods make it possible to adapt an LLM to specific requirements:
+The embedding process captures semantic meaning and contextual nuances in the query, projecting natural language into high-dimensional vector spaces where similar concepts cluster together geometrically. This representation facilitates efficient similarity search across large knowledge bases by reducing semantic comparison to mathematical distance calculations in vector space. The quality of embedding models directly impacts retrieval effectiveness, as superior embeddings better capture semantic relationships and support more accurate identification of relevant information.
 
-RAG — The model remains the same, the input is improved
-An LLM with Retrieval Augmented Generation (RAG) remains unchanged.
+Vector Database Search
 
-However, it gains access to an external knowledge source and can therefore retrieve information that is not stored in its model parameters. RAG extends the model in the inference phase by using external data sources to provide the latest or specific information. The inference phase is the moment when the model generates an answer. 
+Query vectors undergo similarity search within vector databases to identify the most relevant information for response generation. The retrieval process employs Approximate Nearest Neighbors algorithms that efficiently locate similar vectors within large collections, balancing accuracy against computational efficiency. Implementations commonly utilize systems such as FAISS from Meta for high-performance similarity search in extensive data sets, ChromaDB for small to medium-sized retrieval tasks, or specialized vector databases optimized for semantic search operations.
 
-This allows the model to stay up to date without retraining.
+The similarity computation typically employs distance metrics such as cosine similarity or Euclidean distance to quantify vector relationships, ranking retrieved candidates by relevance scores. Advanced implementations may incorporate hybrid search combining dense vector similarity with sparse keyword matching, metadata filtering based on document attributes, or reranking stages that refine initial retrieval results. The vector database architecture enables efficient scaling to massive knowledge bases through indexing strategies that organize vectors for rapid approximate retrieval without exhaustive comparison.
 
-How does it work?
+Context Integration and Response Generation
 
-A user question is asked.
-The query is converted into a vector representation.
-A retriever searches for relevant text sections or data records in an external data source. The documents or FAQS are often stored in a vector database.
-The content found is transferred to the model as additional context.
-The LLM generates its answer on the basis of the retrieved and current information.
-The key point is that the LLM itself remains unchanged and the internal weights of the LLM remain the same. 
+Retrieved documents or text passages integrate into the language model prompt as additional context that grounds the response in specific information. The system constructs augmented prompts that combine the original user query with relevant retrieved content, providing the language model with both the question and supporting information necessary for accurate answers. This context integration represents the critical mechanism through which external knowledge influences model outputs without modifying underlying parameters.
 
-Let’s assume a company uses an internal AI-powered support chatbot.
+The language model processes the augmented prompt to generate responses that synthesize information from retrieved sources with its inherent language understanding and reasoning capabilities. The generation process combines factual content from external sources with the model's general knowledge, linguistic capabilities, and task understanding to produce coherent and contextually appropriate responses. Advanced implementations may include citation mechanisms that attribute specific claims to source documents, confidence scoring based on retrieval quality, or multi-hop reasoning across multiple retrieved passages.
 
-The chatbot helps employees to answer questions about company policies, IT processes or HR topics. If you would ask ChatGPT a question about your company (e.g. How many vacation days do I have left?), the model would logically not give you back a meaningful answer. A classic LLM without RAG would know nothing about the company – it has never been trained with this data. 
+Implementation Frameworks
 
-This changes with RAG: The chatbot can search an external database of current company policies for the most relevant documents (e.g. PDF files, wiki pages or internal FAQs) and provide specific answers.
+LangChain provides comprehensive framework support for building RAG pipelines, facilitating the connection of language model calls with retrieval systems and enabling targeted information retrieval from external sources. The framework offers modular components for embedding generation, vector store integration, retrieval chain construction, and prompt templating that simplify RAG system development. Alternative implementations leverage the Hugging Face Transformers Library with specialized RAG classes including RagTokenizer for processing input and retrieval results, RagRetriever for semantic search and document retrieval from knowledge bases, and RagSequenceForGeneration for integrating retrieved documents into context and generating responses.
 
-RAG works similarly as when we humans look up specific information in a library or Google search – but in real-time.
+Fine-Tuning Architecture
 
-A student who is asked about the meaning of CRUD quickly looks up the Wikipedia article and answers Create, Read, Update and Delete – just like a RAG model retrieves relevant documents. This process allows both humans and AI to provide informed answers without memorizing everything.
+Fine-tuning implementations modify model parameters through continued training on domain-specific data sets, permanently encoding specialized knowledge and task-specific patterns into neural network weights. The process requires careful data preparation, base model selection, training execution, and deployment planning to achieve optimal results while managing computational costs and maintaining model capabilities.
 
-And this makes RAG a powerful tool for keeping responses accurate and current.
+Training Data Preparation
 
+Fine-tuning success depends critically on high-quality training data collection that represents the target domain, task requirements, and desired model behavior. Data sets consist of input-output pairs that demonstrate correct responses, with formats varying based on model architecture and training framework. Conversational models typically employ standardized chat formats with role-based message structures distinguishing system instructions, user queries, and assistant responses. Standard formats include JSONL for OpenAI models with messages containing role and content fields, CSV or JSON for structured data sets, and framework-specific formats such as PyTorch datasets for custom implementations.
 
-Own visualization by the author
-Fine-tuning — The model is trained and stores knowledge permanently
-Instead of looking up external information, an LLM can also be directly updated with new knowledge through fine-tuning.
+Training data quality directly impacts fine-tuning effectiveness, requiring careful curation to ensure accuracy, consistency, diversity, and representativeness of target domain characteristics. Collections should span the range of expected inputs, demonstrate desired output styles and formats, and avoid biases or errors that models might internalize. Scale requirements vary based on task complexity and base model capabilities, with typical implementations ranging from hundreds to thousands of examples for effective adaptation.
 
-Fine-tuning is used during the training phase to provide the model with additional domain-specific knowledge. An existing base model is further trained with specific new data. As a result, it “learns” specific content and internalizes technical terms, style or certain content, but retains its general understanding of language.
+Base Model Selection
 
-This makes fine-tuning an effective tool for customizing LLMs to specific needs, data or tasks.
+Fine-tuning leverages pre-trained language models as starting points that already possess strong general language understanding and reasoning capabilities. Organizations may choose closed-source models such as GPT-3.5 or GPT-4 accessed through provider APIs that support fine-tuning services, or open-source alternatives including DeepSeek, LLaMA, Mistral, Falcon, or task-specific models like T5 and FLAN-T5 for natural language processing applications. Selection criteria encompass factors including base model capabilities, computational requirements, licensing considerations, deployment constraints, and alignment with target task characteristics.
 
-How does this work?
+Larger base models typically offer superior general capabilities but require more substantial computational resources for fine-tuning and inference. Smaller models provide faster training and deployment with lower resource requirements but may demonstrate reduced general knowledge and reasoning abilities. The optimal choice balances performance requirements against available resources and operational constraints while ensuring base model architecture aligns with intended applications.
 
-The LLM is trained with a specialized data set. This data set contains specific knowledge about a domain or a task.
-The model weights are adjusted so that the model stores the new knowledge directly in its parameters.
-After training, the model can generate answers without the need for external sources.
-Let’s now assume we want to use an LLM that provides us with expert answers to legal questions.
+Training Process and Optimization
 
-To do this, this LLM is trained with legal texts so that it can provide precise answers after fine-tuning. For example, it learns complex terms such as “intentional tort” and can name the appropriate legal basis in the context of the relevant country. Instead of just giving a general definition, it can cite relevant laws and precedents.
+Fine-tuning executes supervised learning where model weights update through gradient descent on domain-specific training data. The process requires significant computational resources, particularly for large models where billions of parameters undergo adjustment. Training typically employs powerful GPU or TPU infrastructure to achieve reasonable completion times, with resource requirements scaling with model size and training data volume.
 
-This means that you no longer just have a general LLM like GPT-4o at your disposal, but a useful tool for legal decision-making.
+Parameter-efficient fine-tuning methods reduce computational demands through selective weight updates that maintain most base model parameters frozen while training small adapter modules. Low-Rank Adaptation approaches insert trainable low-rank decomposition matrices into model layers, dramatically reducing the number of trainable parameters while achieving comparable adaptation effectiveness. Quantized Low-Rank Adaptation further optimizes efficiency by applying quantization to model weights, enabling fine-tuning on consumer hardware with reduced memory footprint through techniques such as 4-bit quantization.
 
-If we look again at the analogy with humans, fine-tuning is comparable to having internalized knowledge after an intensive learning phase.
+Training hyperparameters including learning rate, batch size, training epochs, and regularization strength require careful tuning to achieve optimal results without overfitting to training data or degrading base model capabilities. Validation procedures assess model performance throughout training to identify optimal checkpoints and prevent excessive specialization that reduces generalization ability.
 
-After this learning phase, a computer science student knows that the term CRUD stands for Create, Read, Update, Delete. He or she can explain the concept without needing to look it up. The general vocabulary has been expanded.
+Deployment and Operations
 
-This internalization allows for faster, more confident responses—just like a fine-tuned LLM.
+Fine-tuned models deploy to inference environments including local servers, cloud platforms such as Hugging Face Model Hub, AWS, Azure, or specialized serving infrastructure optimized for language model inference. Deployment considerations encompass model size, inference latency requirements, throughput demands, cost constraints, and integration with existing systems. Fine-tuned models operate independently without external dependencies, simplifying deployment architecture compared to RAG systems that require vector database infrastructure and retrieval pipeline management.
 
-2. Differences between RAG and fine-tuning
-Both methods improve the performance of an LLM for specific tasks.
+Use Case Selection
 
-Both methods require well-prepared data to work effectively.
+RAG and Fine-Tuning serve distinct scenarios based on knowledge characteristics, resource constraints, update frequency requirements, and desired system properties. Understanding these distinctions enables appropriate method selection that aligns technical approaches with application requirements and organizational constraints.
 
-And both methods help to reduce hallucinations – the generation of false or fabricated information.
+Retrieval Augmented Generation Scenarios
 
-But if we look at the table below, we can see the differences between these two methods:
+RAG implementations excel in contexts requiring dynamic information access where knowledge bases undergo frequent updates or expansion. FAQ chatbots benefit substantially from RAG architectures that retrieve current answers from evolving knowledge bases without requiring model retraining for each content update. Technical documentation systems leverage RAG to provide accurate information reflecting the latest specifications, API changes, or procedural updates through simple document repository modifications.
 
-RAG is particularly flexible because the model can always access up-to-date data without having to be retrained. It requires less computational effort in advance, but needs more resources while answering a question (inference). The latency can also be higher.
+Real-time information applications including news summarization, market data analysis, and event-based systems utilize RAG to incorporate the most current available information into responses. Organizations with limited computational resources or tight budget constraints favor RAG implementations that avoid expensive training processes while maintaining system effectiveness. Applications requiring explicit source attribution and verifiability benefit from RAG transparency where retrieved documents provide clear evidence for generated responses.
 
-Fine-tuning, on the other hand, offers faster inference times because the knowledge is stored directly in the model weights and no external search is necessary. The major disadvantage is that training is time-consuming and expensive and requires large amounts of high-quality training data.
+Scenarios involving vast knowledge domains that exceed practical parameter encoding capacity demonstrate strong RAG suitability, as external retrieval enables access to extensive information collections without model size constraints. Multi-tenant systems serving diverse users or organizations leverage RAG to provide personalized information access through user-specific or tenant-specific knowledge bases while sharing common model infrastructure.
 
-RAG provides the model with tools to look up knowledge when needed without changing the model itself, whereas fine-tuning stores the additional knowledge in the model with adjusted parameters and weights.
+Fine-Tuning Scenarios
 
+Fine-tuning proves optimal for domain-specific applications requiring consistent specialized expertise where knowledge remains relatively stable over time. Medical applications benefit from fine-tuned models that internalize clinical terminology, diagnostic patterns, and treatment protocols, generating reports and recommendations with precise domain-appropriate language. Legal systems leverage fine-tuning to encode jurisdiction-specific regulations, legal precedents, and formal writing styles that ensure appropriate responses for legal decision support.
 
-Own visualization by the author
-3. Ways to build a RAG model
-A popular framework for building a Retrieval Augmented Generation (RAG) pipeline is LangChain. This framework facilitates the linking of LLM calls with a retrieval system and makes it possible to retrieve information from external sources in a targeted manner.
+Applications demanding specific response styles, formats, or behavioral characteristics utilize fine-tuning to permanently encode these patterns into model behavior. Customer service systems may fine-tune for brand voice consistency, response structure standardization, or company-specific handling procedures. Technical support applications benefit from internalized product knowledge, troubleshooting procedures, and solution patterns that enable consistent expert-level assistance.
 
-How does RAG work technically?
-1. Query embedding
+Scenarios requiring optimal inference performance with minimal latency favor fine-tuned models that eliminate retrieval overhead and external system dependencies. Offline or air-gapped deployments where external knowledge base access is impractical or prohibited necessitate fine-tuning to incorporate required knowledge directly into model parameters. Applications where knowledge requirements are well-defined, comprehensive training data is available, and update frequency is manageable demonstrate strong fine-tuning suitability.
 
-In the first step, the user request is converted into a vector using an embedding model. This is done, for example, with text-embedding-ada-002 from OpenAI or all-MiniLM-L6-v2 from Hugging Face.
+Hybrid Approaches
 
-This is necessary because vector databases do not search through conventional texts, but instead calculate semantic similarities between numerical representations (embeddings). By converting the user query into a vector, the system can not only search for exactly matching terms, but also recognize concepts that are similar in content.
+Retrieval Augmented Fine-Tuning combines both methodologies to leverage complementary strengths, creating systems with deep domain expertise and real-time information adaptability. The hybrid approach first fine-tunes models on domain-specific data to establish specialized knowledge foundations including terminology, structural patterns, and domain conventions. Subsequently, RAG augmentation provides access to specific current information from external sources, enabling responses that integrate internalized expertise with up-to-date factual content.
 
-2. Search in the vector database
+Organizations implement RAFT when applications require both consistent domain expertise and dynamic information incorporation. Medical systems may fine-tune for clinical reasoning and terminology while retrieving current research findings and treatment guidelines. Financial applications might internalize market analysis frameworks and regulatory knowledge while accessing real-time market data and recent news. The combination ensures comprehensive capability spanning stable domain knowledge and evolving information requirements.
 
-The resulting query vector is then compared with a vector database. The aim is to find the most relevant information to answer the question.
+Hybrid implementations balance computational costs across training and inference phases, with upfront fine-tuning investment followed by operational RAG retrieval overhead. The approach proves particularly effective for complex enterprise applications where both deep specialization and broad current knowledge access contribute to system effectiveness. Organizations should evaluate whether the combined benefits justify the additional implementation complexity and resource requirements compared to single-method approaches.
 
-This similarity search is carried out using Approximate Nearest Neighbors (ANN) algorithms. Well-known open source tools for this task are, for example, FAISS from Meta for high-performance similarity searches in large data sets or ChromaDB for small to medium-sized retrieval tasks.
+Decision Framework
 
-3. Insertion into the LLM context
+Method selection requires systematic evaluation of multiple factors including knowledge characteristics, resource availability, update frequency, performance requirements, and operational constraints. Knowledge that changes rapidly or requires constant updates strongly favors RAG implementations, while stable domain expertise suits fine-tuning approaches. Available computational resources influence feasibility, with limited capacity suggesting RAG while substantial infrastructure supports fine-tuning investments.
 
-In the third step, the retrieved documents or text sections are integrated into the prompt so that the LLM generates its response based on this information.
+Required inference performance characteristics affect selection, as latency-sensitive applications benefit from fine-tuned models that eliminate retrieval overhead. Transparency and attribution requirements favor RAG systems that explicitly link responses to source documents. Scale considerations including knowledge domain size and user base magnitude inform architectural decisions, with massive knowledge bases or multi-tenant scenarios often preferring RAG flexibility.
 
-4. Generation of the response
-
-The LLM now combines the information received with its general language vocabulary and generates a context-specific response.
-
-An alternative to LangChain is the Hugging Face Transformer Library, which provides specially developed RAG classes:
-
-‘RagTokenizer’ tokenizes the input and the retrieval result. The class processes the text entered by the user and the retrieved documents.
-The ‘RagRetriever’ class performs the semantic search and retrieval of relevant documents from the predefined knowledge base.
-The ‘RagSequenceForGeneration’ class takes the documents provided, integrates them into the context and transfers them to the actual language model for answer generation.
-4. Options for fine-tuning a model
-While an LLM with RAG uses external information for the query, with fine-tuning we change the model weights so that the model permanently stores the new knowledge.
-
-How does fine-tuning work technically?
-1. Preparation of the training data
-
-Fine-tuning requires a high-quality collection of data. This collection consists of inputs and the desired model responses. For a chatbot, for example, these can be question-answer pairs. For medical models, this could be clinical reports or diagnostic data. For a legal AI, these could be legal texts and judgments.
-
-Let’s take a look at an example: If we look at the documentation of OpenAI, we see that these models use a standardized chat format with roles (system, user, assistant) during fine-tuning. The data format of these question-answer pairs is JSONL and looks like this, for example:
-
-{"messages": [{"role": "system", "content": "Du bist ein medizinischer Assistent."}, {"role": "user", "content": "Was sind Symptome einer Grippe?"}, {"role": "assistant", "content": "Die häufigsten Symptome einer Grippe sind Fieber, Husten, Muskel- und Gelenkschmerzen."}]}  
-Other models use other data formats such as CSV, JSON or PyTorch datasets.
-
-2. Selection of the base model
-
-We can use a pre-trained LLM as a starting point. These can be closed-source models such as GPT-3.5 or GPT-4 via OpenAI API or open-source models such as DeepSeek, LLaMA, Mistral or Falcon or T5 or FLAN-T5 for NLP tasks.
-
-3. Training of the model
-
-Fine-tuning requires a lot of computing power, as the model is trained with new data to update its weights. Especially large models such as GPT-4 or LLaMA 65B require powerful GPUs or TPUs.
-
-To reduce the computational effort, there are optimized methods such as LoRA (Low-Rank Adaption), where only a small number of additional parameters are trained, or QLoRA (Quantized LoRA), where quantized model weights (e.g. 4-bit) are used. 
-
-4. Model deployment & use
-
-Once the model has been trained, we can deploy it locally or on a cloud platform such as Hugging Face Model Hub, AWS or Azure.
-
-5. When is RAG recommended? When is fine-tuning recommended?
-RAG and fine-tuning have different advantages and disadvantages and are therefore suitable for different use cases:
-
-RAG is particularly suitable when content is updated dynamically or frequently.
-
-For example, in FAQ chatbots where information needs to be retrieved from a knowledge database that is constantly expanding. Technical documentation that is regularly updated can also be efficiently integrated using RAG – without the model having to be constantly retrained.
-
-Another point is resources: If limited computing power or a smaller budget is available, RAG makes more sense as no complex training processes are required.
-
-Fine-tuning, on the other hand, is suitable when a model needs to be tailored to a specific company or industry.
-
-The response quality and style can be improved through targeted training. For example, the LLM can then generate medical reports with precise terminology.
-
-The basic rule is: RAG is used when the knowledge is too extensive or too dynamic to be fully integrated into the model, while fine-tuning is the better choice when consistent, task-specific behavior is required.
-
-And then there’s RAFT — the magic of combination
-What if we combine the two?
-
-That’s exactly what happens with Retrieval Augmented Fine-Tuning (RAFT).
-
-The model is first enriched with domain-specific knowledge through fine-tuning so that it understands the correct terminology and structure. The model is then extended with RAG so that it can integrate specific and up-to-date information from external data sources. This combination ensures both deep expertise and real-time adaptability.
-
-Companies use the advantages of both methods. 
-
-Final thoughts
-Both methods—RAG and fine-tuning—extend the capabilities of a basic LLM in different ways.
-
-Fine-tuning specializes the model for a specific domain, while RAG equips it with external knowledge. The two methods are not mutually exclusive and can be combined in hybrid approaches. Looking at computational costs, fine-tuning is resource-intensive upfront but efficient during operation, whereas RAG requires fewer initial resources but consumes more during use.
-
-RAG is ideal when knowledge is too vast or dynamic to be integrated directly into the model. Fine-tuning is the better choice when stability and consistent optimization for a specific task are required. Both approaches serve distinct but complementary purposes, making them valuable tools in AI applications.
-
-On my Substack, I regularly write summaries about the published articles in the fields of Tech, Python, Data Science, Machine Learning and AI. If you’re interested, take a look
+Organizations should prototype both approaches when uncertainty exists regarding optimal selection, conducting empirical evaluations with representative use cases and data to assess actual performance, cost, and effectiveness characteristics. The decision framework considers both immediate requirements and long-term evolution plans, ensuring selected approaches align with current needs while accommodating anticipated future developments in application scope and organizational capabilities.

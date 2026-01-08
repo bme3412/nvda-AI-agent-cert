@@ -1,108 +1,79 @@
-Memory Management Guide
-This guide explains strategies for managing memory when processing large text datasets with NVIDIA NeMo Curator.
+Overview
 
-Memory Challenges in Text Curation
-Processing large text datasets presents several challenges:
+What Is NeMo Curator Memory Management?
 
-Datasets larger than available RAM/VRAM
+NeMo Curator memory management encompasses strategies and techniques for efficiently processing large-scale text datasets within constrained memory resources during data curation workflows. Memory management addresses fundamental challenges arising from dataset scales exceeding available RAM and VRAM capacities, memory-intensive operations including deduplication and classification requiring substantial working memory, long-running processes susceptible to memory leaks degrading performance over time, and distributed system memory balancing ensuring efficient resource utilization across multiple workers.
 
-Memory-intensive operations like deduplication
+The memory management framework provides comprehensive controls over data partitioning, batch processing, and operation-specific optimizations that collectively enable processing of massive text corpora on finite hardware resources. Partitioning strategies divide datasets into manageable chunks processed incrementally rather than loading complete datasets into memory simultaneously, with configurable partition sizes balancing memory consumption against processing efficiency. Batch processing coordinates iterative workflows processing data subsets sequentially while maintaining overall workflow integrity and output correctness.
 
-Long-running processes that may leak memory
+Memory-aware operation implementations optimize resource-intensive tasks including exact deduplication requiring comparison across extensive document collections, quality classification executing neural models over text samples, and other computationally demanding curation steps that would otherwise exhaust available memory. Operation-specific optimizations leverage domain knowledge about computation patterns, memory access behaviors, and intermediate result requirements to minimize peak memory consumption while preserving functionality and accuracy.
 
-Balancing memory across distributed systems
+Monitoring capabilities enable proactive memory management through real-time visibility into CPU and GPU memory utilization patterns, enabling detection of approaching capacity limits, identification of memory leak symptoms, and validation of optimization effectiveness. The monitoring framework supports both development-time memory profiling guiding optimization decisions and production-time operational monitoring enabling proactive intervention before memory exhaustion causes workflow failures.
 
-Memory Management Strategies
-1. Partition Control
-Control how data is split across workers using file partitioning:
+Benefits
 
-from nemo_curator.stages.file_partitioning import FilePartitioningStage
+Memory management optimization delivers substantial advantages across dataset scale, operational reliability, resource efficiency, and cost management dimensions that directly impact data curation capabilities and economics. Dataset scale enablement proves fundamental as effective memory management determines the maximum corpus sizes processable on given hardware, with optimized strategies enabling processing of multi-terabyte text collections on modest infrastructure that would otherwise require extensive hardware investments or prove completely infeasible.
 
-# Control partition size when reading
-partitioner = FilePartitioningStage(
-    file_paths=files,
-    blocksize="256MB",  # Target size of each partition in memory
-    files_per_partition=10  # Alternative: group files by count instead of size
-)
-2. Batch Processing
-Process data in manageable chunks by controlling file partitioning:
+Operational reliability improvements emerge from controlled memory utilization preventing out-of-memory failures that abort long-running workflows, waste computational investment, and delay project timelines. Proactive memory management through monitoring and appropriate configuration ensures workflows complete successfully rather than failing hours or days into processing after consuming substantial computational resources. Graceful handling of near-capacity conditions through strategic data partitioning and batch processing maintains stability even when approaching hardware limits.
 
-from nemo_curator.stages.text.io.reader import JsonlReader
-from nemo_curator.stages.text.io.writer import JsonlWriter
+Resource efficiency advantages manifest through better hardware utilization enabling more ambitious processing on fixed infrastructure, reduced idle resource waste from failed workflows requiring restart, and optimized memory-computation tradeoffs maximizing throughput within available capacity. Organizations extract more value from existing hardware investments by processing larger datasets, handling more concurrent workflows, or reducing processing times through memory-optimized configurations compared to naive approaches quickly exhausting available capacity.
 
-# Read with controlled partition sizes
-reader = JsonlReader(
-    file_paths="input/",
-    files_per_partition=50,  # Process 50 files at a time
-    blocksize="1GB"  # Alternative: control memory usage per partition
-)
+Cost management benefits accumulate from infrastructure requirement reductions through efficient memory utilization avoiding or deferring hardware expansion, operational cost decreases from higher throughput per dollar of infrastructure investment, and reduced waste from failed workflows requiring reprocessing. The cumulative advantages prove particularly significant for organizations processing extensive text corpora where memory optimization translates to substantial infrastructure savings or enables previously infeasible data curation at acceptable cost points.
 
-# Process and write in batches
-writer = JsonlWriter(path="output/")
-3. Memory-Aware Operations
-Some operations need special memory handling:
+Partition Control Strategies
 
-Deduplication
-from nemo_curator.stages.deduplication.exact.workflow import ExactDeduplicationWorkflow
+Partition control represents the foundational memory management strategy dividing datasets into independently processable chunks that fit comfortably within available memory while maintaining reasonable processing efficiency. File partitioning systems organize data access patterns around partition boundaries, loading and processing individual partitions sequentially rather than attempting simultaneous access to complete datasets. Partition sizing fundamentally determines memory consumption characteristics with larger partitions requiring more memory but potentially achieving better processing efficiency through reduced overhead, while smaller partitions constrain memory usage at cost of increased coordination overhead.
 
-# Control memory usage in deduplication
-dedup = ExactDeduplicationWorkflow(
-    input_path="input/",
-    output_path="output/",
-    text_field="text",
-    input_blocksize="1GB"  # Control memory usage per input block
-)
-Classification
-from nemo_curator.stages.text.classifiers import QualityClassifier
+Target-size partitioning specifies desired memory footprint for individual partitions, automatically determining how many files or how much data comprises each partition based on size targets. The approach proves particularly valuable when file sizes vary substantially across datasets, ensuring consistent memory utilization regardless of underlying file size distributions. Size-based partitioning enables predictable memory consumption facilitating capacity planning and preventing memory exhaustion from unexpectedly large partitions.
 
-# Manage classifier memory
-classifier = QualityClassifier(
-    model_inference_batch_size=64,  # Smaller batches use less memory (default: 256)
-    max_chars=3000  # Limit text length to reduce memory usage (default: 6000)
-)
-Memory Monitoring
-CPU Memory
-Monitor system memory:
+Count-based partitioning groups fixed numbers of files into partitions regardless of individual file sizes, simplifying partition management when file sizes remain relatively uniform across datasets. The approach provides straightforward partition sizing when file characteristics remain consistent but risks memory consumption variability when file sizes vary substantially. Count-based partitioning proves most effective for datasets with known file size distributions enabling appropriate count selection achieving desired memory characteristics.
 
-# Note: Requires installing psutil: pip install psutil
-import psutil
+Partition size selection balances competing objectives including memory consumption minimization preferring smaller partitions, processing efficiency favoring larger partitions amortizing overhead, parallelism enablement requiring sufficient partitions for effective work distribution, and I/O efficiency benefiting from larger sequential reads. Optimal partition sizing depends on dataset characteristics including file sizes and distributions, available memory capacity across workers, parallelism requirements from cluster configuration, and specific operation memory requirements varying across curation tasks.
 
-def check_memory():
-    mem = psutil.virtual_memory()
-    print(f"Memory usage: {mem.percent}%")
-    print(f"Available: {mem.available / 1e9:.1f} GB")
-GPU Memory
-Monitor GPU memory:
+Batch Processing Architectures
 
-# Note: Requires CUDA installation with nemo_curator[cuda12]
-import pynvml
+Batch processing implements iterative workflows processing data subsets sequentially while maintaining overall processing correctness and output integrity. Reader components control data ingestion with configurable partition parameters determining how much data loads into memory simultaneously, enabling processing of arbitrarily large datasets through sequential batch handling. Writer components coordinate output generation maintaining data integrity across batches and ensuring complete dataset coverage without duplication or omission.
 
-def check_gpu_memory():
-    pynvml.nvmlInit()
-    handle = pynvml.nvmlDeviceGetHandleByIndex(0)
-    info = pynvml.nvmlDeviceGetMemoryInfo(handle)
-    print(f"GPU memory used: {info.used / 1e9:.1f} GB")
-Best Practices
-Monitor Memory Usage
+File-based batching processes datasets as sequences of file groups, with each batch comprising manageable numbers of files processable within memory constraints. The approach maps naturally to file-oriented storage systems and simplifies batch boundary definition based on file counts or aggregate sizes. File batching proves particularly effective for workflows where file boundaries represent natural processing units and operations don't require cross-file interactions.
 
-Track memory during development
+Size-based batching controls memory consumption directly through target partition sizes, automatically grouping data to approximate specified memory footprints. The strategy ensures predictable memory usage regardless of input data characteristics, preventing memory exhaustion from pathological input distributions. Size-based approaches require memory profiling or estimation determining appropriate targets balancing memory utilization against processing efficiency.
 
-Set up monitoring for production
+Batch coordination ensures workflow correctness across sequential processing including maintaining proper ordering when required, preventing duplicate processing or omissions, coordinating distributed processing across multiple workers, and aggregating results correctly across batches. Coordination mechanisms handle batch boundaries cleanly, manage intermediate results appropriately, and ensure final outputs reflect complete dataset processing without artifacts from batching implementation.
 
-Handle out-of-memory gracefully
+Memory-Aware Operation Optimization
 
-Optimize Data Loading
+Memory-intensive operations require specialized handling beyond generic partitioning strategies to manage peak memory consumption from computationally demanding algorithms. Deduplication operations exhibit particularly challenging memory characteristics from comparison requirements across extensive document collections, with exact deduplication requiring comparison of every document against all others creating quadratic memory scaling without optimization. Memory-aware implementations partition comparison spaces, stage intermediate results appropriately, and employ efficient data structures minimizing memory overhead while preserving deduplication correctness.
 
-Use lazy loading when possible
+Block-size configuration for deduplication controls memory consumption during comparison operations by limiting how much data loads simultaneously for duplicate detection. Smaller blocks constrain memory usage enabling processing of larger datasets on limited hardware, while larger blocks potentially improve efficiency by reducing overhead from repeated processing. Block size optimization balances memory constraints against processing efficiency, with appropriate sizing depending on available memory capacity and dataset characteristics.
 
-Control partition sizes
+Classification operations leveraging neural models exhibit memory consumption from model weights, intermediate activations, and batch processing of text samples. Batch size control directly determines memory requirements with smaller batches reducing peak consumption at cost of reduced GPU utilization and increased processing time, while larger batches maximize throughput but require sufficient memory capacity. Inference batch sizing optimization considers available GPU memory, model architecture characteristics, and throughput requirements achieving desired performance within memory budgets.
 
-Clean up unused data
+Text length limitations constrain maximum sequence lengths processed by classification models, directly controlling activation memory consumption during inference. Shorter length limits reduce memory requirements enabling larger batch sizes or processing on memory-constrained hardware, while longer limits preserve more context potentially improving classification accuracy. Length limit selection balances accuracy requirements against memory constraints and throughput objectives.
 
-Resource Management
+Operation-specific memory optimizations leverage detailed understanding of algorithm memory access patterns, intermediate result requirements, and computation dependencies to minimize peak consumption. Strategies include streaming processing for sequential operations, intermediate result staging to disk for memory-intensive steps, lazy evaluation deferring computation until results needed, and efficient data structure selection minimizing representation overhead.
 
-Release memory after large operations
+Memory Monitoring and Management
 
-Use context managers for cleanup
+Memory monitoring provides visibility into resource utilization patterns enabling proactive management, optimization validation, and operational alerting. CPU memory monitoring tracks system RAM utilization including total consumption, available capacity, and utilization percentages indicating approaching limits. Comprehensive monitoring captures both aggregate system metrics and per-process breakdowns identifying specific consumers enabling targeted optimization.
 
-Monitor long-running processes
+GPU memory monitoring tracks VRAM utilization across available GPUs, essential for workflows employing neural models or GPU-accelerated operations. GPU monitoring reveals memory consumption from model weights, activation buffers, and intermediate computations, identifying capacity constraints limiting batch sizes or model selection. Multi-GPU systems require per-device monitoring ensuring balanced utilization and preventing memory exhaustion on individual devices.
+
+Development-time monitoring guides optimization decisions through profiling workflows under representative conditions, measuring memory consumption across different configurations, identifying peak consumption points within workflows, and validating optimization effectiveness through comparative measurement. Profiling enables evidence-based tuning rather than guesswork, ensuring optimization efforts address actual bottlenecks and achieve measurable improvements.
+
+Production-time monitoring enables operational management through real-time visibility into memory utilization, alerting when approaching capacity limits, detecting memory leak symptoms from gradually increasing consumption, and triggering remediation actions before failures occur. Operational monitoring proves essential for long-running workflows where proactive intervention prevents costly failures after substantial processing completion.
+
+Memory leak detection identifies gradual consumption increases indicating improper resource cleanup, with symptoms including steadily rising memory usage over time, consumption not decreasing after processing steps complete, and eventual memory exhaustion in long-running processes. Early leak detection enables investigation and remediation before operational impacts, maintaining workflow stability across extended processing durations.
+
+Best Practices and Operational Guidance
+
+Effective memory management follows systematic approaches combining proactive monitoring, appropriate configuration, and operational discipline. Memory usage monitoring throughout development identifies consumption patterns, validates optimization effectiveness, and establishes baseline expectations informing production configuration. Development-time monitoring prevents surprises in production by characterizing memory requirements under representative conditions enabling appropriate resource provisioning.
+
+Production monitoring infrastructure implements continuous visibility into resource utilization with alerting for anomalous patterns, capacity threshold approaches, and suspected memory leaks. Automated monitoring enables proactive intervention preventing failures and supporting investigation of performance issues. Monitoring systems should capture both point-in-time snapshots and temporal trends revealing gradual changes indicating leaks or shifting workload characteristics.
+
+Out-of-memory handling implements graceful degradation or recovery when memory limits approached or exceeded, avoiding complete workflow failures when possible. Strategies include checkpoint-based restart enabling resumption from last successful state, automatic partition size reduction attempting smaller batches when full-size processing fails, and progressive data sampling processing representative subsets when full processing infeasible. Graceful handling transforms complete failures into partial successes or delayed completions rather than total losses.
+
+Data loading optimization leverages lazy loading deferring data materialization until actually needed, controlling partition sizes appropriately for available capacity, and cleaning up intermediate data promptly after use. Lazy evaluation patterns prevent loading unnecessary data, while prompt cleanup prevents accumulation of completed processing results consuming memory for future steps. Efficient data lifecycle management maintains minimal memory footprint throughout workflows.
+
+Resource management discipline implements systematic cleanup after large operations, leveraging context managers ensuring deterministic resource release, monitoring long-running processes for leak symptoms, and implementing periodic garbage collection in Python environments. Disciplined resource management prevents gradual degradation from accumulating unreleased resources, maintaining stable memory consumption across extended processing durations.
+
+Configuration documentation maintains records of memory-related settings, rationale for configuration decisions, and empirically determined thresholds for different environments. Documentation enables consistent configuration across deployments, supports troubleshooting when issues arise, and preserves institutional knowledge about effective memory management for specific workload types and infrastructure configurations.

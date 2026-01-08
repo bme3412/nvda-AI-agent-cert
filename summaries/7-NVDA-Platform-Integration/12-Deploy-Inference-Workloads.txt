@@ -1,126 +1,95 @@
-Deploy inference workloads with NVIDIA NIM¶
-This article explains how to deploy a GenAI model from Nvidia NIM as an inference workload via the Run:ai UI.
+Overview
 
-An inference workload provides the setup and configuration needed to deploy your trained model for real-time or batch predictions. It includes specifications for the container image, data sets, network settings, and resource requests required to serve your models.
+What Is NVIDIA NIM Inference Workload Deployment?
 
-The inference workload is assigned to a project and is affected by the project’s quota.
+NVIDIA NIM inference workload deployment represents comprehensive framework for serving production-scale generative AI models through managed inference infrastructure. The deployment architecture provides complete setup and configuration specifications including container image selection, dataset connectivity, network configuration, and resource allocation required for serving trained models in real-time or batch prediction scenarios. Inference workloads operate within project-based resource governance where project quota assignments determine available computational resources and deployment constraints.
 
-To learn more about the inference workload type in Run:ai and determine that it is the most suitable workload type for your goals, see Workload types.
+The workload deployment framework integrates NVIDIA NIM microservices with orchestration platforms enabling streamlined model serving without extensive infrastructure management overhead. NIM packaging includes optimized inference engines, runtime dependencies, and industry-standard APIs pre-configured for efficient execution on NVIDIA GPU infrastructure. The integration eliminates manual optimization and configuration tasks that otherwise require deep expertise in inference optimization, runtime management, and GPU programming.
 
+Deployment configurations encompass model selection from NIM catalog, profile specification determining execution characteristics, access control defining authentication and authorization policies, model store connectivity for artifact retrieval, compute resource allocation matching workload requirements, and scaling policies adapting capacity to varying demand patterns. The comprehensive configuration framework supports diverse deployment scenarios from development testing through production serving at scale.
 
+Project-based resource management assigns inference workloads to organizational projects with associated resource quotas governing GPU allocation, memory consumption, and concurrent workload limits. The quota enforcement prevents resource monopolization by individual workloads while ensuring fair allocation across competing projects. Project association enables charge-back accounting, usage tracking, and governance policies appropriate to organizational structures and operational requirements.
 
-Creating a NIM inference workload¶
-Before you start, make sure you have a project.
+Benefits
 
-To add a new inference workload:
+NIM inference workload deployment delivers substantial advantages across operational simplicity, deployment velocity, resource efficiency, and production readiness dimensions addressing critical requirements for enterprise model serving. Operational simplification emerges from pre-configured NIM microservices eliminating manual optimization tasks, standardized deployment patterns reducing implementation complexity, and managed infrastructure abstracting low-level orchestration details from model deployment workflows.
 
-Go to the Workload manager → Workloads
-Click +NEW WORKLOAD and select Inference
-Within the new inference form:
-Select under which cluster to create the inference workload
-Select the project in which your inference will run
-Select NIM from Inference type
+Deployment velocity improvements enable rapid model serving through template-based configuration, automated resource provisioning, and streamlined deployment workflows reducing time from model completion to production availability. Organizations accelerate model productionization by leveraging standardized deployment patterns rather than implementing custom serving infrastructure for each model variant. The acceleration proves particularly valuable for organizations deploying multiple models or frequently updating deployed models where deployment overhead accumulates significantly.
 
-Note
+Resource efficiency advantages stem from optimized NIM implementations achieving superior performance compared to generic serving approaches, autoscaling capabilities matching resource allocation to actual demand patterns, and quota-based governance preventing resource waste from over-provisioned deployments. Organizations extract better value from GPU infrastructure through efficient serving implementations and dynamic resource allocation adapting to workload characteristics.
 
-Selecting the Inference type is disabled by default. If you cannot see it in the menu, then it must be enabled by your Administrator, under General settings → Workloads → Models.
+Production readiness features including access control integration, monitoring capabilities, scaling policies, and reliability mechanisms ensure deployments meet enterprise requirements for security, observability, and availability. The comprehensive production features eliminate gaps between development serving and production deployment, reducing operational risk and accelerating production readiness timelines.
 
-Enter a unique name for the inference workload (if the name already exists in the project, you will be requested to submit a different name)
+Model Selection and Configuration
 
-Click CONTINUE
-In the next step:
-Select the NIM model and set how to access
+Model catalog integration provides access to NVIDIA NIM microservices for diverse model architectures and capability profiles appropriate to different application requirements. Model selection identifies specific NIM packages matching application needs considering factors including model architecture, parameter scale, capability characteristics, and performance profiles. The catalog organization simplifies model discovery and selection through categorization, documentation, and version management.
 
-Set the model name by selecting a model or entering the model name as displayed in NIM
-Set how the model profile should be selected
+Model profile specification determines execution characteristics including compatible inference engines, precision modes, latency-throughput optimization targets, and GPU hardware requirements. Profiles represent pre-configured optimization sets balancing different performance dimensions, with quantized profiles employing reduced precision arithmetic to decrease memory consumption and enhance throughput. Profile selection fundamentally determines deployment performance characteristics and resource requirements.
 
-A NIM model profile sets compatible model engines and criteria for engine selection, such as precision, latency, throughput optimization, and GPU requirements. Profiles are optimized to balance either latency or throughput, with quantized profiles (e.g., fp8) preferred to reduce memory usage and enhance performance.
+Automatic profile selection enables NIM runtime to choose optimal profiles based on detected hardware capabilities and available resources. The automatic selection evaluates profile compatibility against actual deployment hardware, considers performance optimization objectives, and selects configurations achieving best performance-resource tradeoffs given available infrastructure. Automatic selection proves particularly valuable when deploying across heterogeneous GPU infrastructure where optimal profiles vary by hardware generation and capability.
 
-Automatically (recommended) NIM is designed to automatically select the most suitable profile from the list of compatible profiles based on the detected hardware. Each profile consists of different parameters that influence the selection process.
-Manually
-Enter profile name or hash
-Optional: Modify who can access the inference serving endpoint
+Manual profile specification enables explicit profile selection through profile name or hash identification when deployment requirements demand specific optimization characteristics or when overriding automatic selection proves necessary. Manual selection supports scenarios including performance tuning targeting specific latency or throughput objectives, compatibility requirements with particular hardware configurations, or reproduction of specific deployment configurations for consistency across environments.
 
-Public (default)
+Access Control and Authentication
 
-Everyone within the network can access the endpoint with no authentication
+Endpoint access control determines who can invoke deployed model inference endpoints through configurable authentication and authorization policies. Access control mechanisms balance security requirements against operational convenience, with policy options ranging from unrestricted public access through organizational authentication to fine-grained user and group permissions. The control framework integrates with organizational identity providers enabling consistent access governance across AI infrastructure.
 
-All authenticated users
+Public access configuration enables unrestricted endpoint invocation without authentication requirements, simplifying development and testing scenarios while accepting security implications of unauthenticated access. The open access proves appropriate for internal development networks, prototype demonstrations, or scenarios where network-level security provides sufficient protection. Production deployments typically require more restrictive access policies.
 
-Everyone within the organization’s account that can log in (to Run:ai or SSO)
+Authenticated user access restricts endpoint invocation to users authenticated through organizational identity systems including Run:ai platform authentication or federated single sign-on providers. The authentication requirement ensures accountability for endpoint usage, enables audit logging associating requests with specific users, and supports compliance requirements demanding authenticated access to AI capabilities. Integration with existing identity infrastructure leverages established authentication mechanisms without requiring separate credential management.
 
-Specific group(s)
+Group-based access control restricts endpoint invocation to members of specified groups defined in identity provider systems. The group-based approach enables role-based access where organizational roles receive inference endpoint access appropriate to responsibilities. Group membership management through identity providers centralizes access governance with consistent policy enforcement across AI infrastructure and other enterprise systems.
 
-Click +GROUP
-Enter group names as they appear in your identity provider. You must be a member of one of the groups listed to have access to the endpoint.
-Specific user(s)
+User-specific access control restricts endpoint invocation to explicitly listed individual users identified through email addresses or usernames. The granular control enables precise access management for sensitive models or restricted capabilities, though administrative overhead increases compared to group-based approaches. User-specific policies prove appropriate for limited-access scenarios including early-stage model evaluation, confidential capabilities, or restricted user populations.
 
-Click +USER
-Enter a valid email address or username. If you remove yourself, you will lose access to the endpoint.
-Select how to access the model store
+Model Store Integration
 
-From NVIDIA NGC - The model is downloaded when the workload starts running
-Set the NVIDIA NGC API key
-Enter a key
-(Optional) Click Storage - When downloading a model from NVIDIA NGC, selecting storage is recommended.
-Select a data source where the model is already cached to reduce loading time or click +NEW DATA SOURCE to add a new data source to the gallery. This will cache the model and reduce loading time for future use. If there are issues with the connectivity to the cluster, or issues while creating the data source, the data source won't be available for selection.
-For a step-by-step guide on adding data sources to the gallery, see data sources.
-Once created, the new data source will be automatically selected.
-From storage - The model is accessed directly and without being downloaded
-Storage - Set where to load the model
-Select a data source or click +NEW DATA SOURCE to add a new data source to the gallery. If there are issues with the connectivity to the cluster, or issues while creating the data source, the data source won't be available for selection.
-For a step-by-step guide on adding data sources to the gallery, see data sources.
-Once created, the new data source will be automatically selected.
-Select the compute resource for your inference workload
+Model store connectivity determines how inference workloads access model artifacts required for serving including weights, configuration files, and supporting resources. Store integration strategies balance download performance, storage efficiency, and operational simplicity with options including on-demand download from NVIDIA NGC catalog and direct access from pre-staged storage locations.
 
-Select a compute resource or click +NEW COMPUTE RESOURCE to add a new compute resource to the gallery.
-For a step-by-step guide on adding compute resources to the gallery, see compute resources. Once created, the new compute resource will be automatically selected.
-Optional: Set the minimum and maximum number of replicas to be scaled up and down to meet the changing demands of inference services.
-If the number of minimum and maximum replicas are different, autoscaling will be triggered and you'll need to set conditions for creating a new replica. A replica will be created every time a condition is met. When a condition is no longer met after a replica was created, the replica will be automatically deleted to save resources.
+NGC-based model access downloads models from NVIDIA catalog when workloads start execution, ensuring access to latest model versions without pre-staging requirements. The on-demand approach eliminates local storage management overhead and guarantees model currency through direct catalog access. Authentication through NGC API keys validates entitlement to model access while enabling usage tracking and license compliance.
 
-Select a variable - The variable's values will be monitored via the container's port.
-Latency (milliseconds)
-Throughput (Requests/sec)
-Concurrency (Requests)
-Set a value - This value is the threshold at which autoscaling is triggered
-Optional: Set when the replicas should be automatically scaled down to zero. This allows the compute resources to be freed up when the model is inactive (i.e., there are no requests being sent) When automatic scaling to zero is enabled, the minimum number of replicas set in the previous step, automatically changes to 0
+Storage caching optimization reduces model loading latency by storing downloaded models in persistent storage for reuse across workload restarts or multiple concurrent instances. Cache configuration specifies data sources where models persist after initial download, with subsequent workload launches accessing cached artifacts rather than re-downloading from NGC. The caching substantially reduces startup latency after initial download while decreasing NGC bandwidth consumption.
 
-Optional: Set the order of priority for the node pools on which the scheduler tries to run the workload.
-When a workload is created, the scheduler will try to run it on the first node pool on the list. If the node pool doesn't have free resources, the scheduler will move on to the next one until it finds one that is available.
-Drag and drop them to change the order, remove unwanted ones, or reset to the default order defined in the project.
-Click +NODE POOL to add a new node pool from the list of node pools that were defined on the cluster.
-To configure a new node pool and for additional information, see node pools.
-Select a node affinity to schedule the workload on a specific node type.
-If the administrator added a ‘node type (affinity)’ scheduling rule to the project/department, then this field is mandatory.
-Otherwise, entering a node type (affinity) is optional. Nodes must be tagged with a label that matches the node type key and value.
-Optional: Set toleration(s) to allow the workload to be scheduled on a node with a matching taint
+Direct storage access retrieves models from pre-staged storage locations without NGC download, enabling faster workload startup through elimination of download latency and supporting air-gapped environments without external connectivity requirements. Pre-staging requires model management processes ensuring storage contains current versions but eliminates runtime dependencies on external catalog availability. The approach proves particularly valuable for production deployments requiring predictable startup performance and minimal external dependencies.
 
-Note
+Data source configuration specifies storage locations through persistent volume connections, object storage integrations, or other storage abstractions supported by orchestration platforms. Data source management through gallery interfaces enables reusable storage configurations shared across multiple workloads, reducing configuration duplication and ensuring consistency. Storage performance characteristics including throughput, latency, and capacity directly impact workload startup times and ongoing serving performance.
 
-Tolerations are disabled, by default. If you cannot see Tolerations in the menu, then it must be enabled by your Administrator, under General settings → Workloads → Tolerations
+Compute Resource Allocation
 
-Click +TOLERATION
-Enter a key
-Select the operator
-Exists - If the key exists on the node, the effect will be applied.
-Equals - If the key and the value set below matches to the value on the node, the effect will be applied
-Enter a value matching the value on the node
-Select the effect for the toleration
-NoExecute - Pods that do not tolerate this taint are evicted immediately.
-NoSchedule - No new pods will be scheduled on the tainted node unless they have a matching toleration. Pods currently running on the node will not be evicted.
-PreferNoSchedule - The control plane will try to avoid placing a pod that does not tolerate the taint on the node, but it is not guaranteed.
-Any - All effects above match.
-Optional - General settings:
+Compute resource specification defines GPU allocation, memory capacity, CPU cores, and other computational resources assigned to inference workloads. Resource allocation fundamentally determines workload performance characteristics, concurrent request capacity, and operational costs. Appropriate resource sizing balances performance requirements against infrastructure costs while ensuring sufficient capacity for target workload characteristics.
 
-Set annotations(s)
-Kubernetes annotations are key-value pairs attached to the workload. They are used for storing additional descriptive metadata to enable documentation, monitoring and automation.
-Click +ANNOTATION
-Enter a name
-Enter a value
-Set labels(s)
-Kubernetes labels are key-value pairs attached to the workload. They are used for categorizing to enable querying.
-Enter a name
-Enter a value
-Click CREATE INFERENCE
-Managing and monitoring¶
-After the inference workload is created, it is added to the Workloads table, where it can be managed and monitored.
+Resource templates organize common allocation patterns into reusable configurations simplifying resource specification and promoting consistency across deployments. Template-based allocation reduces configuration errors, encapsulates organizational standards for resource sizing, and accelerates deployment through selection rather than specification. Resource gallery management enables sharing templates across projects and teams while maintaining configuration governance.
+
+GPU selection determines accelerator type assigned to workloads considering factors including GPU generation, memory capacity, compute capabilities, and optimization features. Modern GPU generations provide specialized features supporting optimized inference including tensor cores for accelerated matrix operations, multi-instance GPU capabilities enabling resource sharing, and enhanced memory bandwidth supporting large model serving. GPU selection proves critical for achieving target performance characteristics within budget constraints.
+
+Memory allocation specifies GPU and system memory capacity required for model weights, key-value caches, activation storage, and batch processing. Insufficient memory allocation prevents workload execution or constrains batch sizes limiting throughput, while excessive allocation wastes resources unavailable for other workloads. Accurate memory sizing requires understanding model architecture characteristics and workload serving patterns.
+
+Scaling and Availability
+
+Replica management defines minimum and maximum instance counts for horizontal scaling adapting deployment capacity to varying request volumes. Minimum replica specification ensures baseline availability and responsiveness, while maximum replica limits constrain resource consumption and costs. The replica range enables autoscaling within defined bounds balancing availability objectives against resource constraints.
+
+Autoscaling policies trigger replica creation or deletion based on monitored metrics including request latency, throughput rates, and concurrent request counts. Threshold-based scaling creates additional replicas when metrics exceed configured values indicating capacity constraints, while scale-down eliminates excess capacity when demand decreases. The dynamic scaling maintains service level objectives across varying load patterns without manual intervention or static over-provisioning.
+
+Metric selection for scaling policies determines which performance characteristics drive scaling decisions. Latency-based scaling responds to increasing response times indicating saturated capacity, throughput-based scaling adapts to request rate variations, and concurrency-based scaling manages queue depths preventing request timeouts. Different metrics suit different application characteristics and service level objectives.
+
+Scale-to-zero capabilities enable complete replica elimination during idle periods freeing all associated resources for other workloads. Automatic scale-to-zero proves particularly valuable for development, testing, or intermittently-used models where continuous resource allocation proves wasteful. The capability requires balancing resource savings against startup latency when scaling from zero upon request arrival.
+
+Node Scheduling and Placement
+
+Node pool prioritization establishes preference orders for infrastructure resources where scheduler attempts workload placement. Priority ordering enables preferential use of particular hardware types, cost-optimized resource pools, or infrastructure with specific capabilities. The prioritized scheduling attempts highest-priority pools first, progressing through preference list until finding available capacity.
+
+Node affinity specifications constrain workload placement to nodes matching specific criteria including hardware types, availability zones, or custom node characteristics. Affinity rules ensure workloads execute on appropriate infrastructure meeting performance requirements, compliance constraints, or operational policies. Required affinity prevents scheduling on incompatible infrastructure, while preferred affinity guides placement without absolute constraints.
+
+Node type selection leverages labeled infrastructure enabling workload placement on specific hardware generations, accelerator types, or performance tiers. The type-based placement proves essential when workload requirements demand specific hardware capabilities unavailable across entire infrastructure. Label-based scheduling enables heterogeneous infrastructure supporting diverse workload requirements through appropriate placement.
+
+Toleration mechanisms enable workload scheduling on tainted nodes that otherwise reject pod placement. Taints mark nodes with specific characteristics or constraints, with tolerations overriding taint-based rejections when workloads explicitly accept tainted node characteristics. The mechanism supports reserved infrastructure, maintenance windows, or specialized hardware requiring explicit opt-in for workload placement.
+
+Taint effects determine scheduling behavior including preventing new workload placement on tainted nodes, evicting existing workloads from tainted nodes, or preferring untainted nodes without absolute constraints. Effect selection balances hard placement constraints against scheduling flexibility appropriate to specific infrastructure management scenarios. Toleration configuration matches workload tolerations to node taints enabling complex placement policies.
+
+Metadata and Organization
+
+Annotation mechanisms attach descriptive metadata to workloads supporting documentation, monitoring integration, and automation tooling. Annotations store arbitrary key-value pairs without semantic interpretation by orchestration systems, enabling flexible metadata storage for external tools and operational documentation. Common annotation uses include deployment tracking, change management correlation, and monitoring tool configuration.
+
+Label mechanisms attach categorization metadata enabling workload querying, grouping, and selection through label selectors. Labels support operational workflows including batch operations on labeled workload sets, monitoring dashboards aggregating metrics by labels, and deployment policies applying to labeled workload groups. Label standardization across deployments enables consistent operational patterns and tooling integration.
+
+Metadata consistency proves important for operational effectiveness, with standardized annotation and label conventions enabling automation, reducing errors, and facilitating knowledge transfer. Organizations establish metadata standards appropriate to operational processes, tooling requirements, and governance needs ensuring consistent deployment practices across teams and projects.

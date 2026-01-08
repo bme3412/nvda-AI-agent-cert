@@ -1,41 +1,21 @@
-Jamba 1.5 LLMs Leverage Hybrid Architecture to Deliver Superior Reasoning and Long Context Handling
+Overview
 
-Aug 22, 2024
-By Anjali Shah and Rajvir Singh
+AI21 Labs has unveiled their latest and most advanced Jamba 1.5 model family, a cutting-edge collection of large language models (LLMs) designed to excel in a wide array of generative AI tasks. These models are capable of creating content, summarizing and comparing documents, and extracting valuable insights from vast datasets. This mixture of experts (MoE) model takes advantage of the transformer and Mamba architectures to deliver superior efficiency, latency, and long context handling. This capability, coupled with the ease of deployment on any accelerated platform, enables enterprises to run their applications on secure environments close to where their data resides. NVIDIA recently optimized and hosted the new Jamba 1.5 models, which are now available to experience on the NVIDIA API catalog.
 
-+7
-Like
- Discuss (0)
-AI-Generated Summary
+Hybrid Architecture
 
-AI21 Labs has unveiled their latest and most advanced Jamba 1.5 model family, a cutting-edge collection of large language models (LLMs) designed to excel in a wide array of generative AI tasks. These models are capable of creating content, summarizing and comparing documents, and extracting valuable insights from vast datasets. 
+The Jamba 1.5 model family is built with a unique hybrid approach that combines the strengths of the Mamba and transformer architectures, in addition to a mixture of experts (MoE) module. Specifically, the Mamba architecture excels in managing long contexts with minimal computational overhead, while the transformer layers provide unmatched accuracy and reasoning capabilities. The MoE module helps increase the model capacity, referred to as the total number of available parameters, without increasing the computational requirements, which refers to the number of active parameters. Transformer, Mamba, and MoE layers combined into a singular decoder architecture are collectively referred to as a Jamba block. Each Jamba block can fit in a single NVIDIA H100 80 GB GPU and is configured with eight layers consisting of an attention-to-Mamba ratio of 1:7 layers. MoE is applied to every other layer with a total of 16 experts, out of which two experts are used at each token generation.
 
-This mixture of experts (MoE) model takes advantage of the transformer and Mamba architectures to deliver superior efficiency, latency, and long context handling. This, coupled with the ease of deployment on any accelerated platform, enables enterprises to run their applications on secure environments close to where their data resides.
+By interweaving these architectures, these models achieve a balance between memory usage, less compute for long context, and higher model accuracy. The model also offers a substantial 256K token context window, which translates to about 800 pages of text. The extended context capability enables the model to process and generate more accurate responses by retaining more relevant information.
 
-NVIDIA recently optimized and hosted the new Jamba 1.5 models, which are now available to experience on the NVIDIA API catalog.
+Function Calling and JSON Support
 
-Hybrid architecture delivers superior performance
-The Jamba 1.5 model family is built with a unique hybrid approach that combines the strengths of the Mamba and transformer architectures, in addition to a mixture of experts (MoE) module. Specifically, the Mamba architecture excels in managing long contexts with minimal computational overhead, while the transformer layers provide unmatched accuracy and reasoning capabilities. 
+One of the standout capabilities of the Jamba 1.5 models is its robust function calling feature, with support for JSON data interchange. This functionality greatly expands what AI systems can do, enabling them to perform complex actions based on user inputs and handle sophisticated queries with structured data output. This not only improves the relevance and accuracy of responses but also enhances the overall interactivity of the applications. By extending model capabilities through external function and tool calling, the model is capable of handling a wide variety of downstream use cases for which it may not have been specifically trained. For example, businesses can deploy Jamba 1.5 models to handle a wide range of queries, from loan term sheet generation for a financial service to shopping assistants for retail stores, all in real time and with high precision.
 
-The MoE module helps increase the model capacity referred to as the total number of available parameters without increasing the computational requirements (number of active parameters). Transformer, Mamba, and MoE layers combined into a singular decoder architecture are collectively referred to as a Jamba block. Each Jamba block can fit in a single NVIDIA H100 80 GB GPU and is configured with eight layers consisting of an attention-to-Mamba ratio of 1:7 layers. MoE is applied to every other layer with a total of 16 experts, out of which two experts are used at each token generation.
+Retrieval-Augmented Generation
 
-By interweaving these architectures, these models achieve a balance between memory usage, less compute for long context, and higher model accuracy. For specific metrics regarding model accuracy, see the AI21 Labs press release.
-
-The model also offers a substantial 256K token context window, which translates to about 800 pages of text. The extended context capability enables the model to process and generate more accurate responses by retaining more relevant information.
-
-Enhancing AI interactivity with function calling and JSON support
-One of the standout capabilities of the Jamba 1.5 models is its robust function calling feature, with support for JSON data interchange. This functionality greatly expands what AI systems can do, enabling them to perform complex actions based on user inputs and handle sophisticated queries with structured data output. 
-
-This not only improves the relevance and accuracy of responses but also enhances the overall interactivity of the applications. By extending model capabilities through external function and tool calling, the model is capable of handling a wide variety of downstream use cases for which it may not have been specifically trained.
-
-For example, businesses can deploy Jamba 1.5 models to handle a wide range of queries— from loan term sheet generation for a financial service to shopping assistants for retail stores—all in real time and with high precision.
-
-Maximizing accuracy with retrieval-augmented generation
 The Jamba 1.5 models effectively fit with retrieval-augmented generation (RAG), enhancing the ability to deliver accurate and contextually relevant responses. With a 256K token context window, the models can manage large volumes of information without needing continuous chunking. This is ideal for scenarios requiring comprehensive data analysis. RAG is particularly useful in environments with extensive and scattered knowledge bases, enabling Jamba 1.5 to simplify retrieval and improve accuracy by providing more relevant information in fewer chunks.
 
-Get started
-Experience the Jamba 1.5 models on the NVIDIA API catalog. They join over 100 popular AI models that are supported by NVIDIA NIM microservices designed to simplify the deployment of performance-optimized open and proprietary foundation models.
+Availability and Integration
 
-NVIDIA is working with leading model builders to support their models on a fully accelerated stack, including Llama 3.1 405B, Mistral 8x22B, Phi-3, Nemotron 340B Reward, and many more. Visit ai.nvidia.com to experience, customize, and deploy these models in enterprise applications.
-
- Discuss (0)
+Users can experience the Jamba 1.5 models on the NVIDIA API catalog. They join over 100 popular AI models that are supported by NVIDIA NIM microservices designed to simplify the deployment of performance-optimized open and proprietary foundation models. NVIDIA is working with leading model builders to support their models on a fully accelerated stack, including Llama 3.1 405B, Mistral 8x22B, Phi-3, Nemotron 340B Reward, and many more. These models are available for users to experience, customize, and deploy in enterprise applications through NVIDIA's platform.
