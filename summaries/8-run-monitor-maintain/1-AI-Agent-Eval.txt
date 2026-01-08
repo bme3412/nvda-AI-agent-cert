@@ -1,128 +1,85 @@
-What is AI agent evaluation?
-AI Agents
-Welcome
-Introduction
-Components
-Architecture
-Protocols
-Multi-agent systems
-Frameworks
-Governance
 Overview
-AI agent ethics
-AI agent evaluation
-What is AI agent evaluation?
-Tutorial: AI agent evaluation
-AI agent security
-Human-in-the-loop
-Agentic RAG
-Use cases / Applications
-Authors
-Cole
-Cole Stryker
-Staff Editor, AI Models
 
-IBM Think
+What Is AI Agent Evaluation?
 
-Michal
-Michal Shmueli-Scheuer
-Distinguished Engineer, AI Benchmarking and Evaluation
+AI agent evaluation represents systematic assessment processes for understanding performance characteristics, decision-making quality, and interaction effectiveness of autonomous AI systems executing tasks and serving users. Evaluation proves essential for agent systems given inherent autonomy creating risks from unintended behaviors, inefficiencies consuming excessive resources, or ethical violations harming users or organizations. Assessment frameworks verify agents behave according to designer intent, operate efficiently within resource constraints, and adhere to ethical principles appropriate to deployment contexts.
 
-AI agent evaluation refers to the process of assessing and understanding the performance of an AI agent in executing tasks, decision-making and interacting with users. Given their inherent autonomy, evaluating agents is essential to promote their proper functioning. AI agents must behave in accordance with their designers’ intent, be efficient and adhere to certain ethical AI principles to serve the needs of the organization. Evaluation helps verify that agents are meeting such requirements, and also helps improve the agent's quality by identifying areas for refinement and optimization.
+The evaluation scope extends beyond traditional text generation quality metrics including coherence, relevance, and faithfulness used for standard large language model benchmarks. Agent systems typically perform complex multi-step operations including iterative reasoning processes, tool invocations accessing external systems, and interaction sequences coordinating multiple components. These sophisticated behaviors require comprehensive evaluation examining intermediate actions including database queries, API invocations, and state transitions alongside final outputs, with each component requiring separate assessment determining contribution to overall task success.
 
-Generative AI (gen AI) agents are often evaluated on traditional text-to-text tasks, similar to standard large language model (LLM) benchmarks, where metrics such as coherence, relevance and faithfulness of the generated text are commonly used. However, GenAI agents typically perform broader and more complex operations — including multi-step reasoning, tool calling and interaction with external systems — which require more comprehensive evaluation. Even when the final output is text, it may be the result of intermediate actions like querying a database or invoking an API, each of which needs to be evaluated separately.
+Output diversity complicates evaluation where agents may not produce textual outputs at all, instead completing actions including record updates, message transmission, or system state modifications. Success measurement for non-textual outcomes focuses on correct execution, state consistency, and side effect appropriateness rather than text quality metrics. The evaluation comprehensiveness ensures assessment captures agent behavior across all dimensions relevant to deployment success rather than focusing narrowly on easily measured text characteristics.
 
-In other cases, the agent may not produce textual output at all, instead completing a task such as updating a record or sending a message, where success is measured by correct execution. Therefore, evaluation must go beyond surface-level text quality and assess overall agent behavior, task success and alignment with user intent. In addition, in order to avoid a development of highly capable but resource-intensive agents, which limit their practical deployment, cost and efficiency measurements must be included as part of the evaluation.
+Beyond functional performance assessment, critical evaluation dimensions include safety ensuring agents avoid harmful behaviors, trustworthiness maintaining user confidence through predictable verifiable outputs, policy compliance adhering to organizational and regulatory requirements, and bias mitigation preventing discriminatory behaviors across user populations. These non-functional dimensions prove essential for real-world deployment in high-stakes environments where agent failures impose substantial costs including safety incidents, trust violations, regulatory penalties, or reputational damage.
 
-Beyond measuring task performance, evaluating AI agents must prioritize critical dimensions such as safety, trustworthiness, policy compliance and bias mitigation. These factors are essential for deploying agents in real-world, high-stakes environments. Evaluation helps ensure that agents avoid harmful or unsafe behavior, maintain user trust through predictable and verifiable outputs, and resist manipulation or misuse.
+Benefits
 
-To achieve these functional (quality, cost) and non-functional (safety) goals, evaluation methods can include benchmark testing, human-in-the-loop assessments, A/B testing and real-world simulations. By systematically evaluating AI agents, organizations can enhance their AI capabilities, optimize automation efforts and enhance business functions while minimizing risks associated with unsafe, unreliable or biased agentic AI.
+Agent evaluation delivers substantial advantages across quality assurance, risk mitigation, optimization guidance, and deployment confidence dimensions addressing critical requirements for production agent systems. Quality assurance benefits emerge from systematic assessment identifying performance gaps, revealing edge cases requiring special handling, and validating improvements actually enhance rather than degrade capabilities. The continuous assessment prevents quality degradation through regression detection, ensures modifications achieve intended improvements, and maintains performance standards throughout system evolution.
 
-Industry newsletter
+Risk mitigation advantages stem from early detection of problematic behaviors before production deployment, identification of vulnerabilities enabling manipulation or misuse, and verification of safety constraints preventing harmful actions. Pre-deployment assessment substantially reduces incident probability compared to discovering issues through user reports after production release. The proactive approach proves particularly valuable for high-stakes applications where incidents impose severe consequences requiring prevention rather than reactive response.
 
-The latest AI trends, brought to you by experts
-Get curated insights on the most important—and intriguing—AI news. Subscribe to our weekly Think newsletter. See the IBM Privacy Statement.
+Optimization guidance directs development efforts toward highest-impact improvements through empirical identification of performance bottlenecks, resource inefficiencies, and capability gaps. Evidence-based optimization proves more effective than intuition-driven development by targeting actual limitations revealed through systematic measurement rather than assumed weaknesses potentially unrelated to user-observed problems. The guidance proves particularly valuable for complex systems where developer intuition fails to predict performance characteristics.
 
-Business email
-johndoe@yourdomain.com
-Subscribe
+Deployment confidence increases through validation that agents meet functional and non-functional requirements before production release. Comprehensive assessment provides evidence supporting deployment decisions, identifies risks requiring mitigation, and establishes baselines for ongoing monitoring detecting production degradation. The confidence proves essential for organizational approval processes requiring evidence of readiness before authorizing production deployment affecting users or business operations.
 
-How AI agent evaluation works
-Evaluating an AI agent requires a structured approach within a broader formal observability framework. Evaluation (or eval) methods differ widely, but the process typically involves the following steps:
+Cost visibility emerges from resource consumption measurement revealing operational expenses from token usage, compute time, and infrastructure requirements. Cost tracking enables comparing alternative implementations evaluating expense-performance tradeoffs, identifying optimization opportunities reducing operational costs, and supporting capacity planning for scaling projections. The visibility proves increasingly important as agent deployments scale where aggregate costs multiply across numerous concurrent operations.
 
-1. Define evaluation goals and metrics
-What’s the purpose of the agent? What are the expected outcomes? How is the AI used in real-world scenarios?
+Evaluation Framework Architecture
 
-See “Common AI agent evaluation metrics” for some of the most popular metrics, which fall under the categories of performance, interaction and user experience, ethical and responsible AI, system and efficiency and task-specific metrics.
+Goal definition establishes evaluation purposes determining what agent capabilities require assessment and why evaluation matters for deployment success. Clear goals focus evaluation efforts on relevant capabilities, prevent wasting resources measuring irrelevant characteristics, and enable interpreting results determining whether performance meets requirements. Goal examples include verifying task completion accuracy, ensuring response latency meets user experience requirements, or validating policy compliance prevents regulatory violations.
 
-2. Collect data and prepare for testing
-To evaluate the AI agent effectively, use representative evaluation datasets, including diverse inputs that are reflecting real-world scenarios and test scenarios that simulate real-time conditions. Annotated data represents a ground truth that AI models can be tested against.
+Metric specification operationalizes goals through quantifiable measurements enabling objective performance assessment. Metrics span multiple categories including task-specific measures evaluating domain-appropriate performance, interaction quality metrics assessing user experience, ethical and responsible AI dimensions measuring safety and fairness, efficiency metrics quantifying resource consumption, and system reliability measures tracking availability and consistency. Comprehensive metric coverage ensures evaluation captures all dimensions relevant to deployment success rather than focusing narrowly on easily measured characteristics.
 
-Map out every potential step of an agent’s workflow, whether it’s calling an API, passing information to a second agent or making a decision. By breaking down the AI workflow into individual pieces, it’s easier to evaluate how the agent handles each step. Also consider the agent’s entire approach across the workflow, or in other words, the execution path the agent takes across solving a multi-step problem.
+Data collection assembles representative test cases reflecting real-world usage patterns, edge cases stressing agent capabilities, and adversarial inputs testing robustness. Dataset diversity proves critical for evaluation validity as limited test coverage fails to reveal behaviors emerging only under specific conditions. Annotated ground truth provides reference outputs enabling automated evaluation through comparison against known-correct responses, though ground truth availability varies across tasks with some scenarios lacking obvious correct answers.
 
-3. Conduct testing
-Run the AI agent in different environments, potentially with different LLMs as their back-bone, and and track performance. Break down individual agent steps and evaluate each. For example, monitor the agent’s use of retrieval augmented generation (RAG) to retrieve information from an external database, or the response of an API call.
+Workflow decomposition maps agent execution paths identifying individual steps, decision points, and component interactions enabling granular assessment. Step-level evaluation determines which workflow phases perform well versus problematic areas requiring improvement. Execution path analysis reveals how agents approach multi-step problems including strategy selection, error recovery, and adaptation to unexpected conditions. The decomposition proves particularly valuable for complex agents where overall performance obscures component-specific strengths and weaknesses.
 
-4. Analyze results
-Compare results with predefined success criteria if they exist, and if not, use LLM-as-a-judge (see below). Assess tradeoffs by balancing performance with ethical considerations.
+Testing execution runs agents across diverse scenarios monitoring behavior, resource consumption, and output quality. Environmental variation including different LLM backends, tool availability, and system conditions reveals robustness and adaptation capabilities. Controlled testing enables isolating specific factors determining cause-effect relationships supporting optimization decisions. Real-world simulation provides realistic evaluation conditions revealing behaviors potentially masked in simplified test environments.
 
-Did the agent pick the right tool? Did it call the correct function? Did it pass along the right information in the right context? Did it produce a factually correct response?
+Result analysis compares outcomes against success criteria when available or employs LLM-based evaluation judges when ground truth proves unavailable or inappropriate. Analysis examines tool selection appropriateness, function calling correctness, context handling effectiveness, and factual accuracy. Tradeoff assessment balances competing objectives including performance versus cost, speed versus accuracy, or autonomy versus safety. The analysis determines whether agents meet deployment requirements and identifies specific improvement opportunities.
 
-Function calling/tool use is a fundamental ability for building intelligent agents capable of delivering real time, contextually accurate responses. Consider a dedicated evaluation and analysis using a rule-based approach along with semantic evaluation using LLM-as-a-judge.
+Optimization iteration applies insights from evaluation results through prompt refinement, algorithm debugging, logic streamlining, or architecture reconfiguration. Iterative development cycles implement changes, re-evaluate performance, and continue refinement until meeting requirements or exhausting improvement opportunities. The iteration proves essential for complex systems where initial implementations rarely achieve optimal performance requiring systematic enhancement.
 
-LLM-as-a-judge is an automated evaluation system that assesses the performance of AI agents by using predefined criteria and metrics. Instead of relying solely on human reviewers, an LLM-as-a-judge applies algorithms, heuristics or AI-based scoring models to evaluate an agent’s responses, decisions or actions.
+Task-Specific Performance Metrics
 
-See “Function Calling evaluation metrics” below.
+LLM-based evaluation judges assess text generation quality using predefined criteria applied by language models rather than human reviewers. Judge-based evaluation proves particularly valuable when ground truth proves unavailable, subjective quality assessment requires expertise, or evaluation scale prohibits manual review. The automated approach maintains consistency across evaluations, operates at scale processing numerous examples rapidly, and applies sophisticated criteria potentially exceeding simple heuristic capabilities.
 
-5. Optimize and iterate
-Developers can now tweak prompts, debug algorithms, streamline logic or configure agentic architectures based on evaluation results. For example, customer support use cases can be improved by accelerating response generation and task completion times. System efficiency can be optimized for scalability and resource usage.
+Reference-based comparison metrics including BLEU and ROUGE evaluate generated text quality through similarity measurement against human-written references. These automated metrics provide cost-effective alternatives to human evaluation enabling rapid assessment across large datasets. The metrics prove most effective for tasks with clear correct outputs where reference similarity indicates quality, though limitations include inability to recognize valid alternative phrasings and sensitivity to superficial wording differences.
 
-AI agents
+Success rate measurement quantifies task completion proportion determining how frequently agents correctly complete attempted objectives. High success rates indicate reliable performance while low rates reveal systematic problems requiring investigation. Success definition varies by task with some scenarios having clear completion criteria while others require nuanced judgment about partial success or quality thresholds.
 
-What are AI Agents?
-What are AI agents?
-From monolithic models to compound AI systems, discover how AI agents integrate with databases and external tools to enhance problem-solving capabilities and adaptability.
+Error rate tracking quantifies incorrect outputs or failed operations revealing reliability issues and vulnerability to specific input patterns. Error analysis categorizes failure modes identifying systematic weaknesses versus random errors, enabling targeted improvements addressing root causes. Low error rates prove essential for production deployment where user-facing failures damage trust and satisfaction.
 
-Learn more 
-Common AI agent evaluation metrics
-Developers want agents to work as intended. And given the autonomy of AI agents, it’s important to understand the “why” behind the decisions that AI makes. Review some of the most common metrics that developers can use to successfully evaluate their agents.
+Cost measurement quantifies resource consumption including token usage from LLM API calls, compute time for processing, and infrastructure expenses from deployment. Per-operation cost tracking enables comparing alternative implementations, optimizing expensive operations, and projecting scaling costs. Cost awareness proves increasingly critical as deployment scales where small per-operation expenses multiply into substantial aggregate costs.
 
-Task-specific
-Depending on the AI application, specific evaluation metrics for quality can apply:
+Latency measurement tracks processing time from request submission through result delivery revealing responsiveness characteristics. Latency distributions expose not just average performance but consistency and tail behavior determining worst-case user experience. Low latency proves critical for interactive applications where delays degrade user experience while batch processing tolerates higher latency given throughput prioritization.
 
-LLM as a judge evaluates the quality of AI text generation regardless of the availability of ground-truth data.
-BLEU and ROUGE are lower-cost alternatives that evaluate the quality of AI-generated text by comparing it to human-written text.
-Other functional metrics for assessing AI agent performance include:
+Ethical and Safety Metrics
 
-Success rate/task completion measures the proportion of tasks or goals that the agent completes correctly or satisfactorily out of the total number
-attempted.
-Error rate is the percentage of incorrect outputs or failed operations.
-Cost measures resource usage, like tokens or compute time.
-Latency is the time taken for an AI agent to process and return results.
-Ethical and responsible AI
-Prompt injection vulnerability evaluates success rate of adversarial prompts, altering the agent's intended behavior.
-Policy adherence rate is a percentage of responses that comply with pre-defined organizational or ethical policies.
-Bias and fairness score detects disparities in AI decision-making across different user groups.
-Interaction and user experience
-For AI agents that interact with users, such as chatbots and virtual assistants, evaluators look at these metrics.
+Adversarial robustness evaluation assesses resistance to prompt injection attacks attempting to alter intended behavior through malicious inputs. Injection vulnerability testing measures success rates of adversarial prompts, revealing security weaknesses enabling misuse. High robustness proves essential for production deployment where adversaries may attempt manipulation for malicious purposes including data exfiltration, unauthorized access, or service disruption.
 
-User satisfaction score (CSAT) measures how satisfied users are with AI responses.
+Policy adherence measurement tracks compliance with organizational guidelines, ethical principles, and regulatory requirements through automated checking of outputs against defined policies. Adherence rates quantify compliance levels, while violation analysis categorizes policy breach types enabling targeted improvement. High adherence proves essential for regulated industries or sensitive applications where violations impose legal liability or reputational damage.
 
-Engagement rate tracks how often users interact with the AI system.
+Bias and fairness assessment detects performance disparities across user groups defined by demographic characteristics, usage patterns, or other attributes. Fairness metrics reveal whether agents provide equitable service or exhibit systematic biases favoring particular populations. Bias mitigation proves critical for ethical deployment ensuring agents serve diverse populations appropriately without discrimination.
 
-Conversational flow evaluates the AI’s ability to maintain coherent and meaningful conversations.
+Safety evaluation verifies agents avoid harmful behaviors including generating dangerous content, enabling harmful actions, or producing outputs causing psychological or physical harm. Safety assessment examines both direct harms from agent outputs and indirect harms from actions enabled by agent assistance. Comprehensive safety validation proves essential before deploying agents in contexts where failures could harm users or bystanders.
 
-Task completion rate measures how effectively the AI agent helps users complete a task.
+Interaction Quality Metrics
 
-Function Calling
-These rule-based metrics help assess the operational effectiveness of AI-driven systems:
+User satisfaction measurement captures subjective quality assessments through rating mechanisms, surveys, or implicit feedback signals. Satisfaction scores reveal whether agents meet user expectations and preferences beyond objective performance metrics. High satisfaction proves essential for adoption and continued usage even when agents perform tasks correctly if interactions prove frustrating or unhelpful.
 
-Wrong function name: The agent attempted to call a function that exists but used an incorrect name or spelling, leading to a failure in execution.
-Missing required parameters: The agent initiated a function call but omitted one or more parameters that are necessary for the function to work.
-Wrong parameter value type: The agent supplied a parameter value, but its type (string, number, boolean) did not match what the function expected.
-Allowed values: The agent used a value that is outside the set of accepted or predefined values for a specific parameter.
-Hallucinated parameter: The agent included a parameter in the function call that is not defined or supported by the function’s specification.
-Here are some semantic metrics that are based on LLM-as-a-judge.
+Engagement tracking monitors interaction frequency, session duration, and feature usage revealing whether users find agents valuable enough for repeated use. High engagement indicates agents provide sufficient value justifying usage costs, while declining engagement signals problems requiring investigation. Engagement patterns reveal which capabilities users value versus underutilized features potentially candidates for removal or improvement.
 
-Parameter value grounding helps ensure that every parameter value is directly derived from the user’s text, the context history (such as previous outputs of API calls), or API specification defaults.
-Unit transformation verifies unit or format conversions (beyond basic types) between values in the context and the parameter values in the tool call.
+Conversational flow assessment evaluates dialogue coherence, context maintenance, and natural interaction progression for conversational agents. Flow quality determines whether interactions feel natural versus stilted or confusing, directly impacting user experience. Smooth conversational flow proves particularly important for customer-facing agents where poor interactions damage brand perception and user satisfaction.
+
+Task completion assistance measures how effectively agents help users accomplish objectives including both direct task completion and guidance enabling users to complete tasks themselves. Assistance quality determines agent utility for intended purposes, with ineffective assistance rendering agents useless despite theoretical capabilities. High completion rates prove essential for justifying agent deployment investments.
+
+Function Calling Performance Metrics
+
+Function selection accuracy evaluates whether agents choose appropriate tools from available options for task requirements. Selection errors including wrong function choices or inappropriate tool combinations reveal planning or reasoning weaknesses. Accurate selection proves essential for multi-tool environments where incorrect choices waste resources or produce inappropriate results.
+
+Parameter specification correctness assesses whether function calls include required parameters with appropriate values and types. Common errors include missing required parameters preventing execution, wrong value types causing runtime errors, disallowed values violating constraints, and hallucinated parameters attempting to use non-existent functionality. Parameter correctness directly determines whether function calls execute successfully.
+
+Parameter grounding verification ensures values derive from user inputs, conversation context, or API specifications rather than agent hallucinations. Grounded parameters prove factually justified and appropriate to context, while ungrounded values risk errors from incorrect assumptions or fabricated information. Grounding validation proves critical for maintaining factual accuracy and user trust.
+
+Unit transformation validation verifies format and unit conversions between context values and function parameters maintain correctness. Conversion errors including incorrect unit transformations or format mismatches cause functional failures despite otherwise correct logic. Transformation accuracy proves essential for agents working with diverse data formats and measurement systems.
+
+Semantic correctness evaluation using LLM judges assesses whether function calls appropriately implement user intent beyond syntactic correctness. Semantic evaluation catches errors including technically correct but contextually inappropriate calls, parameter values satisfying type constraints but violating semantic intent, and function sequences technically executable but failing to achieve user goals. The higher-level assessment proves essential for ensuring agents truly serve user needs rather than just syntactically valid but unhelpful operations.

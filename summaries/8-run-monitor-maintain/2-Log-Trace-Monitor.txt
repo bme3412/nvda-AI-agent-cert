@@ -1,163 +1,89 @@
-# Log, Trace, and Monitor
+Overview
 
-When building apps or agents using LangChain, you end up making multiple API calls to fulfill a single user request. However, these requests are not chained when you want to analyse them. With [**Portkey**](/oss/python/integrations/providers/portkey/), all the embeddings, completions, and other requests from a single user request will get logged and traced to a common ID, enabling you to gain full visibility of user interactions.
+What Is LLM Logging and Tracing?
 
-This notebook serves as a step-by-step guide on how to log, trace, and monitor LangChain LLM calls using `Portkey` in your LangChain app.
+LLM logging and tracing represents observability framework for tracking, correlating, and analyzing API calls within generative AI applications where single user requests trigger multiple backend operations. Application complexity emerges from chaining embeddings, completions, tool invocations, and other API calls executing individual request fulfillment, with these distributed operations requiring unified visibility enabling understanding of complete user interaction flows rather than isolated API call analysis.
 
-First, let's import Portkey, OpenAI, and Agent tools
+Observability challenges arise when API calls execute independently without correlation mechanisms linking related operations. Traditional logging approaches treat each API call as isolated event, obscuring relationships between operations serving common user requests and preventing holistic analysis of user experience, error propagation patterns, or resource consumption across complete interaction sequences. The fragmented visibility impedes troubleshooting, performance optimization, and cost analysis requiring understanding of complete request lifecycles.
 
-```python  theme={null}
-import os
+Trace correlation mechanisms associate related API calls through common identifiers enabling reconstruction of complete request flows from disparate operations. Trace IDs propagate across operation boundaries linking embeddings, completions, tool executions, and other calls originating from single user interactions. The correlation enables analyzing complete interaction patterns, identifying bottlenecks spanning multiple operations, and understanding cost accumulation across chained calls rather than viewing operations in isolation.
 
-from langchain.agents import AgentExecutor, create_openai_tools_agent
-from langchain_openai import ChatOpenAI
-from portkey_ai import PORTKEY_GATEWAY_URL, createHeaders
-```
+Production deployment requirements demand comprehensive observability supporting operational monitoring, performance optimization, cost management, and troubleshooting across distributed AI application architectures. Observability frameworks provide visibility into request patterns, error conditions, latency characteristics, and resource consumption enabling data-driven optimization, proactive issue detection, and capacity planning. The comprehensive visibility proves essential for maintaining service level objectives, controlling operational costs, and ensuring reliable user experiences.
 
-Paste your OpenAI API key below. [(You can find it here)](https://platform.openai.com/account/api-keys)
+Benefits
 
-```python  theme={null}
-os.environ["OPENAI_API_KEY"] = "..."
-```
+Logging and tracing delivers substantial advantages across operational visibility, troubleshooting efficiency, cost management, and optimization guidance dimensions addressing critical requirements for production AI applications. Operational visibility benefits emerge from comprehensive request tracking capturing all operations, unified view of distributed executions through trace correlation, and detailed metadata including timestamps, model selections, costs, latencies, request payloads, and response contents supporting diverse analysis requirements.
 
-## Get Portkey API Key
+Troubleshooting efficiency improvements result from end-to-end request flow visibility enabling rapid issue identification, error propagation tracking revealing root causes across operation chains, and detailed request-response logging supporting reproduction and diagnosis. The comprehensive context proves particularly valuable for intermittent issues difficult to reproduce or errors manifesting only under specific interaction patterns invisible without trace-level visibility.
 
-1. Sign up for [Portkey here](https://app.portkey.ai/signup)
-2. On your [dashboard](https://app.portkey.ai/), click on the profile icon on the bottom left, then click on "Copy API Key"
-3. Paste it below
+Cost management capabilities enable precise expense attribution to user requests aggregating costs across multiple API calls, identification of expensive interaction patterns consuming disproportionate resources, and cost trend analysis revealing usage patterns and optimization opportunities. The granular cost visibility proves increasingly important as deployments scale where small per-operation expenses multiply into substantial aggregate costs requiring optimization for economic sustainability.
 
-```python  theme={null}
-PORTKEY_API_KEY = "..."  # Paste your Portkey API Key here
-```
+Optimization guidance emerges from performance pattern identification revealing bottlenecks, inefficiencies, and improvement opportunities across request flows. Latency analysis across operation sequences identifies slow components limiting overall responsiveness, caching opportunity detection reveals repeated identical or similar requests suitable for response reuse, and usage pattern analysis informs architecture decisions including parallelization opportunities or workflow simplification.
 
-## Set Trace ID
+User interaction analysis leverages tracing enabling understanding of application usage patterns, feature utilization tracking, and user journey mapping. The interaction insights guide product development priorities, identify underutilized capabilities potentially candidates for deprecation, and reveal user behavior patterns informing feature design. The analysis proves valuable beyond operational concerns for strategic product decisions.
 
-1. Set the trace id for your request below
-2. The Trace ID can be common for all API calls originating from a single request
+Logging Architecture
 
-```python  theme={null}
-TRACE_ID = "uuid-trace-id"  # Set trace id here
-```
+Request interception mechanisms capture API calls routing through observability platforms before reaching destination services. Interception enables transparent logging without application code modifications beyond initial configuration, ensuring comprehensive capture of all operations regardless of specific implementation details. The transparency proves particularly valuable for complex applications where manual instrumentation throughout codebase proves error-prone and maintenance-intensive.
 
-## Generate Portkey Headers
+Metadata extraction captures comprehensive operation characteristics including invocation timestamps enabling temporal analysis, model identifiers tracking which models handle requests, total costs quantifying per-operation expenses, execution times measuring operation latency, request payloads preserving input context, and response payloads capturing outputs. The comprehensive metadata supports diverse analysis requirements from cost tracking through performance optimization to behavioral understanding.
 
-```python  theme={null}
-portkey_headers = createHeaders(
-    api_key=PORTKEY_API_KEY, provider="openai", trace_id=TRACE_ID
-)
-```
+Persistence mechanisms store logged data enabling historical analysis, trend identification, and compliance documentation. Storage strategies balance retention duration against storage costs, with recent data maintained for operational monitoring while historical data potentially sampled or aggregated reducing storage requirements. Query capabilities enable flexible analysis supporting operational dashboards, ad-hoc investigation, and automated alerting.
 
-Define the prompts and the tools to use
+Default logging ensures comprehensive capture without requiring explicit per-request instrumentation, reducing implementation burden and preventing logging gaps from forgotten instrumentation. Automatic capture proves particularly valuable during development where focus on functionality may lead to neglecting logging until production issues reveal inadequate visibility. The default approach ensures baseline observability from initial deployment.
 
-```python  theme={null}
-from langchain_classic import hub
-from langchain.tools import tool
+Tracing Architecture
 
-prompt = hub.pull("hwchase17/openai-tools-agent")
+Trace identifier propagation links related operations through common identifiers passed across operation boundaries. Applications assign trace IDs representing logical user requests, with identifiers propagating through all operations serving those requests. The propagation enables reconstructing complete request flows from logged operations sharing common trace IDs, transforming isolated operation logs into coherent interaction sequences.
 
+Identifier assignment strategies determine trace ID allocation approaches. Single trace IDs per user session enable analyzing complete user interactions across multiple requests, request-level trace IDs provide finer granularity distinguishing individual operations while maintaining multi-operation correlation, and custom identifiers enable application-specific grouping supporting specialized analysis requirements. Appropriate identifier strategy selection balances granularity against complexity matching specific analysis needs.
 
-@tool
-def multiply(first_int: int, second_int: int) -> int:
-    """Multiply two integers together."""
-    return first_int * second_int
+Trace visualization presents correlated operations in coherent views revealing execution sequences, timing relationships, and data flow across operations. Timeline visualizations display operation ordering and duration enabling identification of sequential bottlenecks, dependency graphs show operation relationships revealing parallelization opportunities, and hierarchical displays represent nested operation structures clarifying system architecture. The visual representations prove more interpretable than raw log data for understanding complex interaction patterns.
 
+User feedback association enables correlating subjective quality assessments with objective trace data. Feedback mechanisms capture user satisfaction ratings, issue reports, or success indicators associated with specific trace IDs. The correlation enables identifying interaction patterns associated with positive or negative user experiences, validating that optimization efforts actually improve user satisfaction, and prioritizing improvements addressing issues impacting user-perceived quality.
 
-@tool
-def exponentiate(base: int, exponent: int) -> int:
-    "Exponentiate the base to the exponent power."
-    return base**exponent
+Dashboard integration presents trace data through operational monitoring interfaces supporting real-time visibility, alerting on anomalous patterns, and trend analysis. Dashboards aggregate trace data revealing usage patterns, error rates, latency distributions, and cost accumulation at various granularities from individual users through aggregate system-wide metrics. The dashboards prove essential for proactive operational management rather than reactive issue response.
 
+Caching Capabilities
 
-tools = [multiply, exponentiate]
-```
+Response caching eliminates redundant API calls by serving previously computed responses for identical or similar requests. Cache mechanisms intercept requests, compute cache keys based on request characteristics, query cache storage for matching entries, and return cached responses when available avoiding downstream API invocation. The caching substantially reduces costs and latency for workloads exhibiting request repetition.
 
-Run your agent as usual. The **only** change is that we will **include the above headers** in the request now.
+Exact matching identifies requests identical to previous invocations through precise comparison of request parameters including prompts, model selections, and configuration settings. Exact matching provides perfect precision ensuring cached responses match current requests exactly, though limited recall missing opportunities from semantically equivalent but textually different requests. The approach proves most effective for highly structured requests with limited variation.
 
-```python  theme={null}
-model = ChatOpenAI(
-    base_url=PORTKEY_GATEWAY_URL, default_headers=portkey_headers, temperature=0
-)
+Semantic similarity matching identifies requests conveying similar meaning despite textual differences through embedding-based comparison. Semantic approaches compute request embeddings, perform similarity search in embedding space, and return cached responses for sufficiently similar previous requests. The semantic matching increases cache hit rates compared to exact matching by recognizing equivalent requests phrased differently, though introduces risk of inappropriate matches when semantic similarity inadequately captures relevant differences.
 
-# Construct the OpenAI Tools agent
-agent = create_openai_tools_agent(model, tools, prompt)
+Cache invalidation strategies determine when cached responses become stale requiring refresh. Time-based expiration removes entries after configured durations appropriate to content volatility, explicit invalidation enables targeted cache clearing when underlying data changes, and usage-based eviction removes least-recently-used entries when cache capacity constraints require space reclamation. Appropriate invalidation balances cache effectiveness against staleness risks.
 
-# Create an agent executor by passing in the agent and tools
-agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+Performance improvements from caching prove substantial with latency reductions potentially reaching twenty-fold speedups by eliminating API round-trips and model execution. Cost savings accumulate proportionally to cache hit rates with high hit rate workloads achieving dramatic expense reductions. The improvements prove particularly valuable for read-heavy workloads where same information serves numerous requests.
 
-agent_executor.invoke(
-    {
-        "input": "Take 3 to the fifth power and multiply that by thirty six, then square the result"
-    }
-)
-```
+Retry Mechanisms
 
-```text  theme={null}
-> Entering new AgentExecutor chain...
+Automatic retry capabilities handle transient failures through configurable re-execution policies eliminating manual retry implementation. Retry mechanisms detect failed requests based on error codes, status indicators, or timeout conditions, automatically resubmit requests according to configured policies, and surface persistent failures after exhausting retry attempts. The automation improves reliability by recovering from transient issues without application-level retry logic.
 
-Invoking: `exponentiate` with `{'base': 3, 'exponent': 5}`
+Exponential backoff strategies space retry attempts with progressively increasing delays preventing overwhelming services experiencing difficulties. Initial retries occur rapidly handling brief transient issues, while subsequent attempts delay progressively allowing extended recovery time for persistent problems. The backoff prevents retry storms where massive simultaneous retry volumes exacerbate service difficulties rather than allowing recovery.
 
+Retry attempt limits prevent infinite retry loops wasting resources on fundamentally unrecoverable failures. Configurable maximum attempts balance persistence against futility, with typical configurations allowing multiple retries handling most transient issues while preventing indefinite retry attempts on permanent failures. The limits prove essential for avoiding resource exhaustion from retrying inherently failing requests.
 
-243
-Invoking: `multiply` with `{'first_int': 243, 'second_int': 36}`
+Failure classification distinguishes transient issues suitable for retry from permanent failures requiring different handling. Transient failures including network timeouts, rate limiting, and service unavailability benefit from retry, while permanent failures including authentication errors, invalid requests, or resource not found conditions should surface immediately without retry. Appropriate classification prevents wasting retry attempts on unrecoverable failures while ensuring transient issues receive retry handling.
 
+Reliability improvements from automatic retry substantially reduce user-visible failures from transient issues, improve perceived service quality through transparent failure recovery, and simplify application code by eliminating custom retry logic. The reliability enhancement proves particularly valuable for production systems where availability requirements demand handling transient failures gracefully.
 
-8748
-Invoking: `exponentiate` with `{'base': 8748, 'exponent': 2}`
+Tagging and Metadata
 
+Tag mechanisms attach custom metadata to operations enabling flexible categorization, filtering, and analysis. Tags represent key-value pairs capturing operation characteristics including user identifiers enabling per-user analysis, session identifiers grouping related interactions, feature flags tracking experimental variations, or custom attributes supporting application-specific analysis requirements. The flexible tagging enables diverse analysis dimensions beyond standard logged attributes.
 
-76527504The result of taking 3 to the fifth power, multiplying it by 36, and then squaring the result is 76,527,504.
+Predefined tag schemas establish organizational standards ensuring consistent tagging across applications and teams. Schema standardization enables cross-application analysis, simplifies dashboard configuration through predictable tag structures, and prevents tag proliferation from inconsistent naming. The standardization proves particularly valuable for large organizations deploying numerous applications where ad-hoc tagging creates analysis complexity.
 
-> Finished chain.
-```
+Audit trail capabilities leverage tags for compliance documentation tracking user interactions, access patterns, and data processing activities. Compliance requirements often demand detailed interaction tracking, user consent verification, and data lineage documentation supported through comprehensive tagging. The audit capabilities prove essential for regulated industries where documentation requirements demand detailed operational records.
 
-```text  theme={null}
-{'input': 'Take 3 to the fifth power and multiply that by thirty six, then square the result',
- 'output': 'The result of taking 3 to the fifth power, multiplying it by 36, and then squaring the result is 76,527,504.'}
-```
+Analytics enablement through tags supports sophisticated analysis including cohort comparison across user segments, A/B test evaluation comparing tagged experimental variations, and usage pattern analysis revealing feature adoption. The analytical flexibility proves valuable for data-driven product development, operational optimization, and business intelligence requiring understanding of detailed usage characteristics.
 
-## How Logging & Tracing Works on Portkey
+Production Deployment Considerations
 
-**Logging**
+Gateway integration routes API traffic through observability platforms providing interception points for logging, tracing, caching, and retry handling. Gateway architecture centralizes observability logic avoiding distributed instrumentation across application code, simplifies policy enforcement through centralized control points, and enables transparent feature adoption without application modifications. The centralization proves particularly valuable for organizations managing numerous applications requiring consistent observability.
 
-* Sending your request through Portkey ensures that all of the requests are logged by default
-* Each request log contains `timestamp`, `model name`, `total cost`, `request time`, `request json`, `response json`, and additional Portkey features
+Header propagation mechanisms transmit observability metadata including trace identifiers, cache directives, and retry policies through HTTP headers attached to API requests. Header-based approaches maintain stateless request handling, enable middleware processing at multiple layers, and support standard HTTP semantics familiar to developers. The standard approach ensures broad compatibility across frameworks and infrastructure components.
 
-**[Tracing](https://portkey.ai/docs/product/observability-modern-monitoring-for-llms/traces)**
+Performance overhead considerations evaluate observability costs including network latency from gateway routing, processing time for logging and metadata extraction, and storage costs for logged data. Overhead minimization through efficient implementations, selective logging for critical operations, and asynchronous processing prevents observability from significantly degrading application performance. The overhead management ensures observability value exceeds costs.
 
-* Trace id is passed along with each request and is visible on the logs on Portkey dashboard
-* You can also set a **distinct trace id** for each request if you want
-* You can append user feedback to a trace id as well. [More info on this here](https://portkey.ai/docs/product/observability-modern-monitoring-for-llms/feedback)
-
-For the above request, you will be able to view the entire log trace like this
-![View LangChain traces on Portkey](https://assets.portkey.ai/docs/agent_tracing.gif)
-
-## Advanced LLMOps Features - Caching, Tagging, Retries
-
-In addition to logging and tracing, Portkey provides more features that add production capabilities to your existing workflows:
-
-**Caching**
-
-Respond to previously served customers queries from cache instead of sending them again to OpenAI. Match exact strings OR semantically similar strings. Cache can save costs and reduce latencies by 20x. [Docs](https://portkey.ai/docs/product/ai-gateway-streamline-llm-integrations/cache-simple-and-semantic)
-
-**Retries**
-
-Automatically reprocess any unsuccessful API requests **`upto 5`** times. Uses an **`exponential backoff`** strategy, which spaces out retry attempts to prevent network overload. [Docs](https://portkey.ai/docs/product/ai-gateway-streamline-llm-integrations)
-
-**Tagging**
-
-Track and audit each user interaction in high detail with predefined tags. [Docs](https://portkey.ai/docs/product/observability-modern-monitoring-for-llms/metadata)
-
-***
-
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/portkey/logging_tracing_portkey.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-</Callout>
-
-<Tip icon="terminal" iconType="regular">
-  [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-</Tip>
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.langchain.com/llms.txt
+Integration complexity varies based on application architecture with simple applications requiring minimal configuration while complex distributed systems may need sophisticated trace propagation across service boundaries. Integration approaches balance ease of adoption against feature completeness, with progressive enhancement enabling starting with basic logging and adding sophisticated features as needed. The flexible integration accommodates diverse deployment scenarios and organizational maturity levels.

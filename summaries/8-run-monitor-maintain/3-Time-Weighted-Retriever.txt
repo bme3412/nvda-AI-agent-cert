@@ -1,83 +1,83 @@
-# Time-Weighted Retriever
+Overview
 
-A Time-Weighted Retriever is a retriever that takes into account recency in addition to similarity. The scoring algorithm is:
+What Is Time-Weighted Retrieval?
 
-```typescript  theme={null}
-let score = (1.0 - this.decayRate) ** hoursPassed + vectorRelevance;
-```
+Time-weighted retrieval represents enhancement to semantic similarity search incorporating temporal recency factors into document ranking algorithms. Standard vector retrieval selects documents based solely on embedding similarity to query vectors, disregarding temporal characteristics including document creation time, modification timestamps, or access patterns. The temporal-agnostic approach proves suboptimal for applications where information relevance depends on recency alongside semantic relevance, such as conversational systems requiring awareness of recent discussion context or information retrieval favoring current data over outdated content.
 
-Notably, `hoursPassed` above refers to the time since the object in the retriever was last accessed, not since it was created. This means that frequently accessed objects remain "fresh" and score higher.
+Temporal weighting mechanisms modify similarity scores through decay functions diminishing relevance of documents based on time since last access. The combined scoring integrates semantic relevance from vector similarity with temporal relevance from recency calculations, producing final rankings balancing both dimensions rather than optimizing either independently. The hybrid approach proves particularly valuable for applications where neither pure semantic matching nor pure recency ordering provides optimal results requiring nuanced tradeoff between dimensions.
 
-`this.decayRate` is a configurable decimal number between 0 and 1. A lower number means that documents will be "remembered" for longer, while a higher number strongly weights more recently accessed documents.
+Access-based temporal tracking distinguishes time-weighted approaches from creation-based or modification-based alternatives by measuring recency from last retrieval rather than document origin. Frequently accessed documents maintain temporal freshness despite potentially old creation dates, while infrequently accessed documents decay regardless of recent creation. The access-based approach proves particularly appropriate for conversational memory and cache-like scenarios where usage patterns determine ongoing relevance more accurately than creation or modification timestamps.
 
-Note that setting a decay rate of exactly 0 or 1 makes `hoursPassed` irrelevant and makes this retriever equivalent to a standard vector lookup.
+Decay rate configuration provides tunable control over temporal weighting strength determining how aggressively older documents lose relevance. Low decay rates preserve document relevance across extended time periods reducing temporal influence on rankings, while high decay rates strongly favor recently accessed content rapidly diminishing older document scores. The configurability enables adapting retrieval behavior to application-specific requirements balancing stability of results against responsiveness to temporal patterns.
 
-## Usage
+Benefits
 
-This example shows how to intialize a `TimeWeightedVectorStoreRetriever` with a vector store.
-It is important to note that due to required metadata, all documents must be added to the backing vector store using the `addDocuments` method on the **retriever**, not the vector store itself.
+Time-weighted retrieval delivers substantial advantages across conversational coherence, adaptive relevance, cache-like behavior, and application flexibility dimensions addressing limitations of pure similarity-based retrieval. Conversational coherence improvements emerge from maintaining awareness of recent discussion context through temporal boosting of recently mentioned information. The recency bias enables agents to reference recent conversation elements appropriately rather than retrieving semantically similar but temporally distant content disrupting conversational flow.
 
-```typescript  theme={null}
-import { TimeWeightedVectorStoreRetriever } from "@langchain/classic/retrievers/time_weighted";
-import { MemoryVectorStore } from "@langchain/classic/vectorstores/memory";
-import { OpenAIEmbeddings } from "@langchain/openai";
+Adaptive relevance mechanisms enable retrieval systems to learn implicit importance signals from access patterns without explicit relevance feedback. Frequently accessed documents accumulate temporal freshness through repeated retrieval indicating ongoing relevance, while neglected documents decay suggesting diminishing importance. The implicit learning proves particularly valuable for systems lacking explicit relevance signals or where user behavior provides more reliable importance indicators than static relevance judgments.
 
-const vectorStore = new MemoryVectorStore(new OpenAIEmbeddings());
+Cache-like behavior emerges from access-based temporal tracking creating retrieval patterns resembling cache replacement policies. Recently used documents remain readily accessible through temporal boosting analogous to cache retention, while unused documents eventually become difficult to retrieve through temporal decay analogous to cache eviction. The cache-like characteristics prove valuable for applications benefiting from locality of reference where recent access patterns predict future access needs.
 
-const retriever = new TimeWeightedVectorStoreRetriever({
-  vectorStore,
-  memoryStream: [],
-  searchKwargs: 2,
-});
+Application flexibility benefits from decay rate tuning enabling single retrieval mechanism serving diverse use cases through configuration rather than requiring separate implementations. Minimal decay approximates standard vector retrieval for applications prioritizing semantic similarity, moderate decay balances temporal and semantic factors for general-purpose retrieval, and aggressive decay creates strongly recency-biased retrieval for cache-like scenarios. The configurability reduces implementation complexity by supporting varied requirements through unified parameterized approach.
 
-const documents = [
-  "My name is John.",
-  "My name is Bob.",
-  "My favourite food is pizza.",
-  "My favourite food is pasta.",
-  "My favourite food is sushi.",
-].map((pageContent) => ({ pageContent, metadata: {} }));
+Temporal awareness eliminates need for explicit temporal filtering or separate recency-based retrieval stages. Single integrated retrieval operation simultaneously considers semantic relevance and temporal factors producing optimally balanced results rather than requiring multi-stage pipelines combining separate semantic and temporal retrieval. The integration simplifies application architecture while potentially improving result quality through holistic optimization.
 
-// All documents must be added using this method on the retriever (not the vector store!)
-// so that the correct access history metadata is populated
-await retriever.addDocuments(documents);
+Scoring Algorithm Architecture
 
-const results1 = await retriever.invoke("What is my favourite food?");
+Combined scoring computation integrates semantic similarity from vector comparison with temporal relevance from decay calculation producing unified relevance scores. The algorithm applies exponential decay to elapsed time since last access, scales decay by configurable rate parameter, and combines decayed temporal factor with vector similarity score. The mathematical formulation enables tuning temporal influence through single decay rate parameter while maintaining consistent scoring semantics.
 
-console.log(results1);
+Exponential decay implementation applies decay rate raised to power of elapsed time measured in hours since last document access. The exponential function creates smooth continuous decay where relevance decreases progressively over time rather than discrete thresholds or linear degradation. Exponential characteristics prove mathematically convenient while matching intuitive expectations that recent information matters substantially more than ancient data with intermediate ages receiving intermediate weighting.
 
-/*
-[
-  Document { pageContent: 'My favourite food is pasta.', metadata: {} }
-]
- */
+Decay rate parameterization determines temporal weighting strength through decimal values between zero and one controlling decay aggressiveness. Rate values near zero produce minimal temporal influence preserving document relevance across extended periods, intermediate values create moderate temporal bias balancing recency against semantic relevance, and values approaching one impose strong recency preference rapidly diminishing older document scores. The bounded parameterization prevents pathological configurations while spanning useful behavioral range.
 
-const results2 = await retriever.invoke("What is my favourite food?");
+Semantic similarity contribution from vector relevance scores combines with temporal factors through additive integration preserving both signal types. Vector similarity scores typically range zero to one representing embedding similarity between queries and documents, with higher values indicating stronger semantic matches. The additive combination enables documents to score highly through either strong semantic similarity or strong temporal recency, supporting retrieval of either semantically relevant recent information or highly relevant older information.
 
-console.log(results2);
+Extreme configuration handling addresses special cases including zero decay creating pure similarity-based retrieval and unit decay creating pure recency-based ordering. Zero decay eliminates temporal influence making hoursPassed term vanish from scoring, reducing algorithm to standard vector similarity ranking. Unit decay eliminates semantic contribution making vector relevance irrelevant, creating pure temporal ordering. The extreme cases enable graceful degradation to standard retrieval modes when temporal weighting proves inappropriate.
 
-/*
-[
-  Document { pageContent: 'My favourite food is pasta.', metadata: {} }
-]
- */
-```
+Access Tracking Architecture
 
-## Related
+Metadata augmentation attaches temporal tracking information to documents enabling subsequent access time queries. Last access timestamps record most recent retrieval time for each document, access counters potentially track retrieval frequency, and initialization timestamps capture document insertion time establishing temporal baselines. The metadata persistence proves essential for temporal scoring requiring access to historical usage patterns surviving system restarts.
 
-* [Retrieval guide](/oss/javascript/langchain/retrieval)
+Automatic timestamp updates occur transparently during retrieval operations maintaining accurate access time records without explicit application intervention. Retrieval operations atomically update last access timestamps before returning documents ensuring temporal metadata reflects actual usage patterns. The automatic maintenance eliminates manual timestamp management reducing implementation complexity and preventing inconsistencies from forgotten updates.
 
-***
+Initialization requirements mandate using dedicated document addition methods rather than direct vector store insertion ensuring proper metadata initialization. Standard vector store insertion lacks awareness of temporal tracking requirements potentially omitting access metadata or using incorrect initialization values. Dedicated addition methods guarantee appropriate metadata attachment including initial timestamps and access counters establishing correct baselines for subsequent temporal scoring.
 
-<Callout icon="pen-to-square" iconType="regular">
-  [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/retrievers/time-weighted-retriever.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-</Callout>
+Metadata persistence mechanisms maintain temporal information across system restarts enabling long-term temporal pattern accumulation. Vector store backends supporting metadata persistence automatically preserve access times and counters, while memory-based stores may lose temporal information requiring reinitialization. The persistence requirements influence vector store selection for applications depending on long-term temporal tracking.
 
-<Tip icon="terminal" iconType="regular">
-  [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-</Tip>
+Clock synchronization considerations address challenges from distributed systems or extended offline periods potentially creating temporal inconsistencies. Clock drift across distributed components may cause access timestamp inaccuracies affecting temporal scoring, while system downtime creates temporal gaps where access patterns fail to update. Robust implementations address synchronization through standard time sources and handle gaps gracefully preventing temporal anomalies from degrading retrieval quality.
 
+Configuration and Tuning
 
----
+Decay rate selection determines application-specific tradeoff between temporal and semantic relevance based on use case requirements. Conversational applications often benefit from moderate to aggressive decay maintaining focus on recent context, while knowledge retrieval applications may prefer minimal decay prioritizing semantic relevance over recency. Empirical tuning through representative query sets reveals optimal decay rates balancing desired retrieval characteristics.
 
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.langchain.com/llms.txt
+Search result quantity specification controls how many documents retrieval operations return influencing precision-recall tradeoffs and computational costs. Smaller result sets emphasize highest-scoring documents potentially missing relevant but lower-ranked items, while larger sets provide comprehensive recall at cost of including marginally relevant documents and increased processing overhead. Appropriate quantity selection depends on downstream usage patterns and quality requirements.
+
+Vector store backend selection determines retrieval performance characteristics, metadata persistence capabilities, and scalability limits. In-memory stores provide maximum speed with no persistence requiring reinitialization, persistent stores maintain metadata across restarts with potential performance overhead, and distributed stores enable scaling beyond single-node capacity with additional complexity. Backend selection balances performance, persistence, and scale requirements appropriate to deployment scenarios.
+
+Memory stream initialization establishes temporal tracking state when instantiating retrievers. Empty initialization creates clean state appropriate for new deployments, while restored state from previous executions enables continuing established temporal patterns. The initialization approach depends on whether temporal continuity across system restarts matters for application behavior or fresh temporal state proves acceptable.
+
+Behavioral edge cases emerge from extreme configurations or unusual usage patterns requiring consideration during deployment. Rarely accessed documents eventually decay toward irrelevance regardless of semantic relevance potentially becoming unretrievable even when appropriate, while constantly accessed documents may dominate results through temporal freshness despite marginal semantic relevance. Understanding edge case behaviors enables appropriate configuration avoiding pathological retrieval patterns.
+
+Integration Patterns
+
+Embedding model integration provides semantic similarity foundation for hybrid temporal-semantic scoring. Embedding selection determines semantic relevance quality with better embeddings improving similarity accuracy, while embedding dimensionality affects computational costs and memory requirements. Appropriate embedding selection balances semantic quality against resource constraints matching deployment capabilities.
+
+Vector store initialization configures backend storage for document embeddings and metadata. Store creation specifies storage location, persistence options, and performance characteristics determining retrieval latency and throughput. Initialization typically occurs once during application setup with retriever instances reusing established stores.
+
+Retriever instantiation creates time-weighted retrieval instances configured with vector stores, decay rates, and search parameters. Multiple retriever instances may share common vector stores with different configurations enabling varied retrieval behaviors from common document collections. Instance management determines retrieval behavior patterns across application components.
+
+Document addition workflows incorporate temporal metadata initialization through dedicated retriever methods rather than direct vector store insertion. Addition operations compute embeddings, store vectors, and initialize access metadata ensuring proper temporal tracking. The workflow discipline proves critical for correct temporal behavior preventing metadata inconsistencies from manual vector store manipulation.
+
+Query execution combines semantic similarity computation with temporal scoring producing ranked results. Execution operations retrieve candidate documents through vector similarity search, compute combined temporal-semantic scores, and return highest-scoring documents. The execution transparency hides scoring complexity from applications through simple query interfaces.
+
+Use Case Applications
+
+Conversational memory systems leverage time-weighted retrieval for maintaining awareness of recent discussion context while gradually forgetting distant interactions. Recent conversation turns receive temporal boosting ensuring agents reference current context appropriately, while old discussions decay preventing obsolete context from confusing responses. The temporal dynamics mirror human conversational memory patterns improving interaction naturalness.
+
+Session-based retrieval emphasizes information accessed during current sessions while de-emphasizing previous session content. Session boundaries create temporal discontinuities where new sessions start with relatively equal document scores before access patterns within sessions create temporal differentiation. The session-aware behavior proves appropriate for applications with distinct interaction episodes.
+
+Trending content identification leverages access pattern tracking revealing currently popular documents through temporal freshness accumulation. Documents receiving sustained access maintain high temporal scores indicating ongoing relevance, while previously popular documents decay revealing shifting interest patterns. The trend detection enables applications to surface currently relevant content without explicit popularity tracking.
+
+Personal information management benefits from temporal weighting keeping recently referenced information readily accessible while older content gradually becomes less prominent. The adaptive retrieval mirrors human memory patterns where recent experiences remain vivid while distant memories fade, creating intuitive retrieval behaviors matching user expectations.
+
+Cache-like information systems approximate least-recently-used caching policies through aggressive temporal decay. Frequently accessed documents remain easily retrievable through temporal freshness, while unused documents decay toward irretrievability mimicking cache eviction. The cache-like behavior proves useful for applications benefiting from access locality where recent patterns predict future needs.

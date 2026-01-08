@@ -1,561 +1,97 @@
-Agentic or Tool use
-Agentic or tool use workflows can be evaluated in multiple dimensions. Here are some of the metrics that can be used to evaluate the performance of agents or tools in a given task.
-
-Topic Adherence
-AI systems deployed in real-world applications are expected to adhere to domains of interest while interacting with users but LLMs sometimes may answer general queries by ignoring this limitation. The topic adherence metric evaluates the ability of the AI to stay on predefined domains during the interactions. This metric is particularly important in conversational AI systems, where the AI is expected to only provide assistance to queries related to predefined domains.
-
-TopicAdherence requires a predefined set of topics that the AI system is expected to adhere to which is provided using reference_topics along with user_input. The metric can compute precision, recall, and F1 score for topic adherence, defined as
-
- 
- 
- 
- 
- 
- 
-Example
-
-import asyncio
-from openai import AsyncOpenAI
-from ragas.llms.base import llm_factory
-from ragas.metrics.collections import TopicAdherence
-from ragas.messages import HumanMessage, AIMessage, ToolMessage, ToolCall
-
-
-async def evaluate_topic_adherence():
-    # Setup LLM
-    client = AsyncOpenAI()
-    llm = llm_factory("gpt-4o-mini", client=client)
-
-    user_input = [
-        HumanMessage(
-            content="Can you provide me with details about Einstein's theory of relativity?"
-        ),
-        AIMessage(
-            content="Sure, let me retrieve the relevant information for you.",
-            tool_calls=[
-                ToolCall(
-                    name="document_search",
-                    args={"query": "Einstein's theory of relativity"},
-                )
-            ],
-        ),
-        ToolMessage(
-            content="Found relevant documents: 1. Relativity: The Special and the General Theory, 2. General Theory of Relativity by A. Einstein."
-        ),
-        AIMessage(
-            content="I found some documents on Einstein's theory of relativity. Which one would you like to know more about: 'Relativity: The Special and the General Theory' or 'General Theory of Relativity by A. Einstein'?"
-        ),
-        HumanMessage(content="Tell me about the 'General Theory of Relativity'."),
-        AIMessage(
-            content="Got it! Let me fetch more details from 'General Theory of Relativity by A. Einstein'.",
-            tool_calls=[
-                ToolCall(
-                    name="document_retrieve",
-                    args={"document": "General Theory of Relativity by A. Einstein"},
-                )
-            ],
-        ),
-        ToolMessage(
-            content="The document discusses how gravity affects the fabric of spacetime, describing the relationship between mass and spacetime curvature."
-        ),
-        AIMessage(
-            content="The 'General Theory of Relativity' explains how gravity affects the fabric of spacetime and the relationship between mass and spacetime curvature. Would you like more details or a specific explanation?"
-        ),
-        HumanMessage(
-            content="No, that's perfect. By the way, do you know any good recipes for a chocolate cake?"
-        ),
-        AIMessage(
-            content="Sure! Let me find a simple and delicious recipe for a chocolate cake.",
-            tool_calls=[
-                ToolCall(name="recipe_search", args={"query": "chocolate cake recipe"})
-            ],
-        ),
-        ToolMessage(
-            content="Here's a popular recipe for a chocolate cake: Ingredients include flour, sugar, cocoa powder, eggs, milk, and butter. Instructions: Mix dry ingredients, add wet ingredients, and bake at 350°F for 30-35 minutes."
-        ),
-        AIMessage(
-            content="I found a great recipe for chocolate cake! Would you like the full details, or is that summary enough?"
-        ),
-    ]
-
-    # Evaluate with precision mode
-    metric = TopicAdherence(llm=llm, mode="precision")
-    result = await metric.ascore(
-        user_input=user_input,
-        reference_topics=["science"],
-    )
-    print(f"Topic Adherence (precision): {result.value}")
-
-
-if __name__ == "__main__":
-    asyncio.run(evaluate_topic_adherence())
-Output
-
-Topic Adherence (precision): 0.6666666666444444
-To change the mode to recall, set the mode parameter to recall.
-
-
-metric = TopicAdherence(llm=llm, mode="recall")
-Output
-
-0.99999999995
-Legacy API (Deprecated)
-Deprecation Notice
-
-The legacy TopicAdherenceScore from ragas.metrics is deprecated and will be removed in v1.0. Please migrate to ragas.metrics.collections.TopicAdherence which provides the same functionality with a modern API.
-
-The legacy API can still be used but requires MultiTurnSample:
-
-
-from ragas.dataset_schema import MultiTurnSample
-from ragas.messages import HumanMessage, AIMessage, ToolMessage, ToolCall
-from ragas.metrics import TopicAdherenceScore  # Legacy import
-from ragas.llms import LangchainLLMWrapper
-from langchain_openai import ChatOpenAI
-
-evaluator_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-4o"))
-
-sample = MultiTurnSample(
-    user_input=[...],  # conversation messages
-    reference_topics=["science"],
-)
-scorer = TopicAdherenceScore(llm=evaluator_llm, mode="precision")
-score = await scorer.multi_turn_ascore(sample)
-Tool call Accuracy
-ToolCallAccuracy measures how accurately an LLM agent invokes tools compared to expected tool calls. It evaluates both the sequence of tool calls and the accuracy of their arguments. This metric is particularly useful for validating that agents call the right tools with the right parameters in multi-step workflows.
-
-The metric requires user_input (conversation messages) and reference_tool_calls (expected tool calls). It returns a score between 0 and 1, where higher values indicate better performance.
-
-Key Features
-Two Evaluation Modes:
-
-Strict Order (default): Tool calls must match exactly in sequence
-
-Use for: Sequential workflows where order matters
-Example: Must search before filtering results
-Flexible Order: Tool calls can be in any order
-
-Use for: Parallel operations where order doesn't matter
-Example: Fetching weather for multiple cities simultaneously
-Scoring:
-
-Evaluates sequence alignment (correct tools in correct order)
-Evaluates argument accuracy (correct parameters for each tool)
-Final score = (argument accuracy) × (sequence aligned ? 1 : 0)
-Example: Basic Usage
-
-import asyncio
-from ragas.metrics.collections import ToolCallAccuracy
-from ragas.messages import AIMessage, HumanMessage, ToolCall
-
-async def evaluate_tool_call_accuracy():
-    # Define the conversation with tool calls
-    user_input = [
-        HumanMessage(content="What's the weather like in New York right now?"),
-        AIMessage(
-            content="The current temperature in New York is 75°F and it's partly cloudy.",
-            tool_calls=[ToolCall(name="weather_check", args={"location": "New York"})],
-        ),
-        HumanMessage(content="Can you translate that to Celsius?"),
-        AIMessage(
-            content="Let me convert that to Celsius for you.",
-            tool_calls=[
-                ToolCall(
-                    name="temperature_conversion", args={"temperature_fahrenheit": 75}
-                )
-            ],
-        ),
-    ]
-
-    # Define expected tool calls
-    reference_tool_calls = [
-        ToolCall(name="weather_check", args={"location": "New York"}),
-        ToolCall(name="temperature_conversion", args={"temperature_fahrenheit": 75}),
-    ]
-
-    # Evaluate
-    metric = ToolCallAccuracy()
-    result = await metric.ascore(
-        user_input=user_input,
-        reference_tool_calls=reference_tool_calls,
-    )
-    print(f"Tool Call Accuracy: {result.value}")
-
-if __name__ == "__main__":
-    asyncio.run(evaluate_tool_call_accuracy())
-Output:
-
-Tool Call Accuracy: 1.0
-Example: Flexible Order Mode
-For scenarios where tool calls can happen in parallel:
-
-
-# Enable flexible order mode
-metric = ToolCallAccuracy(strict_order=False)
-
-user_input = [
-    HumanMessage(content="Get weather for Paris and London"),
-    AIMessage(
-        content="Fetching weather data...",
-        tool_calls=[
-            ToolCall(name="weather_check", args={"location": "London"}),
-            ToolCall(name="weather_check", args={"location": "Paris"}),
-        ],
-    ),
-]
-
-reference_tool_calls = [
-    ToolCall(name="weather_check", args={"location": "Paris"}),
-    ToolCall(name="weather_check", args={"location": "London"}),
-]
-
-result = await metric.ascore(
-    user_input=user_input,
-    reference_tool_calls=reference_tool_calls,
-)
-print(f"Score: {result.value}")  # 1.0 (order doesn't matter)
-Scoring Examples
-Perfect match:
-
-
-# All tools called correctly with correct arguments
-Expected: [weather_check(location="Paris"), translate(text="hello")]
-Got:      [weather_check(location="Paris"), translate(text="hello")]
-Score: 1.0
-Partial argument match:
-
-
-# Some arguments incorrect
-Expected: [search(query="python", limit=10, sort="date")]
-Got:      [search(query="python", limit=10, sort="relevance")]
-Score: 0.66 (2 out of 3 arguments match)
-Wrong order (strict mode):
-
-
-# Correct tools but wrong sequence
-Expected: [search(...), filter(...)]
-Got:      [filter(...), search(...)]
-Score: 0.0 (sequence not aligned)
-Use Cases
-Agent Validation: Test if agents correctly use tools
-Regression Testing: Ensure tool calling doesn't degrade after changes
-Multi-Step Workflows: Validate complex sequential operations
-Tool Selection: Verify agents pick the right tool from many options
-When to Use Different Metrics
-Metric	Use When
-ToolCallAccuracy	You care about exact tool sequence and arguments
-ToolCallF1	You want precision/recall metrics for tool calling
-AgentGoalAccuracy	You care about outcome, not the specific tools used
-Example: For "Book me a flight to Paris", if you only care that the booking succeeds (not which intermediate tools were called), use AgentGoalAccuracyWithReference instead.
-
-Legacy API (Deprecated)
-Deprecation Notice
-
-The legacy ToolCallAccuracy from ragas.metrics is deprecated and will be removed in v1.0. Please migrate to ragas.metrics.collections.ToolCallAccuracy which provides the same functionality with a modern API.
-
-The legacy API can still be used but requires MultiTurnSample:
-
-
-from ragas.dataset_schema import MultiTurnSample
-from ragas.messages import AIMessage, HumanMessage, ToolCall
-from ragas.metrics import ToolCallAccuracy  # Legacy import
-
-sample = MultiTurnSample(
-    user_input=[
-        HumanMessage(content="What's the weather in New York?"),
-        AIMessage(
-            content="Checking weather...",
-            tool_calls=[ToolCall(name="weather_check", args={"location": "New York"})],
-        ),
-    ],
-    reference_tool_calls=[
-        ToolCall(name="weather_check", args={"location": "New York"}),
-    ],
-)
-
-scorer = ToolCallAccuracy()
-score = await scorer.multi_turn_ascore(sample)
-The legacy version also supported custom argument comparison metrics:
-
-
-from ragas.metrics._string import NonLLMStringSimilarity
-from ragas.metrics._tool_call_accuracy import ToolCallAccuracy
-
-metric = ToolCallAccuracy()
-metric.arg_comparison_metric = NonLLMStringSimilarity()
-Tool Call F1
-ToolCallF1 is a metric that return F1-score based on precision and recall of tool calls made by an agent, comparing them to a set of expected calls (reference_tool_calls). While ToolCallAccuracy provides a binary score based on exact order and content match, ToolCallF1 complements it by offering a softer evaluation useful for onboarding and iteration. It helps quantify how close the agent was to the expected behavior even if it over- or under-calls.
-
-Formula
-ToolCallF1 is based on classic IR metrics. It uses unordered matching: the order in which the tools are called does not impact the result, only the presence and correctness of tool names and parameters are considered.
-
- 
- 
- 
- 
- 
- 
-How is it different from Topic Adherence?
-While both ToolCallF1 and TopicAdherenceScore uses precision, recall, and F1-score, they evaluate different aspects:
-
-Metric	Evaluates	Based on
-ToolCallF1	Correctness of tool executions	Structured tool call objects
-TopicAdherenceScore	Whether the conversation stays on-topic	Comparison of domain topics
-Use ToolCallF1 when you want to track whether the agent correctly executed tools. Use TopicAdherenceScore when evaluating whether the content or intention stays within allowed topics.
-
-Example: Basic Usage
-
-import asyncio
-from ragas.metrics.collections import ToolCallF1
-from ragas.messages import HumanMessage, AIMessage, ToolCall
-
-async def evaluate_tool_call_f1():
-    # Define the conversation with tool calls
-    user_input = [
-        HumanMessage(content="What's the weather like in Paris today?"),
-        AIMessage(
-            content="Let me check that for you.",
-            tool_calls=[ToolCall(name="weather_check", args={"location": "Paris"})],
-        ),
-        HumanMessage(content="And the UV index?"),
-        AIMessage(
-            content="Sure, here's the UV index for Paris.",
-            tool_calls=[ToolCall(name="uv_index_lookup", args={"location": "Paris"})],
-        ),
-    ]
-
-    # Define expected tool calls
-    reference_tool_calls = [
-        ToolCall(name="weather_check", args={"location": "Paris"}),
-        ToolCall(name="uv_index_lookup", args={"location": "Paris"}),
-    ]
-
-    # Evaluate
-    metric = ToolCallF1()
-    result = await metric.ascore(
-        user_input=user_input,
-        reference_tool_calls=reference_tool_calls,
-    )
-    print(f"Tool Call F1: {result.value}")
-
-if __name__ == "__main__":
-    asyncio.run(evaluate_tool_call_f1())
-Output:
-
-
-Tool Call F1: 1.0
-Example: Extra Tool Called
-When the agent makes an extra tool call not in the reference:
-
-
-user_input = [
-    HumanMessage(content="What's the weather like in Paris today?"),
-    AIMessage(
-        content="Let me check that for you.",
-        tool_calls=[ToolCall(name="weather_check", args={"location": "Paris"})],
-    ),
-    HumanMessage(content="And the UV index?"),
-    AIMessage(
-        content="Sure, here's the UV index and air quality for Paris.",
-        tool_calls=[
-            ToolCall(name="uv_index_lookup", args={"location": "Paris"}),
-            ToolCall(name="air_quality", args={"location": "Paris"}),  # extra call
-        ],
-    ),
-]
-
-reference_tool_calls = [
-    ToolCall(name="weather_check", args={"location": "Paris"}),
-    ToolCall(name="uv_index_lookup", args={"location": "Paris"}),
-]
-
-result = await metric.ascore(
-    user_input=user_input,
-    reference_tool_calls=reference_tool_calls,
-)
-print(f"F1 Score: {result.value}")
-Output:
-
-
-F1 Score: 0.67
-In this case: - TP = 2 (weather_check, uv_index_lookup) - FP = 1 (air_quality) - FN = 0 - Precision = 2/3 = 0.67, Recall = 2/2 = 1.0, F1 = 0.67
-
-Scoring Examples
-Perfect match:
-
-
-# All tools called correctly
-Reference: [weather_check(location="Paris"), uv_index_lookup(location="Paris")]
-Got:       [weather_check(location="Paris"), uv_index_lookup(location="Paris")]
-F1 Score: 1.0
-Missing tool call:
-
-
-# One expected tool not called
-Reference: [weather_check(...), uv_index_lookup(...)]
-Got:       [weather_check(...)]
-F1 Score: 0.67 (TP=1, FP=0, FN=1)
-Wrong arguments:
-
-
-# Tool name matches but args differ
-Reference: [weather_check(location="Paris")]
-Got:       [weather_check(location="London")]
-F1 Score: 0.0 (no match, arguments must be exact)
-Legacy API (Deprecated)
-Deprecation Notice
-
-The legacy ToolCallF1 from ragas.metrics is deprecated and will be removed in v1.0. Please migrate to ragas.metrics.collections.ToolCallF1 which provides the same functionality with a modern API.
-
-The legacy API can still be used but requires MultiTurnSample:
-
-
-from ragas.metrics import ToolCallF1  # Legacy import
-from ragas.dataset_schema import MultiTurnSample
-from ragas.messages import HumanMessage, AIMessage, ToolCall
-
-sample = MultiTurnSample(
-    user_input=[
-        HumanMessage(content="What's the weather like in Paris today?"),
-        AIMessage(
-            content="Let me check that for you.",
-            tool_calls=[ToolCall(name="weather_check", args={"location": "Paris"})],
-        ),
-    ],
-    reference_tool_calls=[
-        ToolCall(name="weather_check", args={"location": "Paris"}),
-    ],
-)
-
-scorer = ToolCallF1()
-score = await scorer.multi_turn_ascore(sample)
-Agent Goal Accuracy
-Agent goal accuracy is a metric that can be used to evaluate the performance of the LLM in identifying and achieving the goals of the user. This is a binary metric, with 1 indicating that the AI has achieved the goal and 0 indicating that the AI has not achieved the goal.
-
-With Reference
-AgentGoalAccuracyWithReference evaluates whether the agent achieved the user's goal by comparing the workflow's end state against a provided reference outcome. The reference represents the expected/ideal outcome.
-
-
-import asyncio
-from openai import AsyncOpenAI
-from ragas.llms.base import llm_factory
-from ragas.metrics.collections import AgentGoalAccuracyWithReference
-from ragas.messages import AIMessage, HumanMessage, ToolCall, ToolMessage
-
-
-async def evaluate_agent_goal_accuracy_with_reference():
-    # Setup LLM
-    client = AsyncOpenAI()
-    llm = llm_factory("gpt-4o-mini", client=client)
-
-    user_input = [
-        HumanMessage(
-            content="Hey, book a table at the nearest best Chinese restaurant for 8:00pm"
-        ),
-        AIMessage(
-            content="Sure, let me find the best options for you.",
-            tool_calls=[
-                ToolCall(
-                    name="restaurant_search",
-                    args={"cuisine": "Chinese", "time": "8:00pm"},
-                )
-            ],
-        ),
-        ToolMessage(
-            content="Found a few options: 1. Golden Dragon, 2. Jade Palace"
-        ),
-        AIMessage(
-            content="I found some great options: Golden Dragon and Jade Palace. Which one would you prefer?"
-        ),
-        HumanMessage(content="Let's go with Golden Dragon."),
-        AIMessage(
-            content="Great choice! I'll book a table for 8:00pm at Golden Dragon.",
-            tool_calls=[
-                ToolCall(
-                    name="restaurant_book",
-                    args={"name": "Golden Dragon", "time": "8:00pm"},
-                )
-            ],
-        ),
-        ToolMessage(content="Table booked at Golden Dragon for 8:00pm."),
-        AIMessage(
-            content="Your table at Golden Dragon is booked for 8:00pm. Enjoy your meal!"
-        ),
-        HumanMessage(content="thanks"),
-    ]
-
-    metric = AgentGoalAccuracyWithReference(llm=llm)
-    result = await metric.ascore(
-        user_input=user_input,
-        reference="Table booked at one of the chinese restaurants at 8 pm",
-    )
-    print(f"Agent Goal Accuracy: {result.value}")
-
-
-if __name__ == "__main__":
-    asyncio.run(evaluate_agent_goal_accuracy_with_reference())
-Output
-
-Agent Goal Accuracy: 1.0
-Without Reference
-AgentGoalAccuracyWithoutReference evaluates whether the agent achieved the user's goal without requiring a reference. The metric infers both the user's intended goal and the achieved outcome from the conversation, then compares them.
-
-
-import asyncio
-from openai import AsyncOpenAI
-from ragas.llms.base import llm_factory
-from ragas.metrics.collections import AgentGoalAccuracyWithoutReference
-from ragas.messages import AIMessage, HumanMessage, ToolCall, ToolMessage
-
-
-async def evaluate_agent_goal_accuracy_without_reference():
-    # Setup LLM
-    client = AsyncOpenAI()
-    llm = llm_factory("gpt-4o-mini", client=client)
-
-    user_input = [
-        HumanMessage(
-            content="Hey, book a table at the nearest best Chinese restaurant for 8:00pm"
-        ),
-        AIMessage(
-            content="Sure, let me find the best options for you.",
-            tool_calls=[
-                ToolCall(
-                    name="restaurant_search",
-                    args={"cuisine": "Chinese", "time": "8:00pm"},
-                )
-            ],
-        ),
-        ToolMessage(
-            content="Found a few options: 1. Golden Dragon, 2. Jade Palace"
-        ),
-        AIMessage(
-            content="I found some great options: Golden Dragon and Jade Palace. Which one would you prefer?"
-        ),
-        HumanMessage(content="Let's go with Golden Dragon."),
-        AIMessage(
-            content="Great choice! I'll book a table for 8:00pm at Golden Dragon.",
-            tool_calls=[
-                ToolCall(
-                    name="restaurant_book",
-                    args={"name": "Golden Dragon", "time": "8:00pm"},
-                )
-            ],
-        ),
-        ToolMessage(content="Table booked at Golden Dragon for 8:00pm."),
-        AIMessage(
-            content="Your table at Golden Dragon is booked for 8:00pm. Enjoy your meal!"
-        ),
-        HumanMessage(content="thanks"),
-    ]
-
-    metric = AgentGoalAccuracyWithoutReference(llm=llm)
-    result = await metric.ascore(user_input=user_input)
-    print(f"Agent Goal Accuracy: {result.value}")
-
-
-if __name__ == "__main__":
-    asyncio.run(evaluate_agent_goal_accuracy_without_reference())
-Output
-
-Agent Goal Accuracy: 1.0
+Overview
+
+What Is Agentic Tool Use Evaluation?
+
+Agentic tool use evaluation represents systematic assessment methodologies for measuring autonomous agent performance across multiple dimensions including goal achievement, tool selection accuracy, conversation management, and topic adherence. Evaluation frameworks address unique challenges emerging from agent autonomy where systems make independent decisions about tool invocation, multi-step workflow orchestration, and conversation flow management. The comprehensive assessment proves essential for validating agents operate reliably, select appropriate tools, and achieve user objectives despite complex decision spaces.
+
+Multi-dimensional assessment recognizes agent quality emerges from multiple factors beyond simple accuracy metrics. Tool selection correctness ensures agents choose appropriate capabilities from available options, argument accuracy validates proper parameter specification, sequence alignment verifies correct workflow ordering, and goal achievement confirms ultimate objective satisfaction. The holistic evaluation proves necessary as agents may exhibit high performance on individual dimensions while failing overall tasks or vice versa.
+
+Reference-based and reference-free evaluation approaches address varying availability of ground truth data. Reference-based methods compare agent behaviors against expected tool sequences, predetermined outcomes, or defined topic boundaries enabling objective quantitative assessment. Reference-free approaches infer expected behaviors from conversation context enabling evaluation without explicit specifications. The dual approaches accommodate diverse deployment scenarios from controlled testing through production monitoring.
+
+Metric selection considerations balance evaluation objectives against assessment costs and ground truth availability. Different metrics suit different purposes with tool call accuracy appropriate for validating exact implementations, F1-scores useful for quantifying partial correctness, and goal accuracy focusing on outcome achievement regardless of intermediate steps. Understanding metric characteristics enables selecting appropriate evaluation approaches matching specific validation requirements.
+
+Benefits
+
+Agentic tool use evaluation delivers substantial advantages across quality assurance, development velocity, regression prevention, and operational monitoring dimensions addressing critical requirements for autonomous system deployment. Quality assurance benefits emerge from systematic validation revealing agent weaknesses, identifying failure patterns, and verifying improvements actually enhance rather than degrade performance. Comprehensive assessment proves more reliable than ad-hoc testing potentially missing edge cases or overlooking subtle degradations.
+
+Development velocity improvements result from rapid feedback enabling iterative refinement, automated evaluation supporting continuous integration, and quantitative metrics guiding optimization priorities. Empirical measurements prove more effective than intuition for identifying highest-impact improvements, validating experimental modifications, and tracking progress toward quality objectives. The systematic feedback accelerates development compared to manual testing or waiting for production incidents.
+
+Regression prevention capabilities detect performance degradation from code modifications, dependency updates, or configuration changes before production deployment. Continuous evaluation throughout development lifecycle catches issues early when correction proves easier and less costly. The protective capabilities prove particularly valuable for complex systems where modifications' downstream impacts may prove non-obvious.
+
+Operational monitoring enables ongoing production assessment detecting emerging issues, validating real-world performance, and identifying optimization opportunities. Production evaluation complements pre-deployment testing by revealing performance under actual usage patterns, detecting issues manifesting only at scale, and validating assumptions about deployment environments. The ongoing assessment proves essential for maintaining service quality despite evolving conditions.
+
+Benchmarking capabilities enable comparing alternative implementations, evaluating model selections, and measuring progress over time. Standardized metrics facilitate objective comparison supporting data-driven decisions about architecture choices, model upgrades, or configuration changes. The comparative capabilities prove valuable for optimization prioritization and resource allocation decisions.
+
+Topic Adherence Evaluation
+
+Domain constraint validation ensures agents maintain focus on intended subject areas rather than responding to arbitrary queries. Topic adherence proves particularly important for specialized assistants expected to provide expertise within specific domains while declining out-of-scope requests. Constraint enforcement prevents agents from attempting tasks beyond their competencies, reduces liability from inappropriate guidance, and maintains user expectations about system capabilities.
+
+Precision-focused evaluation measures how frequently agent responses stay within allowed topics revealing tendency toward topic drift. High precision indicates reliable domain focus while low precision suggests agents frequently stray into inappropriate subjects. Precision metrics prove valuable when penalty for off-topic responses exceeds benefit from comprehensive coverage, such as regulated domains where unauthorized advice creates liability.
+
+Recall-focused evaluation measures how comprehensively agents address allowed topics revealing tendency toward excessive constraint. High recall indicates agents engage with full topic scope while low recall suggests overly conservative limitation. Recall metrics prove valuable when comprehensiveness matters more than occasional drift, such as information discovery contexts where missing relevant information proves more costly than occasional irrelevance.
+
+F1-score balancing enables evaluating both precision and recall trade-offs. Balanced assessment proves valuable when both false positives and false negatives impose costs requiring optimization considering both dimensions. The harmonic mean provides single metric summarizing overall topic adherence quality.
+
+Reference topic specification defines allowed and prohibited domains through explicit enumeration or implicit description. Topic definitions balance specificity enabling clear evaluation against flexibility accommodating legitimate variation. Appropriate specification proves essential for meaningful evaluation as overly narrow definitions penalize appropriate responses while overly broad definitions fail to detect problematic drift.
+
+Tool Call Accuracy Evaluation
+
+Sequence alignment assessment validates agents invoke tools in correct order when workflow logic demands specific sequencing. Order sensitivity proves appropriate when operations have dependencies requiring predetermined execution patterns, such as search preceding filtering or authentication preceding data access. Strict sequencing constraints ensure agents respect workflow logic rather than executing operations arbitrarily.
+
+Flexible ordering evaluation accommodates scenarios where tool invocation order proves irrelevant to correctness. Order flexibility proves appropriate for parallel operations, independent tasks, or commutative operations where sequencing doesn't affect outcomes. Appropriate flexibility recognition prevents penalizing functionally correct but differently ordered executions.
+
+Argument accuracy assessment validates tool parameters match expected values ensuring correct operation specification. Parameter correctness proves essential for tool execution success as incorrect arguments cause failures, inappropriate behaviors, or unexpected results. Argument-level evaluation enables identifying specific parameter issues guiding targeted corrections.
+
+Binary scoring provides clear pass-fail assessment useful for strict validation requirements. Binary approach proves appropriate when partial correctness provides insufficient value or when downstream systems require exact specifications. The clarity simplifies decision-making about deployment readiness or acceptance testing.
+
+Compositional scoring combines sequence and argument assessment providing nuanced evaluation. Multiplicative combination ensures both dimensions contribute to overall quality while zero scores in either dimension appropriately result in zero overall scores. The compositional approach recognizes both sequence and arguments must be correct for functional execution.
+
+Tool Call F1-Score Evaluation
+
+Precision measurement quantifies what fraction of invoked tools represent correct choices revealing over-invocation tendencies. Low precision indicates agents frequently call unnecessary or inappropriate tools wasting resources or complicating workflows. Precision focus proves valuable when excess tool usage imposes substantial costs from computational expense, latency accumulation, or workflow complexity.
+
+Recall measurement quantifies what fraction of required tools agents actually invoke revealing under-invocation tendencies. Low recall indicates agents miss necessary operations causing incomplete task execution or objective failure. Recall focus proves valuable when missing critical operations causes failures or when comprehensive operation coverage proves essential.
+
+Soft evaluation approach recognizes partial success providing more informative feedback than binary metrics. Quantifying how close agents come to correct behavior enables tracking improvement over iterations, identifying specific weaknesses, and prioritizing development efforts. The granular feedback proves particularly valuable during development and tuning phases.
+
+Unordered matching accommodates execution sequences where tool order proves irrelevant. Order-independent evaluation focuses on tool selection and argument correctness without penalizing alternative but functionally equivalent orderings. The flexibility proves appropriate for many practical scenarios where strict ordering proves unnecessarily restrictive.
+
+True positive identification recognizes correctly invoked tools with accurate arguments. False positive detection identifies unnecessary or incorrect tool invocations. False negative recognition captures required tools agents failed to invoke. The comprehensive categorization enables understanding specific failure modes guiding targeted improvements.
+
+Agent Goal Accuracy Evaluation
+
+Outcome-focused assessment validates ultimate objective achievement regardless of intermediate steps or tool selections. Goal-centric evaluation proves appropriate when multiple valid approaches exist for achieving objectives or when specific implementation details matter less than final results. The high-level assessment recognizes task success proves more important than particular methods for many applications.
+
+Reference-based goal evaluation compares achieved outcomes against predefined expected results enabling objective assessment. Reference specifications describe desired end states, successful completion criteria, or expected side effects. The explicit expectations enable clear validation but require manual reference creation for test cases.
+
+Reference-free goal evaluation infers intended objectives from conversation context without explicit specifications. Inference-based assessment proves valuable for production monitoring, exploratory testing, or scenarios where creating explicit references proves impractical. The approach recognizes conversation structure and user feedback often reveals goal achievement without explicit declaration.
+
+Binary goal assessment provides clear success-failure distinction appropriate for tasks with definite completion criteria. Binary evaluation proves suitable when partial goal achievement provides insufficient value or when systems require clear determination of task completion. The simplicity facilitates decision-making and supports straightforward acceptance criteria.
+
+Conversation analysis extracts goal information and achievement signals from interaction patterns. Analysis examines user satisfaction indicators, task completion confirmations, error corrections, and outcome acknowledgments. The contextual understanding proves essential for accurate goal assessment especially in ambiguous scenarios.
+
+Multi-turn interaction consideration recognizes goals emerge and evolve through extended conversations requiring comprehensive dialogue understanding. Single-turn evaluation proves insufficient for complex tasks requiring negotiation, clarification, or iterative refinement. Full conversation assessment captures goal achievement dynamics spanning multiple exchanges.
+
+Evaluation Mode Selection
+
+Strict ordering requirements apply when workflow logic demands specific execution sequences. Sequential dependencies including authentication before access, search before retrieval, or validation before processing necessitate order enforcement. Appropriate strictness prevents logically invalid execution patterns.
+
+Flexible ordering allowances apply when operations prove independent or commutative. Parallel information gathering, independent validations, or order-insensitive aggregations permit flexible sequencing. Appropriate flexibility prevents unnecessarily constraining agent implementations.
+
+Precision optimization suits scenarios where false positives prove more costly than false negatives. Applications avoiding undesired behaviors, preventing policy violations, or minimizing unnecessary operations benefit from precision focus. Conservative agents prove preferable when inappropriate actions impose substantial costs.
+
+Recall optimization suits scenarios where false negatives prove more costly than false positives. Applications requiring comprehensive coverage, avoiding missed opportunities, or ensuring complete processing benefit from recall focus. Aggressive agents prove preferable when missing operations causes failures.
+
+Balanced assessment suits scenarios where both false positives and false negatives impose costs requiring trade-off consideration. F1-scores or similar balanced metrics prove appropriate when neither precision nor recall alone adequately captures quality requirements. The balance recognizes most practical applications face costs from both error types.
+
+Metric Complementarity
+
+Tool accuracy and F1-score combination provides comprehensive tool usage assessment. Accuracy captures exact match requirements while F1-score quantifies partial correctness and over-under invocation balance. Using both metrics reveals different performance dimensions guiding targeted improvements.
+
+Tool metrics and goal accuracy combination distinguishes implementation correctness from outcome achievement. Agents may use incorrect tools while achieving goals through alternative approaches or use correct tools while failing objectives through other errors. Combined assessment reveals whether tool issues actually impact outcomes.
+
+Topic adherence and tool accuracy combination evaluates both conversation management and technical execution. Agents may stay on topic while selecting wrong tools or drift off-topic while executing correct operations. Comprehensive assessment requires evaluating both dimensions.
+
+Precision-recall trade-off understanding recognizes optimizing one dimension often degrades the other requiring balanced consideration. Pure precision optimization may reduce recall while pure recall optimization may reduce precision. Understanding trade-offs enables setting appropriate targets considering application requirements.
+
+Multi-metric dashboards provide holistic performance visibility revealing strengths, weaknesses, and optimization opportunities. Comprehensive measurement proves more informative than single metrics potentially missing important quality dimensions. Dashboard approaches support nuanced quality understanding guiding development priorities.
