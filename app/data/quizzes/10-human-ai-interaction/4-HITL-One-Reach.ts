@@ -1,8 +1,8 @@
-import { QuizQuestion } from '../../types';
+import { QuizQuestion } from '../types';
 
 export const questions: QuizQuestion[] = [
   {
-    id: 1,
+    id: 'q1',
     question: "What is the projected adoption rate of AI agents by organizations according to the 2025 data mentioned?",
     options: [
       "35% plan deployment in 2025, with 86% adoption projected by 2027",
@@ -14,7 +14,7 @@ export const questions: QuizQuestion[] = [
     explanation: "According to the text, 35% of organizations plan to deploy AI agents in 2025, with adoption projected to reach 86% by 2027, showing rapid growth in agentic AI adoption."
   },
   {
-    id: 2,
+    id: 'q2',
     question: "How does Human-in-the-Loop (HITL) agentic AI differ from fully autonomous AI systems?",
     options: [
       "HITL systems are slower and less efficient than autonomous systems",
@@ -26,7 +26,7 @@ export const questions: QuizQuestion[] = [
     explanation: "HITL agentic AI maintains machine autonomy for routine operations while embedding human oversight at critical decision points, balancing efficiency with safety and accountability."
   },
   {
-    id: 3,
+    id: 'q3',
     question: "What are the key risks of unchecked AI autonomy mentioned in high-stakes domains?",
     options: [
       "Increased computational costs and slower processing speeds",
@@ -38,7 +38,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Unchecked AI autonomy risks include ethical lapses, security exploitation, lack of contextual judgment for sensitive situations, and potential regulatory non-compliance in critical domains."
   },
   {
-    id: 4,
+    id: 'q4',
     question: "What is the primary scalability challenge of implementing HITL in agentic AI systems?",
     options: [
       "Increased hardware requirements for AI processing",
@@ -50,7 +50,7 @@ export const questions: QuizQuestion[] = [
     explanation: "The primary scalability challenge is that human oversight can become a bottleneck as AI handles more tasks, potentially limiting the speed and scale of automation."
   },
   {
-    id: 5,
+    id: 'q5',
     question: "How does HITL AI address the skill gap challenge in the workforce?",
     options: [
       "By eliminating the need for human workers entirely",
@@ -62,7 +62,7 @@ export const questions: QuizQuestion[] = [
     explanation: "HITL AI addresses skill gaps by requiring training programs that provide employees with AI literacy and the skills needed to effectively review and validate AI decisions."
   },
   {
-    id: 6,
+    id: 'q6',
     question: "In healthcare applications, what is the typical HITL workflow for medical diagnostics?",
     options: [
       "AI systems make all diagnostic decisions independently",
@@ -74,7 +74,7 @@ export const questions: QuizQuestion[] = [
     explanation: "In healthcare HITL, AI agents pre-screen medical images for anomalies, but physicians review and confirm diagnoses to prevent misdiagnoses and ensure patient safety."
   },
   {
-    id: 7,
+    id: 'q7',
     question: "What is the concept of 'tiered oversight' in HITL agentic AI implementation?",
     options: [
       "Multiple AI systems reviewing each other's decisions",
@@ -86,7 +86,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Tiered oversight allows routine tasks to be handled autonomously by AI while automatically escalating high-stakes or complex cases to human reviewers."
   },
   {
-    id: 8,
+    id: 'q8',
     question: "How does Reinforcement Learning from Human Feedback (RLHF) support HITL systems?",
     options: [
       "It eliminates the need for ongoing human oversight",
@@ -98,7 +98,7 @@ export const questions: QuizQuestion[] = [
     explanation: "RLHF integrates human feedback into the learning process, helping align agentic AI behavior with human values and organizational goals through continuous improvement."
   },
   {
-    id: 9,
+    id: 'q9',
     question: "What role does Explainable AI (XAI) play in HITL implementations?",
     options: [
       "It reduces the computational complexity of AI models",
@@ -110,7 +110,7 @@ export const questions: QuizQuestion[] = [
     explanation: "XAI clarifies why AI agents made particular decisions, empowering human overseers to understand the reasoning and supporting both transparency and regulatory compliance."
   },
   {
-    id: 10,
+    id: 'q10',
     question: "How does adaptive autonomy work in HITL agentic AI systems?",
     options: [
       "AI autonomy levels remain constant regardless of circumstances",
@@ -122,7 +122,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Adaptive autonomy allows AI systems to dynamically adjust their level of independence based on factors like context, risk assessment, and confidence levels in their decisions."
   },
   {
-    id: 11,
+    id: 'q11',
     question: "What are the key pillars of responsible HITL mentioned in the EU AI Act context?",
     options: [
       "Speed, efficiency, and cost-effectiveness",
@@ -134,7 +134,7 @@ export const questions: QuizQuestion[] = [
     explanation: "The three pillars of responsible HITL are AI ethics (embedding human values), explainability (transparent decision-making), and compliance (adhering to regulations and policies)."
   },
   {
-    id: 12,
+    id: 'q12',
     question: "How does OneReach.ai's GSX platform implement HITL capabilities?",
     options: [
       "Through complete human control over all AI operations",
@@ -146,7 +146,7 @@ export const questions: QuizQuestion[] = [
     explanation: "OneReach.ai's GSX platform enables seamless escalation from AI agents to human experts in real-time, with feedback loops that inform future AI behavior for continuous improvement."
   },
   {
-    id: 13,
+    id: 'q13',
     question: "According to research mentioned, what benefits do effective AI collaborators achieve?",
     options: [
       "1x ROI, 50 minutes saved daily, standard innovation levels",
@@ -158,7 +158,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Effective AI collaborators achieve 2x ROI, save 105 minutes daily, are 1.5x more likely to reinvest time in learning new skills, and are 1.8x more likely to be viewed as innovative."
   },
   {
-    id: 14,
+    id: 'q14',
     question: "What is the key message for organizational leaders regarding HITL agentic AI deployment?",
     options: [
       "Focus solely on maximizing AI autonomy without human oversight",
@@ -170,7 +170,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Leaders should design and deploy agentic AI systems that are not only intelligent but also trustworthy, explainable, and aligned with human values, especially for high-stakes use cases."
   },
   {
-    id: 15,
+    id: 'q15',
     question: "How do HITL systems support bias mitigation in agentic AI?",
     options: [
       "By eliminating all training data to prevent bias introduction",

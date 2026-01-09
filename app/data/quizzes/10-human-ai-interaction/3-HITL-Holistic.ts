@@ -1,8 +1,8 @@
-import { QuizQuestion } from '../../types';
+import { QuizQuestion } from '../types';
 
 export const questions: QuizQuestion[] = [
   {
-    id: 1,
+    id: 'q1',
     question: "What distinguishes Human-in-the-Loop AI from fully autonomous AI systems?",
     options: [
       "HITL AI requires more computational resources than autonomous systems",
@@ -14,7 +14,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Human-in-the-Loop AI actively incorporates human input and oversight into its operational processes, unlike fully autonomous systems that operate without human intervention."
   },
   {
-    id: 2,
+    id: 'q2',
     question: "What is the primary benefit of continuous human involvement in HITL AI systems?",
     options: [
       "It eliminates all computational costs associated with AI processing",
@@ -26,7 +26,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Continuous human involvement enables real-time adjustments, ongoing feedback, and continual improvement of the AI system through collaborative human-AI interaction."
   },
   {
-    id: 3,
+    id: 'q3',
     question: "How does iterative learning in HITL AI systems improve AI performance?",
     options: [
       "By reducing the size of neural networks to improve processing speed",
@@ -38,7 +38,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Iterative learning incorporates continuous feedback from human experts, allowing the AI system to refine its algorithms and improve its ability to handle complex situations."
   },
   {
-    id: 4,
+    id: 'q4',
     question: "What role does ethical oversight play in HITL AI implementations?",
     options: [
       "It slows down AI processing to ensure perfect accuracy",
@@ -50,7 +50,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Ethical oversight ensures that AI decisions align with ethical standards and societal norms, helping reduce the risk of bias and unintended consequences from automated systems."
   },
   {
-    id: 5,
+    id: 'q5',
     question: "How does HITL AI address the challenge of adaptability in dynamic environments?",
     options: [
       "By freezing AI models after initial training to ensure consistency",
@@ -62,7 +62,7 @@ export const questions: QuizQuestion[] = [
     explanation: "HITL AI maintains adaptability through human intervention and guidance, allowing systems to remain flexible and responsive to changing environments and new information."
   },
   {
-    id: 6,
+    id: 'q6',
     question: "In the HITL AI workflow, what is the significance of the data annotation phase?",
     options: [
       "It eliminates the need for machine learning algorithms",
@@ -74,7 +74,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Data annotation by human experts provides the foundational 'ground truth' labeling that serves as the basis for AI learning and directly influences the system's accuracy and reliability."
   },
   {
-    id: 7,
+    id: 'q7',
     question: "What is the purpose of human validation and testing in HITL AI systems?",
     options: [
       "To reduce the computational costs of AI model deployment",
@@ -86,7 +86,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Human validation and testing ensure that AI systems can generalize effectively and perform reliably in real-world scenarios through expert review and intervention to correct errors or biases."
   },
   {
-    id: 8,
+    id: 'q8',
     question: "How does the continuous feedback loop in HITL AI contribute to system improvement?",
     options: [
       "It automatically fixes all AI errors without human intervention",
@@ -98,7 +98,7 @@ export const questions: QuizQuestion[] = [
     explanation: "The continuous feedback loop enables ongoing human input and corrections, helping the AI system adapt to new data and challenges while maintaining accuracy and ethical alignment over time."
   },
   {
-    id: 9,
+    id: 'q9',
     question: "What is a primary challenge of implementing HITL AI in terms of scalability?",
     options: [
       "HITL systems require more powerful hardware than autonomous systems",
@@ -110,7 +110,7 @@ export const questions: QuizQuestion[] = [
     explanation: "The need for human involvement in HITL AI can create bottlenecks that limit the ability to scale systems efficiently as data volume and task complexity increase."
   },
   {
-    id: 10,
+    id: 'q10',
     question: "How do cost implications affect HITL AI implementation strategies?",
     options: [
       "HITL AI eliminates all operational costs through automation",
@@ -122,7 +122,7 @@ export const questions: QuizQuestion[] = [
     explanation: "HITL AI requires continuous human input from skilled professionals, which increases operational costs that must be carefully balanced against the efficiency gains from automation."
   },
   {
-    id: 11,
+    id: 'q11',
     question: "In healthcare applications, how does HITL AI enhance medical diagnostics?",
     options: [
       "By completely replacing human doctors in diagnostic processes",
@@ -134,7 +134,7 @@ export const questions: QuizQuestion[] = [
     explanation: "HITL AI in healthcare combines AI analysis capabilities with physician validation and expertise, ensuring diagnostic accuracy while maintaining the human judgment essential for patient safety."
   },
   {
-    id: 12,
+    id: 'q12',
     question: "What role does HITL AI play in manufacturing quality control processes?",
     options: [
       "It eliminates the need for human quality inspectors entirely",
@@ -146,7 +146,7 @@ export const questions: QuizQuestion[] = [
     explanation: "In manufacturing, HITL AI uses AI systems to identify potential defects and quality issues, while human operators validate these findings to ensure accurate assessments and maintain high-quality standards."
   },
   {
-    id: 13,
+    id: 'q13',
     question: "How does HITL AI improve customer service operations?",
     options: [
       "By eliminating all human customer service representatives",
@@ -158,7 +158,7 @@ export const questions: QuizQuestion[] = [
     explanation: "HITL AI in customer service allows AI to efficiently handle routine inquiries while intelligently escalating complex issues to human agents who can provide personalized and effective problem resolution."
   },
   {
-    id: 14,
+    id: 'q14',
     question: "What is essential for successful implementation of HITL AI in organizations?",
     options: [
       "Complete replacement of existing AI systems with HITL alternatives",
@@ -170,7 +170,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Successful HITL AI implementation requires assessing areas where human-AI collaboration adds value, training workers to interact with AI systems, establishing ethical guidelines, and investing in supporting technology infrastructure."
   },
   {
-    id: 15,
+    id: 'q15',
     question: "How does HITL AI contribute to building trust in AI systems among stakeholders?",
     options: [
       "By eliminating all AI decision-making capabilities",

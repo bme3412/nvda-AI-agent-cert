@@ -62,7 +62,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Data flywheels continuously incorporate new data and patterns, allowing models to adapt and maintain performance as conditions change, preventing degradation."
   },
   {
-    id: 6,
+    id: 'q6',
     question: "What is the relationship between data quality and flywheel momentum in AI systems?",
     options: [
       "Higher data quality creates faster flywheel acceleration and better AI outcomes",
@@ -74,7 +74,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Higher data quality creates better AI outputs, which generate more valuable insights and feedback, accelerating the flywheel and creating a virtuous improvement cycle."
   },
   {
-    id: 7,
+    id: 'q7',
     question: "How do cost optimization strategies integrate with AI data flywheel implementations?",
     options: [
       "By eliminating all data storage costs",
@@ -86,7 +86,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Cost optimization in data flywheels involves smart resource allocation, automated scaling, and focusing computational resources on high-value learning opportunities."
   },
   {
-    id: 8,
+    id: 'q8',
     question: "What is the primary advantage of self-improving AI systems powered by data flywheels?",
     options: [
       "They require less initial training data than traditional models",
@@ -98,7 +98,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Self-improving systems powered by data flywheels can automatically adapt and enhance their performance through continuous learning, reducing the need for manual tuning."
   },
   {
-    id: 9,
+    id: 'q9',
     question: "In enterprise deployments, how do data flywheels impact scalability of AI systems?",
     options: [
       "They limit system growth to prevent data overload",
@@ -110,7 +110,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Data flywheels enable AI systems to scale effectively by continuously learning from new data and improving their ability to handle increased complexity and volume."
   },
   {
-    id: 10,
+    id: 'q10',
     question: "What role does automated data collection play in sustaining AI data flywheels?",
     options: [
       "It replaces the need for human-generated training data",
@@ -122,7 +122,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Automated data collection ensures continuous data flow without manual bottlenecks, maintaining the momentum needed for effective flywheel operation and continuous improvement."
   },
   {
-    id: 11,
+    id: 'q11',
     question: "How do enterprise data flywheels handle data diversity and multi-modal inputs?",
     options: [
       "By converting all data to a single standardized format",
@@ -134,7 +134,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Enterprise data flywheels use adaptive pipelines that can process diverse data types, learning from this variety to create more robust and comprehensive AI systems."
   },
   {
-    id: 12,
+    id: 'q12',
     question: "What is the impact of real-time feedback loops on data flywheel effectiveness?",
     options: [
       "They slow down the learning process due to processing overhead",
@@ -146,7 +146,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Real-time feedback loops enable immediate course corrections and rapid learning, significantly accelerating the improvement cycles in data flywheel systems."
   },
   {
-    id: 13,
+    id: 'q13',
     question: "How do data flywheels contribute to competitive advantage in AI-driven enterprises?",
     options: [
       "By reducing the cost of AI infrastructure to minimal levels",
@@ -158,7 +158,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Data flywheels create continuous learning cycles that build increasingly sophisticated AI capabilities over time, creating competitive advantages that are difficult for competitors to replicate."
   },
   {
-    id: 14,
+    id: 'q14',
     question: "What is the role of data governance in maintaining effective AI data flywheels?",
     options: [
       "To slow down data processing to ensure perfect accuracy",
@@ -170,7 +170,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Data governance establishes frameworks that balance data quality, compliance requirements, and privacy while maintaining the velocity needed for effective flywheel operation."
   },
   {
-    id: 15,
+    id: 'q15',
     question: "How do AI data flywheels integrate with existing enterprise data infrastructure?",
     options: [
       "They require complete replacement of existing data systems",

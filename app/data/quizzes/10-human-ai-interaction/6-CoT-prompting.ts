@@ -1,8 +1,8 @@
-import { QuizQuestion } from '../../types';
+import { QuizQuestion } from '../types';
 
 export const questions: QuizQuestion[] = [
   {
-    id: 1,
+    id: 'q1',
     question: "What is Chain of Thought (CoT) prompting in the context of large language models?",
     options: [
       "A technique for optimizing LLM computational performance",
@@ -14,7 +14,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Chain of Thought prompting is a technique that uses examples or instructions to improve LLM reasoning by forcing the model to solve problems step-by-step in logical sequences."
   },
   {
-    id: 2,
+    id: 'q2',
     question: "How does CoT prompting improve LLM responses to complex reasoning tasks?",
     options: [
       "By reducing the computational requirements for model inference",
@@ -26,7 +26,7 @@ export const questions: QuizQuestion[] = [
     explanation: "CoT prompting improves responses by providing both the result and intermediate steps, helping models handle problems that require multiple reasoning and calculation steps more effectively."
   },
   {
-    id: 3,
+    id: 'q3',
     question: "What distinguishes zero-shot CoT from few-shot CoT prompting approaches?",
     options: [
       "Zero-shot uses more computational resources than few-shot approaches",
@@ -38,7 +38,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Zero-shot CoT uses instructions to guide step-by-step reasoning without examples, while few-shot CoT provides example problems with their reasoning sequences for the model to learn from."
   },
   {
-    id: 4,
+    id: 'q4',
     question: "What are typical instruction phrases used in zero-shot Chain of Thought prompting?",
     options: [
       "'Process this data efficiently' and 'Optimize the solution'",
@@ -50,7 +50,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Zero-shot CoT uses phrases like 'Let's think step by step', 'Solve this problem step by step', or 'Let's work this out in a step by step manner' to guide reasoning."
   },
   {
-    id: 5,
+    id: 'q5',
     question: "Why is few-shot CoT generally more accurate than zero-shot CoT?",
     options: [
       "Few-shot requires less computational processing power",
@@ -62,7 +62,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Few-shot CoT is more accurate because providing examples helps the LLM learn appropriate reasoning patterns, leading to more logical and accurate step sequences for new problems."
   },
   {
-    id: 6,
+    id: 'q6',
     question: "What is the primary advantage of Automatic Chain of Thought (Auto-CoT) over manual approaches?",
     options: [
       "Auto-CoT eliminates all computational overhead from reasoning processes",
@@ -74,7 +74,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Auto-CoT automates example generation by clustering diverse questions and using zero-shot CoT to create reasoning sequences, eliminating the need to manually design examples for each question type."
   },
   {
-    id: 7,
+    id: 'q7',
     question: "How does the Auto-CoT process work for generating reasoning examples?",
     options: [
       "It randomly selects examples from existing training datasets",
@@ -86,7 +86,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Auto-CoT clusters questions by similarity using sentence transformers, selects representative questions from each cluster, then generates reasoning sequences using zero-shot CoT."
   },
   {
-    id: 8,
+    id: 'q8',
     question: "What role does sentence transformer encoding play in Auto-CoT implementation?",
     options: [
       "It optimizes computational performance during model inference",
@@ -98,7 +98,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Sentence transformers encode questions into vectors, allowing cosine similarity calculations to group similar questions into clusters for representative example selection."
   },
   {
-    id: 9,
+    id: 'q9',
     question: "How is CoT prompting implemented in LangChain applications?",
     options: [
       "Through automatic model architecture modifications",
@@ -110,7 +110,7 @@ export const questions: QuizQuestion[] = [
     explanation: "CoT prompting in LangChain is implemented using prompt templates that incorporate step-by-step instructions (zero-shot) or example patterns with reasoning sequences (few-shot)."
   },
   {
-    id: 10,
+    id: 'q10',
     question: "What is a key limitation of CoT prompting with small-scale language models?",
     options: [
       "Small models process CoT prompts too quickly to be effective",
@@ -122,7 +122,7 @@ export const questions: QuizQuestion[] = [
     explanation: "CoT prompting performance gains are only visible with large-scale LLMs. Small models may produce reasoning sequences that seem logical but are actually incorrect, leading to worse performance."
   },
   {
-    id: 11,
+    id: 'q11',
     question: "How does CoT prompting enhance the debugging process for LLM outputs?",
     options: [
       "It automatically fixes all errors without human intervention",
@@ -134,7 +134,7 @@ export const questions: QuizQuestion[] = [
     explanation: "CoT prompting makes debugging easier because the visible reasoning sequences allow developers to identify the exact step where the model makes an error, enabling targeted corrections."
   },
   {
-    id: 12,
+    id: 'q12',
     question: "What is the benefit of CoT prompting for understanding model decision-making?",
     options: [
       "It eliminates the need for explainable AI techniques",
@@ -146,7 +146,7 @@ export const questions: QuizQuestion[] = [
     explanation: "CoT prompting provides transparency by making the model's reasoning process visible, showing how it proceeds step-by-step to derive outputs, improving interpretability."
   },
   {
-    id: 13,
+    id: 'q13',
     question: "How does CoT prompting help LLMs handle complex multi-step problems?",
     options: [
       "By reducing problems to single-step calculations",
@@ -158,7 +158,7 @@ export const questions: QuizQuestion[] = [
     explanation: "CoT prompting helps by breaking complex questions into small, simple steps, allowing the model to focus attention on each part and combine them for more accurate outputs."
   },
   {
-    id: 14,
+    id: 'q14',
     question: "What is the recommended approach for implementing CoT in diverse question domains?",
     options: [
       "Use the same examples for all types of questions to maintain consistency",
@@ -170,7 +170,7 @@ export const questions: QuizQuestion[] = [
     explanation: "Auto-CoT is recommended for diverse domains because it automatically generates appropriate examples for different question types through clustering and representative selection."
   },
   {
-    id: 15,
+    id: 'q15',
     question: "How do the three types of CoT prompting (zero-shot, few-shot, Auto-CoT) compare in terms of effectiveness?",
     options: [
       "Zero-shot is most effective, followed by few-shot, then Auto-CoT",
