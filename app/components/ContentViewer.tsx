@@ -137,6 +137,24 @@ import { questions as nemoGuardrailsQuestions } from '@/app/data/quizzes/7-NVDA-
 import { questions as tritonServerBackendQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/3-Triton-server-backend';
 import { questions as performanceTuningGuideQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/5-performance-tuning-guide';
 import { questions as nemoBestPracticesQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/6-NeMo-best-practices';
+import { questions as optimizationQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/7-Optimization';
+import { questions as nemoAgentQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/8-NEmo-Agent';
+import { questions as nemoAgentIntelligenceToolkitQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/9-Nemo-Agent-intelligence-toolkit';
+import { questions as aiqQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/10-AIQ';
+import { questions as masteringLLMsQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/11-Mastering-LLMs';
+import { questions as deployInferenceWorkloadsQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/12-Deploy-Inference-Workloads';
+import { questions as nemotronAdvancedAgentsQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/13-Nemotron-advanced-agents';
+import { questions as aiAgentBlueprintQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/14-AI-Agent-blueprint';
+import { questions as improveAICodeGenQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/15-Improve-AI-code-gen';
+import { questions as nemoScalableAiQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/16-Nemo-Scalable-Ai';
+import { questions as aiAgentEvalQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/1-AI-Agent-Eval';
+import { questions as logTraceMonitorQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/2-Log-Trace-Monitor';
+import { questions as timeWeightedRetrieverQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/3-Time-Weighted-Retriever';
+import { questions as troubleshootingQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/4-Troubleshooting';
+import { questions as langchainTracingQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/5-Langchain-Tracing';
+import { questions as langchainStructuredOutputsQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/6-LangChain-structured-outputs';
+import { questions as smithLangchainEvalQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/7-Smith-Langchain-eval';
+import { questions as monitoringMLProductionQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/8-Monitoring-ML-production';
 
 // Quiz questions organized by reading files
 const QUIZ_DATA: QuizSet = {
@@ -195,7 +213,25 @@ const QUIZ_DATA: QuizSet = {
   '7-NVDA-Platform-Integration/4-NeMO-Guardrails.txt': nemoGuardrailsQuestions,
   '7-NVDA-Platform-Integration/3-Triton-server-backend.txt': tritonServerBackendQuestions,
   '7-NVDA-Platform-Integration/5-performance-tuning-guide.txt': performanceTuningGuideQuestions,
-  '7-NVDA-Platform-Integration/6-NeMo-best-practices.txt': nemoBestPracticesQuestions
+  '7-NVDA-Platform-Integration/6-NeMo-best-practices.txt': nemoBestPracticesQuestions,
+  '7-NVDA-Platform-Integration/7-Optimization.txt': optimizationQuestions,
+  '7-NVDA-Platform-Integration/8-NEmo-Agent.txt': nemoAgentQuestions,
+  '7-NVDA-Platform-Integration/9-Nemo-Agent-intelligence-toolkit.txt': nemoAgentIntelligenceToolkitQuestions,
+  '7-NVDA-Platform-Integration/10-AIQ.txt': aiqQuestions,
+  '7-NVDA-Platform-Integration/11-Mastering-LLMs.txt': masteringLLMsQuestions,
+  '7-NVDA-Platform-Integration/12-Deploy-Inference-Workloads.txt': deployInferenceWorkloadsQuestions,
+  '7-NVDA-Platform-Integration/13-Nemotron-advanced-agents.txt': nemotronAdvancedAgentsQuestions,
+  '7-NVDA-Platform-Integration/14-AI-Agent-blueprint.txt': aiAgentBlueprintQuestions,
+  '7-NVDA-Platform-Integration/15-Improve-AI-code-gen.txt': improveAICodeGenQuestions,
+  '7-NVDA-Platform-Integration/16-Nemo-Scalable-Ai.txt': nemoScalableAiQuestions,
+  '8-run-monitor-maintain/1-AI-Agent-Eval.txt': aiAgentEvalQuestions,
+  '8-run-monitor-maintain/2-Log-Trace-Monitor.txt': logTraceMonitorQuestions,
+  '8-run-monitor-maintain/3-Time-Weighted-Retriever.txt': timeWeightedRetrieverQuestions,
+  '8-run-monitor-maintain/4-Troubleshooting.txt': troubleshootingQuestions,
+  '8-run-monitor-maintain/5-Langchain-Tracing.txt': langchainTracingQuestions,
+  '8-run-monitor-maintain/6-LangChain-structured-outputs.txt': langchainStructuredOutputsQuestions,
+  '8-run-monitor-maintain/7-Smith-Langchain-eval.txt': smithLangchainEvalQuestions,
+  '8-run-monitor-maintain/8-Monitoring-ML-production.txt': monitoringMLProductionQuestions
 };
 
 function boldKeyTerms(text: string): string {
