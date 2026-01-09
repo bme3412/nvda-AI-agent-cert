@@ -155,6 +155,14 @@ import { questions as langchainTracingQuestions } from '@/app/data/quizzes/8-run
 import { questions as langchainStructuredOutputsQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/6-LangChain-structured-outputs';
 import { questions as smithLangchainEvalQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/7-Smith-Langchain-eval';
 import { questions as monitoringMLProductionQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/8-Monitoring-ML-production';
+import { questions as buildingSaferAppsTemplatesQuestions } from '@/app/data/quizzes/9-Safety-Ethics/1-Building-Safer-Apps-Templates';
+import { questions as aiMLSoftwareMedDeviceQuestions } from '@/app/data/quizzes/9-Safety-Ethics/2-AI-ML-Software-Med-Device';
+import { questions as proposedRegulationHarmonizedQuestions } from '@/app/data/quizzes/9-Safety-Ethics/3-Proposed-Regulation-Harmonized';
+import { questions as ethicallyAlignedDesignQuestions } from '@/app/data/quizzes/9-Safety-Ethics/4-Ethically-Alinged-Design';
+import { questions as securingGenAIDeploymentsQuestions } from '@/app/data/quizzes/9-Safety-Ethics/5-Securing-Gen-AI-Deployments';
+import { questions as metricsAgenticAiQuestions } from '@/app/data/quizzes/9-Safety-Ethics/6-Metrics-Agentic-Ai';
+import { questions as aiRegulatoryQuestions } from '@/app/data/quizzes/9-Safety-Ethics/7-AI-Regulatory';
+import { questions as responsibleAiQuestions } from '@/app/data/quizzes/9-Safety-Ethics/8-Responsible-Ai';
 
 // Quiz questions organized by reading files
 const QUIZ_DATA: QuizSet = {
@@ -231,7 +239,15 @@ const QUIZ_DATA: QuizSet = {
   '8-run-monitor-maintain/5-Langchain-Tracing.txt': langchainTracingQuestions,
   '8-run-monitor-maintain/6-LangChain-structured-outputs.txt': langchainStructuredOutputsQuestions,
   '8-run-monitor-maintain/7-Smith-Langchain-eval.txt': smithLangchainEvalQuestions,
-  '8-run-monitor-maintain/8-Monitoring-ML-production.txt': monitoringMLProductionQuestions
+  '8-run-monitor-maintain/8-Monitoring-ML-production.txt': monitoringMLProductionQuestions,
+  '9-Safety-Ethics/1-Building-Safer-Apps-Templates.txt': buildingSaferAppsTemplatesQuestions,
+  '9-Safety-Ethics/2-AI-ML-Software-Med-Device.txt': aiMLSoftwareMedDeviceQuestions,
+  '9-Safety-Ethics/3-Proposed-Regulation-Harmonized.txt': proposedRegulationHarmonizedQuestions,
+  '9-Safety-Ethics/4-Ethically-Alinged-Design.txt': ethicallyAlignedDesignQuestions,
+  '9-Safety-Ethics/5-Securing-Gen-AI-Deployments.txt': securingGenAIDeploymentsQuestions,
+  '9-Safety-Ethics/6-Metrics-Agentic-Ai.txt': metricsAgenticAiQuestions,
+  '9-Safety-Ethics/7-AI-Regulatory.txt': aiRegulatoryQuestions,
+  '9-Safety-Ethics/8-Responsible-Ai.txt': responsibleAiQuestions
 };
 
 function boldKeyTerms(text: string): string {
