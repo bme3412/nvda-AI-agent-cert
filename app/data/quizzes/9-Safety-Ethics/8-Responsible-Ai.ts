@@ -5,48 +5,48 @@ export const questions: QuizQuestion[] = [
     id: 'q1',
     question: 'What did the 2023 "Responsible AI in the Enterprise" book aim to provide?',
     options: [
-      'Technical specifications for AI hardware design and implementation',
       'Practical AI risk management strategies for explainable, auditable, and safe models',
+      'Technical specifications for AI hardware design and implementation',
       'Marketing guidelines for AI products and services',
       'Legal requirements for AI compliance without implementation guidance'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'The 2023 "Responsible AI in the Enterprise" book aimed to provide practical AI risk management strategies for explainable, auditable, and safe models in enterprise settings.'
   },
   {
     id: 'q2',
     question: 'How is the AI landscape characterized from mid-2023 to May 2025?',
     options: [
-      'Completely stable without significant changes or developments',
       'Evolution of unprecedented velocity and scale',
+      'Completely stable without significant changes or developments',
       'Gradual decline in AI adoption and development',
       'Limited to academic research without practical applications'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'The period from mid-2023 to May 2025 witnessed an evolution of unprecedented velocity and scale in the AI landscape, particularly concerning responsible development and deployment in enterprise settings.'
   },
   {
     id: 'q3',
     question: 'What does responsible AI development emphasize in enterprise contexts?',
     options: [
-      'Maximum performance regardless of ethical considerations',
       'Explainable, auditable, and safe model characteristics',
+      'Maximum performance regardless of ethical considerations',
       'Cost reduction without consideration for safety requirements',
       'Speed of deployment over thorough risk assessment'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Responsible AI development in enterprise contexts emphasizes explainable, auditable, and safe model characteristics, ensuring AI systems can be understood, verified, and operated safely.'
   },
   {
     id: 'q4',
     question: 'Why does AI risk management prove essential for enterprise deployment?',
     options: [
-      'Risk management proves unnecessary for advanced AI systems',
       'To ensure safe, reliable, and ethical AI implementation in business environments',
+      'Risk management proves unnecessary for advanced AI systems',
       'Only for regulatory compliance without operational benefits',
       'AI systems automatically manage risks without human oversight'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'AI risk management proves essential for enterprise deployment to ensure safe, reliable, and ethical AI implementation in business environments, addressing potential harms and ensuring responsible operation.'
   },
   {
@@ -78,11 +78,11 @@ export const questions: QuizQuestion[] = [
     question: 'Why does auditability prove important for enterprise AI systems?',
     options: [
       'Auditing complicates AI systems without providing value',
-      'To enable verification, compliance demonstration, and accountability',
       'Only for financial applications without broader relevance',
+      'To enable verification, compliance demonstration, and accountability',
       'Auditability proves unnecessary for modern AI systems'
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'Auditability proves important for enterprise AI systems to enable verification of system behavior, demonstration of compliance with regulations and policies, and establishment of accountability for AI-driven decisions.'
   },
   {
@@ -90,11 +90,11 @@ export const questions: QuizQuestion[] = [
     question: 'What does safety in AI models encompass for responsible deployment?',
     options: [
       'Only technical performance without consideration for broader impacts',
-      'Protection against harm, reliable operation, and appropriate safeguards',
       'Speed of operation without safety considerations',
-      'Cost efficiency over safety requirements'
+      'Cost efficiency over safety requirements',
+      'Protection against harm, reliable operation, and appropriate safeguards'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Safety in AI models encompasses protection against harm, reliable operation under various conditions, and implementation of appropriate safeguards to prevent unintended consequences in enterprise environments.'
   },
   {
@@ -138,11 +138,11 @@ export const questions: QuizQuestion[] = [
     question: 'What role does governance play in responsible AI implementation?',
     options: [
       'Governance complicates AI implementation without providing benefits',
-      'Establishing frameworks for oversight, accountability, and decision-making',
       'Only technical management without strategic considerations',
-      'Governance proves unnecessary for well-designed AI systems'
+      'Governance proves unnecessary for well-designed AI systems',
+      'Establishing frameworks for oversight, accountability, and decision-making'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Governance plays a crucial role in responsible AI implementation by establishing frameworks for oversight, accountability, and decision-making, ensuring AI systems align with organizational values and regulatory requirements.'
   },
   {
@@ -150,23 +150,23 @@ export const questions: QuizQuestion[] = [
     question: 'How does responsible AI address stakeholder concerns about AI deployment?',
     options: [
       'Stakeholder concerns prove irrelevant for AI system design',
-      'Through transparency, accountability, and demonstration of safe and ethical operation',
       'By hiding AI implementation details from stakeholders',
-      'Concerns automatically resolve without specific actions'
+      'Concerns automatically resolve without specific actions',
+      'Through transparency, accountability, and demonstration of safe and ethical operation'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Responsible AI addresses stakeholder concerns through transparency about AI capabilities and limitations, accountability for AI-driven decisions, and demonstration of safe and ethical operation in enterprise environments.'
   },
   {
     id: 'q14',
     question: 'What does continuous evolution in AI landscape require from organizations?',
     options: [
-      'Static approaches that never adapt to changes',
       'Ongoing adaptation of responsible AI practices and risk management strategies',
+      'Static approaches that never adapt to changes',
       'Complete replacement of AI systems with each update',
       'No adaptation since all changes prove superficial'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Continuous evolution in the AI landscape requires ongoing adaptation of responsible AI practices and risk management strategies to address new challenges, opportunities, and regulatory developments.'
   },
   {
@@ -174,11 +174,11 @@ export const questions: QuizQuestion[] = [
     question: 'Why does responsible AI prove increasingly critical for enterprise success?',
     options: [
       'Responsible AI complicates enterprise operations without benefits',
-      'Because ethical, safe, and accountable AI builds trust and enables sustainable adoption',
       'Enterprise success depends only on AI performance capabilities',
-      'Responsibility considerations prove irrelevant for business outcomes'
+      'Responsibility considerations prove irrelevant for business outcomes',
+      'Because ethical, safe, and accountable AI builds trust and enables sustainable adoption'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Responsible AI proves increasingly critical for enterprise success because ethical, safe, and accountable AI builds stakeholder trust, ensures regulatory compliance, and enables sustainable adoption of AI technologies in business environments.'
   }
 ];

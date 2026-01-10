@@ -18,11 +18,11 @@ export const questions: QuizQuestion[] = [
     question: 'What distinguishes applied ethics emphasis from theoretical discourse?',
     options: [
       'Applied ethics eliminates all theoretical considerations focusing exclusively on technical implementation',
-      'Implementation-focused standards providing concrete assessment criteria, measurable requirements, and verification procedures',
       'Theoretical frameworks prove more valuable than practical implementation for ethical AI',
-      'Applied ethics requires no theoretical foundation or principled approach'
+      'Applied ethics requires no theoretical foundation or principled approach',
+      'Implementation-focused standards providing concrete assessment criteria, measurable requirements, and verification procedures'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Applied ethics emphasis distinguishes practical frameworks from purely theoretical discourse through implementation-focused standards providing concrete assessment criteria, measurable requirements, and verification procedures enabling organizations to demonstrate ethical compliance and bridging gap between aspirational principles and operational reality.'
   },
   {
@@ -42,11 +42,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does risk mitigation benefit from systematic ethics integration?',
     options: [
       'Ethics integration eliminates all possible risks without need for ongoing management',
-      'Through systematic identification of ethical hazards, structured assessment of potential harms, and implementation of appropriate safeguards',
       'Risk mitigation proves unnecessary when ethical principles are clearly stated',
-      'All AI systems pose identical ethical risks regardless of design or application'
+      'All AI systems pose identical ethical risks regardless of design or application',
+      'Through systematic identification of ethical hazards, structured assessment of potential harms, and implementation of appropriate safeguards'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Risk mitigation benefits emerge from systematic identification of ethical hazards, structured assessment of potential harms, and implementation of appropriate safeguards, with proactive ethics integration reducing incident probability compared to reactive approaches addressing issues only after manifestation.'
   },
   {
@@ -66,11 +66,11 @@ export const questions: QuizQuestion[] = [
     question: 'What does ethics assessment certification provide through independent verification?',
     options: [
       'Universal certification that guarantees perfect ethical behavior without any limitations',
-      'Independent verification of AI system ethical characteristics through structured evaluation against defined criteria',
       'Automatic certification eliminating need for assessment or evaluation processes',
-      'Certification applies only to technical performance without ethical considerations'
+      'Certification applies only to technical performance without ethical considerations',
+      'Independent verification of AI system ethical characteristics through structured evaluation against defined criteria'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Ethics assessment certification provides independent verification of AI system ethical characteristics through structured evaluation against defined criteria encompassing fairness, transparency, privacy, accountability, safety, and human oversight, ensuring broad ethical consideration rather than narrow focus.'
   },
   {
@@ -90,11 +90,11 @@ export const questions: QuizQuestion[] = [
     question: 'How do ethics training programs bridge implementation gaps?',
     options: [
       'Training eliminates all ethical challenges without need for ongoing consideration or management',
-      'By providing actionable knowledge for embedding ethics throughout development processes with principles and practical implementation',
       'Abstract principles alone provide sufficient guidance without practical training requirements',
-      'All developers automatically understand ethical implementation without specific training'
+      'All developers automatically understand ethical implementation without specific training',
+      'By providing actionable knowledge for embedding ethics throughout development processes with principles and practical implementation'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Ethics training programs bridge gap between abstract principles and practical implementation providing participants with actionable knowledge for embedding ethics throughout development processes, with comprehensive curriculum ensuring understanding of both ethical principles and practical implementation methodologies.'
   },
   {
@@ -114,11 +114,11 @@ export const questions: QuizQuestion[] = [
     question: 'How do standards creation processes ensure diverse perspectives?',
     options: [
       'Technical experts alone provide sufficient perspective for comprehensive ethical standards',
-      'Through inclusive participation encompassing technical experts, ethicists, civil society representatives, and affected community voices',
       'Diverse perspectives complicate standards development without providing value',
-      'Universal standards eliminate need for considering different perspectives or contexts'
+      'Universal standards eliminate need for considering different perspectives or contexts',
+      'Through inclusive participation encompassing technical experts, ethicists, civil society representatives, and affected community voices'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Standards creation processes employ inclusive participation mechanisms ensuring diverse perspectives inform framework development, with participation encompassing technical experts, domain specialists, ethicists, civil society representatives, and affected community voices proving essential for addressing complex sociotechnical challenges.'
   },
   {
@@ -138,11 +138,11 @@ export const questions: QuizQuestion[] = [
     question: 'What do age-appropriate design standards address for children\'s protection?',
     options: [
       'Universal protection that applies identically to all users regardless of age',
-      'Children\'s unique vulnerabilities including data collection, persuasive design, inappropriate content exposure, and developmental impacts',
       'Age considerations prove unnecessary for digital environment design',
-      'All users require identical protection regardless of developmental stage'
+      'All users require identical protection regardless of developmental stage',
+      'Children\'s unique vulnerabilities including data collection, persuasive design, inappropriate content exposure, and developmental impacts'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Age-appropriate design standards address children\'s unique vulnerabilities in digital environments including heightened risks from data collection, persuasive design, inappropriate content exposure, and developmental impacts, ensuring technologies serving children incorporate appropriate protections rather than simply applying adult-focused frameworks.'
   },
   {
@@ -162,11 +162,11 @@ export const questions: QuizQuestion[] = [
     question: 'What does community forum collaboration enable for standards development?',
     options: [
       'Individual organization initiatives provide sufficient coordination without community collaboration',
-      'Collaboration between standards organizations, industry, academia, and civil society for knowledge sharing and coordinated action',
       'Community forums complicate standards development without providing meaningful benefits',
-      'Universal standards eliminate need for collaborative development approaches'
+      'Universal standards eliminate need for collaborative development approaches',
+      'Collaboration between standards organizations, industry, academia, and civil society for knowledge sharing and coordinated action'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Community forums enable collaboration between standards development organizations, industry participants, academic institutions, and civil society groups, facilitating knowledge sharing, joint problem-solving, and coordinated action proving more effective than isolated initiatives for addressing complex challenges requiring diverse expertise.'
   },
   {

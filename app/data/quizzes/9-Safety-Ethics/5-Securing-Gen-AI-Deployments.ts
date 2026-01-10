@@ -18,11 +18,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does NIM microservices architecture deliver optimized inference?',
     options: [
       'Through automatic hardware optimization that eliminates need for manual configuration and tuning',
-      'Via prebuilt containers encapsulating models, inference engines, and standard APIs eliminating deployment complexity',
       'By requiring specialized hardware configurations optimized exclusively for NVIDIA infrastructure',
-      'Through universal compatibility ensuring identical performance across all possible deployment environments'
+      'Through universal compatibility ensuring identical performance across all possible deployment environments',
+      'Via prebuilt containers encapsulating models, inference engines, and standard APIs eliminating deployment complexity'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'NIM microservices architecture delivers optimized inference through prebuilt containers encapsulating models, inference engines, and standard APIs, with container approach eliminating deployment complexity from manual optimization, dependency management, and infrastructure configuration.'
   },
   {
@@ -42,11 +42,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does security integration address enterprise concerns?',
     options: [
       'Through automatic security that eliminates all possible threats without manual oversight',
-      'By ensuring models execute in secure containers, access controls limit API usage, and guardrails prevent prohibited content',
       'Through universal security measures that apply identically across all deployment scenarios',
-      'By eliminating all security requirements through advanced protection algorithms'
+      'By eliminating all security requirements through advanced protection algorithms',
+      'By ensuring models execute in secure containers, access controls limit API usage, and guardrails prevent prohibited content'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Security integration addresses enterprise concerns including unauthorized access prevention, sensitive information protection, and malicious use mitigation, ensuring models execute in secure containerized environments with access controls limiting inference API usage and guardrails preventing prohibited content generation.'
   },
   {
@@ -66,11 +66,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does container packaging provide consistent execution environments?',
     options: [
       'Through universal packaging that works identically across all infrastructure types without adaptation',
-      'By encapsulating models, inference engines, dependencies, and configuration into deployable units',
       'Through automatic packaging that eliminates need for manual configuration or dependency management',
-      'By requiring standardized infrastructure eliminating variations across deployment environments'
+      'By requiring standardized infrastructure eliminating variations across deployment environments',
+      'By encapsulating models, inference engines, dependencies, and configuration into deployable units'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Container packaging encapsulates models, inference engines, dependencies, and configuration into deployable units, providing consistent execution environments across infrastructure, eliminating dependency conflicts from host system variations, and simplifying deployment through standard container orchestration.'
   },
   {
