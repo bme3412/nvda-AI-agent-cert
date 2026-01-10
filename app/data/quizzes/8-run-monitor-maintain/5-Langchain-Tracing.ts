@@ -5,12 +5,12 @@ export const questions: QuizQuestion[] = [
     id: 'q1',
     question: 'What is LangChain and how does it enable rapid agent development?',
     options: [
-      'A deployment platform for scaling machine learning models across distributed infrastructure',
       'Open-source framework providing pre-built agent architectures and model integrations enabling rapid autonomous application development',
+      'A deployment platform for scaling machine learning models across distributed infrastructure',
       'A security system for protecting large language models from unauthorized access and malicious attacks',
       'A data preprocessing toolkit for preparing training datasets for natural language processing applications'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'LangChain represents open-source framework providing pre-built agent architectures and model integrations enabling rapid development of autonomous applications powered by large language models, abstracting complexities through standardized interfaces and reusable components.'
   },
   {
@@ -30,11 +30,11 @@ export const questions: QuizQuestion[] = [
     question: 'What capabilities does LangGraph foundation provide for agent orchestration?',
     options: [
       'Only basic workflow management without advanced features for production deployments',
-      'State management, control flow primitives, persistence mechanisms, and execution control supporting streaming and human intervention',
       'Exclusively real-time processing without support for durable or long-running operations',
-      'Universal compatibility ensuring identical behavior across all deployment environments and configurations'
+      'Universal compatibility ensuring identical behavior across all deployment environments and configurations',
+      'State management, control flow primitives, persistence mechanisms, and execution control supporting streaming and human intervention'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'LangGraph foundation provides underlying orchestration capabilities including state management maintaining context across multi-step execution, control flow primitives enabling conditional logic, persistence mechanisms surviving process interruptions, and execution control supporting streaming and human intervention.'
   },
   {
@@ -54,11 +54,11 @@ export const questions: QuizQuestion[] = [
     question: 'What advantages does streaming support provide for interactive applications?',
     options: [
       'Elimination of all computational overhead without affecting response quality or accuracy',
-      'Incremental response delivery as generation progresses improving perceived responsiveness',
       'Universal compatibility ensuring identical streaming behavior across all model types',
-      'Automatic optimization that reduces resource consumption without manual configuration'
+      'Automatic optimization that reduces resource consumption without manual configuration',
+      'Incremental response delivery as generation progresses improving perceived responsiveness'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Streaming support enables incremental response delivery as generation progresses rather than waiting for complete outputs, proving valuable for interactive applications where partial results improve perceived responsiveness and long-form generation where users benefit from early access.'
   },
   {

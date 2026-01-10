@@ -5,24 +5,24 @@ export const questions: QuizQuestion[] = [
     id: 'q1',
     question: 'What is NVIDIA NeMo Agent Toolkit and what does it enable?',
     options: [
-      'A hardware acceleration platform for training large language models on GPU clusters',
       'An open-source framework for building, profiling, and optimizing AI agent systems with cross-framework integration',
+      'A hardware acceleration platform for training large language models on GPU clusters',
       'A cloud-based service for deploying and managing machine learning models at scale',
       'A data preprocessing pipeline for preparing training datasets for agent development'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'NVIDIA NeMo Agent Toolkit represents an open-source framework for building, profiling, and optimizing AI agent systems across diverse agent frameworks, enabling unified cross-framework integration and comprehensive observability.'
   },
   {
     id: 'q2',
     question: 'How does the toolkit operate as a universal integration layer?',
     options: [
-      'By replacing all existing agent frameworks with a unified NVIDIA-specific implementation',
       'Through supporting major agent frameworks like LangChain, CrewAI, and custom implementations via standardized interfaces',
+      'By replacing all existing agent frameworks with a unified NVIDIA-specific implementation',
       'By requiring all agents to be rewritten using proprietary NVIDIA development tools',
       'Through automatic conversion of existing agents to a single standardized framework'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'The framework operates as universal integration layer supporting major agent frameworks including LangChain, CrewAI, and custom implementations through standardized interfaces that enable mixing frameworks within single workflows.'
   },
   {

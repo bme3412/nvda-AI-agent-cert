@@ -5,12 +5,12 @@ export const questions: QuizQuestion[] = [
     id: 'q1',
     question: 'What is time-weighted retrieval and how does it enhance standard vector retrieval?',
     options: [
-      'A security mechanism that prevents unauthorized access to recently accessed documents',
       'Enhancement incorporating temporal recency factors into document ranking algorithms alongside semantic similarity',
+      'A security mechanism that prevents unauthorized access to recently accessed documents',
       'An optimization technique that reduces computational costs by caching frequently accessed documents',
       'A compression algorithm that reduces storage requirements for temporal document metadata'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Time-weighted retrieval represents enhancement to semantic similarity search incorporating temporal recency factors into document ranking algorithms, while standard vector retrieval selects documents based solely on embedding similarity disregarding temporal characteristics.'
   },
   {
@@ -18,11 +18,11 @@ export const questions: QuizQuestion[] = [
     question: 'How do temporal weighting mechanisms modify similarity scores?',
     options: [
       'By completely replacing semantic similarity with temporal ranking based purely on access time',
-      'Through decay functions diminishing document relevance based on time since last access',
       'By automatically updating document content to maintain relevance over time',
-      'Through standardizing all documents to have identical temporal characteristics'
+      'Through standardizing all documents to have identical temporal characteristics',
+      'Through decay functions diminishing document relevance based on time since last access'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Temporal weighting mechanisms modify similarity scores through decay functions diminishing relevance of documents based on time since last access, with combined scoring integrating semantic relevance from vector similarity with temporal relevance from recency calculations.'
   },
   {
@@ -42,11 +42,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does decay rate configuration provide control over temporal weighting strength?',
     options: [
       'Decay rates automatically optimize based on usage patterns without manual configuration',
-      'Low rates preserve relevance across extended periods while high rates strongly favor recently accessed content',
       'All documents must use identical decay rates to ensure fair ranking across content types',
-      'Decay rate configuration applies only to semantic similarity without affecting temporal factors'
+      'Decay rate configuration applies only to semantic similarity without affecting temporal factors',
+      'Low rates preserve relevance across extended periods while high rates strongly favor recently accessed content'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Decay rate configuration provides tunable control over temporal weighting strength, with low decay rates preserving document relevance across extended time periods while high decay rates strongly favor recently accessed content rapidly diminishing older document scores.'
   },
   {
@@ -66,11 +66,11 @@ export const questions: QuizQuestion[] = [
     question: 'What cache-like behavior emerges from access-based temporal tracking?',
     options: [
       'All documents become permanently cached eliminating the need for retrieval mechanisms',
-      'Recently used documents remain accessible through temporal boosting while unused documents decay toward irretrievability',
       'Cache behavior applies only to technical documents without relevance for other content types',
-      'Temporal tracking eliminates caching requirements through improved storage efficiency'
+      'Temporal tracking eliminates caching requirements through improved storage efficiency',
+      'Recently used documents remain accessible through temporal boosting while unused documents decay toward irretrievability'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Cache-like behavior emerges from access-based temporal tracking creating retrieval patterns resembling cache replacement policies, with recently used documents remaining readily accessible through temporal boosting while unused documents eventually become difficult to retrieve through temporal decay.'
   },
   {
@@ -78,11 +78,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does the combined scoring computation integrate semantic and temporal factors?',
     options: [
       'By alternating between semantic and temporal ranking on successive retrievals',
-      'Through applying exponential decay to elapsed time and combining with vector similarity scores',
       'By using only the highest score between semantic similarity and temporal relevance',
-      'Through converting all semantic scores to temporal equivalents for unified ranking'
+      'Through converting all semantic scores to temporal equivalents for unified ranking',
+      'Through applying exponential decay to elapsed time and combining with vector similarity scores'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Combined scoring computation integrates semantic similarity from vector comparison with temporal relevance from decay calculation, applying exponential decay to elapsed time since last access, scaling by configurable rate parameter, and combining with vector similarity score.'
   },
   {
@@ -126,11 +126,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does decay rate selection determine application-specific retrieval tradeoffs?',
     options: [
       'All applications should use identical decay rates to ensure consistent behavior across systems',
-      'Conversational applications benefit from moderate to aggressive decay while knowledge retrieval may prefer minimal decay',
       'Decay rate selection applies only to conversational systems without relevance for other applications',
-      'Higher decay rates always provide better performance regardless of application requirements'
+      'Higher decay rates always provide better performance regardless of application requirements',
+      'Conversational applications benefit from moderate to aggressive decay while knowledge retrieval may prefer minimal decay'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Decay rate selection determines application-specific tradeoff between temporal and semantic relevance, with conversational applications often benefiting from moderate to aggressive decay maintaining focus on recent context while knowledge retrieval applications may prefer minimal decay prioritizing semantic relevance over recency.'
   },
   {
@@ -162,11 +162,11 @@ export const questions: QuizQuestion[] = [
     question: 'What does trending content identification reveal through access pattern tracking?',
     options: [
       'All content trends identically regardless of actual user interest or access patterns',
-      'Currently popular documents through temporal freshness accumulation from sustained access',
       'Trending identification requires manual curation without benefit from access tracking',
-      'Access patterns provide no useful information about content popularity or trends'
+      'Access patterns provide no useful information about content popularity or trends',
+      'Currently popular documents through temporal freshness accumulation from sustained access'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Trending content identification leverages access pattern tracking revealing currently popular documents through temporal freshness accumulation, with documents receiving sustained access maintaining high temporal scores indicating ongoing relevance while previously popular documents decay revealing shifting interest patterns.'
   },
   {
@@ -174,11 +174,11 @@ export const questions: QuizQuestion[] = [
     question: 'How do cache-like information systems approximate LRU policies through temporal decay?',
     options: [
       'Cache approximation requires specialized hardware unavailable in standard retrieval systems',
-      'Through aggressive temporal decay where frequently accessed documents remain retrievable while unused documents decay toward irretrievability',
       'LRU approximation works only with text documents without applicability to other content types',
-      'Temporal decay eliminates caching requirements making LRU policies unnecessary'
+      'Temporal decay eliminates caching requirements making LRU policies unnecessary',
+      'Through aggressive temporal decay where frequently accessed documents remain retrievable while unused documents decay toward irretrievability'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Cache-like information systems approximate least-recently-used caching policies through aggressive temporal decay, with frequently accessed documents remaining easily retrievable through temporal freshness while unused documents decay toward irretrievability mimicking cache eviction, proving useful for applications benefiting from access locality.'
   }
 ];

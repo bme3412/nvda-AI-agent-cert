@@ -30,11 +30,11 @@ export const questions: QuizQuestion[] = [
     question: 'How do trace correlation mechanisms enable request flow reconstruction?',
     options: [
       'By automatically optimizing API call sequences for improved performance and efficiency',
-      'Through associating related API calls via common identifiers enabling complete request flow reconstruction',
       'By eliminating unnecessary API calls to reduce system complexity and overhead',
-      'Through standardizing all API calls to use identical formats and protocols'
+      'Through standardizing all API calls to use identical formats and protocols',
+      'Through associating related API calls via common identifiers enabling complete request flow reconstruction'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Trace correlation mechanisms associate related API calls through common identifiers enabling reconstruction of complete request flows, with trace IDs propagating across operation boundaries linking embeddings, completions, and tool executions from single user interactions.'
   },
   {
@@ -54,11 +54,11 @@ export const questions: QuizQuestion[] = [
     question: 'How do cost management capabilities enable precise expense attribution?',
     options: [
       'Through automatic cost reduction algorithms that optimize resource usage without manual intervention',
-      'By enabling expense attribution to user requests aggregating costs across multiple API calls',
       'Through universal pricing models that standardize costs across all service providers',
-      'By eliminating all operational costs through efficiency improvements and optimization'
+      'By eliminating all operational costs through efficiency improvements and optimization',
+      'By enabling expense attribution to user requests aggregating costs across multiple API calls'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Cost management capabilities enable precise expense attribution to user requests aggregating costs across multiple API calls, identification of expensive interaction patterns, and cost trend analysis revealing usage patterns and optimization opportunities.'
   },
   {
@@ -78,11 +78,11 @@ export const questions: QuizQuestion[] = [
     question: 'What comprehensive operation characteristics does metadata extraction capture?',
     options: [
       'Only basic timing information without detailed request or response data',
-      'Invocation timestamps, model identifiers, costs, execution times, request payloads, and response payloads',
       'Exclusively security-related information for compliance and audit purposes',
-      'Universal metadata that applies identically across all operation types'
+      'Universal metadata that applies identically across all operation types',
+      'Invocation timestamps, model identifiers, costs, execution times, request payloads, and response payloads'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Metadata extraction captures comprehensive operation characteristics including invocation timestamps enabling temporal analysis, model identifiers tracking which models handle requests, total costs, execution times, request payloads, and response payloads.'
   },
   {
@@ -102,11 +102,11 @@ export const questions: QuizQuestion[] = [
     question: 'What advantages does exact matching provide for response caching?',
     options: [
       'Universal compatibility ensuring cache hits work identically across all request types',
-      'Perfect precision ensuring cached responses match current requests exactly through precise parameter comparison',
       'Automatic cache optimization that improves hit rates without manual configuration',
+      'Perfect precision ensuring cached responses match current requests exactly through precise parameter comparison',
       'Elimination of all cache misses through advanced prediction algorithms'
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'Exact matching identifies requests identical to previous invocations through precise comparison of request parameters including prompts, model selections, and configuration settings, providing perfect precision ensuring cached responses match current requests exactly.'
   },
   {
@@ -126,11 +126,11 @@ export const questions: QuizQuestion[] = [
     question: 'What does automatic retry capability handle for reliability improvement?',
     options: [
       'All possible system failures regardless of their fundamental nature or cause',
-      'Transient failures through configurable re-execution policies eliminating manual retry implementation',
       'Only permanent failures that require immediate escalation to human operators',
-      'Universal error recovery that works identically across all failure types'
+      'Universal error recovery that works identically across all failure types',
+      'Transient failures through configurable re-execution policies eliminating manual retry implementation'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Automatic retry capabilities handle transient failures through configurable re-execution policies, detecting failed requests based on error codes and automatically resubmitting according to configured policies while surfacing persistent failures after exhausting retry attempts.'
   },
   {
@@ -138,11 +138,11 @@ export const questions: QuizQuestion[] = [
     question: 'Why do exponential backoff strategies prove essential for retry mechanisms?',
     options: [
       'To guarantee successful retry on the first attempt without multiple attempts',
-      'For spacing retry attempts with progressively increasing delays preventing overwhelming services experiencing difficulties',
       'To eliminate all retry attempts by resolving issues before they require retries',
-      'For standardizing retry timing across all systems regardless of specific failure characteristics'
+      'For standardizing retry timing across all systems regardless of specific failure characteristics',
+      'For spacing retry attempts with progressively increasing delays preventing overwhelming services experiencing difficulties'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Exponential backoff strategies space retry attempts with progressively increasing delays preventing overwhelming services experiencing difficulties, with initial retries occurring rapidly while subsequent attempts delay progressively allowing extended recovery time.'
   },
   {
@@ -162,11 +162,11 @@ export const questions: QuizQuestion[] = [
     question: 'What advantages does gateway integration provide for observability platforms?',
     options: [
       'Automatic performance optimization and cost reduction without manual configuration',
-      'Centralized observability logic avoiding distributed instrumentation across application code',
       'Universal compatibility ensuring identical behavior across all programming frameworks',
-      'Elimination of all observability overhead through advanced efficiency algorithms'
+      'Elimination of all observability overhead through advanced efficiency algorithms',
+      'Centralized observability logic avoiding distributed instrumentation across application code'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Gateway integration routes API traffic through observability platforms providing centralized observability logic avoiding distributed instrumentation across application code, simplifying policy enforcement and enabling transparent feature adoption without application modifications.'
   },
   {

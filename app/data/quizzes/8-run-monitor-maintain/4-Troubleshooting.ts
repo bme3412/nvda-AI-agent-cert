@@ -5,12 +5,12 @@ export const questions: QuizQuestion[] = [
     id: 'q1',
     question: 'What does TensorRT-LLM debugging and troubleshooting encompass?',
     options: [
-      'Only basic performance monitoring without detailed diagnostic capabilities for complex issues',
       'Comprehensive methodology for identifying, diagnosing, and resolving compilation, building, execution, and deployment issues',
+      'Only basic performance monitoring without detailed diagnostic capabilities for complex issues',
       'Automated error correction that resolves all problems without manual intervention requirements',
       'Simple logging mechanisms that capture basic information without sophisticated analysis capabilities'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'TensorRT-LLM debugging and troubleshooting represents comprehensive methodology for identifying, diagnosing, and resolving issues arising during compilation, model building, execution, and deployment of optimized large language model inference engines.'
   },
   {
@@ -30,11 +30,11 @@ export const questions: QuizQuestion[] = [
     question: 'What issue categories span the troubleshooting methodology?',
     options: [
       'Only runtime execution errors without consideration for installation or building problems',
-      'Installation problems, model building failures, runtime execution errors, and performance issues',
       'Exclusively performance optimization without addressing functional correctness or error resolution',
-      'Universal issues that apply identically across all deployment scenarios and environments'
+      'Universal issues that apply identically across all deployment scenarios and environments',
+      'Installation problems, model building failures, runtime execution errors, and performance issues'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Issue categories span installation problems from dependency conflicts, model building failures from invalid network definitions, runtime execution errors from tensor shape mismatches or plugin failures, and performance issues from inefficient configurations.'
   },
   {
@@ -66,11 +66,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does intermediate tensor inspection enable computation validation?',
     options: [
       'Through automatic validation that eliminates need for manual inspection of computation results',
-      'By examining computation results at arbitrary points within model execution rather than observing only final outputs',
       'Inspection applies only to final model outputs without access to intermediate computation states',
-      'Through universal monitoring that works identically across all model architectures'
+      'Through universal monitoring that works identically across all model architectures',
+      'By examining computation results at arbitrary points within model execution rather than observing only final outputs'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Intermediate tensor inspection enables examining computation results at arbitrary points within model execution rather than observing only final outputs, requiring registering intermediate tensors as network outputs making them accessible during execution.'
   },
   {
@@ -78,11 +78,11 @@ export const questions: QuizQuestion[] = [
     question: 'What does network output registration accomplish for debugging flexibility?',
     options: [
       'Automatic optimization of network performance without manual configuration requirements',
-      'Designating specific tensors for external visibility despite their intermediate position in computation graphs',
       'Universal compatibility ensuring all tensors can be accessed identically across deployments',
-      'Elimination of debugging overhead through advanced efficiency algorithms'
+      'Elimination of debugging overhead through advanced efficiency algorithms',
+      'Designating specific tensors for external visibility despite their intermediate position in computation graphs'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Network output registration mechanisms designate specific tensors for external visibility despite their intermediate position in computation graphs, with registration APIs enabling dynamically marking tensors of interest without modifying core network definitions.'
   },
   {
@@ -102,11 +102,11 @@ export const questions: QuizQuestion[] = [
     question: 'Why do plugin synchronization failures require synchronous execution mode?',
     options: [
       'Synchronous execution eliminates all plugin requirements through advanced optimization',
-      'Because asynchronous kernel launches hide errors until subsequent operations attempt using incorrect results',
       'Synchronous mode provides automatic error correction without manual intervention requirements',
-      'Plugin failures occur only in development environments without production relevance'
+      'Plugin failures occur only in development environments without production relevance',
+      'Because asynchronous kernel launches hide errors until subsequent operations attempt using incorrect results'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Plugin synchronization failures arise from asynchronous kernel launches hiding errors until subsequent operations attempt using incorrect results, with synchronous execution mode forcing immediate error detection by blocking until each kernel completes and checking return status.'
   },
   {
@@ -114,11 +114,11 @@ export const questions: QuizQuestion[] = [
     question: 'What do shape validation mechanisms prevent during execution?',
     options: [
       'All performance overhead from validation processes without affecting error detection',
-      'Execution with incompatible configurations by detecting mismatches between actual and build-time tensor shapes',
       'Shape validation applies only to static models without relevance for dynamic configurations',
-      'Universal compatibility issues through automatic shape adjustment algorithms'
+      'Universal compatibility issues through automatic shape adjustment algorithms',
+      'Execution with incompatible configurations by detecting mismatches between actual and build-time tensor shapes'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Shape validation mechanisms detect mismatches between actual tensor shapes and build-time specifications preventing execution with incompatible configurations, with shape errors manifesting when runtime inputs violate size constraints or dynamic shapes exceed optimization profile bounds.'
   },
   {
@@ -126,11 +126,11 @@ export const questions: QuizQuestion[] = [
     question: 'How does optimization profile information support shape constraint understanding?',
     options: [
       'Through automatic optimization that eliminates all shape constraint requirements',
-      'By displaying allowable tensor shape ranges for dynamic dimensions enabling verification of runtime shape bounds',
       'Profile information applies only to static models without dynamic shape considerations',
-      'Through universal compatibility ensuring identical shape handling across all models'
+      'Through universal compatibility ensuring identical shape handling across all models',
+      'By displaying allowable tensor shape ranges for dynamic dimensions enabling verification of runtime shape bounds'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Optimization profile information displays allowable tensor shape ranges for dynamic dimensions enabling verification that runtime shapes fall within acceptable bounds, revealing minimum, optimal, and maximum allowed shapes providing context for understanding shape-related errors.'
   },
   {
@@ -162,11 +162,11 @@ export const questions: QuizQuestion[] = [
     question: 'What do communication library configuration issues manifest as during distributed execution?',
     options: [
       'Only performance improvements without any negative effects on system operation',
-      'Communication timeouts, synchronization deadlocks, or data corruption from improper buffer management',
       'Communication issues apply only to single-GPU scenarios without multi-GPU relevance',
-      'Universal compatibility ensuring identical behavior across all communication libraries'
+      'Universal compatibility ensuring identical behavior across all communication libraries',
+      'Communication timeouts, synchronization deadlocks, or data corruption from improper buffer management'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Communication library configuration issues manifest as communication timeouts, synchronization deadlocks, or data corruption from improper buffer management, requiring adequate shared memory allocation, appropriate memory locking limits, and correct network setup for multi-node scenarios.'
   },
   {
@@ -174,11 +174,11 @@ export const questions: QuizQuestion[] = [
     question: 'Why does cluster scheduler integration require understanding environment-specific constraints?',
     options: [
       'Scheduler integration provides automatic optimization without configuration requirements',
-      'Because managed compute environments impose constraints on communication patterns and process management approaches',
       'Cluster scheduling applies only to development environments without production relevance',
-      'Through universal compatibility ensuring identical behavior across all scheduler types'
+      'Through universal compatibility ensuring identical behavior across all scheduler types',
+      'Because managed compute environments impose constraints on communication patterns and process management approaches'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Cluster scheduler integration accommodates execution within managed compute environments requiring understanding environment-specific constraints, communication patterns, and process management approaches, ensuring distributed execution operates correctly within managed environments without conflicts from scheduler-imposed constraints.'
   }
 ];
