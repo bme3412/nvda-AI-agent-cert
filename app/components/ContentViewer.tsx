@@ -354,6 +354,33 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
     }
   }, [filePath]);
 
+  // Format content and extract key terms - must be before any early returns
+  const formattedContent = useMemo(() => {
+    if (!content || !filePath) {
+      return { title: '', sections: [] };
+    }
+    const formatted = formatContent(content, filePath);
+    
+    // Apply highlights to paragraph sections
+    if (highlights.length > 0) {
+      formatted.sections = formatted.sections.map(section => {
+        if (section.type === 'paragraph') {
+          return {
+            ...section,
+            content: applyHighlightsToText(section.content, highlights)
+          };
+        }
+        return section;
+      });
+    }
+    
+    return formatted;
+  }, [content, filePath, highlights]);
+
+  const { title, sections } = formattedContent;
+  const fileName = filePath ? filePath.split('/').pop()?.replace('.txt', '') || '' : '';
+  const isReview = fileName.toLowerCase() === 'review';
+
   // Set up Intersection Observer to detect when flashcards section comes into view
   useEffect(() => {
     if (typeof window === 'undefined' || !filePath) return;
@@ -419,34 +446,6 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
       }
     };
   }, [sections, filePath]);
-
-
-  // Format content and extract key terms - must be before any early returns
-  const formattedContent = useMemo(() => {
-    if (!content || !filePath) {
-      return { title: '', sections: [] };
-    }
-    const formatted = formatContent(content, filePath);
-    
-    // Apply highlights to paragraph sections
-    if (highlights.length > 0) {
-      formatted.sections = formatted.sections.map(section => {
-        if (section.type === 'paragraph') {
-          return {
-            ...section,
-            content: applyHighlightsToText(section.content, highlights)
-          };
-        }
-        return section;
-      });
-    }
-    
-    return formatted;
-  }, [content, filePath, highlights]);
-
-  const { title, sections } = formattedContent;
-  const fileName = filePath ? filePath.split('/').pop()?.replace('.txt', '') || '' : '';
-  const isReview = fileName.toLowerCase() === 'review';
   
   // Extract key terms from sections - article-specific
   const keyTerms = useMemo(() => {
