@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styles from './ContentViewer.module.css';
 import Quiz from './Quiz';
 import Flashcard from './Flashcard';
@@ -44,6 +44,9 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
   const [keyTermsSidebarOpen, setKeyTermsSidebarOpen] = useState(true);
   const [highlightedTerm, setHighlightedTerm] = useState<string | null>(null);
   const [highlights, setHighlights] = useState<TextHighlight[]>([]);
+  const [isSticky, setIsSticky] = useState(true);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const flashcardsRef = useRef<HTMLElement | null>(null);
 
   // Format display name helper (moved up for use in getCategoryFiles)
   const formatDisplayName = useCallback((name: string): string => {
@@ -351,6 +354,72 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
     }
   }, [filePath]);
 
+  // Set up Intersection Observer to detect when flashcards section comes into view
+  useEffect(() => {
+    if (typeof window === 'undefined' || !filePath) return;
+    
+    let observer: IntersectionObserver | null = null;
+    let flashcardsElement: HTMLElement | null = null;
+    let handleScroll: (() => void) | null = null;
+    
+    // Wait for content to render
+    const timeoutId = setTimeout(() => {
+      flashcardsElement = document.getElementById('article-flashcards');
+      if (!flashcardsElement) {
+        // No flashcards section, keep header sticky
+        setIsSticky(true);
+        return;
+      }
+
+      flashcardsRef.current = flashcardsElement;
+      
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // When flashcards section enters viewport (top of viewport), make header not sticky
+            // entry.boundingClientRect.top tells us where the element is relative to viewport
+            if (entry.isIntersecting && entry.boundingClientRect.top < 150) {
+              setIsSticky(false);
+            } else if (!entry.isIntersecting || entry.boundingClientRect.top >= 150) {
+              // When flashcards are not visible or are below the threshold, make header sticky
+              setIsSticky(true);
+            }
+          });
+        },
+        {
+          rootMargin: '0px',
+          threshold: [0, 0.1, 0.5],
+        }
+      );
+
+      observer.observe(flashcardsElement);
+
+      // Also check on scroll for more responsive updates
+      handleScroll = () => {
+        if (!flashcardsElement) return;
+        const rect = flashcardsElement.getBoundingClientRect();
+        // If flashcards section is within 150px of top, stop being sticky
+        if (rect.top < 150 && rect.bottom > 0) {
+          setIsSticky(false);
+        } else {
+          setIsSticky(true);
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (observer && flashcardsElement) {
+        observer.unobserve(flashcardsElement);
+      }
+      if (handleScroll) {
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [sections, filePath]);
+
 
   // Format content and extract key terms - must be before any early returns
   const formattedContent = useMemo(() => {
@@ -570,7 +639,10 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
           </div>
         </div>
       )}
-      <div className={`${styles.header} ${isReview ? styles.reviewHeader : ''} ${keyTermsSidebarOpen ? styles.sidebarOpen : ''}`}>
+      <div 
+        ref={headerRef}
+        className={`${styles.header} ${isReview ? styles.reviewHeader : ''} ${keyTermsSidebarOpen ? styles.sidebarOpen : ''} ${isSticky ? styles.sticky : ''}`}
+      >
         {breadcrumbs.length > 0 && (
           <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
             <button
