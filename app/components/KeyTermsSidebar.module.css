@@ -1,0 +1,221 @@
+.sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 360px;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateX(100%);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.toggleButton:hover {
+  background: var(--highlight-bg);
+  color: var(--accent-primary);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+}
+
+.termsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.termItem {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.termItem.highlighted {
+  background-color: var(--highlight-bg);
+  animation: highlightPulse 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateX(-2px);
+}
+
+@keyframes highlightPulse {
+  0% {
+    background-color: rgba(var(--accent-primary-rgb, 37, 99, 235), 0.25);
+    box-shadow: 0 0 0 0 rgba(var(--accent-primary-rgb, 37, 99, 235), 0.4);
+  }
+  30% {
+    background-color: rgba(var(--accent-primary-rgb, 37, 99, 235), 0.15);
+    box-shadow: 0 0 0 4px rgba(var(--accent-primary-rgb, 37, 99, 235), 0);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: 0 0 0 0 rgba(var(--accent-primary-rgb, 37, 99, 235), 0);
+  }
+}
+
+.termButton {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 14px 24px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: background-color 0.25s ease, padding 0.3s ease;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.termButton:hover {
+  background: var(--highlight-bg);
+}
+
+.termButton:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -2px;
+}
+
+.termName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+  line-height: 1.5;
+}
+
+.expandIcon {
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.definitionContainer {
+  padding: 0 24px 20px 24px;
+  background: var(--bg-primary);
+  animation: slideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+    padding-top: 0;
+    padding-bottom: 20px;
+    transform: translateY(0);
+  }
+}
+
+.definition {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.example {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  padding: 12px 16px;
+  background: var(--highlight-bg);
+  border-radius: 8px;
+  margin-top: 12px;
+  border-left: 3px solid var(--accent-primary);
+}
+
+.example strong {
+  color: var(--accent-primary);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+/* Scrollbar styling */
+.content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    max-width: 320px;
+  }
+}

@@ -3,6 +3,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import styles from './ContentViewer.module.css';
 import Quiz from './Quiz';
+import Flashcard from './Flashcard';
+import KeyTermsSidebar from './KeyTermsSidebar';
+import ProgressDisplay, { type ProgressStats } from './ProgressDisplay';
+import { formatContent, type FormattedContent } from '@/app/utils/contentFormatter';
+import { findQuizData } from '@/app/utils/quizMatcher';
+import { QUIZ_DATA } from '@/app/data/quizzes';
 
 interface ContentViewerProps {
   filePath?: string;
@@ -16,321 +22,6 @@ interface SummaryItem {
   children?: SummaryItem[];
 }
 
-interface ProgressStats {
-  total: number;
-  read: number;
-  percentage: number;
-  byCategory: Array<{
-    name: string;
-    total: number;
-    read: number;
-    percentage: number;
-  }>;
-}
-
-interface FormattedContent {
-  title: string;
-  sections: Array<{ type: 'heading' | 'paragraph'; content: string; level?: number }>;
-}
-
-// Key terms to automatically bold - only the most important concepts
-const KEY_TERMS = [
-  // Core foundational concepts
-  'Enterprise AI Factory', 'Agentic AI', 'autonomous agents',
-  
-  // Critical infrastructure components
-  'Kubernetes', 'RAG', 'retrieval-augmented generation', 'vector databases',
-  'GitOps', 'observability', 'defense-in-depth',
-  
-  // Key NVIDIA technologies
-  'NIM', 'NeMo', 'NVIDIA NeMo', 'NVIDIA AI Blueprints', 'NeMo Guardrails',
-  'Triton Inference Server', 'TensorRT', 'Agent Intelligence Toolkit', 'AIQ',
-  
-  // Important operational concepts
-  'Agent Ops', 'microservices', 'artifact repository',
-  
-  // Critical metrics
-  'Time To First Token', 'faithfulness metrics',
-  
-  // Security essentials
-  'RBAC', 'IAM',
-  
-  // Memory concepts
-  'short-term memory', 'long-term memory',
-  
-  // Planning concepts
-  'task decomposition', 'Chain of Thought',
-  
-  // Agent development concepts
-  'dynamic batching', 'model instances', 'LoRA', 'P-tuning', 'prompt tuning',
-  'Circuit Breaker', 'Retry pattern', 'transient faults', 'exponential back-off',
-  'idempotency', 'LangChain', 'LlamaIndex', 'CrewAI',
-];
-
-// Quiz data organized by reading/section
-interface QuizQuestion {
-  id: string;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation: string;
-}
-
-interface QuizSet {
-  [key: string]: QuizQuestion[];
-}
-
-// Import quiz questions from separate files
-import { questions as agenticAIFactoryQuestions } from '@/app/data/quizzes/1-agent-architecture-design/1-agentic-AI-factory';
-import { questions as buildingAutonomousAIQuestions } from '@/app/data/quizzes/1-agent-architecture-design/2-building-autonomous-AI';
-import { questions as buildingBlocksCustomerServiceQuestions } from '@/app/data/quizzes/1-agent-architecture-design/3-building-blocks-customer-service';
-import { questions as agenticAIAutonomousAIAgentsQuestions } from '@/app/data/quizzes/1-agent-architecture-design/4-agentic-AI-autonomous-AI-agents';
-import { questions as catchMeIfYouCanQuestions } from '@/app/data/quizzes/1-agent-architecture-design/5-catch-me-if-you-can';
-import { questions as multiAgentSystemsQuestions } from '@/app/data/quizzes/1-agent-architecture-design/6-multi-agent-systems';
-import { questions as designUserInterfacesQuestions } from '@/app/data/quizzes/generated-content/1-agent-architecture-design/1.1-Design-user-interfaces';
-import { questions as implementReasoningReActQuestions } from '@/app/data/quizzes/generated-content/1-agent-architecture-design/1.2-Implement-Reasoning-ReAct';
-import { questions as configAgentProtocolQuestions } from '@/app/data/quizzes/generated-content/1-agent-architecture-design/1.3-Config-Agent-agent-protocol';
-import { questions as manageMemoryQuestions } from '@/app/data/quizzes/generated-content/1-agent-architecture-design/1.4-Manage-memory';
-import { questions as orchestrateMultiAgentQuestions } from '@/app/data/quizzes/generated-content/1-agent-architecture-design/1.5-Orchestrate-multi-agent';
-import { questions as applyingLogicTreesQuestions } from '@/app/data/quizzes/1-agent-architecture-design/12-applying-logic-trees';
-import { questions as designingUserInterfacesSummaryQuestions } from '@/app/data/quizzes/summaries/1-agent-architecture-design/7-designing-user-interfaces';
-import { questions as implementingReasoningReactSummaryQuestions } from '@/app/data/quizzes/summaries/1-agent-architecture-design/8-implementing-reasoning-react';
-import { questions as configuringAgentCommunicationSummaryQuestions } from '@/app/data/quizzes/summaries/1-agent-architecture-design/9-configuring-agent-communication';
-import { questions as orchestratingMultiAgentWorkflowsSummaryQuestions } from '@/app/data/quizzes/summaries/1-agent-architecture-design/11-orchestrating-multi-agent-workflows';
-import { questions as implementingKnowledgeGraphsQuestions } from '@/app/data/quizzes/summaries/1-agent-architecture-design/13-implementing-knowledge-graphs';
-import { questions as ensuringAdaptabilityAndScalabilityQuestions } from '@/app/data/quizzes/summaries/1-agent-architecture-design/14-ensuring-adaptability-and-scalability';
-import { questions as optimizationNVDATritonQuestions } from '@/app/data/quizzes/2-agent-development/1-optimization-NVDA-Triton';
-import { questions as nvdaAgentIntelligenceToolkitQuestions } from '@/app/data/quizzes/2-agent-development/2-NVDA-agent-intelligence-toolkit';
-import { questions as introLLMPTuningQuestions } from '@/app/data/quizzes/2-agent-development/3-intro-LLM-p-tuning';
-import { questions as buildingMultiModalAIRAGQuestions } from '@/app/data/quizzes/2-agent-development/4-building-multi-modal-AI-RAG';
-import { questions as designConsiderationsAgenticQuestions } from '@/app/data/quizzes/2-agent-development/5-design-considerations-Agentic';
-import { questions as transientFaultHandlingQuestions } from '@/app/data/quizzes/2-agent-development/6-transient-fault-handling';
-import { questions as circuitBreakerPatternQuestions } from '@/app/data/quizzes/2-agent-development/7-circuit-breaker-pattern';
-import { questions as retryPatternQuestions } from '@/app/data/quizzes/2-agent-development/8-retry-pattern';
-import { questions as evaluateDecisionStrategiesQuestions } from '@/app/data/quizzes/generated-content/2-agent-development/2.6-Evaluate-decision-strategies';
-import { questions as agentIntelligenceToolkitFAQQuestions } from '@/app/data/quizzes/3-evaluation-tuning/4-agent-intelligence-toolkit-FAQ';
-import { questions as launchingAgentIntelligenceToolkitQuestions } from '@/app/data/quizzes/3-evaluation-tuning/5-launching-agent-intelligence-toolkit';
-import { questions as nvdaNemoAgentQuestions } from '@/app/data/quizzes/3-evaluation-tuning/6-NVDA-NEMO-agent';
-import { questions as agenticAINextBigThingQuestions } from '@/app/data/quizzes/3-evaluation-tuning/7-agentic-AI-next-big-thing';
-import { questions as agenticAIChallengesQuestions } from '@/app/data/quizzes/3-evaluation-tuning/8-agentic-AI-challenges';
-import { questions as aiAgentsBeginnersQuestions } from '@/app/data/quizzes/3-evaluation-tuning/9-AI-agents-beginners';
-import { questions as navigatingChallengesQuestions } from '@/app/data/quizzes/3-evaluation-tuning/10-navigating-challenges';
-import { questions as agenticAIFactoryDeploymentQuestions } from '@/app/data/quizzes/4-deployment-scaling/1-agentic-AI-factory';
-import { questions as tensorRTLLMGithubQuestions } from '@/app/data/quizzes/4-deployment-scaling/2-TensorRTLLM-Github';
-import { questions as measureImproveAIWorkloadQuestions } from '@/app/data/quizzes/4-deployment-scaling/3-measure-improve-AI-workload';
-import { questions as kubernetesGlossaryQuestions } from '@/app/data/quizzes/4-deployment-scaling/4-Kubernetes-glossary';
-import { questions as nvdaNSightQuestions } from '@/app/data/quizzes/4-deployment-scaling/5-NVDA-NSight';
-import { questions as kubePrometheusQuestions } from '@/app/data/quizzes/4-deployment-scaling/6-Kube-Prometheus';
-import { questions as scalingLLMKubernetesQuestions } from '@/app/data/quizzes/4-deployment-scaling/7-scaling-LLM-Kubernetes';
-import { questions as tensorRTPerformanceAnalysisQuestions } from '@/app/data/quizzes/4-deployment-scaling/8-TensorRT-performance-analysis';
-import { questions as nvdaNemoQuestions } from '@/app/data/quizzes/5-cognition-planning-memory/1-NVDA-NeMO';
-import { questions as llmContextLearnersQuestions } from '@/app/data/quizzes/5-cognition-planning-memory/2-LLM-context-learners';
-import { questions as nemoRLDocQuestions } from '@/app/data/quizzes/5-cognition-planning-memory/3-NemO-RL-doc';
-import { questions as jamba15Questions } from '@/app/data/quizzes/5-cognition-planning-memory/4-Jamba-1.5';
-import { questions as understandingPlanningLLMQuestions } from '@/app/data/quizzes/5-cognition-planning-memory/5-Understanding-planning-LLM';
-import { questions as aiAgentMemoryQuestions } from '@/app/data/quizzes/5-cognition-planning-memory/6-AI-Agent-Memory';
-import { questions as understandingPlanningLLM2Questions } from '@/app/data/quizzes/5-cognition-planning-memory/7-Understanding-Planning-LLM';
-import { questions as ragMoreAccurateQuestions } from '@/app/data/quizzes/6-knowledge-integration-data-handling/1-RAG-more-accurate';
-import { questions as bestPracticesTensorRTQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/1-Best-Practices-TensorRT';
-import { questions as batchersQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/2-Batchers';
-import { questions as nemoGuardrailsQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/4-NeMO-Guardrails';
-import { questions as tritonServerBackendQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/3-Triton-server-backend';
-import { questions as performanceTuningGuideQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/5-performance-tuning-guide';
-import { questions as nemoBestPracticesQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/6-NeMo-best-practices';
-import { questions as optimizationQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/7-Optimization';
-import { questions as nemoAgentQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/8-NEmo-Agent';
-import { questions as nemoAgentIntelligenceToolkitQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/9-Nemo-Agent-intelligence-toolkit';
-import { questions as aiqQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/10-AIQ';
-import { questions as masteringLLMsQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/11-Mastering-LLMs';
-import { questions as deployInferenceWorkloadsQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/12-Deploy-Inference-Workloads';
-import { questions as nemotronAdvancedAgentsQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/13-Nemotron-advanced-agents';
-import { questions as aiAgentBlueprintQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/14-AI-Agent-blueprint';
-import { questions as improveAICodeGenQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/15-Improve-AI-code-gen';
-import { questions as nemoScalableAiQuestions } from '@/app/data/quizzes/7-NVDA-Platform-Integration/16-Nemo-Scalable-Ai';
-import { questions as aiAgentEvalQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/1-AI-Agent-Eval';
-import { questions as logTraceMonitorQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/2-Log-Trace-Monitor';
-import { questions as timeWeightedRetrieverQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/3-Time-Weighted-Retriever';
-import { questions as troubleshootingQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/4-Troubleshooting';
-import { questions as langchainTracingQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/5-Langchain-Tracing';
-import { questions as langchainStructuredOutputsQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/6-LangChain-structured-outputs';
-import { questions as smithLangchainEvalQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/7-Smith-Langchain-eval';
-import { questions as monitoringMLProductionQuestions } from '@/app/data/quizzes/8-run-monitor-maintain/8-Monitoring-ML-production';
-import { questions as buildingSaferAppsTemplatesQuestions } from '@/app/data/quizzes/9-Safety-Ethics/1-Building-Safer-Apps-Templates';
-import { questions as aiMLSoftwareMedDeviceQuestions } from '@/app/data/quizzes/9-Safety-Ethics/2-AI-ML-Software-Med-Device';
-import { questions as proposedRegulationHarmonizedQuestions } from '@/app/data/quizzes/9-Safety-Ethics/3-Proposed-Regulation-Harmonized';
-import { questions as ethicallyAlignedDesignQuestions } from '@/app/data/quizzes/9-Safety-Ethics/4-Ethically-Alinged-Design';
-import { questions as securingGenAIDeploymentsQuestions } from '@/app/data/quizzes/9-Safety-Ethics/5-Securing-Gen-AI-Deployments';
-import { questions as metricsAgenticAiQuestions } from '@/app/data/quizzes/9-Safety-Ethics/6-Metrics-Agentic-Ai';
-import { questions as aiRegulatoryQuestions } from '@/app/data/quizzes/9-Safety-Ethics/7-AI-Regulatory';
-import { questions as responsibleAiQuestions } from '@/app/data/quizzes/9-Safety-Ethics/8-Responsible-Ai';
-
-// Quiz questions organized by reading files
-const QUIZ_DATA: QuizSet = {
-  '1-agent-architecture-design/1-agentic-AI-factory.txt': agenticAIFactoryQuestions,
-  '1-agent-architecture-design/2-building-autonomous-AI.txt': buildingAutonomousAIQuestions,
-  '1-agent-architecture-design/3-building-blocks-customer-service.txt': buildingBlocksCustomerServiceQuestions,
-  '1-agent-architecture-design/4-agentic-AI-autonomous-AI-agents.txt': agenticAIAutonomousAIAgentsQuestions,
-  '1-agent-architecture-design/5-catch-me-if-you-can.txt': catchMeIfYouCanQuestions,
-  '1-agent-architecture-design/6-multi-agent-systems.txt': multiAgentSystemsQuestions,
-  '1-agent-architecture-design/12-applying-logic-trees.txt': applyingLogicTreesQuestions,
-  'generated-content/1-agent-architecture-design/1.1-Design-user-interfaces.txt': designUserInterfacesQuestions,
-  'generated-content/1-agent-architecture-design/1.2-Implement-Reasoning-ReAct.txt': implementReasoningReActQuestions,
-  'generated-content/1-agent-architecture-design/1.3-Config-Agent-agent-protocol.txt': configAgentProtocolQuestions,
-  'generated-content/1-agent-architecture-design/1.4-Manage-memory.txt': manageMemoryQuestions,
-  'generated-content/1-agent-architecture-design/1.5-Orchestrate-multi-agent.txt': orchestrateMultiAgentQuestions,
-  'summaries/1-agent-architecture-design/7-designing-user-interfaces.txt': designingUserInterfacesSummaryQuestions,
-  'summaries/1-agent-architecture-design/8-implementing-reasoning-react.txt': implementingReasoningReactSummaryQuestions,
-  'summaries/1-agent-architecture-design/9-configuring-agent-communication.txt': configuringAgentCommunicationSummaryQuestions,
-  'summaries/1-agent-architecture-design/11-orchestrating-multi-agent-workflows.txt': orchestratingMultiAgentWorkflowsSummaryQuestions,
-  'summaries/1-agent-architecture-design/13-implementing-knowledge-graphs.txt': implementingKnowledgeGraphsQuestions,
-  'summaries/1-agent-architecture-design/14-ensuring-adaptability-and-scalability.txt': ensuringAdaptabilityAndScalabilityQuestions,
-  '2-agent-development/1-optimization-NVDA-Triton.txt': optimizationNVDATritonQuestions,
-  '2-agent-development/2-NVDA-agent-intelligence-toolkit.txt': nvdaAgentIntelligenceToolkitQuestions,
-  '2-agent-development/3-intro-LLM-p-tuning.txt': introLLMPTuningQuestions,
-  '2-agent-development/4-building-multi-modal-AI-RAG.txt': buildingMultiModalAIRAGQuestions,
-  '2-agent-development/5-design-considerations-Agentic.txt': designConsiderationsAgenticQuestions,
-  '2-agent-development/6-transient-fault-handling.txt': transientFaultHandlingQuestions,
-  '2-agent-development/7-circuit-breaker-pattern.txt': circuitBreakerPatternQuestions,
-  '2-agent-development/8-retry-pattern.txt': retryPatternQuestions,
-  'generated-content/2-agent-development/2.6-Evaluate-decision-strategies.txt': evaluateDecisionStrategiesQuestions,
-  '3-evaluation-tuning/4-agent-intelligence-toolkit-FAQ.txt': agentIntelligenceToolkitFAQQuestions,
-  '3-evaluation-tuning/5-launching-agent-intelligence-toolkit.txt': launchingAgentIntelligenceToolkitQuestions,
-  '3-evaluation-tuning/6-NVDA-NEMO-agent.txt': nvdaNemoAgentQuestions,
-  '3-evaluation-tuning/7-agentic-AI-next-big-thing.txt': agenticAINextBigThingQuestions,
-  '3-evaluation-tuning/8-agentic-AI-challenges.txt': agenticAIChallengesQuestions,
-  '3-evaluation-tuning/9-AI-agents-beginners.txt': aiAgentsBeginnersQuestions,
-  '3-evaluation-tuning/10-navigating-challenges.txt': navigatingChallengesQuestions,
-  '4-deployment-scaling/1-agentic-AI-factory.txt': agenticAIFactoryDeploymentQuestions,
-  '4-deployment-scaling/2-TensorRTLLM-Github.txt': tensorRTLLMGithubQuestions,
-  '4-deployment-scaling/3-measure-improve-AI-workload.txt': measureImproveAIWorkloadQuestions,
-  '4-deployment-scaling/4-Kubernetes-glossary.txt': kubernetesGlossaryQuestions,
-  '4-deployment-scaling/5-NVDA-NSight.txt': nvdaNSightQuestions,
-  '4-deployment-scaling/6-Kube-Prometheus.txt': kubePrometheusQuestions,
-  '4-deployment-scaling/7-scaling-LLM-Kubernetes.txt': scalingLLMKubernetesQuestions,
-  '4-deployment-scaling/8-TensorRT-performance-analysis.txt': tensorRTPerformanceAnalysisQuestions,
-  '5-cognition-planning-memory/1-NVDA-NeMO.txt': nvdaNemoQuestions,
-  '5-cognition-planning-memory/2-LLM-context-learners.txt': llmContextLearnersQuestions,
-  '5-cognition-planning-memory/3-NemO-RL-doc.txt': nemoRLDocQuestions,
-  '5-cognition-planning-memory/4-Jamba-1.5.txt': jamba15Questions,
-  '5-cognition-planning-memory/5-Understanding-planning-LLM.txt': understandingPlanningLLMQuestions,
-  '5-cognition-planning-memory/6-AI-Agent-Memory.txt': aiAgentMemoryQuestions,
-  '5-cognition-planning-memory/7-Understanding-Planning-LLM.txt': understandingPlanningLLM2Questions,
-  '6-knowledge-integration-data-handling/1-RAG-more-accurate.txt': ragMoreAccurateQuestions,
-  '7-NVDA-Platform-Integration/1-Best-Practices-TensorRT.txt': bestPracticesTensorRTQuestions,
-  '7-NVDA-Platform-Integration/2-Batchers.txt': batchersQuestions,
-  '7-NVDA-Platform-Integration/4-NeMO-Guardrails.txt': nemoGuardrailsQuestions,
-  '7-NVDA-Platform-Integration/3-Triton-server-backend.txt': tritonServerBackendQuestions,
-  '7-NVDA-Platform-Integration/5-performance-tuning-guide.txt': performanceTuningGuideQuestions,
-  '7-NVDA-Platform-Integration/6-NeMo-best-practices.txt': nemoBestPracticesQuestions,
-  '7-NVDA-Platform-Integration/7-Optimization.txt': optimizationQuestions,
-  '7-NVDA-Platform-Integration/8-NEmo-Agent.txt': nemoAgentQuestions,
-  '7-NVDA-Platform-Integration/9-Nemo-Agent-intelligence-toolkit.txt': nemoAgentIntelligenceToolkitQuestions,
-  '7-NVDA-Platform-Integration/10-AIQ.txt': aiqQuestions,
-  '7-NVDA-Platform-Integration/11-Mastering-LLMs.txt': masteringLLMsQuestions,
-  '7-NVDA-Platform-Integration/12-Deploy-Inference-Workloads.txt': deployInferenceWorkloadsQuestions,
-  '7-NVDA-Platform-Integration/13-Nemotron-advanced-agents.txt': nemotronAdvancedAgentsQuestions,
-  '7-NVDA-Platform-Integration/14-AI-Agent-blueprint.txt': aiAgentBlueprintQuestions,
-  '7-NVDA-Platform-Integration/15-Improve-AI-code-gen.txt': improveAICodeGenQuestions,
-  '7-NVDA-Platform-Integration/16-Nemo-Scalable-Ai.txt': nemoScalableAiQuestions,
-  '8-run-monitor-maintain/1-AI-Agent-Eval.txt': aiAgentEvalQuestions,
-  '8-run-monitor-maintain/2-Log-Trace-Monitor.txt': logTraceMonitorQuestions,
-  '8-run-monitor-maintain/3-Time-Weighted-Retriever.txt': timeWeightedRetrieverQuestions,
-  '8-run-monitor-maintain/4-Troubleshooting.txt': troubleshootingQuestions,
-  '8-run-monitor-maintain/5-Langchain-Tracing.txt': langchainTracingQuestions,
-  '8-run-monitor-maintain/6-LangChain-structured-outputs.txt': langchainStructuredOutputsQuestions,
-  '8-run-monitor-maintain/7-Smith-Langchain-eval.txt': smithLangchainEvalQuestions,
-  '8-run-monitor-maintain/8-Monitoring-ML-production.txt': monitoringMLProductionQuestions,
-  '9-Safety-Ethics/1-Building-Safer-Apps-Templates.txt': buildingSaferAppsTemplatesQuestions,
-  '9-Safety-Ethics/2-AI-ML-Software-Med-Device.txt': aiMLSoftwareMedDeviceQuestions,
-  '9-Safety-Ethics/3-Proposed-Regulation-Harmonized.txt': proposedRegulationHarmonizedQuestions,
-  '9-Safety-Ethics/4-Ethically-Alinged-Design.txt': ethicallyAlignedDesignQuestions,
-  '9-Safety-Ethics/5-Securing-Gen-AI-Deployments.txt': securingGenAIDeploymentsQuestions,
-  '9-Safety-Ethics/6-Metrics-Agentic-Ai.txt': metricsAgenticAiQuestions,
-  '9-Safety-Ethics/7-AI-Regulatory.txt': aiRegulatoryQuestions,
-  '9-Safety-Ethics/8-Responsible-Ai.txt': responsibleAiQuestions
-};
-
-function boldKeyTerms(text: string): string {
-  let result = text;
-  
-  // Sort by length (longest first) to avoid partial matches
-  const sortedTerms = [...KEY_TERMS].sort((a, b) => b.length - a.length);
-  
-  for (const term of sortedTerms) {
-    // Create regex that matches whole words, case-insensitive
-    const regex = new RegExp(`\\b(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\b`, 'gi');
-    
-    // Check if already wrapped in strong tags
-    const alreadyBolded = new RegExp(`<strong>${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</strong>`, 'gi');
-    
-    if (!alreadyBolded.test(result)) {
-      result = result.replace(regex, '<strong>$1</strong>');
-    }
-  }
-  
-  return result;
-}
-
-function formatContent(content: string): FormattedContent {
-  const lines = content.split('\n').map(line => line.trim());
-  
-  if (lines.length === 0 || lines.every(line => line.length === 0)) {
-    return { title: '', sections: [] };
-  }
-
-  // First line is typically the title
-  const title = lines[0];
-  const sections: Array<{ type: 'heading' | 'paragraph'; content: string; level?: number }> = [];
-  let skipRemaining = false;
-  
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i];
-    
-    // Skip empty lines
-    if (line.length === 0) {
-      continue;
-    }
-    
-    // Check if this is the REVIEW QUESTIONS section - skip it and everything after
-    if (line.toUpperCase().includes('REVIEW QUESTIONS')) {
-      skipRemaining = true;
-      break;
-    }
-    
-    // If we've hit REVIEW QUESTIONS, skip everything
-    if (skipRemaining) {
-      continue;
-    }
-    
-    // Check if line is a heading (all caps, or ends with colon, or short line with specific patterns)
-    const isAllCaps = line === line.toUpperCase() && line.length < 100 && /^[A-Z\s:]+$/.test(line);
-    const endsWithColon = line.endsWith(':') && line.length < 80 && !line.includes('.');
-    const isShortHeading = line.length < 60 && !line.includes('.') && !line.match(/^[a-z]/);
-    
-    if (isAllCaps || endsWithColon || isShortHeading) {
-      // Determine heading level
-      let level = 1;
-      if (isAllCaps) level = 1;
-      else if (endsWithColon) level = 2;
-      else level = 3;
-      
-      sections.push({
-        type: 'heading',
-        content: line.replace(/:$/, ''),
-        level
-      });
-    } else {
-      // Treat each non-empty line as a separate paragraph
-      // This works well for files where each line is a complete paragraph
-      sections.push({
-        type: 'paragraph',
-        content: boldKeyTerms(line)
-      });
-    }
-  }
-
-  return { title, sections };
-}
 
 export default function ContentViewer({ filePath, onFileSelect }: ContentViewerProps) {
   const [content, setContent] = useState<string>('');
@@ -338,13 +29,15 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
   const [error, setError] = useState<string | null>(null);
   const [isRead, setIsRead] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [checkboxJustChecked, setCheckboxJustChecked] = useState(false);
   const [progress, setProgress] = useState<ProgressStats | null>(null);
   const [structure, setStructure] = useState<SummaryItem[]>([]);
   const [navigation, setNavigation] = useState<{ prev: string | null; next: string | null }>({ prev: null, next: null });
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [isReady, setIsReady] = useState(false);
-  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [readStatusUpdate, setReadStatusUpdate] = useState(0);
+  const [keyTermsSidebarOpen, setKeyTermsSidebarOpen] = useState(true);
+  const [highlightedTerm, setHighlightedTerm] = useState<string | null>(null);
 
   // Format display name helper (moved up for use in getCategoryFiles)
   const formatDisplayName = useCallback((name: string): string => {
@@ -566,22 +259,6 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
     }
   }, [filePath, isReady, updateProgress]);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    if (!expandedCategory) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest(`.${styles.progressCategory}`)) {
-        setExpandedCategory(null);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [expandedCategory]);
 
   // Load read status from localStorage
   useEffect(() => {
@@ -607,12 +284,18 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
       window.dispatchEvent(new Event('readStatusChanged'));
     }
     
-    // Show celebration animation when marked as read
+    // Trigger animation when checking (not unchecking)
     if (checked) {
-      setShowCelebration(true);
-      setTimeout(() => {
-        setShowCelebration(false);
-      }, 2000);
+      setCheckboxJustChecked(true);
+      setTimeout(() => setCheckboxJustChecked(false), 600);
+      
+      // Show celebration if this is the first time marking as read
+      if (!isRead) {
+        setShowCelebration(true);
+        setTimeout(() => {
+          setShowCelebration(false);
+        }, 2000);
+      }
     }
   };
 
@@ -663,110 +346,14 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
             </p>
 
             {progress && progress.total > 0 && (
-              <div className={styles.progressSection}>
-                <div className={styles.progressHeader}>
-                  <h2 className={styles.progressTitle}>Your Progress</h2>
-                  <div className={styles.progressOverall}>
-                    <div className={styles.progressMain}>
-                      <div className={styles.progressNumberLarge}>{progress.percentage}%</div>
-                      <div className={styles.progressText}>
-                        <span className={styles.progressRead}>{progress.read}</span>
-                        <span className={styles.progressOf}> of </span>
-                        <span className={styles.progressTotal}>{progress.total}</span>
-                        <span className={styles.progressLabel}> articles completed</span>
-                      </div>
-                      <div className={styles.progressBar}>
-                        <div 
-                          className={styles.progressBarFill}
-                          style={{ width: `${progress.percentage}%` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {progress.byCategory.length > 0 && (
-                  <div className={styles.progressCategories}>
-                    <h3 className={styles.progressCategoriesTitle}>By Category</h3>
-                    <div className={styles.progressCategoriesList}>
-                      {progress.byCategory.map((category) => {
-                        const isExpanded = expandedCategory === category.name;
-                        const categoryFiles = isExpanded ? getCategoryFiles(category.name, structure) : [];
-                        
-                        return (
-                          <div key={category.name} className={styles.progressCategory}>
-                            <div className={styles.progressCategoryHeader}>
-                              <div className={styles.progressCategoryInfo}>
-                                <span className={styles.progressCategoryName}>{category.name}</span>
-                                <span className={styles.progressCategoryPercent}>
-                                  {category.read}/{category.total}
-                                </span>
-                              </div>
-                              <button
-                                className={styles.progressCategoryToggle}
-                                onClick={() => setExpandedCategory(isExpanded ? null : category.name)}
-                                aria-label={isExpanded ? 'Collapse' : 'Expand'}
-                              >
-                                {isExpanded ? '▼' : '▶'}
-                              </button>
-                            </div>
-                            <div className={styles.progressCategoryBar}>
-                              <div 
-                                className={styles.progressCategoryBarFill}
-                                style={{ width: `${category.percentage}%` }}
-                              />
-                            </div>
-                            {isExpanded && categoryFiles.length > 0 && (
-                              <div className={styles.progressCategoryDropdown}>
-                                {categoryFiles.map((file) => (
-                                  <button
-                                    key={file.path}
-                                    className={`${styles.progressCategoryFile} ${file.isRead ? styles.progressCategoryFileRead : ''}`}
-                                    onClick={() => onFileSelect?.(file.path)}
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      checked={file.isRead}
-                                      readOnly
-                                      className={styles.progressCategoryCheckbox}
-                                    />
-                                    <span className={styles.progressCategoryFileName}>{file.name}</span>
-                                  </button>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <ProgressDisplay
+                progress={progress}
+                structure={structure}
+                getCategoryFiles={getCategoryFiles}
+                onFileSelect={onFileSelect}
+              />
             )}
 
-            <div className={styles.emptyFeatures}>
-              <div className={styles.feature}>
-                <span className={styles.featureIcon}>📖</span>
-                <div className={styles.featureContent}>
-                  <h3 className={styles.featureTitle}>Structured Learning</h3>
-                  <p className={styles.featureText}>Articles organized by topic with clear navigation</p>
-                </div>
-              </div>
-              <div className={styles.feature}>
-                <span className={styles.featureIcon}>🎯</span>
-                <div className={styles.featureContent}>
-                  <h3 className={styles.featureTitle}>Key Concepts</h3>
-                  <p className={styles.featureText}>Important terms automatically highlighted for quick reference</p>
-                </div>
-              </div>
-              <div className={styles.feature}>
-                <span className={styles.featureIcon}>✅</span>
-                <div className={styles.featureContent}>
-                  <h3 className={styles.featureTitle}>Progress Tracking</h3>
-                  <p className={styles.featureText}>Mark articles as read to track your learning progress</p>
-                </div>
-              </div>
-            </div>
             <div className={styles.emptyCta}>
               <p className={styles.emptyCtaText}>Select an article from the sidebar to begin</p>
             </div>
@@ -793,128 +380,17 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
     );
   }
 
-  const { title, sections } = formatContent(content);
+  const { title, sections } = formatContent(content, filePath);
   const fileName = filePath ? filePath.split('/').pop()?.replace('.txt', '') || '' : '';
   const isReview = fileName.toLowerCase() === 'review';
   
-  // Function to find quiz data by matching file paths flexibly
-  const findQuizData = (path: string | undefined): QuizQuestion[] | null => {
-    if (!path) return null;
-    
-    // Try exact match first
-    if (QUIZ_DATA[path]) {
-      console.log('Quiz found: exact match for', path);
-      return QUIZ_DATA[path];
-    }
-    
-    // Try matching without directory prefix (e.g., "1-agent-architecture-design/file.txt")
-    const pathWithoutPrefix = path.replace(/^(summaries|readings|generated-content)\//, '');
-    if (QUIZ_DATA[pathWithoutPrefix]) {
-      console.log('Quiz found: match without prefix for', path, '->', pathWithoutPrefix);
-      return QUIZ_DATA[pathWithoutPrefix];
-    }
-    
-    // Try with different directory prefixes
-    const possiblePaths = [
-      `summaries/${pathWithoutPrefix}`,
-      `readings/${pathWithoutPrefix}`,
-      `generated-content/${pathWithoutPrefix}`,
-      pathWithoutPrefix
-    ];
-    
-    for (const possiblePath of possiblePaths) {
-      if (QUIZ_DATA[possiblePath]) {
-        console.log('Quiz found: match with prefix for', path, '->', possiblePath);
-        return QUIZ_DATA[possiblePath];
-      }
-    }
-    
-    // Try fuzzy matching by normalizing file names
-    // Extract the base filename and normalize it
-    const baseFileName = path.split('/').pop()?.replace('.txt', '').toLowerCase() || '';
-    const normalizedBase = baseFileName
-      .replace(/^\d+[-.]/, '') // Remove leading numbers with dash or dot
-      .replace(/[-_]/g, '-') // Normalize separators
-      .replace(/\s+/g, '-') // Replace spaces with dashes
-      .trim();
-    
-    // Get directory path without prefix
-    const pathDir = path.substring(0, path.lastIndexOf('/'));
-    const pathDirWithoutPrefix = pathDir.replace(/^(summaries|readings|generated-content)\//, '');
-    
-    // Extract key words from filename (remove common words like "design", "implement", etc.)
-    const extractKeywords = (name: string): string[] => {
-      const words = name.split('-').filter(w => w.length > 2);
-      // Remove common prefixes/suffixes
-      return words.filter(w => 
-        !['design', 'implement', 'config', 'manage', 'orchestrate', 'apply', 'ensure', 'user', 'interfaces', 
-          'overview', 'tutorials', 'faq', 'launching', 'intro', 'introductory'].includes(w.toLowerCase())
-      );
-    };
-    
-    const baseKeywords = extractKeywords(normalizedBase);
-    
-    // Search through all QUIZ_DATA keys for a match
-    for (const [key, questions] of Object.entries(QUIZ_DATA)) {
-      const keyFileName = key.split('/').pop()?.replace('.txt', '').toLowerCase() || '';
-      const normalizedKey = keyFileName
-        .replace(/^\d+[-.]/, '') // Remove leading numbers
-        .replace(/[-_]/g, '-') // Normalize separators
-        .replace(/\s+/g, '-') // Replace spaces with dashes
-        .trim();
-      
-      // Get key directory without prefix
-      const keyDir = key.substring(0, key.lastIndexOf('/'));
-      const keyDirWithoutPrefix = keyDir.replace(/^(summaries|readings|generated-content)\//, '');
-      
-      // Check directory match first (must be in same category)
-      const dirsMatch = keyDirWithoutPrefix === pathDirWithoutPrefix || 
-          keyDirWithoutPrefix.includes(pathDirWithoutPrefix) ||
-          pathDirWithoutPrefix.includes(keyDirWithoutPrefix);
-      
-      if (!dirsMatch) continue;
-      
-      // Try multiple matching strategies
-      const exactMatch = normalizedBase === normalizedKey;
-      const substringMatch = normalizedBase.includes(normalizedKey) || normalizedKey.includes(normalizedBase);
-      
-      // Keyword-based matching
-      const keyKeywords = extractKeywords(normalizedKey);
-      const keywordOverlap = baseKeywords.length > 0 && keyKeywords.length > 0 &&
-        baseKeywords.some(kw => keyKeywords.some(kk => kw.includes(kk) || kk.includes(kw)));
-      
-      // Check if significant portion of words match
-      const baseWords = normalizedBase.split('-').filter(w => w.length > 2);
-      const keyWords = normalizedKey.split('-').filter(w => w.length > 2);
-      const wordOverlap = baseWords.length > 0 && keyWords.length > 0 &&
-        baseWords.filter(bw => keyWords.some(kw => bw === kw || bw.includes(kw) || kw.includes(bw))).length >= 
-        Math.min(2, Math.min(baseWords.length, keyWords.length));
-      
-      // Special handling for agent intelligence toolkit files - match based on core keywords
-      // Files like "agent-intelligence-toolkit-overview" should match "agent-intelligence-toolkit-FAQ"
-      // if they're in the same directory category
-      const coreAgentTerms = ['agent', 'intelligence', 'toolkit'];
-      const baseHasCoreTerms = coreAgentTerms.every(term => normalizedBase.includes(term));
-      const keyHasCoreTerms = coreAgentTerms.every(term => normalizedKey.includes(term));
-      
-      // If both files contain the core agent intelligence toolkit terms, they're related
-      // This allows overview/tutorials files to match FAQ/launching quiz data in the same category
-      const agentIntelligenceMatch = baseHasCoreTerms && keyHasCoreTerms;
-      
-      if (exactMatch || substringMatch || keywordOverlap || wordOverlap || agentIntelligenceMatch) {
-        console.log('Quiz found: fuzzy match for', path, '->', key, 
-          '(normalized:', normalizedBase, 'vs', normalizedKey, 
-          ', keywords:', baseKeywords, 'vs', keyKeywords, ')');
-        return questions;
-      }
-    }
-    
-    console.log('No quiz found for', path, '- checked', Object.keys(QUIZ_DATA).length, 'quiz entries');
-    return null;
-  };
+  // Extract key terms from sections
+  const keyTerms = sections
+    .filter(section => section.type === 'key-terms' && section.terms)
+    .flatMap(section => section.terms || []);
   
   // Check if this file has a quiz
-  const quizQuestions = findQuizData(filePath);
+  const quizQuestions = findQuizData(filePath, QUIZ_DATA);
   const hasQuiz = quizQuestions !== null;
 
   // Build breadcrumbs
@@ -958,18 +434,35 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
         )}
         <div className={styles.headerTop}>
           <h1 className={styles.title}>{title || fileName}</h1>
-          <label className={styles.readCheckbox}>
-            <input
-              type="checkbox"
-              checked={isRead}
-              onChange={handleReadChange}
-              className={styles.checkboxInput}
-            />
+          <label className={`${styles.readCheckbox} ${checkboxJustChecked ? styles.justChecked : ''} ${isRead ? styles.checked : ''}`}>
+            <div className={styles.checkboxWrapper}>
+              <input
+                type="checkbox"
+                checked={isRead}
+                onChange={handleReadChange}
+                className={styles.checkboxInput}
+              />
+              {isRead && (
+                <div className={styles.checkmarkContainer}>
+                  <svg 
+                    className={styles.checkmark} 
+                    viewBox="0 0 20 20" 
+                    fill="none"
+                  >
+                    <path
+                      d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  <div className={styles.checkmarkRipple} />
+                </div>
+              )}
+            </div>
             <span className={styles.checkboxLabel}>Mark as read</span>
           </label>
         </div>
       </div>
-      <div className={styles.content}>
+      <div className={`${styles.content} ${keyTermsSidebarOpen ? styles.sidebarOpen : ''}`}>
         <article className={styles.article}>
           {sections.map((section, index) => {
             if (section.type === 'heading') {
@@ -986,11 +479,42 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
                   </HeadingTag>
                 </div>
               );
+            } else if (section.type === 'key-terms' && section.terms) {
+              return (
+                <div key={index} className={styles.keyTermsSection}>
+                  <h3 className={styles.keyTermsTitle}>KEY TERMS AND DEFINITIONS</h3>
+                  <div className={styles.flashcardsGrid}>
+                    {section.terms.map((item, termIndex) => (
+                      <Flashcard
+                        key={termIndex}
+                        term={item.term}
+                        definition={item.definition}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
             } else {
               return (
                 <p 
                   key={index} 
                   className={styles.paragraph}
+                  onClick={(e) => {
+                    // Handle clicks on bolded terms
+                    const target = e.target as HTMLElement;
+                    if (target.tagName === 'STRONG' || target.tagName === 'B') {
+                      const termText = target.textContent || '';
+                      // Find matching term in keyTerms
+                      const matchingTerm = keyTerms.find(t => 
+                        t.term.toLowerCase() === termText.toLowerCase() ||
+                        termText.toLowerCase().includes(t.term.toLowerCase()) ||
+                        t.term.toLowerCase().includes(termText.toLowerCase())
+                      );
+                      if (matchingTerm) {
+                        setHighlightedTerm(matchingTerm.term);
+                      }
+                    }
+                  }}
                   dangerouslySetInnerHTML={{ __html: section.content }}
                 />
               );
@@ -1005,6 +529,12 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
           )}
         </article>
       </div>
+      <KeyTermsSidebar 
+        terms={keyTerms}
+        isOpen={keyTermsSidebarOpen}
+        onToggle={() => setKeyTermsSidebarOpen(!keyTermsSidebarOpen)}
+        highlightTerm={highlightedTerm}
+      />
     </main>
   );
 }

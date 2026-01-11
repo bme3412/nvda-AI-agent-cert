@@ -323,7 +323,11 @@ async function findMatchingFile(filePath: string): Promise<{ content: string; ti
   const baseName = fileName.replace('.txt', '');
   
   // Try to find matching files in all three directories
-  const directories = ['summaries', 'readings', 'generated-content'];
+  const directories = [
+    join('app', 'data', 'content', 'summaries'),
+    'readings',
+    join('app', 'data', 'content', 'generated-content')
+  ];
   const contents: string[] = [];
   let title = 'Article';
   

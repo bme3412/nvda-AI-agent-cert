@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Sidebar from './components/Sidebar';
+import SidebarEnhanced from './components/SidebarEnhanced';
 import ContentViewer from './components/ContentViewer';
 import styles from './page.module.css';
 
@@ -42,7 +42,7 @@ export default function Home() {
           onClick={() => setSidebarOpen(false)}
         />
       )}
-      <Sidebar 
+      <SidebarEnhanced 
         onFileSelect={handleFileSelect} 
         selectedPath={selectedPath}
         isOpen={sidebarOpen}

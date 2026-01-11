@@ -18,7 +18,7 @@ export async function GET(
       );
     }
 
-    const fullPath = join(process.cwd(), 'summaries', filePath);
+    const fullPath = join(process.cwd(), 'app', 'data', 'content', 'summaries', filePath);
     
     // Verify file exists and is within summaries directory
     if (!existsSync(fullPath)) {

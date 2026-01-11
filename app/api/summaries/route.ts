@@ -56,7 +56,7 @@ async function getDirectoryStructure(dirPath: string, basePath: string = ''): Pr
 
 export async function GET() {
   try {
-    const summariesPath = join(process.cwd(), 'summaries');
+    const summariesPath = join(process.cwd(), 'app', 'data', 'content', 'summaries');
     const structure = await getDirectoryStructure(summariesPath);
     
     // Sort: folders first, then files
