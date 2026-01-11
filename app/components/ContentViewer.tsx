@@ -13,6 +13,7 @@ import { getCategoryFromPath, getKeyTermsForCategory } from '@/app/utils/categor
 import { TERM_DEFINITIONS } from '@/app/utils/termDefinitions';
 import { getArticleDefinitions, normalizeArticlePath } from '@/app/utils/articleDefinitions';
 import { getArticleSummary } from '@/app/utils/articleSummaries';
+import { getHighlightsForArticle, saveHighlight, applyHighlightsToText, removeHighlight, type TextHighlight } from '@/app/utils/textHighlights';
 
 interface ContentViewerProps {
   filePath?: string;
@@ -42,6 +43,7 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
   const [readStatusUpdate, setReadStatusUpdate] = useState(0);
   const [keyTermsSidebarOpen, setKeyTermsSidebarOpen] = useState(true);
   const [highlightedTerm, setHighlightedTerm] = useState<string | null>(null);
+  const [highlights, setHighlights] = useState<TextHighlight[]>([]);
 
   // Format display name helper (moved up for use in getCategoryFiles)
   const formatDisplayName = useCallback((name: string): string => {
@@ -337,13 +339,41 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
       });
   }, [filePath, isInitialLoad]);
 
+  // Load highlights when filePath changes
+  useEffect(() => {
+    if (filePath) {
+      console.log('[ContentViewer] Loading highlights for filePath:', filePath);
+      const articleHighlights = getHighlightsForArticle(filePath);
+      console.log('[ContentViewer] Loaded', articleHighlights.length, 'highlights');
+      setHighlights(articleHighlights);
+    } else {
+      setHighlights([]);
+    }
+  }, [filePath]);
+
+
   // Format content and extract key terms - must be before any early returns
   const formattedContent = useMemo(() => {
     if (!content || !filePath) {
       return { title: '', sections: [] };
     }
-    return formatContent(content, filePath);
-  }, [content, filePath]);
+    const formatted = formatContent(content, filePath);
+    
+    // Apply highlights to paragraph sections
+    if (highlights.length > 0) {
+      formatted.sections = formatted.sections.map(section => {
+        if (section.type === 'paragraph') {
+          return {
+            ...section,
+            content: applyHighlightsToText(section.content, highlights)
+          };
+        }
+        return section;
+      });
+    }
+    
+    return formatted;
+  }, [content, filePath, highlights]);
 
   const { title, sections } = formattedContent;
   const fileName = filePath ? filePath.split('/').pop()?.replace('.txt', '') || '' : '';
@@ -563,7 +593,39 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
         )}
         <div className={styles.headerTop}>
           <h1 className={styles.title}>{title || fileName}</h1>
-          <label className={`${styles.readCheckbox} ${checkboxJustChecked ? styles.justChecked : ''} ${isRead ? styles.checked : ''}`}>
+          <div className={styles.headerActions}>
+            <button
+              className={styles.highlightActionButton}
+              onClick={() => {
+                const selection = window.getSelection();
+                if (selection && selection.rangeCount > 0 && filePath) {
+                  // Get plain text from selection (not HTML)
+                  const selectedText = selection.toString().trim();
+                  
+                  if (selectedText.length > 3) {
+                    // Save the highlight with plain text only
+                    saveHighlight(filePath, selectedText);
+                    
+                    // Clear selection
+                    window.getSelection()?.removeAllRanges();
+                    
+                    // Reload highlights to update the display
+                    setTimeout(() => {
+                      const articleHighlights = getHighlightsForArticle(filePath);
+                      setHighlights(articleHighlights);
+                    }, 100);
+                  }
+                } else {
+                  // Show a message if no text is selected
+                  alert('Please select some text to highlight first.');
+                }
+              }}
+              title="Highlight selected text"
+            >
+              <span className={styles.highlightActionIcon}>🖍️</span>
+              <span>Highlight</span>
+            </button>
+            <label className={`${styles.readCheckbox} ${checkboxJustChecked ? styles.justChecked : ''} ${isRead ? styles.checked : ''}`}>
             <div className={styles.checkboxWrapper}>
               <input
                 type="checkbox"
@@ -589,6 +651,7 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
             </div>
             <span className={styles.checkboxLabel}>Mark as read</span>
           </label>
+          </div>
         </div>
       </div>
       <div className={`${styles.content} ${keyTermsSidebarOpen ? styles.sidebarOpen : ''}`}>
@@ -684,8 +747,27 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
                   key={index} 
                   className={styles.paragraph}
                   onClick={(e) => {
-                    // Handle clicks on bolded terms
                     const target = e.target as HTMLElement;
+                    
+                    // Handle clicks on existing highlights to remove them
+                    const highlightElement = target.closest('.text-highlight');
+                    if (highlightElement) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const highlightId = highlightElement.getAttribute('data-highlight-id');
+                      if (highlightId && filePath) {
+                        // Remove highlight
+                        removeHighlight(filePath, highlightId);
+                        // Reload highlights
+                        setTimeout(() => {
+                          const articleHighlights = getHighlightsForArticle(filePath);
+                          setHighlights(articleHighlights);
+                        }, 50);
+                        return;
+                      }
+                    }
+                    
+                    // Handle clicks on bolded terms
                     
                     // Check if clicked element is a bolded term or inside one
                     let termElement: HTMLElement | null = null;
@@ -749,6 +831,7 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
               <Quiz questions={quizQuestions} articleTitle={title || fileName} />
             </section>
           )}
+          
         </article>
       </div>
       <KeyTermsSidebar 

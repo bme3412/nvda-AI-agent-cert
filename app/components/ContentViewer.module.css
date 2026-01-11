@@ -87,6 +87,53 @@
   margin-bottom: 10px;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.highlightActionButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.highlightActionButton:hover {
+  background: var(--highlight-bg);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.highlightActionButton:active {
+  transform: scale(0.98);
+}
+
+.highlightActionIcon {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .headerActions {
+    gap: 12px;
+  }
+  
+  .highlightActionButton {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 24px 20px 20px 20px;
@@ -1568,6 +1615,54 @@
 
 .content::-webkit-scrollbar-thumb:hover {
   background: #cbd5e0;
+}
+
+/* Text Highlighting Styles */
+.text-highlight {
+  background-color: #fef08a;
+  padding: 2px 0;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.text-highlight:hover {
+  background-color: #fde047;
+}
+
+.highlightButton {
+  position: fixed;
+  left: var(--button-x, 0);
+  top: var(--button-y, 0);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  transform: translateX(-50%) translateY(-100%);
+  transition: all 0.2s ease;
+  animation: fadeInUp 0.2s ease-out;
+  pointer-events: auto;
+  white-space: nowrap;
+}
+
+.highlightButton:hover {
+  background: var(--accent-secondary);
+  transform: translateX(-50%) translateY(-100%) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.highlightIcon {
+  font-size: 16px;
 }
 
 .quizSection {
