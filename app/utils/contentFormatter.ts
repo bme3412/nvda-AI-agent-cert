@@ -77,9 +77,10 @@ export function boldKeyTerms(text: string, filePath?: string): string {
         const firstMatchIndex = firstMatch.index!;
         const matchedText = firstMatch[0];
         
-        // Just bold the term (no tooltip data attribute needed)
+        // Bold the term with data attribute for click handling
+        const escapedTermAttr = term.replace(/"/g, '&quot;');
         result = result.substring(0, firstMatchIndex) + 
-                 `<strong>${matchedText}</strong>` + 
+                 `<strong data-term="${escapedTermAttr}" class="key-term-clickable">${matchedText}</strong>` + 
                  result.substring(firstMatchIndex + matchedText.length);
         
         // Mark as bolded for this document
@@ -231,6 +232,56 @@ export function formatContent(content: string, filePath?: string): FormattedCont
       content: '',
       terms: keyTerms
     });
+  }
+
+  // Merge article-specific definitions with key terms section
+  if (filePath) {
+    // Import here to avoid circular dependencies
+    const { getArticleDefinitions, normalizeArticlePath } = require('@/app/utils/articleDefinitions');
+    const normalizedPath = normalizeArticlePath(filePath);
+    const articleDefs = getArticleDefinitions(normalizedPath);
+    
+    if (articleDefs && Object.keys(articleDefs).length > 0) {
+      // Find existing key-terms section or create new one
+      const keyTermsSectionIndex = sections.findIndex(s => s.type === 'key-terms');
+      
+      if (keyTermsSectionIndex >= 0) {
+        // Merge with existing key terms section
+        const existingTerms = sections[keyTermsSectionIndex].terms || [];
+        const termsMap = new Map(existingTerms.map(t => [t.term.toLowerCase(), t]));
+        
+        // Add or update terms from article definitions
+        Object.keys(articleDefs).forEach(term => {
+          const lowerTerm = term.toLowerCase();
+          if (termsMap.has(lowerTerm)) {
+            // Update existing term with article-specific definition
+            termsMap.get(lowerTerm)!.definition = articleDefs[term].definition;
+          } else {
+            // Add new term from article definitions
+            termsMap.set(lowerTerm, {
+              term: term,
+              definition: articleDefs[term].definition
+            });
+          }
+        });
+        
+        // Update the section with merged terms
+        sections[keyTermsSectionIndex].terms = Array.from(termsMap.values());
+      } else {
+        // No KEY TERMS section found, create one from article definitions
+        const articleKeyTerms = Object.keys(articleDefs).map(term => ({
+          term: term,
+          definition: articleDefs[term].definition
+        }));
+        
+        // Add as key-terms section at the end
+        sections.push({
+          type: 'key-terms',
+          content: '',
+          terms: articleKeyTerms
+        });
+      }
+    }
   }
 
   return { title, sections };

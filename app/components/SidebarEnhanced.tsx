@@ -47,8 +47,6 @@ export default function SidebarEnhanced({ onFileSelect, selectedPath, isOpen = f
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [readFiles, setReadFiles] = useState<Set<string>>(new Set());
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showOnlyUnread, setShowOnlyUnread] = useState(false);
   const [categoryStats, setCategoryStats] = useState<Map<string, CategoryStats>>(new Map());
 
   const isFileRead = (path: string): boolean => {
@@ -172,17 +170,8 @@ export default function SidebarEnhanced({ onFileSelect, selectedPath, isOpen = f
     setExpandedFolders(new Set());
   };
 
-  const matchesSearch = (item: SummaryItem): boolean => {
-    if (!searchQuery) return true;
-    const displayName = formatDisplayName(item.name, item.type === 'folder').toLowerCase();
-    return displayName.includes(searchQuery.toLowerCase());
-  };
 
   const shouldShowItem = (item: SummaryItem): boolean => {
-    if (!matchesSearch(item)) return false;
-    if (showOnlyUnread && item.type === 'file' && readFiles.has(item.path)) {
-      return false;
-    }
     return true;
   };
 
@@ -203,11 +192,10 @@ export default function SidebarEnhanced({ onFileSelect, selectedPath, isOpen = f
           return shouldShowItem(child);
         } else {
           // For nested folders, we'd need to check recursively, but for simplicity...
-          return matchesSearch(child);
         }
       });
 
-      if (!hasVisibleChildren && searchQuery) return null;
+      if (!hasVisibleChildren) return null;
 
       return (
         <div key={fullPath} className={styles.categoryContainer}>
@@ -250,7 +238,7 @@ export default function SidebarEnhanced({ onFileSelect, selectedPath, isOpen = f
           {isExpanded && item.children && (
             <div className={styles.childrenContainer}>
               {item.children
-                .filter(child => shouldShowItem(child) || (child.type === 'folder' && matchesSearch(child)))
+                .filter(child => shouldShowItem(child))
                 .map((child) => renderItem(child, depth + 1))
                 .filter(Boolean)}
             </div>
@@ -356,40 +344,6 @@ export default function SidebarEnhanced({ onFileSelect, selectedPath, isOpen = f
         </div>
       </div>
 
-      <div className={styles.searchContainer}>
-        <div className={styles.searchInputWrapper}>
-          <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <circle cx="7" cy="7" r="4" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-            <path d="M10 10L13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="Search articles..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {searchQuery && (
-            <button
-              className={styles.clearButton}
-              onClick={() => setSearchQuery('')}
-              aria-label="Clear search"
-            >
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </button>
-          )}
-        </div>
-        <label className={styles.filterToggle}>
-          <input
-            type="checkbox"
-            checked={showOnlyUnread}
-            onChange={(e) => setShowOnlyUnread(e.target.checked)}
-          />
-          <span>Unread only</span>
-        </label>
-      </div>
 
       <div className={styles.content}>
         {structure.length === 0 ? (

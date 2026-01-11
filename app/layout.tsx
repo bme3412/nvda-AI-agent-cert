@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Agentic AI-LLMs',
   description: 'View and navigate NVDA agentic certification summaries',
 };
 

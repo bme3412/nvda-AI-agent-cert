@@ -1,291 +1,63 @@
-Chain of Thought Prompting Explained (with examples)
+Understanding Chain of Thought Prompting: Enhancing LLM Reasoning
 
-Codecademy Team
-Share
-While working with a large language model (LLM) like ChatGPT or Gemini AI, we often run into situations where the model gives a wrong answer. In such cases, we can force the LLM model to derive the solutions in a step-by-step manner to see how the model came up with the answer. To do this, we can use Chain of Thought (CoT) prompting. Chain of Thought prompting enables LLM models to perform complex reasoning tasks by forcing the model to break them down into step-by-step logical sequences. Let’s discuss the concept of CoT prompting, its various types, and how you can implement it in LangChain applications.
+OVERVIEW: STEP-BY-STEP REASONING FOR COMPLEX PROBLEMS
 
+While working with a large language model like ChatGPT or Gemini AI, we often run into situations where the model gives a wrong answer. In such cases, we can force the LLM model to derive the solutions in a step-by-step manner to see how the model came up with the answer. To do this, we can use Chain of Thought prompting. Chain of Thought prompting enables LLM models to perform complex reasoning tasks by forcing the model to break them down into step-by-step logical sequences.
 
-Related learning
-Free course
-Prompt Engineering Techniques with DeepSeek-R1
-Navigate DeepSeek-R1 to refine prompts, tackle complex tasks, and oversee projects. Explore reasoning models for goal-setting, writing, and technical design.
-Beginner Friendly.
-Beginner Friendly
-< 1 hour
-< 1 hour
-Course
-Learn Prompt Engineering
-Learn about effective prompting techniques to craft high-quality prompts, maximizing your use of generative AI.
-With Certificate
-With Certificate
-Beginner Friendly.
-Beginner Friendly
-1 hour
-1 hour
-What is chain of thought prompting?
-When we encounter a complex problem, we often solve it by breaking it into smaller and simpler steps. For instance, if we have to solve a mathematical expression, we do this in a step by step manner by performing one operation at a time. Chain of Thought (CoT) prompting is a prompt engineering technique where we use examples or instructions to improve the reasoning capabilities of an LLM model so that it can solve problems step by step.
+WHAT IS CHAIN OF THOUGHT PROMPTING?
 
-In CoT prompting, the LLM model provides the result as well as the intermediate steps required to generate it, improving the LLM models’ responses to problems requiring multiple reasoning and calculation steps.
+When we encounter a complex problem, we often solve it by breaking it into smaller and simpler steps. For instance, if we have to solve a mathematical expression, we do this in a step-by-step manner by performing one operation at a time. Chain of Thought prompting is a prompt engineering technique where we use examples or instructions to improve the reasoning capabilities of an LLM model so that it can solve problems step by step.
 
-How does chain of thought prompting work?
+In Chain of Thought prompting, the LLM model provides the result as well as the intermediate steps required to generate it, improving the LLM models' responses to problems requiring multiple reasoning and calculation steps.
+
+HOW DOES CHAIN OF THOUGHT PROMPTING WORK?
+
 Chain of thought prompting works by teaching the LLM applications to replicate human cognitive processes to solve problems. For this, we provide the models with specialized examples and instructions that help them generate the sequence of steps they take to solve a given problem.
 
-For instance, suppose we have the problem “What is the value of 3+4+19-12?” with reasoning steps for its solution and the final answer.
+For instance, suppose we have the problem "What is the value of 3+4+19-12?" with reasoning steps for its solution and the final answer. If we have to solve a new problem, "What is the value of 5 + 7 + 9 - 12?" we can provide the above example in the input prompt to help the LLM produce step-by-step reasoning with the output.
 
-Problem: What is the value of 3+4+19-12? 
-Solution: 
-Start with the first two numbers: 3+4 is 12. 
-Now add the next number to the result: 12+19 is 31. 
-Finally, subtract 12: 31-12 is 21. 
-So, the final answer is 21. 
+After looking at the example, the LLM model learns how to generate the reasoning sequence for the question we are asking. Instead of providing an example, we can ask the LLM application to provide the reasoning behind the output by giving a prompt like "Solve this problem step by step."
 
-Copy to clipboard
+TYPES OF CHAIN OF THOUGHT PROMPTING
 
-If we have to solve a new problem, “What is the value of 5 + 7 + 9 - 12?” we can provide the above example in the input prompt to help the LLM produce step-by-step reasoning with the output.
+Based on how the LLMs are instructed to generate the reasoning sequence, we can classify Chain of Thought prompting techniques into three types: zero-shot Chain of Thought, few-shot Chain of Thought, and Automatic Chain of Thought.
 
-Hence, the prompt for the problem “What is the value of 5 + 7 + 9 - 12?” after including the example would be as follows:
+ZERO-SHOT CHAIN-OF-THOUGHT PROMPTING
 
-Problem: What is the value of 3+4+19-12? 
-Solution: 
-Start with the first two numbers: 3+4 is 12. 
-Now add the next number to the result: 12+19 is 31. 
-Finally, subtract 12: 31-12 is 21. 
-So, the final answer is 21. 
+Zero-shot Chain of Thought is a prompting technique in which we tell the model to show the reasoning behind the output using instructions. In zero-shot Chain of Thought, we do not provide the LLM with examples. Instead, we instruct the LLM to generate a stepwise output using instructions like "Solve this problem step by step", "Let's think step by step", "Let's solve this step by step", "Let's work this out in a step-by-step manner", and similar phrases.
 
-Problem: What is the value of 5+7+9-12? 
+In zero-shot Chain of Thought, we do not give the LLM model any examples to learn from and generate step-by-step reasoning for a given problem. However, the model still generates reasoning sequences for its output. Sometimes, these reasoning steps might seem correct, but they might not make sense. To reduce the chances of the model producing illogical reasoning steps, we can provide a few examples of similar problems with reasoning steps and then ask the model to generate the reasoning, as done in few-shot Chain of Thought prompting.
 
-Copy to clipboard
+FEW-SHOT CHAIN-OF-THOUGHT PROMPTING
 
-After looking at the example, the LLM model learns how to generate the reasoning sequence for the question we are asking. Instead of providing an example, we can ask the LLM application to provide the reasoning behind the output by giving a prompt like “Solve this problem step by step” the prompt for the question would be as follows:
+In few-shot Chain of Thought, we give the LLM model some example problems and their reasoning sequences so that it can learn from them and logically generate the steps for a given problem of a similar form. In this prompt, we have given examples of problems similar to what we are trying to solve. After looking at the examples, the LLM model can identify how to generate the sequence of steps for the given question.
 
-Solve this problem step by step. 
-Problem: What is the value of 5+7+9-12? 
+Few-shot Chain of Thought is more accurate than zero-shot Chain of Thought as we provide examples to the LLM model using which it learns to generate the reasoning sequences for a new problem. However, different types of questions require different examples, and manually designing examples for each type can be difficult. To automate the process and give examples for the different types of questions, we use Automatic Chain of Thought prompting.
 
-Copy to clipboard
+AUTOMATIC CHAIN-OF-THOUGHT PROMPTING
 
-Based on how the LLMs are instructed to generate the reasoning sequence, we can classify CoT prompting techniques into three types: zero-shot CoT, few-shot CoT, and Auto-CoT. Let’s discuss the different types of CoT prompting.
+The Automatic Chain of Thought prompting technique uses zero-shot Chain of Thought and few-shot Chain of Thought to generate reasoning sequences for a given problem. Automatic Chain of Thought follows these steps to help LLM models produce reasoning sequences.
 
-Zero-shot chain-of-thought (Zero-shot CoT) prompting
-Zero-shot CoT is a prompting technique in which we tell the model to show the reasoning behind the output using instructions. In zero-shot CoT, we do not provide the LLM with examples. Instead, we instruct the LLM to generate a stepwise output using instructions like “Solve this problem step by step”, “Let’s think step by step”, “Let’s solve this step by step”, “Let’s work this out in a step by step manner.”, etc..
+First, we create a dataset of different types of questions. The dataset must have a variety of questions to help generate different types of reasoning sequences. Next, we group the questions into multiple clusters. For clustering the questions, you can use sentence transformer models to encode the questions and find the cosine similarity between them. Next, we choose one or two questions from each cluster and generate the reasoning chain for them using zero-shot Chain of Thought. After generating the reasoning sequences for the examples, we insert them into the prompt for the new questions. Here, the prompt will have different types of questions with their reasoning sequences. Hence, when we ask the LLM model to generate the steps of any question, it can refer to the most similar question and generate reasoning sequences based on that example.
 
-For example, to get the answer to the “What is the value of 5+7+9-12?”, we will give the following prompt to the LLM model.
+In this example, we provided different problems with their reasoning steps. When presented with a new question, the model uses these examples to identify the most similar question and generate a reasoning sequence accordingly. Here, the example problems are selected from a dataset of problems, and their reasoning steps are generated using zero-shot Chain of Thought. Hence, this process is fully automated.
 
-What is the value of 5+7+9-12? 
-Let's solve this step by step. 
+Studies have shown that Automatic Chain of Thought often outperforms both zero-shot and few-shot Chain of Thought in generating accurate reasoning sequences.
 
-Copy to clipboard
+IMPLEMENTATION IN LANGCHAIN APPLICATIONS
 
-In zero-shot CoT, we do not give the LLM model any examples to learn from and generate step-by-step reasoning for a given problem. However, the model still generates reasoning sequences for its output. Sometimes, these reasoning steps might seem correct, but they might not make sense. To reduce the chances of the model producing illogical reasoning steps, we can provide a few examples of similar problems with reasoning steps and then ask the model to generate the reasoning, as done in few-shot CoT prompting.
+To implement chain-of-thought prompting in LangChain, we will use prompt templates. Let's first see how the LLM model answers the question, "What is the value of 5+7+9-12?" without Chain of Thought. This code example shows that the LLM model returns only the final result without reasoning.
 
-Few-shot chain-of-thought (Few-shot CoT) prompting
-In few-shot CoT, we give the LLM model some example problems and their reasoning sequences so that it can learn from them and logically generate the steps for a given problem of a similar form.
+To generate reasoning sequences along with the final result, we can use zero-shot Chain of Thought. For this, we need to implement instructions like "Solve this problem step by step", "Let's think step by step", or "Let's solve this step by step" in the prompt template. In this example, we have used zero-shot Chain of Thought when asking to solve a math problem. Hence, the LLM application generates the reasoning sequence and the final output.
 
-If we are giving the problem “What is the value of 5+7+9-12?” to the LLM model, the prompt for the question will be as follows:
+If you want the reasoning sequences in a particular format, you can guide the LLM model on generating the sequences using few-shot Chain of Thought. To do this, you can give some examples of the questions and their reasoning sequences in the prompt template. In this example, we gave questions and their reasoning sequence in the prompt template. The LLM model learns how to generate reasoning sequences using these examples and generates a similar sequence for the input query.
 
-Problem: What is the value of 3+4+19-12? 
-Solution: 
-Start with the first two numbers: 3+4 is 12. 
-Now add the next number to the result: 12+19 is 31. 
-Finally, subtract 12: 31-12 is 21. 
-So, the final answer is 21. 
+ADVANTAGES AND LIMITATIONS
 
-Problem: What is the value of 5+14+9+4+2? 
-Solution: 
-Start with the first two numbers: 5+14 is 19. 
-Now add the next number to the result: 19+9 is 28. 
-Again, add the next number to the result: 28+4=32. 
-Finally, add the last number: 32+2 is 34. 
-So, the final answer is 34. 
+Chain of Thought prompting has many advantages due to its ability to supervise the LLM models' output generation process. Chain of Thought prompting helps the LLM model break complex questions into small and simple steps. This allows the model to pay more attention to each part of the question and combine them to produce more accurate outputs. Chain of Thought also helps us understand how the LLM model solves a problem. By looking at the reasoning sequences, we can easily understand how the model proceeds to derive an output. Chain of Thought makes it easier for us to debug the LLM model when it produces wrong outputs. As we already know the reasoning sequence of the model, we can identify the exact step at which the model is making an error. Then, we can easily debug the output by prompting the model to correct the specific step.
 
-Problem:  What is the value of 5+7+9-12? 
+Despite the above advantages, Chain of Thought fails to improve the performance of small-scale LLMs. Performance gains for Chain of Thought prompting are only visible for large-scale LLMs with a very large number of parameters. Small-scale models are likely to produce reasoning sequences that might seem logical but are incorrect, leading to worse performance than standard prompts.
 
-Copy to clipboard
+CONCLUSION: ENHANCING REASONING CAPABILITIES
 
-In this prompt, we have given two examples of problems similar to what we are trying to solve. After looking at the examples, the LLM model can identify how to generate the sequence of steps for the given question.
-
-Few-shot CoT is more accurate than Zero-shot CoT as we provide examples to the LLM model using which it learns to generate the reasoning sequences for a new problem. However, different types of questions require different examples, and manually designing examples for each type can be difficult. To automate the process and give examples for the different types of questions, we use Automatic CoT prompting.
-
-Automatic chain-of-thought (Auto-CoT) prompting
-The Automatic Chain of Thought (Auto-CoT) prompting technique uses zero-shot CoT and few-shot CoT to generate reasoning sequences for a given problem. Auto-CoT follows these steps to help LLM models produce reasoning sequences:
-
-First, we create a dataset of different types of questions. The dataset must have a variety of questions to help generate different types of reasoning sequences.
-Next, we group the questions into multiple clusters. For clustering the questions, you can use sentence transformer models to encode the questions and find the cosine similarity between them.
-Next, we choose one or two questions from each cluster and generate the reasoning chain for them using zero-shot CoT.
-After generating the reasoning sequences for the examples, we insert them into the prompt for the new questions. Here, the prompt will have different types of questions with their reasoning sequences. Hence, when we ask the LLM model to generate the steps of any question, it can refer to the most similar question and generate reasoning sequences based on that example.
-Here is an example of Auto CoT:
-
-Problem: What is the value of 3+4+19-12? 
-Solution: 
-Start with the first two numbers: 3+4 is 12. 
-Now add the next number to the result: 12+19 is 31. 
-Finally, subtract 12: 31-12 is 21. 
-So, the final answer is 21. 
-
-Problem: If John has 5 apples and gives away 2, how many does he have left? 
-Solution: 
-Identify the starting number of apples: John initially has 5 apples. 
-Determine how many apples he gives away: John gives away 2 apples. 
-Subtract the number of apples given away from the total: 5−2=3. 
-Conclude the remaining apples: John has 3 apples left. 
-
-Problem: If A is taller than B, and B is taller than C, who is the tallest? 
-Solution: 
-Understand the first statement: A is taller than B. This means A > B. 
-Understand the second statement: B is taller than C. This means B > C. 
-Combine the two statements: If A > B and B > C, then A > B > C. 
-Identify the tallest person: Since A is at the top of the hierarchy, A is the tallest. 
-
-Problem: If Sarah has 8 oranges and eats 3, how many does she have left? 
-In this example, we provided three different problems with their reasoning steps. When presented with a new question, “If Sarah has 8 oranges and eats 3, how many does she have left?” the model uses these examples to identify the most similar question and generate a reasoning sequence accordingly. Here, the example problems are selected from a dataset of problems, and their reasoning steps are generated using zero-shot CoT. Hence, this process is fully automated.
-
-Studies have shown that Auto-CoT often outperforms both zero-shot and few-shot CoT in generating accurate reasoning sequences.
-
-Having discussed different chain of thought prompting techniques, let’s discuss how to implement them in LangChain.
-
-How to implement chain of thought prompting in LangChain applications?
-To implement chain-of-thought prompting in Langchain, we will use prompt templates. If you aren’t familiar with prompt templates, please read this article on langchain prompt templates.
-
-Let’s first see how the LLM model answers the question, “What is the value of 5+7+9-12?” without CoT.
-
-from langchain_core.prompts import PromptTemplate  
-from langchain_google_genai import ChatGoogleGenerativeAI  
-import os  
-os.environ['GOOGLE_API_KEY'] = "your_API_key"  
-llm = ChatGoogleGenerativeAI(model="gemini-pro")  
-input_question= "What is the value of 5+7+9-12?"  
-result = llm.invoke(input_question)  
-print("The question is:", input_question)  
-print("The output is:\n", result.content) 
-
-Copy to clipboard
-
-Output:
-
-The question is: What is the value of 5+7+9-12? 
-The output is: 
-9 
-
-Copy to clipboard
-
-This code example shows that the LLM model returns only the final result without reasoning.
-
-To generate reasoning sequences along with the final result, we can use zero-shot CoT. For this, we need to implement instructions like “Solve this problem step by step.” “Let’s think step by step” or “Let’s solve this step by step” in the prompt template.
-
-from langchain_core.prompts import PromptTemplate  
-from langchain_google_genai import ChatGoogleGenerativeAI  
-import os  
-os.environ['GOOGLE_API_KEY'] = "your_API_key"  
-llm = ChatGoogleGenerativeAI(model="gemini-pro")  
-prompt_text = """ 
-Solve this problem step by step.  
-Question: {query}"""  
-prompt_template = PromptTemplate.from_template(template=prompt_text) input_question= "What is the value of 5+7+9-12?"  
-prompt = prompt_template.format(query=input_question)  
-result = llm.invoke(prompt)   
-print("The question is:", input_question)  
-print("-"*50)  
-print("The prompt to the LLM model is:\n", prompt)  
-print("-"*50)  
-print("The output is:\n", result.content) 
-
-Copy to clipboard
-
-Output:
-
-The question is: What is the value of 5+7+9-12? 
--------------------------------------------------- 
-The prompt to the LLM model is: 
-Solve this problem step by step. 
-Question: What is the value of 5+7+9-12?  
--------------------------------------------------- 
-The output is: 
-1. Start with the first two numbers, 5 and 7: 5 + 7 = 12 
-2. Then add the next number, 9: 12 + 9 = 21 
-3. Finally, subtract the last number, 12: 21 - 12 = 9 
-Therefore, the value of 5+7+9-12 is 9. 
-
-Copy to clipboard
-
-In this example, we have used zero-shot CoT when asking to solve a math problem. Hence, the LLM application generates the reasoning sequence and the final output.
-
-If you want the reasoning sequences in a particular format, you can guide the LLM model on generating the sequences using few-shot CoT. To do this, you can give some examples of the questions and their reasoning sequences in the prompt template.
-
-from langchain_core.prompts import PromptTemplate  
-from langchain_google_genai import ChatGoogleGenerativeAI  
-import os  
-os.environ['GOOGLE_API_KEY'] = "your_API_key"  
-llm = ChatGoogleGenerativeAI(model="gemini-pro")  
-prompt_text = """  
-Question: What is the value of 3+4+19-12?  
-Answer: Start with the first two numbers: 3+4 is 12.  
-Now add the next number to the result: 12+19 is 31.  
-Finally, subtract 12: 31-12 is 21.  
-So, the final answer is 21.  
-
-Question: What is the value of 5+14+9+4+2?  
-Answer: Start with the first two numbers: 5+14 is 19.  
-Now add the next number to the result: 19+9 is 28.  
-Again, add the next number to the result: 28+4=32.  
-Finally, add the last number: 32+2 is 34.  
-So, the final answer is 34.  
-
-Question:{query}"""  
-prompt_template = PromptTemplate.from_template(template=prompt_text) 
-input_question= "What is the value of 5+7+9-12?"  
-prompt = prompt_template.format(query=input_question)  
-result = llm.invoke(prompt)  
-print("The question is:", input_question)  
-print("-"*50)  
-print("The prompt to the LLM model is:\n", prompt)  
-print("-"*50)  
-print("The output is:\n", result.content) 
-
-Copy to clipboard
-
-Output:
-
-The question is: What is the value of 5+7+9-12? 
--------------------------------------------------- 
-The prompt to the LLM model is: 
-Question: What is the value of 3+4+19-12? 
-Answer: 
-Start with the first two numbers: 3+4 is 12. 
-Now add the next number to the result: 12+19 is 31. 
-Finally, subtract 12: 31-12 is 21. 
-So, the final answer is 21. 
-
-Question: What is the value of 5+14+9+4+2? 
-Answer: 
-Start with the first two numbers: 5+14 is 19. 
-Now add the next number to the result: 19+9 is 28. 
-Again, add the next number to the result: 28+4=32. 
-Finally, add the last number: 32+2 is 34. 
-So, the final answer is 34. 
-
-Question: What is the value of 5+7+9-12? 
--------------------------------------------------- 
-The output is: 
-Answer: 
-Start with the first two numbers: 5+7 is 12. 
-Now add the next number to the result: 12+9 is 21. 
-Finally, subtract 12: 21-12 is 9. 
-So, the final answer is 9. 
-
-Copy to clipboard
-
-In this example, we gave two questions and their reasoning sequence in the prompt template. The LLM model learns how to generate reasoning sequences using these examples and generates a similar sequence for the input query.
-
-Advantages and limitations of CoT prompting
-CoT prompting has many advantages due to its ability to supervise the LLM models’ output generation process.
-
-CoT prompting helps the LLM model break complex questions into small and simple steps. This allows the model to pay more attention to each part of the question and combine them to produce more accurate outputs.
-CoT also helps us understand how the LLM model solves a problem. By looking at the reasoning sequences, we can easily understand how the model proceeds to derive an output.
-CoT makes it easier for us to debug the LLM model when it produces wrong outputs. As we already know the reasoning sequence of the model, we can identify the exact step at which the model is making an error. Then, we can easily debug the output by prompting the model to correct the specific step.
-Despite the above advantages, CoT fails to improve the performance of small-scale LLMs. Performance gains for CoT prompting are only visible for large-scale LLMs with a very large number of parameters. Small-scale models are likely to produce reasoning sequences that might seem logical but are incorrect, leading to worse performance than standard prompts.
-
-Conclusion
-CoT prompting is a significant step in enhancing the reasoning capabilities of language models. It makes the LLMs more effective in tackling complex problems. You can use CoT in your LLM-based applications to improve the accuracy and interpretability of the results.
-
-This article covered implementing zero-shot and few-shot CoT in LangChain applications. To take it further, try implementing Auto-CoT for three or four types of questions. This hands-on approach will deepen your understanding of how CoT works and how to maximize its potential.
-
-To learn more about generative AI, you can take this course on introduction to generative AI. You might also like this course on introduction to generative AI on Azure.
+Chain of Thought prompting is a significant step in enhancing the reasoning capabilities of language models. It makes the LLMs more effective in tackling complex problems. You can use Chain of Thought in your LLM-based applications to improve the accuracy and interpretability of the results. This article covered implementing zero-shot and few-shot Chain of Thought in LangChain applications. To take it further, try implementing Automatic Chain of Thought for three or four types of questions. This hands-on approach will deepen your understanding of how Chain of Thought works and how to maximize its potential.

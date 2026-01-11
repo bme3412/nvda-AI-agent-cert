@@ -22,6 +22,10 @@
   --highlight-bg: #eff6ff;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   max-width: 100vw;
@@ -38,3 +42,18 @@ body {
   height: 100%;
 }
 
+/* Global styles for clickable key terms */
+.key-term-clickable {
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.key-term-clickable:hover {
+  color: var(--accent-primary);
+  text-decoration: underline;
+  background: var(--highlight-bg);
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin: -2px -4px;
+}

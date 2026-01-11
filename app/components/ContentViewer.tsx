@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import styles from './ContentViewer.module.css';
 import Quiz from './Quiz';
 import Flashcard from './Flashcard';
@@ -9,6 +9,10 @@ import ProgressDisplay, { type ProgressStats } from './ProgressDisplay';
 import { formatContent, type FormattedContent } from '@/app/utils/contentFormatter';
 import { findQuizData } from '@/app/utils/quizMatcher';
 import { QUIZ_DATA } from '@/app/data/quizzes';
+import { getCategoryFromPath, getKeyTermsForCategory } from '@/app/utils/categoryKeyTerms';
+import { TERM_DEFINITIONS } from '@/app/utils/termDefinitions';
+import { getArticleDefinitions, normalizeArticlePath } from '@/app/utils/articleDefinitions';
+import { getArticleSummary } from '@/app/utils/articleSummaries';
 
 interface ContentViewerProps {
   filePath?: string;
@@ -333,18 +337,156 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
       });
   }, [filePath, isInitialLoad]);
 
+  // Format content and extract key terms - must be before any early returns
+  const formattedContent = useMemo(() => {
+    if (!content || !filePath) {
+      return { title: '', sections: [] };
+    }
+    return formatContent(content, filePath);
+  }, [content, filePath]);
+
+  const { title, sections } = formattedContent;
+  const fileName = filePath ? filePath.split('/').pop()?.replace('.txt', '') || '' : '';
+  const isReview = fileName.toLowerCase() === 'review';
+  
+  // Extract key terms from sections - article-specific
+  const keyTerms = useMemo(() => {
+    if (!sections || sections.length === 0) {
+      return [];
+    }
+    
+    // Normalize file path for article definitions lookup
+    const normalizedPath = filePath ? normalizeArticlePath(filePath) : '';
+    
+    // Check if we have article-specific definitions
+    const articleDefs = normalizedPath ? getArticleDefinitions(normalizedPath) : null;
+    
+    // First, try to get key terms from KEY TERMS section (most relevant)
+    let terms = sections
+      .filter(section => section.type === 'key-terms' && section.terms)
+      .flatMap(section => section.terms || []);
+    
+    // If we have article-specific definitions, prioritize them
+    // This ensures articles with specific definitions always show them
+    if (articleDefs && Object.keys(articleDefs).length > 0) {
+      // If we have KEY TERMS section, merge with article-specific definitions
+      // Otherwise, use article-specific definitions directly
+      if (terms.length > 0) {
+        // Merge: article-specific definitions take precedence
+        const termsMap = new Map(terms.map(t => [t.term.toLowerCase(), t]));
+        Object.keys(articleDefs).forEach(term => {
+          const lowerTerm = term.toLowerCase();
+          if (termsMap.has(lowerTerm)) {
+            // Update existing term with article-specific definition
+            termsMap.get(lowerTerm)!.definition = articleDefs[term].definition;
+          } else {
+            // Add new term from article-specific definitions
+            terms.push({
+              term: term,
+              definition: articleDefs[term].definition
+            });
+          }
+        });
+      } else {
+        // No KEY TERMS section, use article-specific definitions directly
+        terms = Object.keys(articleDefs).map(term => ({
+          term: term,
+          definition: articleDefs[term].definition
+        }));
+      }
+    }
+    
+    // If no KEY TERMS section and no article-specific definitions, extract from bolded terms
+    if (terms.length === 0) {
+      // No KEY TERMS section and no article-specific definitions
+      // Extract from bolded terms actually used in this article
+      const category = getCategoryFromPath(filePath || '');
+      const categoryTerms = getKeyTermsForCategory(category);
+      
+      // Extract unique bolded terms from all paragraph sections (article-specific)
+      const boldedTermsMap = new Map<string, number>(); // Track frequency
+      sections.forEach(section => {
+        if (section.type === 'paragraph') {
+          // Parse HTML to find bolded terms
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(`<div>${section.content}</div>`, 'text/html');
+          const strongElements = doc.querySelectorAll('strong, b');
+          strongElements.forEach(el => {
+            const termText = el.textContent?.trim() || '';
+            if (termText && termText.length > 2) { // Filter out very short terms
+              const count = boldedTermsMap.get(termText) || 0;
+              boldedTermsMap.set(termText, count + 1);
+            }
+          });
+        }
+      });
+      
+      // Convert to array and prioritize by frequency and relevance
+      const boldedTermsArray = Array.from(boldedTermsMap.entries())
+        .map(([term, frequency]) => ({ term, frequency }))
+        .sort((a, b) => {
+          // Prioritize terms that:
+          // 1. Have definitions in TERM_DEFINITIONS
+          // 2. Match category-specific terms
+          // 3. Appear more frequently in the article
+          const aHasDef = !!(TERM_DEFINITIONS[a.term] || TERM_DEFINITIONS[a.term.toLowerCase()]);
+          const bHasDef = !!(TERM_DEFINITIONS[b.term] || TERM_DEFINITIONS[b.term.toLowerCase()]);
+          const aIsCategory = categoryTerms.some(ct => 
+            ct.toLowerCase() === a.term.toLowerCase() ||
+            a.term.toLowerCase().includes(ct.toLowerCase()) ||
+            ct.toLowerCase().includes(a.term.toLowerCase())
+          );
+          const bIsCategory = categoryTerms.some(ct => 
+            ct.toLowerCase() === b.term.toLowerCase() ||
+            b.term.toLowerCase().includes(ct.toLowerCase()) ||
+            ct.toLowerCase().includes(b.term.toLowerCase())
+          );
+          
+          // Priority: has definition > is category term > frequency
+          if (aHasDef && !bHasDef) return -1;
+          if (!aHasDef && bHasDef) return 1;
+          if (aIsCategory && !bIsCategory) return -1;
+          if (!aIsCategory && bIsCategory) return 1;
+          return b.frequency - a.frequency;
+        })
+        .map(({ term }) => term);
+      
+      // Create key terms array - only include terms that appear in this article
+      terms = boldedTermsArray
+        .filter(term => {
+          // Only include if it has a definition or is a category term
+          return TERM_DEFINITIONS[term] || 
+                 TERM_DEFINITIONS[term.toLowerCase()] ||
+                 categoryTerms.some(ct => 
+                   ct.toLowerCase() === term.toLowerCase() ||
+                   term.toLowerCase().includes(ct.toLowerCase()) ||
+                   ct.toLowerCase().includes(term.toLowerCase())
+                 );
+        })
+        .map(term => {
+          // Find the best matching definition
+          const termDef = TERM_DEFINITIONS[term] || TERM_DEFINITIONS[term.toLowerCase()];
+          if (termDef) {
+            return {
+              term: term,
+              definition: termDef.definition
+            };
+          }
+          // If no definition found, skip it (we only want terms with definitions)
+          return null;
+        })
+        .filter((term): term is { term: string; definition: string } => term !== null)
+        .slice(0, 30); // Limit to 30 most relevant terms for this article
+    }
+    
+    return terms;
+  }, [sections, filePath]);
+
   if (!filePath && isReady) {
     return (
       <main className={styles.viewer}>
         <div className={styles.empty}>
           <div className={styles.emptyContent}>
-            <div className={styles.emptyIcon}>📚</div>
-            <h1 className={styles.emptyTitle}>NVIDIA Agentic AI Study Guide</h1>
-            <p className={styles.emptyDescription}>
-              Welcome to your comprehensive study guide for NVIDIA Agentic AI certification. 
-              Explore articles, summaries, and key concepts organized by topic.
-            </p>
-
             {progress && progress.total > 0 && (
               <ProgressDisplay
                 progress={progress}
@@ -353,10 +495,6 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
                 onFileSelect={onFileSelect}
               />
             )}
-
-            <div className={styles.emptyCta}>
-              <p className={styles.emptyCtaText}>Select an article from the sidebar to begin</p>
-            </div>
           </div>
         </div>
       </main>
@@ -379,15 +517,6 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
       </main>
     );
   }
-
-  const { title, sections } = formatContent(content, filePath);
-  const fileName = filePath ? filePath.split('/').pop()?.replace('.txt', '') || '' : '';
-  const isReview = fileName.toLowerCase() === 'review';
-  
-  // Extract key terms from sections
-  const keyTerms = sections
-    .filter(section => section.type === 'key-terms' && section.terms)
-    .flatMap(section => section.terms || []);
   
   // Check if this file has a quiz
   const quizQuestions = findQuizData(filePath, QUIZ_DATA);
@@ -411,7 +540,7 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
           </div>
         </div>
       )}
-      <div className={`${styles.header} ${isReview ? styles.reviewHeader : ''}`}>
+      <div className={`${styles.header} ${isReview ? styles.reviewHeader : ''} ${keyTermsSidebarOpen ? styles.sidebarOpen : ''}`}>
         {breadcrumbs.length > 0 && (
           <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
             <button
@@ -464,7 +593,63 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
       </div>
       <div className={`${styles.content} ${keyTermsSidebarOpen ? styles.sidebarOpen : ''}`}>
         <article className={styles.article}>
-          {sections.map((section, index) => {
+          {/* Article Summary */}
+          {filePath && (() => {
+            const summary = getArticleSummary(filePath);
+            return summary ? (
+              <div className={`${styles.articleSummary} ${isReview ? styles.reviewSummary : ''}`}>
+                <p>{summary}</p>
+              </div>
+            ) : null;
+          })()}
+          
+          {/* Article Navigation Links */}
+          <nav className={styles.articleNav} aria-label="Article navigation">
+            <button 
+              className={styles.navButton}
+              onClick={() => {
+                const element = document.getElementById('article-content');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+            >
+              <span className={styles.navIcon}>📄</span>
+              <span className={styles.navText}>Content</span>
+            </button>
+            {sections.some(s => s.type === 'key-terms' && s.terms && s.terms.length > 0) && (
+              <button 
+                className={styles.navButton}
+                onClick={() => {
+                  const element = document.getElementById('article-flashcards');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+              >
+                <span className={styles.navIcon}>🃏</span>
+                <span className={styles.navText}>Flash Cards</span>
+              </button>
+            )}
+            {hasQuiz && (
+              <button 
+                className={styles.navButton}
+                onClick={() => {
+                  const element = document.getElementById('article-quiz');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+              >
+                <span className={styles.navIcon}>📝</span>
+                <span className={styles.navText}>Practice Questions</span>
+              </button>
+            )}
+          </nav>
+
+          {/* Article Content Section */}
+          <section id="article-content" className={styles.contentSection}>
+            {sections.map((section, index) => {
             if (section.type === 'heading') {
               const HeadingTag = section.level === 1 ? 'h2' : section.level === 2 ? 'h3' : 'h4';
               const headingClass = section.level === 1 
@@ -481,18 +666,17 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
               );
             } else if (section.type === 'key-terms' && section.terms) {
               return (
-                <div key={index} className={styles.keyTermsSection}>
-                  <h3 className={styles.keyTermsTitle}>KEY TERMS AND DEFINITIONS</h3>
-                  <div className={styles.flashcardsGrid}>
+                <section key={`flashcards-${index}`} id="article-flashcards" className={styles.flashcardsSection}>
+                  <div className={styles.flashcardsContainer}>
                     {section.terms.map((item, termIndex) => (
                       <Flashcard
-                        key={termIndex}
+                        key={`${index}-${termIndex}`}
                         term={item.term}
                         definition={item.definition}
                       />
                     ))}
                   </div>
-                </div>
+                </section>
               );
             } else {
               return (
@@ -502,16 +686,51 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
                   onClick={(e) => {
                     // Handle clicks on bolded terms
                     const target = e.target as HTMLElement;
-                    if (target.tagName === 'STRONG' || target.tagName === 'B') {
-                      const termText = target.textContent || '';
-                      // Find matching term in keyTerms
-                      const matchingTerm = keyTerms.find(t => 
-                        t.term.toLowerCase() === termText.toLowerCase() ||
-                        termText.toLowerCase().includes(t.term.toLowerCase()) ||
-                        t.term.toLowerCase().includes(termText.toLowerCase())
-                      );
-                      if (matchingTerm) {
-                        setHighlightedTerm(matchingTerm.term);
+                    
+                    // Check if clicked element is a bolded term or inside one
+                    let termElement: HTMLElement | null = null;
+                    if (target.tagName === 'STRONG' || target.tagName === 'B' || target.classList.contains('key-term-clickable')) {
+                      termElement = target;
+                    } else {
+                      // Check if parent is a bolded term
+                      const parent = target.closest('strong, b, .key-term-clickable');
+                      if (parent) {
+                        termElement = parent as HTMLElement;
+                      }
+                    }
+                    
+                    if (termElement) {
+                      // Try to get term from data attribute first (most reliable)
+                      const termFromData = termElement.getAttribute('data-term');
+                      const termText = termFromData || termElement.textContent || '';
+                      
+                      if (termText) {
+                        // Find matching term in keyTerms - try exact match first, then fuzzy
+                        let matchingTerm = keyTerms.find(t => 
+                          t.term.toLowerCase() === termText.toLowerCase()
+                        );
+                        
+                        // If no exact match, try fuzzy matching
+                        if (!matchingTerm) {
+                          matchingTerm = keyTerms.find(t => {
+                            const tLower = t.term.toLowerCase();
+                            const textLower = termText.toLowerCase();
+                            return tLower === textLower ||
+                                   textLower.includes(tLower) ||
+                                   tLower.includes(textLower) ||
+                                   tLower.replace(/\s+/g, '-') === textLower.replace(/\s+/g, '-') ||
+                                   tLower.replace(/-/g, ' ') === textLower.replace(/-/g, ' ');
+                          });
+                        }
+                        
+                        if (matchingTerm) {
+                          // Open sidebar if closed
+                          if (!keyTermsSidebarOpen) {
+                            setKeyTermsSidebarOpen(true);
+                          }
+                          // Set highlighted term (this will trigger expansion in sidebar)
+                          setHighlightedTerm(matchingTerm.term);
+                        }
                       }
                     }
                   }}
@@ -521,11 +740,14 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
             }
           })}
           
+          </section>
+          
           {/* Quiz - appears after all content if available */}
           {hasQuiz && quizQuestions && (
-            <div className={styles.quizSection}>
+            <section id="article-quiz" className={styles.quizSection}>
+              <h2 className={styles.sectionHeader}>Practice Questions</h2>
               <Quiz questions={quizQuestions} articleTitle={title || fileName} />
-            </div>
+            </section>
           )}
         </article>
       </div>
@@ -534,6 +756,7 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
         isOpen={keyTermsSidebarOpen}
         onToggle={() => setKeyTermsSidebarOpen(!keyTermsSidebarOpen)}
         highlightTerm={highlightedTerm}
+        articlePath={filePath}
       />
     </main>
   );

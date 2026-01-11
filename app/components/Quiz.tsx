@@ -63,17 +63,13 @@ export default function Quiz({ questions, articleTitle }: QuizProps) {
 
   return (
     <div className={styles.quizContainer}>
-      <div className={styles.quizHeader}>
-        <h2 className={styles.quizTitle}>Practice Quiz</h2>
-        <p className={styles.quizSubtitle}>Test your understanding of {articleTitle}</p>
-        {score !== null && (
-          <div className={styles.scoreDisplay}>
-            <span className={styles.scoreText}>
-              Score: {score} / {questions.length} ({Math.round((score / questions.length) * 100)}%)
-            </span>
-          </div>
-        )}
-      </div>
+      {score !== null && (
+        <div className={styles.scoreDisplay}>
+          <span className={styles.scoreText}>
+            Score: {score} / {questions.length} ({Math.round((score / questions.length) * 100)}%)
+          </span>
+        </div>
+      )}
 
       <div className={styles.questionsList}>
         {questions.map((question, qIndex) => {

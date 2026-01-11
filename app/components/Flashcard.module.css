@@ -1,9 +1,9 @@
 .flashcard {
   perspective: 1200px;
   cursor: pointer;
-  height: 360px;
+  height: 320px;
   width: 100%;
-  min-height: 360px;
+  min-height: 320px;
 }
 
 .flashcardInner {

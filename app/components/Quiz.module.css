@@ -8,29 +8,9 @@
   max-width: 100%;
 }
 
-.quizHeader {
-  margin-bottom: 32px;
-  text-align: left;
-}
-
-.quizTitle {
-  font-family: 'Crimson Text', serif;
-  font-size: 28px;
-  font-weight: 600;
-  color: var(--accent-dark);
-  margin: 0 0 8px 0;
-}
-
-.quizSubtitle {
-  font-family: 'Work Sans', sans-serif;
-  font-size: 16px;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
 .scoreDisplay {
-  margin-top: 20px;
-  padding: 12px 24px;
+  margin-bottom: 24px;
+  padding: 12px 20px;
   background: var(--bg-primary);
   border: 2px solid var(--accent-primary);
   border-radius: 8px;
@@ -47,7 +27,7 @@
 .questionsList {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
 }
 
 .questionCard {

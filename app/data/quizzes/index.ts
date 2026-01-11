@@ -83,6 +83,12 @@ import { questions as securingGenAIDeploymentsQuestions } from './9-Safety-Ethic
 import { questions as metricsAgenticAiQuestions } from './9-Safety-Ethics/6-Metrics-Agentic-Ai';
 import { questions as aiRegulatoryQuestions } from './9-Safety-Ethics/7-AI-Regulatory';
 import { questions as responsibleAiQuestions } from './9-Safety-Ethics/8-Responsible-Ai';
+import { questions as dataFlywheelQuestions } from './10-human-ai-interaction/1-Data-Flywheel';
+import { questions as aiAgentsHITlQuestions } from './10-human-ai-interaction/2-AI-Agents-HITl';
+import { questions as hitlHolisticQuestions } from './10-human-ai-interaction/3-HITL-Holistic';
+import { questions as hitlOneReachQuestions } from './10-human-ai-interaction/4-HITL-One-Reach';
+import { questions as aporiaAiGuardrailsQuestions } from './10-human-ai-interaction/5-Aporia-Ai-Guardrails';
+import { questions as coTPromptingQuestions } from './10-human-ai-interaction/6-CoT-prompting';
 
 import type { QuizQuestion } from './types';
 
@@ -173,5 +179,11 @@ export const QUIZ_DATA: QuizSet = {
   '9-Safety-Ethics/5-Securing-Gen-AI-Deployments.txt': securingGenAIDeploymentsQuestions,
   '9-Safety-Ethics/6-Metrics-Agentic-Ai.txt': metricsAgenticAiQuestions,
   '9-Safety-Ethics/7-AI-Regulatory.txt': aiRegulatoryQuestions,
-  '9-Safety-Ethics/8-Responsible-Ai.txt': responsibleAiQuestions
+  '9-Safety-Ethics/8-Responsible-Ai.txt': responsibleAiQuestions,
+  '10-Human-AI-Interaction/1-Data-Flywheel.txt': dataFlywheelQuestions,
+  '10-Human-AI-Interaction/2-AI-Agents-HITl.txt': aiAgentsHITlQuestions,
+  '10-Human-AI-Interaction/3-HITL-Holistic.txt': hitlHolisticQuestions,
+  '10-Human-AI-Interaction/4-HITL-One-Reach.txt': hitlOneReachQuestions,
+  '10-Human-AI-Interaction/5-Aporia-Ai-Guardrails.txt': aporiaAiGuardrailsQuestions,
+  '10-Human-AI-Interaction/6-CoT-prompting.txt': coTPromptingQuestions
 };

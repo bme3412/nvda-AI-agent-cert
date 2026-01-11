@@ -1,138 +1,47 @@
-However, LangChain’s latest work demonstrates how human oversight can be effectively integrated as checkpoints before tasks are executed, addressing these concerns.
-Cobus Greyling
-Cobus Greyling
+Understanding Human-in-the-Loop AI Agents: Strategic Oversight Integration
 
-Follow
-6 min read
-·
-Aug 16, 2024
-172
+OVERVIEW: EVOLVING INTERACTION PARADIGMS
 
+Traditional customer care implementations have long utilized chatbots, functioning similarly to how Interactive Voice Response systems have been used, but with text-based interactions instead of voice. These traditional chatbots can be referred to as Interactive Text Response systems. In these setups, once the automated conversation reached a certain point, the handover to a live agent was a one-time transfer. The live agent then had to take ownership of the interaction, complete the interaction, fulfill the user's intent, and close the session.
 
+However, LangChain's latest work demonstrates how human oversight can be effectively integrated as checkpoints before tasks are executed, addressing concerns about autonomous agentic applications. This evolution represents a fundamental shift from binary handoff models to integrated collaboration where humans and AI work together throughout task execution.
 
+AGENTIC APPLICATIONS: AUTONOMOUS DECISION-MAKING
 
-Introduction
-Traditional customer care implementations have long utilised chatbots, functioning similarly to how IVRs (Interactive Voice Response systems) have been used, but with text-based interactions instead of voice.
+Agentic applications represent AI systems capable of independent, objective-driven action. Several terms and phrases are used interchangeably to refer to the same underlying concept of agents. Agents have as their backbone one or more Large Language Models or Foundation Models which assist with the decomposition of complex tasks into sub-tasks. From the sub-tasks, a chain of action is created which the agent can follow.
 
-One could refer to the traditional chatbots as ITR’s (Interactive Text Response systems).
+The agent has access to a list of defined tools which it can make use of to solve challenges. Each of these tools has a description which allows the agent to know when to select tools in a sequence to solve questions. As mentioned, the agent creates a sequence of steps which it follows to reach a final conclusion.
 
-In these setups, once the automated conversation reached a certain point, the handover to a live agent was a one-time transfer. The live agent then had to take ownership of the interaction, complete the interaction, fulfil the user’s intent, and close the session.
+TOOLS: EXTENDING AGENT CAPABILITIES
 
-Agentic Applications to the rescue…
+Tools made available to the agent can include an API to research portals like Arxiv, HuggingFace, GALE, Bing search, Serp API, and others. One of the tools is a Human-in-the-Loop tool at the disposal of an agent. If the agent does not know what the next step or conclusion should be, a live human agent can be contacted to retrieve an answer to a specific question.
 
-Agentic Applications
-As I have mentioned at the onset of this article, there has been dystopian fears around agentic applications in terms of their autonomous nature.
+LANGGRAPH: GRAPH-BASED ORCHESTRATION
 
-Press enter or click to view image in full size
+LangGraph is a graph-based orchestration framework that adds control to agent workflows. LangGraph has a node and edge approach, where each node constitutes a task or can be considered as a step. Edges are links between the nodes which can be subject to conditions which determine to which node the state moves.
 
-Several terms and phrases are being used interchangeably to refer to the same underlying concept of agents.
-A seen in the image below, agents do have as their backbone one ore more Large Language Models / Foundation Models which assists with the decomposition of complex tasks into sub-tasks. From the sub-tasks, a chain of action is created which the agent can follow.
+Within LangGraph, an interrupt can be added where a human intervention is required. An interrupt can also be added for certain tools where it is deemed that a tool cannot be executed prior to one or more humans approving. Hence for certain tools, a human interrupt can be added, or within the graph environment of LangGraph a node where human intervention is required can be defined as such. The Human-in-the-Loop can be prior or post a particular node, so the human involvement can be to grant approval, or check a transaction post the interaction.
 
-The agent has access to a list of defined tools which it can make use of to solve challenges. Each of these tools have a description which allows the agent to know when to select tools in a sequence to solve questions. As I have mentioned, the agent creates a sequence of steps which it follows to reach a final conclusion.
+LangGraph makes agents more transparent by allowing inspection of their behavior and striking a balance between autonomy and following a defined sequence. LangGraph Cloud is a service for deploying and scaling these applications, featuring a Studio for easy prototyping, debugging, and sharing.
 
-Press enter or click to view image in full size
+HUMANS AS A TOOL: INTEGRATED COLLABORATION
 
-Tools
-Tools made available to the agent can include an API to research portals like Arxiv, HuggingFace, GALE, Bing search, Serp API, etc. One of the tools is a Human-In-The-Loop tool at the disposal to an agent.
+The key point to consider is that the entire conversation and its context are not fully handed over to an agent. Instead, live human agents are engaged selectively, allowing automation to continue even after human interaction. This introduces a new paradigm where human involvement is accessed only when necessary.
 
-If the agent does not know what the next step or conclusion should be, an live human agent can be contacted to retrieve an answer to a specific question.
+This approach enables sophisticated workflows where AI agents handle routine operations autonomously, invoke human expertise for specific questions or approvals, and continue automation seamlessly after receiving human input. The selective engagement proves more efficient than binary handoff models where entire workflows transfer to humans, enabling organizations to achieve automation benefits while maintaining human oversight where most valuable.
 
-LangGraph
-As shown in the working notebook below, within LangGraph an interrupt can be added where a human intervention is required. An interrupt can also be added for certain tools where it is deemed that a tool cannot be executed prior to one or more humans approving.
+The integration enables AI agents to maintain context throughout interactions, preserving conversation history and workflow state even when humans provide input. This continuity proves essential for complex multi-step workflows where human intervention occurs at specific points but automation continues handling overall coordination and execution.
 
-Hence for certain tools, a human interrupt can be added, or within the graph environment of LangGraph a node where human intervention is required can be defined as such. The HITL can be prior or post a particular node, so the human involvement can be to grant approval, or check a transaction post the interaction.
+PRACTICAL IMPLEMENTATION: GRAPH-BASED WORKFLOWS
 
-user_approval = input(“Do you want to go to Step 3? (yes/no): “)
+LangGraph is a method for creating state machines for conversational flow by defining them as graphs, making it easier to visualize and manage complex agent workflows. The graph approach enables defining interrupt points where human intervention is required, with interrupts added for certain tools where execution cannot proceed prior to human approval.
 
-Humans As A Tool
-The key point to consider is that the entire conversation and its context are not fully handed over to an agent.
+Interrupts can be prior or post particular nodes, so human involvement can grant approval or check transactions post interaction. This flexibility enables sophisticated workflows where automation handles routine operations while humans provide oversight for critical decisions or complex scenarios.
 
-Instead, live human agents are engaged selectively, allowing automation to continue even after human interaction. This introduces a new paradigm where human involvement is accessed only when necessary.
+The graph approach defines the agent to a large degree, with the loop clearly indicated in the graphic representation. A breakpoint can be added for approval, where the flow pauses and waits for permission. The agent can be initiated with an interrupt prior to the action being taken, creating natural collaboration points where human judgment enhances automated workflows.
 
-Press enter or click to view image in full size
+CONCLUSION: EVOLVING ARCHITECTURE
 
-LangChain Example
-LangChain implemented a new framework called LangGraph…LangGraph is a return to a graph approach to conversations and automation.
+It's a fascinating time to observe the evolution of technology and architecture as they unfold. We are also witnessing how organizations are aligning with what is considered best practice. For seasoned chatbot designers and builders, graph representations of conversations are nothing new; they have long been a dominant method in building environments. However, it's intriguing to see a renewed emphasis on graph approaches, where we return to visual and flow-based representations.
 
-Get Cobus Greyling’s stories in your inbox
-Join Medium for free to get updates from this writer.
-
-Enter your email
-Subscribe
-LangGraph is a graph based orchestration framework that adds control to agent workflows. LangGraph has a node and edge approach, where each node constitutes a task or can be considered as a step. And edges are links between the nodes which can be subject to conditions which determines to which node the state moves.
-
-Press enter or click to view image in full size
-
-LangGraph Cloud is a service for deploying and scaling these applications, featuring a Studio for easy prototyping, debugging, and sharing.
-
-LangGraph From LangChain Explained In Simple Terms
-LangGraph is a method for creating state machines for conversational flow by defining them as graphs & it’s easier to…
-cobusgreyling.medium.com
-
-LangGraph makes agents more transparent by allowing you to inspect their behaviour and strike a balance between autonomy and following a defined sequence.
-
-Practical LangChain Example of a LangGraph Implementation
-Below is a very simple example of creating a graph in Python…
-
-from typing import TypedDict
-from langgraph.graph import StateGraph, START, END
-from langgraph.checkpoint.memory import MemorySaver
-from IPython.display import Image, display
-
-
-class State(TypedDict):
-    input: str
-
-
-def step_1(state):
-    print("---Step 1---")
-    pass
-
-
-def step_2(state):
-    print("---Step 2---")
-    pass
-
-
-def step_3(state):
-    print("---Step 3---")
-    pass
-
-
-builder = StateGraph(State)
-builder.add_node("step_1", step_1)
-builder.add_node("step_2", step_2)
-builder.add_node("step_3", step_3)
-builder.add_edge(START, "step_1")
-builder.add_edge("step_1", "step_2")
-builder.add_edge("step_2", "step_3")
-builder.add_edge("step_3", END)
-
-# Set up memory
-memory = MemorySaver()
-
-# Add
-graph = builder.compile(checkpointer=memory, interrupt_before=["step_3"])
-
-# View
-display(Image(graph.get_graph().draw_mermaid_png()))
-With the graph printed out below….
-
-Press enter or click to view image in full size
-
-Then a breakpoint an be added for approval, where the flow pauses and waits for permission.
-
-Press enter or click to view image in full size
-
-And below the agent is initiated, with an interrupt prior to the action being taken. Again the graph approach defines the agent to a large degree, with the loop clearing indicated in the graphic representation.
-
-Press enter or click to view image in full size
-
-Finally
-It’s a fascinating time to observe the evolution of technology and architecture as they unfold before us.
-
-We are also witnessing how organisations are aligning with what is considered best practice.
-
-For seasoned chatbot designers and builders, graph representations of conversations are nothing new; they have long been a dominant method in building environments. However, it’s intriguing to see a renewed emphasis on graph approaches, where we return to visual and flow-based representations.
-
-In this context, “flow” refers not only to conversations but also to processes.
+In this context, "flow" refers not only to conversations but also to processes. The integration of human oversight into agent workflows through graph-based orchestration represents a significant advancement in creating reliable, transparent, and effective AI systems that combine the speed and scale of automation with the judgment and context of human expertise.

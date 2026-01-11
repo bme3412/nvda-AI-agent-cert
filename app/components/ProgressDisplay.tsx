@@ -41,7 +41,6 @@ export default function ProgressDisplay({
   return (
     <div className={styles.progressSection}>
       <div className={styles.progressHeader}>
-        <h2 className={styles.progressTitle}>Your Progress</h2>
         <div className={styles.progressOverall}>
           <div className={styles.progressMain}>
             <div className={styles.progressNumberLarge}>{progress.percentage}%</div>

@@ -3,15 +3,17 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './KeyTermsSidebar.module.css';
 import { TERM_DEFINITIONS } from '@/app/utils/termDefinitions';
+import { getArticleDefinition } from '@/app/utils/articleDefinitions';
 
 interface KeyTermsSidebarProps {
   terms: Array<{ term: string; definition: string }>;
   isOpen: boolean;
   onToggle: () => void;
   highlightTerm?: string | null;
+  articlePath?: string;
 }
 
-export default function KeyTermsSidebar({ terms, isOpen, onToggle, highlightTerm }: KeyTermsSidebarProps) {
+export default function KeyTermsSidebar({ terms, isOpen, onToggle, highlightTerm, articlePath }: KeyTermsSidebarProps) {
   const [expandedTerm, setExpandedTerm] = useState<string | null>(null);
   const termRefs = useRef<{ [key: string]: HTMLLIElement | null }>({});
   
@@ -23,29 +25,55 @@ export default function KeyTermsSidebar({ terms, isOpen, onToggle, highlightTerm
         onToggle();
       }
       
-      // Expand the term
-      setExpandedTerm(highlightTerm);
+      // Find the matching term in the terms array (handle variations)
+      const findMatchingTerm = (searchTerm: string): string | null => {
+        const searchLower = searchTerm.toLowerCase();
+        
+        // Try exact match first
+        let match = terms.find(t => t.term.toLowerCase() === searchLower);
+        if (match) return match.term;
+        
+        // Try fuzzy matching
+        match = terms.find(t => {
+          const tLower = t.term.toLowerCase();
+          return tLower === searchLower ||
+                 searchLower.includes(tLower) ||
+                 tLower.includes(searchLower) ||
+                 tLower.replace(/\s+/g, '-') === searchLower.replace(/\s+/g, '-') ||
+                 tLower.replace(/-/g, ' ') === searchLower.replace(/-/g, ' ');
+        });
+        if (match) return match.term;
+        
+        return null;
+      };
       
-      // Scroll to the term after a short delay to ensure sidebar is open
-      setTimeout(() => {
-        const termElement = termRefs.current[highlightTerm];
-        if (termElement) {
-          termElement.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center',
-            inline: 'nearest'
-          });
-          // Add a highlight effect with smooth animation
-          requestAnimationFrame(() => {
-            termElement.classList.add(styles.highlighted);
-            setTimeout(() => {
-              termElement.classList.remove(styles.highlighted);
-            }, 2500);
-          });
-        }
-      }, 400); // Wait for sidebar animation to complete
+      const matchingTerm = findMatchingTerm(highlightTerm);
+      
+      if (matchingTerm) {
+        // Expand the matching term
+        setExpandedTerm(matchingTerm);
+        
+        // Scroll to the term after a short delay to ensure sidebar is open
+        setTimeout(() => {
+          const termElement = termRefs.current[matchingTerm];
+          if (termElement) {
+            termElement.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center',
+              inline: 'nearest'
+            });
+            // Add a highlight effect with smooth animation
+            requestAnimationFrame(() => {
+              termElement.classList.add(styles.highlighted);
+              setTimeout(() => {
+                termElement.classList.remove(styles.highlighted);
+              }, 2500);
+            });
+          }
+        }, 400); // Wait for sidebar animation to complete
+      }
     }
-  }, [highlightTerm, isOpen, onToggle]);
+  }, [highlightTerm, isOpen, onToggle, terms]);
 
   if (terms.length === 0) {
     return null;
@@ -59,17 +87,30 @@ export default function KeyTermsSidebar({ terms, isOpen, onToggle, highlightTerm
     }
   };
 
-  // Get definition from TERM_DEFINITIONS if available, otherwise use the definition from terms array
+  // Get definition with priority: article-specific > global TERM_DEFINITIONS > terms array
   const getTermDefinition = (term: string) => {
-    const termData = TERM_DEFINITIONS[term];
+    // First, try article-specific definition
+    if (articlePath) {
+      const articleDef = getArticleDefinition(articlePath, term);
+      if (articleDef) {
+        return {
+          definition: articleDef.definition,
+          example: articleDef.example
+        };
+      }
+    }
+    
+    // Second, try global TERM_DEFINITIONS
+    const termData = TERM_DEFINITIONS[term] || TERM_DEFINITIONS[term.toLowerCase()];
     if (termData) {
       return {
         definition: termData.definition,
         example: termData.example
       };
     }
-    // Fallback to definition from terms array
-    const termItem = terms.find(t => t.term === term);
+    
+    // Fallback to definition from terms array (from KEY TERMS section)
+    const termItem = terms.find(t => t.term === term || t.term.toLowerCase() === term.toLowerCase());
     return {
       definition: termItem?.definition || '',
       example: undefined
