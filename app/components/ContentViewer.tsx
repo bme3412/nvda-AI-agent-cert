@@ -293,14 +293,14 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
     // Trigger animation when checking (not unchecking)
     if (checked) {
       setCheckboxJustChecked(true);
-      setTimeout(() => setCheckboxJustChecked(false), 600);
+      setTimeout(() => setCheckboxJustChecked(false), 800);
       
       // Show celebration if this is the first time marking as read
       if (!isRead) {
         setShowCelebration(true);
         setTimeout(() => {
           setShowCelebration(false);
-        }, 2000);
+        }, 2200);
       }
     }
   };
@@ -649,7 +649,16 @@ export default function ContentViewer({ filePath, onFileSelect }: ContentViewerP
                 </div>
               )}
             </div>
-            <span className={styles.checkboxLabel}>Mark as read</span>
+            <span className={styles.checkboxLabel}>
+              {isRead ? (
+                <>
+                  <span className={styles.readBadge}>✓</span>
+                  <span>Completed</span>
+                </>
+              ) : (
+                'Mark as read'
+              )}
+            </span>
           </label>
           </div>
         </div>
