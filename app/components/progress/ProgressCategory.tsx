@@ -1,14 +1,8 @@
 'use client';
 
-import styles from './ContentViewer.module.css';
+import styles from '../viewer/ContentViewer.module.css';
 import ProgressFileList from './ProgressFileList';
-
-interface SummaryItem {
-  name: string;
-  path: string;
-  type: 'file' | 'folder';
-  children?: SummaryItem[];
-}
+import { SummaryItem } from '../sidebar/types';
 
 interface Category {
   name: string;

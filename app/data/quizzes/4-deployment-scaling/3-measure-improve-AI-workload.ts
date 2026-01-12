@@ -182,4 +182,3 @@ export const questions: QuizQuestion[] = [
     explanation: 'DGX Cloud Benchmarking is designed to evolve alongside the AI industry with regular updates incorporating new models, emerging hardware platforms, and innovative software optimizations. This ensures users have access to most relevant and up-to-date insights.'
   }
 ];
-

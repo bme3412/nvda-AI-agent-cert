@@ -25,6 +25,7 @@
   padding: 24px 64px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   background: var(--bg-primary);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -67,6 +68,7 @@
 .breadcrumbSeparator {
   color: var(--text-muted);
   margin: 0 4px;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -1142,6 +1144,7 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   flex-shrink: 0;
   padding: 10px 14px;
@@ -1615,137 +1618,6 @@
 
   .emptyCta {
     padding-top: 24px;
-  }
-
-  .emptyCtaText {
-    font-size: 14px;
-  }
-
-  .progressSection {
-    padding: 20px 16px;
-    margin-bottom: 32px;
-    margin-top: 16px;
-  }
-
-  .progressTitle {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-
-  .progressNumberLarge {
-    font-size: 42px;
-  }
-
-  .progressText {
-    font-size: 14px;
-  }
-
-  .progressRead,
-  .progressTotal {
-    font-size: 16px;
-  }
-
-  .progressBar {
-    height: 8px;
-  }
-
-  .progressCategories {
-    margin-top: 20px;
-    padding-top: 20px;
-  }
-
-  .progressCategoriesTitle {
-    font-size: 16px;
-    margin-bottom: 14px;
-  }
-
-  .progressCategory {
-    padding: 12px;
-  }
-
-  .progressCategoryHeader {
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-
-  .progressCategoryInfo {
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .progressCategoryName {
-    font-size: 13px;
-    line-height: 1.4;
-  }
-
-  .progressCategoryPercent {
-    font-size: 12px;
-    white-space: nowrap;
-  }
-
-  .progressCategoryToggle {
-    width: 32px;
-    height: 32px;
-    padding: 8px;
-    font-size: 16px;
-  }
-
-  .progressCategoryBar {
-    height: 4px;
-  }
-
-  .progressCategoryDropdown {
-    max-height: min(280px, calc(100vh - 350px));
-    margin-top: 10px;
-    padding-top: 10px;
-    gap: 4px;
-  }
-
-  .progressCategoriesList > .progressCategory:first-child .progressCategoryDropdown {
-    max-height: min(250px, calc(100vh - 380px));
-  }
-
-  .progressCategoryFile {
-    padding: 10px;
-    gap: 8px;
-  }
-
-  .progressCategoryCheckbox {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-  }
-
-  .progressCategoryFileName {
-    font-size: 12px;
-    line-height: 1.4;
-  }
-
-  .emptyFeatures {
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-
-  .feature {
-    padding: 16px;
-    gap: 12px;
-  }
-
-  .featureIcon {
-    font-size: 24px;
-  }
-
-  .featureTitle {
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-
-  .featureText {
-    font-size: 12px;
-  }
-
-  .emptyCta {
-    margin-top: 24px;
   }
 
   .emptyCtaText {

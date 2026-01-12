@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './ContentViewer.module.css';
+import styles from '../viewer/ContentViewer.module.css';
 
 interface File {
   path: string;

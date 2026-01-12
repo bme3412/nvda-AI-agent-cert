@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styles from './ContentViewer.module.css';
-import Quiz from './Quiz';
-import Flashcard from './Flashcard';
-import KeyTermsSidebar from './KeyTermsSidebar';
-import ProgressDisplay, { type ProgressStats } from './ProgressDisplay';
+import Quiz from '../quiz/Quiz';
+import Flashcard from '../flashcard/Flashcard';
+import KeyTermsSidebar from '../sidebar/KeyTermsSidebar';
+import ProgressDisplay, { type ProgressStats } from '../progress/ProgressDisplay';
 import { formatContent, type FormattedContent } from '@/app/utils/contentFormatter';
 import { findQuizData } from '@/app/utils/quizMatcher';
 import { QUIZ_DATA } from '@/app/data/quizzes';

@@ -17,12 +17,12 @@ export const questions: QuizQuestion[] = [
     id: 'q2',
     question: 'What distinguishes prompt chains from single-prompt approaches in multi-step reasoning?',
     options: [
-      'Prompt chains use multiple different AI models while single prompts use only one',
       'Prompt chains break complex reasoning into focused, sequential steps where each call builds on previous outputs, allowing for verification at each step',
+      'Prompt chains use multiple different AI models while single prompts use only one',
       'Prompt chains are faster and more efficient than single-prompt approaches',
       'Prompt chains only work with structured data while single prompts handle unstructured input'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'The document explains that "Instead of trying to cram an entire complex reasoning task into one massive prompt, you break it into a series of focused prompts where each one handles a specific aspect of the problem... The elegance of prompt chains is that each step is focused and verifiable. Instead of asking the agent to do everything at once—which often leads to superficial analysis or missing important steps—you\'re forcing it to tackle one aspect thoroughly before moving to the next."'
   },
   {
@@ -42,11 +42,11 @@ export const questions: QuizQuestion[] = [
     question: 'According to the document, what is the purpose of pruning strategies in logic trees?',
     options: [
       'To remove incorrect information from the knowledge base',
-      'To make complex reasoning computationally feasible by eliminating branches that don\'t need full exploration',
       'To ensure all possible reasoning paths are explored thoroughly',
-      'To convert unstructured reasoning into structured decision trees'
+      'To convert unstructured reasoning into structured decision trees',
+      'To make complex reasoning computationally feasible by eliminating branches that don\'t need full exploration'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'The document explains that "Logic trees also enable pruning strategies that make complex reasoning computationally feasible. Not every branch needs to be explored fully. If the agent determines early on that a company has unsustainable debt levels, it might prune away entire branches of analysis about long-term growth prospects—there\'s no point in detailed valuation work if the company might not survive its debt obligations."'
   },
   {
@@ -65,13 +65,12 @@ export const questions: QuizQuestion[] = [
     id: 'q6',
     question: 'What is the ultimate goal of applying logic trees, prompt chains, and stateful orchestration in AI agents?',
     options: [
-      'To reduce the cost and complexity of deploying AI systems in production',
       'To build agents that can genuinely think through complex problems systematically with transparent, verifiable reasoning rather than just pattern-matching',
+      'To reduce the cost and complexity of deploying AI systems in production',
       'To ensure all AI agents produce identical results for the same input queries',
       'To eliminate the need for human oversight in AI decision-making processes'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'The document concludes that "The ultimate goal of applying logic trees, prompt chains, and stateful orchestration is building agents that can genuinely think through complex problems systematically rather than just pattern-matching to superficially similar training examples. When you ask such an agent a hard question, it doesn\'t immediately guess an answer—it breaks the problem down, gathers relevant information, analyzes different aspects, considers alternatives, synthesizes findings, and reaches evidence-based conclusions. The reasoning is transparent, verifiable, and can be refined as you identify weaknesses."'
   }
 ];
-

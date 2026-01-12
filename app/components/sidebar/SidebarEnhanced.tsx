@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styles from './SidebarEnhanced.module.css';
-import { SummaryItem } from './Sidebar';
+import { SummaryItem } from './types';
 
 interface SidebarEnhancedProps {
   onFileSelect: (path: string | undefined) => void;

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import SidebarEnhanced from './components/SidebarEnhanced';
-import ContentViewer from './components/ContentViewer';
+import SidebarEnhanced from './components/sidebar/SidebarEnhanced';
+import ContentViewer from './components/viewer/ContentViewer';
 import styles from './page.module.css';
 
 export default function Home() {

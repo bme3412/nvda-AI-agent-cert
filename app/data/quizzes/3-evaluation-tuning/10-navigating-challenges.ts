@@ -6,11 +6,11 @@ export const questions: QuizQuestion[] = [
     question: 'According to the 2024 survey, what percentage of organizations need to upgrade their technology stack to deploy AI agents?',
     options: [
       '66% of organizations must upgrade their technology infrastructure while maintaining current organizational structures',
-      '86% of organizations need to upgrade existing technology stack and reevaluate their structures and processes',
       '76% of organizations need to upgrade existing infrastructure and completely reevaluate their structures and processes',
+      '86% of organizations need to upgrade existing technology stack and reevaluate their structures and processes',
       '96% of organizations require comprehensive technology upgrades along with fundamental restructuring of operational workflows'
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'The 2024 survey revealed that 86% of organizations need to upgrade their existing technology stack and reevaluate their structures and processes to deploy AI agents effectively. This demonstrates that agentic AI requires more than just plug-and-play technology solutions.'
   },
   {
@@ -18,11 +18,11 @@ export const questions: QuizQuestion[] = [
     question: 'What is the primary risk of taking a technology-only approach to agentic AI adoption?',
     options: [
       'Technology-only approaches are the most cost-effective method for implementing agentic AI in enterprise environments',
-      'Focusing solely on technology while ignoring broader organizational context like strategy and workforce development leads to breakdowns',
       'Technology-focused approaches always produce better results than holistic strategies involving multiple organizational dimensions',
+      'Focusing solely on technology while ignoring broader organizational context like strategy and workforce development leads to breakdowns',
       'Prioritizing technology eliminates the need for change management or employee training in AI implementations'
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'Treating agentic AI as merely a plug-and-play solution often leads to breakdowns. Successful AI transformation requires a holistic approach encompassing strategy, capabilities, ethical standards, and workforce development, not just technology.'
   },
   {
@@ -30,23 +30,23 @@ export const questions: QuizQuestion[] = [
     question: 'What components should organizational readiness assessments evaluate before implementing agentic AI?',
     options: [
       'Only financial budgets and projected return on investment timelines for the implementation project',
-      'Technical and data preparedness, leadership alignment, AI literacy, support systems, and governance frameworks',
       'Exclusively technical infrastructure capacity without considering human factors or organizational culture elements',
+      'Technical and data preparedness, leadership alignment, AI literacy, support systems, and governance frameworks',
       'Primarily employee satisfaction scores and existing technology vendor relationships within the organization'
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'Organizational readiness assessments should evaluate technical and data preparedness (data availability and quality), leadership alignment, AI literacy, support systems, and governance frameworks. This comprehensive evaluation identifies gaps needing improvement for successful adoption.'
   },
   {
     id: 'q4',
     question: 'What statistic reveals the challenge leaders face in demonstrating AI value?',
     options: [
-      'More than 90% of IT executives implemented AI, yet nearly half aren\'t sure how to demonstrate the value',
       'Approximately 75% of IT executives have implemented AI and all can clearly demonstrate measurable value',
       'Less than 50% of IT executives have attempted any AI implementation due to unclear value propositions',
-      'Around 60% of IT executives implemented AI but most can easily quantify returns on investment'
+      'Around 60% of IT executives implemented AI but most can easily quantify returns on investment',
+      'More than 90% of IT executives implemented AI, yet nearly half aren\'t sure how to demonstrate the value'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'Recent data shows more than 90% of IT executives have implemented at least one instance of AI, yet nearly half aren\'t sure how to demonstrate the value. This highlights the critical importance of establishing clear ROI expectations.'
   },
   {
@@ -65,36 +65,36 @@ export const questions: QuizQuestion[] = [
     id: 'q6',
     question: 'What percentage of AI-driven breakdowns come from leadership\'s unrealistic ROI timelines?',
     options: [
-      'More than half of AI-driven breakdowns in enterprise come from leadership\'s unrealistic timelines for ROI',
       'Approximately 35% of AI-driven enterprise breakdowns result from leadership setting unrealistic ROI expectations',
       'Around 40% of AI implementation failures trace back to unrealistic leadership timelines for returns',
+      'More than half of AI-driven breakdowns in enterprise come from leadership\'s unrealistic timelines for ROI',
       'Nearly 25% of AI adoption challenges stem from leadership establishing impossible timeline expectations'
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation: 'More than half of AI-driven breakdowns in enterprise come from leadership\'s unrealistic timelines for ROI. This underscores why upskilling leadership in AI governance is critical for successful adoption.'
   },
   {
     id: 'q7',
     question: 'How does AI literacy impact employee acceptance and trust in agentic AI systems?',
     options: [
+      'Employees with higher AI literacy are less likely to harbor misconceptions and more likely to accept and trust AI',
       'AI literacy has no measurable impact on employee acceptance since trust develops naturally over time',
       'Lower AI literacy actually increases trust because employees ask fewer questions about AI operations',
-      'Employees with higher AI literacy are less likely to harbor misconceptions and more likely to accept and trust AI',
       'AI literacy exclusively benefits technical staff without affecting general employee acceptance or adoption rates'
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation: 'Employees with higher AI literacy are less likely to harbor misconceptions and more likely to accept and trust AI. Conversely, low AI literacy can significantly hinder adoption, limiting AI\'s transformative potential within organizations.'
   },
   {
     id: 'q8',
     question: 'What role did driver feedback and AI training play in UPS\'s ORION routing agent success?',
     options: [
-      'Driver training delayed implementation but eventually reduced costs by approximately $50 million annually',
       'Driver feedback loops and training on AI systems were major contributors to success and $300 million annual savings',
+      'Driver training delayed implementation but eventually reduced costs by approximately $50 million annually',
       'Driver involvement was minimal and had negligible impact on the routing agent\'s performance outcomes',
       'UPS succeeded by implementing the routing agent without any driver input or training programs'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'UPS\'s ORION routing agent example shows that drivers\' feedback loops and training on AI systems were major contributors to AI success and a $300 million annual cost savings. This demonstrates the value of empowering employees with AI literacy.'
   },
   {
@@ -113,12 +113,12 @@ export const questions: QuizQuestion[] = [
     id: 'q10',
     question: 'Why is early and continuous employee involvement crucial for agentic AI adoption success?',
     options: [
+      'Early engagement allows employees to identify risks, enhancing their confidence and understanding of AI\'s benefits',
       'Employee involvement is only necessary during initial planning phases and becomes irrelevant during implementation',
       'Continuous involvement slows adoption processes and should be minimized to accelerate deployment timelines',
-      'Employee engagement matters exclusively for user interface design without affecting broader adoption outcomes',
-      'Early engagement allows employees to identify risks, enhancing their confidence and understanding of AI\'s benefits'
+      'Employee engagement matters exclusively for user interface design without affecting broader adoption outcomes'
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation: 'Early and continuous employee involvement from pilot phases to full-scale implementation mitigates both practical and psychological barriers. Engaging employees allows them to identify and address potential risks, enhancing their confidence and understanding of AI\'s benefits.'
   },
   {
@@ -149,37 +149,36 @@ export const questions: QuizQuestion[] = [
     id: 'q13',
     question: 'What governance approach do many enterprises implement for early agentic AI deployments?',
     options: [
+      'AI governance committees and requiring human-in-the-loop approach, especially for early deployments',
       'Fully autonomous operations without any human oversight to maximize efficiency and deployment speed',
       'Minimal governance frameworks that evolve only after significant adoption and operational experience',
-      'AI governance committees and requiring human-in-the-loop approach, especially for early deployments',
       'Delegating all governance decisions to external consultants without internal committee involvement'
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation: 'Many enterprises are setting up AI governance committees and requiring a human-in-the-loop approach, especially for early deployments. This provides appropriate oversight while building trust and ensuring responsible AI implementation.'
   },
   {
     id: 'q14',
     question: 'What human role transitions are necessary as AI agents take on decision-making tasks?',
     options: [
+      'Humans transition to more strategic, supervisory, and creative roles requiring critical thinking and problem-solving skills',
       'Humans must focus exclusively on manual data entry and routine administrative tasks AI cannot handle',
       'Human roles become completely eliminated as AI agents achieve full autonomy in all organizational functions',
-      'Humans shift entirely to technical programming roles maintaining and debugging AI agent systems exclusively',
-      'Humans transition to more strategic, supervisory, and creative roles requiring critical thinking and problem-solving skills'
+      'Humans shift entirely to technical programming roles maintaining and debugging AI agent systems exclusively'
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation: 'As AI agents increasingly take on decision-making tasks, humans must transition to more strategic, supervisory, and creative roles, while broadening skills in critical thinking, complex problem-solving, and collaboration with autonomous systems.'
   },
   {
     id: 'q15',
     question: 'What elements can help mitigate employee anxiety about autonomous AI decision-making?',
     options: [
+      'Transparent communication, strategic guidance, increased AI literacy, and updated interaction models',
       'Limiting information about AI systems to prevent employees from understanding how decisions are made',
       'Accelerating deployment without addressing concerns to demonstrate AI capabilities through immediate results',
-      'Restricting AI access to senior leadership while keeping most employees isolated from systems',
-      'Transparent communication, strategic guidance, increased AI literacy, and updated interaction models'
+      'Restricting AI access to senior leadership while keeping most employees isolated from systems'
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation: 'Transparent communication, strategic guidance, increased AI literacy, and updated interaction models can mitigate anxieties about perceived loss of control and ethical concerns. These elements help align autonomous decisions with organizational values and build trust.'
   }
 ];
-

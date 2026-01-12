@@ -17,24 +17,24 @@ export const questions: QuizQuestion[] = [
     id: 'q2',
     question: 'What are the four types of AI agent orchestration described in the document, and what characterizes each type?',
     options: [
-      'Sequential, Parallel, Conditional, and Loop-based orchestration based on execution patterns',
       'Centralized, Decentralized, Federated, and Hierarchical orchestration based on control and coordination structures',
+      'Sequential, Parallel, Conditional, and Loop-based orchestration based on execution patterns',
       'Synchronous, Asynchronous, Real-time, and Batch orchestration based on timing requirements',
       'Local, Regional, Global, and Universal orchestration based on geographical distribution'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'The document describes four orchestration types: "Centralized" (single supervisor coordinates), "Decentralized" (each agent operates autonomously), "Federated" (multiple agent systems collaborate across organizations), and "Hierarchical" (higher-level agents supervise lower-level agents in tiers). Each type represents different control and coordination structures.'
   },
   {
     id: 'q3',
     question: 'According to the document, what are the key capabilities that Agentic RAG must be able to provide?',
     options: [
-      'Fast query processing, automated data backup, real-time synchronization, and error recovery mechanisms',
       'Access knowledge across diverse data types, efficiently process petabyte-scale data, provide high-accuracy retrieval and reranking, and store learnings to create an AI data flywheel',
+      'Fast query processing, automated data backup, real-time synchronization, and error recovery mechanisms',
       'User authentication, data encryption, network security, and compliance monitoring for enterprise systems',
       'Model training, hyperparameter tuning, performance optimization, and automated deployment capabilities'
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'The document states that Agentic RAG must: "Access knowledge across structured, semi-structured, and unstructured data... Efficiently process data at petabyte scale... Provide high-accuracy, high-performance retrieval and reranking... Store and leverage learnings from AI-powered applications and agents in production, automatically increasing the knowledge of the enterprise and creating an AI data flywheel."'
   },
   {
@@ -42,11 +42,11 @@ export const questions: QuizQuestion[] = [
     question: 'What types of organizations benefit most from multi-agent systems according to the document?',
     options: [
       'Small startups with limited resources and simple operational requirements',
-      'Organizations with demanding workloads, rapidly changing environments, distributed control needs, and essential fault tolerance requirements',
       'Traditional manufacturing companies with established processes and minimal technology integration',
-      'Educational institutions focused primarily on theoretical research and academic publishing'
+      'Educational institutions focused primarily on theoretical research and academic publishing',
+      'Organizations with demanding workloads, rapidly changing environments, distributed control needs, and essential fault tolerance requirements'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'The document identifies organizations that benefit most as those that: "Experience demanding, growing workloads... Face rapidly changing environments... Must monitor and distribute control intelligence... Require essential fault tolerance." These characteristics describe complex, dynamic environments where multi-agent systems provide the most value.'
   },
   {
@@ -66,12 +66,11 @@ export const questions: QuizQuestion[] = [
     question: 'According to the document, what benefits do multi-agent systems provide over single AI agents?',
     options: [
       'Lower computational requirements, simpler maintenance, and reduced training time',
-      'Greater efficiency through specialization, scalability, transparency, and the ability to update individual agents without complete system overhaul',
       'Faster processing speeds, better data compression, and improved network security',
-      'Reduced energy consumption, smaller memory footprint, and simplified user interfaces'
+      'Reduced energy consumption, smaller memory footprint, and simplified user interfaces',
+      'Greater efficiency through specialization, scalability, transparency, and the ability to update individual agents without complete system overhaul'
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'The document states that multi-agent systems "consist of many agents tailored for specialized or niche tasks, leading to overall greater efficiency and performance" and "are scalable and transparent, as systems don\'t require a complete overhaul or retraining—individual agents can be replaced or updated." This emphasizes the modularity and adaptability advantages.'
   }
 ];
-

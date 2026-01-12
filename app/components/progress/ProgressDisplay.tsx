@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import styles from './ContentViewer.module.css';
+import styles from '../viewer/ContentViewer.module.css';
 import ProgressCategory from './ProgressCategory';
+import { SummaryItem } from '../sidebar/types';
 
 export interface ProgressStats {
   total: number;
@@ -14,13 +15,6 @@ export interface ProgressStats {
     read: number;
     percentage: number;
   }>;
-}
-
-interface SummaryItem {
-  name: string;
-  path: string;
-  type: 'file' | 'folder';
-  children?: SummaryItem[];
 }
 
 interface ProgressDisplayProps {

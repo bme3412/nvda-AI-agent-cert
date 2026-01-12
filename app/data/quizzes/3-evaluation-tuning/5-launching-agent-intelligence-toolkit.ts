@@ -5,12 +5,12 @@ export const questions: QuizQuestion[] = [
     id: 'q1',
     question: 'What command is used to start the AIQ toolkit server with a specific configuration?',
     options: [
-      'aiq serve --config_file=path/to/config.yml to launch the server using the designated configuration',
       'aiq start --config_file=path/to/config.yml to initialize the server with specified workflow settings',
       'aiq launch --config_file=path/to/config.yml to begin server operations with custom parameters',
-      'aiq run --config_file=path/to/config.yml to execute the server process with configuration directives'
+      'aiq run --config_file=path/to/config.yml to execute the server process with configuration directives',
+      'aiq serve --config_file=path/to/config.yml to launch the server using the designated configuration'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'The correct command is aiq serve --config_file=examples/simple_calculator/configs/config.yml. The serve subcommand specifically launches the AIQ toolkit server, which then runs on http://localhost:8000 by default. The config file specifies the workflow, models, tools, and other settings the server will use.'
   },
   {
@@ -29,24 +29,24 @@ export const questions: QuizQuestion[] = [
     id: 'q3',
     question: 'What is the default port on which the AIQ toolkit server runs after launching?',
     options: [
-      'Port 8000, which is where Uvicorn hosts the AIQ toolkit server by default for API requests',
       'Port 8080, which is the standard alternative HTTP port commonly used for development servers',
       'Port 3000, which is the typical port for Node.js applications and web development servers',
-      'Port 5000, which is the conventional port for Flask and lightweight Python web applications'
+      'Port 5000, which is the conventional port for Flask and lightweight Python web applications',
+      'Port 8000, which is where Uvicorn hosts the AIQ toolkit server by default for API requests'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'The server runs on http://localhost:8000 as shown in the startup output: "Uvicorn running on http://localhost:8000". This is the port where you send API requests like POST to /generate. The web UI (which is separate) runs on port 3000 by default.'
   },
   {
     id: 'q4',
     question: 'Which HTTP endpoint is recommended for receiving intermediate results streaming from the server?',
     options: [
-      '/chat/stream for streaming intermediate results, which is the recommended endpoint for real-time updates',
       '/generate for basic request-response interactions without any streaming of intermediate processing steps',
       '/websocket for persistent bidirectional connections that maintain state across multiple interactions',
-      '/api/stream for generic streaming responses that provide continuous data flow during processing'
+      '/api/stream for generic streaming responses that provide continuous data flow during processing',
+      '/chat/stream for streaming intermediate results, which is the recommended endpoint for real-time updates'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'The documentation specifically notes "It is recommended to select /chat/stream for intermediate results streaming." This endpoint allows you to see the agent\'s intermediate steps and reasoning in real-time as it processes your request, rather than waiting for the complete final response.'
   },
   {
@@ -77,12 +77,12 @@ export const questions: QuizQuestion[] = [
     id: 'q7',
     question: 'What are the available HTTP API endpoint options for chat completion in AIQ toolkit?',
     options: [
-      '/generate, /generate/stream, /chat, and /chat/stream endpoints supporting both standard and streaming interactions',
       'Only /generate and /chat endpoints without any streaming capabilities for real-time responses',
       'Exclusively WebSocket-based endpoints for all communication requiring persistent bidirectional connections',
-      '/api/v1/chat and /api/v1/generate following RESTful versioning conventions for backward compatibility'
+      '/api/v1/chat and /api/v1/generate following RESTful versioning conventions for backward compatibility',
+      '/generate, /generate/stream, /chat, and /chat/stream endpoints supporting both standard and streaming interactions'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'The settings panel shows four HTTP endpoint options: /generate (basic request), /generate/stream (streaming generation), /chat (basic chat), and /chat/stream (streaming chat with recommended intermediate results). These provide flexibility in how you interact with the agent depending on whether you need streaming updates.'
   },
   {
@@ -149,12 +149,12 @@ export const questions: QuizQuestion[] = [
     id: 'q13',
     question: 'What does the "use_knowledge_base" parameter control in the API request payload?',
     options: [
-      'Whether the agent should retrieve information from configured vector databases or knowledge sources',
       'Which specific database instance to query from among multiple configured knowledge base options',
       'The maximum number of knowledge base entries to retrieve before generating the response',
-      'Whether to cache knowledge base results for future requests to improve performance'
+      'Whether to cache knowledge base results for future requests to improve performance',
+      'Whether the agent should retrieve information from configured vector databases or knowledge sources'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'The example request includes "use_knowledge_base": true in the JSON payload. This parameter indicates whether the agent should utilize configured knowledge sources (like vector databases) when processing the request, allowing the agent to access additional context beyond its base capabilities.'
   },
   {
@@ -173,13 +173,12 @@ export const questions: QuizQuestion[] = [
     id: 'q15',
     question: 'What does the "Override intermediate steps with the same ID" feature allow users to do?',
     options: [
-      'Replace or update intermediate step results sharing the same identifier during workflow execution',
       'Permanently delete duplicate intermediate steps from the workflow execution history and logs',
       'Prevent multiple agents from executing identical steps simultaneously to avoid resource conflicts',
-      'Merge redundant processing steps into a single operation for improved performance optimization'
+      'Merge redundant processing steps into a single operation for improved performance optimization',
+      'Replace or update intermediate step results sharing the same identifier during workflow execution'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'This UI feature allows overriding intermediate steps that have the same ID, meaning if multiple intermediate steps share an identifier, you can replace or update their results. This is useful for debugging, testing alternative approaches, or manually correcting agent behavior without rerunning entire workflows.'
   }
 ];
-

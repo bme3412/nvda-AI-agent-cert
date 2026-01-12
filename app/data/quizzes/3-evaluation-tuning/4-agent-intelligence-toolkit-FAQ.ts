@@ -5,121 +5,120 @@ export const questions: QuizQuestion[] = [
     id: 'q1',
     question: 'What is required to begin using AIQ toolkit with existing codebases?',
     options: [
-      'Nothing mandatory - the toolkit is fully opt-in at any integration level, from individual tools to complete workflows',
       'Complete rewrite of all agent and tool implementations to conform to NVIDIA\'s proprietary architecture standards and design patterns',
+      'Replacement of existing LLM providers with NVIDIA models and conversion of all agent logic to NVIDIA-compatible formats',
       'Migration to NVIDIA-specific programming frameworks exclusively, replacing all existing framework dependencies with NVIDIA-approved alternatives',
-      'Replacement of existing LLM providers with NVIDIA models and conversion of all agent logic to NVIDIA-compatible formats'
+      'Nothing mandatory - the toolkit is fully opt-in at any integration level, from individual tools to complete workflows'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'AIQ toolkit is 100% opt-in, meaning you don\'t need to rewrite any existing code to begin using it. This is a fundamental design principle that respects the significant investments organizations have already made in their agent architectures and codebases. Users have complete freedom to integrate at whatever level they want—whether that\'s at the tool level (decorating individual functions), agent level (wrapping entire agents), or entire workflow level (instrumenting complete systems). You can start small where you believe you\'ll see the most value and expand coverage from there based on demonstrated benefits. While the documentation encourages wrapping (decorating) every tool and agent to get the most comprehensive data from the profiler and to maximize observability, this is a recommendation rather than a requirement. The toolkit provides value even with partial adoption, allowing teams to prove benefits in limited contexts before broader rollout. This opt-in design significantly reduces adoption friction, protects existing technology investments, minimizes organizational change management challenges, and enables learning-driven adoption strategies where teams can experiment with low risk. The architecture explicitly avoids lock-in, ensuring that organizations maintain full control over their implementation choices and can integrate AIQ toolkit capabilities incrementally as their needs and confidence grow.'
   },
   {
     id: 'q2',
     question: 'How does AIQ toolkit relate to existing agentic frameworks like LangChain or LlamaIndex?',
     options: [
-      'It works alongside them as a complementary layer without requiring replacement of existing framework implementations',
       'It replaces them entirely with a proprietary NVIDIA framework that requires migrating all existing agent code and logic',
+      'It works alongside them as a complementary layer without requiring replacement of existing framework implementations',
       'It only supports NVIDIA-developed frameworks exclusively, requiring abandonment of third-party or open-source alternatives',
       'It requires migrating to new framework architectures designed specifically for NVIDIA GPU infrastructure and optimization'
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation: 'AIQ toolkit is explicitly not another LLM or agentic framework—it\'s fundamentally designed to work alongside, not replace, your existing agentic frameworks, whether they are sophisticated enterprise-grade systems, popular open-source frameworks like LangChain or LlamaIndex, or even simple custom Python-based agents you\'ve built yourself. This complementary approach is central to the toolkit\'s value proposition and differentiates it from frameworks that require you to rebuild your entire system using their abstractions and patterns. The toolkit adds powerful capabilities like comprehensive profiling, systematic evaluation, advanced observability, and performance optimization on top of whatever framework you\'re already using successfully. This means you can enhance your current technology stack with NVIDIA\'s specialized tools for agent development without the significant cost, risk, and disruption of replatforming your entire system. The design respects your existing architecture decisions and the substantial investments you\'ve made in learning and building with your chosen frameworks. Whether you\'ve standardized on LangChain for its extensive ecosystem, LlamaIndex for its data connectivity features, CrewAI for multi-agent orchestration, Microsoft Semantic Kernel for enterprise integration, or custom Python implementations tailored to your specific needs, AIQ toolkit integrates seamlessly. This framework-agnostic approach also future-proofs your investment—as new frameworks emerge or your needs evolve, AIQ toolkit continues providing value without requiring you to start over.'
   },
   {
     id: 'q3',
     question: 'What is AIQ toolkit\'s approach to handling agent-to-agent communication?',
     options: [
-      'Delegating communication to existing proven protocols like MCP, HTTP, gRPC, and sockets rather than creating new standards',
       'Implementing a proprietary protocol specifically designed for NVIDIA agents with custom serialization and routing mechanisms',
       'Creating a new industry standard specifically for NVIDIA agents that other frameworks would need to adopt',
+      'Delegating communication to existing proven protocols like MCP, HTTP, gRPC, and sockets rather than creating new standards',
       'Requiring all agents to use identical communication methods and data formats defined by NVIDIA specifications'
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation: 'AIQ toolkit explicitly is not an attempt to solve agent-to-agent communication, recognizing that this is a well-addressed problem with mature, proven solutions already available. Instead, the toolkit acknowledges that agent communication is best handled over existing, widely-adopted protocols such as MCP (Model Context Protocol), HTTP (the foundation of web services), gRPC (Google\'s high-performance RPC framework), and traditional sockets (for low-level networking). This pragmatic decision reflects several important principles. First, protocol proliferation is a real problem in software ecosystems—introducing yet another communication standard would fragment the ecosystem and create interoperability challenges rather than solving them. Second, the existing protocols have years or decades of real-world usage, hardening, tooling support, and developer familiarity; recreating this would be wasteful and unlikely to produce better results. Third, by leveraging standard protocols, AIQ toolkit ensures that agents built with the toolkit can seamlessly communicate with agents built using other frameworks, technologies, and even different programming languages, promoting true interoperability across the broader AI agent ecosystem. Fourth, developers already understand these protocols, infrastructure already supports them, and security teams have established policies for them. Rather than spending resources reinventing communication, AIQ toolkit focuses its innovation on areas where it can provide unique value like profiling, evaluation, and observability—capabilities that truly differentiate the toolkit and address gaps in the current agent development ecosystem.'
   },
   {
     id: 'q4',
     question: 'What is the relationship between AIQ toolkit and observability platforms?',
     options: [
-      'It collects and transmits fine-grained telemetry to help with optimization but doesn\'t replace existing observability platforms',
       'AIQ toolkit completely replaces existing observability solutions with a comprehensive NVIDIA-specific monitoring and analytics platform',
+      'It collects and transmits fine-grained telemetry to help with optimization but doesn\'t replace existing observability platforms',
       'AIQ toolkit requires using NVIDIA\'s proprietary monitoring tools exclusively and disables integration with third-party systems',
       'It prevents integration with third-party observability systems to ensure consistency with NVIDIA\'s monitoring standards'
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation: 'While AIQ toolkit is capable of collecting and transmitting fine-grained telemetry data to help with optimization and evaluation of agent systems, it explicitly does not replace your preferred observability platform and data collection applications. The toolkit complements existing observability solutions by providing specialized, agent-specific telemetry that captures the unique aspects of agent behavior—things like tool invocation patterns, decision-making paths, reasoning quality, token usage, intermediate steps in agent workflows, and performance characteristics specific to agentic AI systems. This specialized telemetry can be sent to whatever observability platform you already use, whether that\'s commercial solutions like Datadog, New Relic, or Dynatrace, open-source platforms like Prometheus and Grafana, cloud-native services like AWS CloudWatch or Azure Monitor, or specialized AI observability tools like Weights & Biases or Phoenix. This design philosophy maintains compatibility with enterprise observability stacks that organizations have carefully selected, configured, and integrated into their operations, while adding the specialized capabilities needed for agent monitoring and profiling. The toolkit recognizes that observability is a complex, mature domain with established solutions that organizations have invested significantly in, and rather than competing with these proven platforms, AIQ toolkit enhances them by providing the agent-specific instrumentation and telemetry that general observability tools don\'t naturally capture. This allows teams to maintain their unified observability strategy across all systems while gaining the deep agent insights that AIQ toolkit uniquely provides.'
   },
   {
     id: 'q5',
     question: 'What flexibility does AIQ toolkit provide regarding profiler integration depth?',
     options: [
-      'Users choose their preferred integration level ranging from individual tools to agent-level to complete workflow scope',
-      'All tools and agents must be comprehensively decorated for the profiler functionality to work at any level',
+      'The profiler automatically decorates all code without requiring user control or explicit integration decisions',
       'Only complete workflow decoration is supported by the profiler, requiring full instrumentation before any benefits',
-      'The profiler automatically decorates all code without requiring user control or explicit integration decisions'
+      'All tools and agents must be comprehensively decorated for the profiler functionality to work at any level',
+      'Users choose their preferred integration level ranging from individual tools to agent-level to complete workflow scope'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'AIQ toolkit gives users complete freedom to integrate at whatever level they want—whether that\'s at the granular tool level (decorating individual functions and utilities), the agent level (wrapping entire agent implementations), or the entire workflow level (instrumenting complete end-to-end systems). While the toolkit\'s documentation actively encourages wrapping (decorating) every tool and agent throughout your system to get the most comprehensive and detailed data out of the profiler—enabling the deepest insights into performance bottlenecks, decision-making patterns, and optimization opportunities—this comprehensive instrumentation is presented as a recommendation for maximum value rather than a strict requirement for basic functionality. Users can start small, focusing on areas where they believe they\'ll see the most immediate value or where they have the most pressing performance questions, and then progressively expand their instrumentation coverage from there as they gain confidence and see concrete benefits. This flexibility allows teams to adopt incrementally rather than requiring a big-bang implementation, which is particularly valuable in large, complex systems where full instrumentation might represent a significant undertaking. Teams might start by instrumenting just the most critical or problematic agents, or perhaps focus on specific high-value workflows, gather insights and demonstrate value to stakeholders, and then expand coverage systematically. The profiler provides meaningful insights even with partial coverage, though naturally the comprehensiveness and depth of analysis improves as instrumentation coverage increases. This graduated adoption approach lowers barriers to entry, reduces risk, allows learning and adjustment along the way, and respects that different organizations and teams have different priorities, constraints, and starting points for their agent development maturity.'
   },
   {
     id: 'q6',
     question: 'What approach does AIQ toolkit take toward technology stack compatibility?',
     options: [
-      'Working seamlessly with both enterprise-grade frameworks and simple custom agents, supporting diverse development contexts',
       'Requiring migration to NVIDIA-specific infrastructure exclusively, including specialized hardware and software dependencies',
       'Supporting only Python-based agents without framework dependencies, limiting compatibility to simple implementations',
-      'Enforcing standardization across all agent implementations to ensure consistent behavior and performance characteristics'
+      'Enforcing standardization across all agent implementations to ensure consistent behavior and performance characteristics',
+      'Working seamlessly with both enterprise-grade frameworks and simple custom agents, supporting diverse development contexts'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'AIQ toolkit is designed with broad compatibility in mind, working alongside existing agentic frameworks whether they are sophisticated, enterprise-grade systems deployed at scale in production environments with complex orchestration and governance requirements, or simple, straightforward Python-based agents that might be quick prototypes or specialized tools serving specific narrow purposes. This inclusive approach means the toolkit doesn\'t force architectural decisions, doesn\'t require sophisticated infrastructure, and doesn\'t mandate that you adopt particular design patterns or organizational structures. Whether you\'re running complex enterprise systems with multi-agent orchestration, extensive tool libraries, sophisticated evaluation pipelines, and enterprise integration requirements, or straightforward Python scripts that perform focused tasks with minimal dependencies, AIQ toolkit can add value through its profiling, evaluation, and observability capabilities. The toolkit meets developers where they are rather than requiring them to meet specific prerequisites or architectural standards. This flexibility is particularly important given the diversity of agent development contexts across organizations—startups might favor simple, fast-moving implementations while enterprises require robust, governed systems; research teams might prioritize experimentation while production teams emphasize reliability. AIQ toolkit provides value across this entire spectrum, allowing teams with different maturity levels, different constraints, and different goals to benefit from its capabilities. The toolkit\'s modular design means you can use just the pieces that make sense for your context—perhaps just profiling for a prototype, or comprehensive evaluation and observability for production systems. This approach lowers adoption barriers significantly, making AIQ toolkit accessible to a much broader audience than tools that assume specific architectural patterns or infrastructure capabilities.'
   },
   {
     id: 'q7',
     question: 'What is AIQ toolkit\'s stance on replacing existing development tools and frameworks?',
     options: [
-      'It works alongside existing tools as an enhancement layer without requiring replacement of any current components',
-      'It requires complete replacement of all existing frameworks and tools with NVIDIA equivalents for proper functionality',
+      'It only supplements tools that lack specific features, requiring partial replacement for comprehensive coverage',
       'It selectively replaces frameworks based on performance benchmarks, requiring migration of underperforming components',
-      'It only supplements tools that lack specific features, requiring partial replacement for comprehensive coverage'
+      'It requires complete replacement of all existing frameworks and tools with NVIDIA equivalents for proper functionality',
+      'It works alongside existing tools as an enhancement layer without requiring replacement of any current components'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'A consistent and fundamental theme running throughout the entire FAQ and AIQ toolkit documentation is that the toolkit is not designed to replace anything—not LLM frameworks like those from OpenAI or Anthropic, not agentic frameworks like LangChain or LlamaIndex, not observability platforms like Datadog or New Relic, and not communication protocols like HTTP or gRPC. Instead, AIQ toolkit explicitly works alongside all existing tools to enhance their capabilities with specialized features for agent development. This "enhancement not replacement" philosophy is deeply embedded in the toolkit\'s design and reflects a pragmatic understanding that organizations have made substantial investments in their current tools, frameworks, and platforms—investments in licensing, training, integration, customization, and operational processes that shouldn\'t be discarded lightly. By positioning itself as a complementary layer rather than a replacement, AIQ toolkit dramatically reduces adoption friction since teams don\'t need to make difficult decisions about abandoning working systems. It protects and leverages existing investments rather than rendering them obsolete. It enables gradual integration where teams can add AIQ toolkit capabilities incrementally without disrupting working systems or requiring risky big-bang migrations. Organizations can continue using their chosen frameworks, platforms, and tools while augmenting them with AIQ toolkit\'s specialized capabilities for profiling agent performance, evaluating decision-making quality, providing deep observability into agent behavior, and optimizing resource usage. This approach recognizes that the agent development ecosystem is diverse and pluralistic, with different tools excelling at different aspects, and that providing value doesn\'t require monopolizing the entire stack—it just requires doing specific things exceptionally well that other tools don\'t address comprehensively.'
   },
   {
     id: 'q8',
     question: 'For optimal profiler benefits, what does AIQ toolkit recommend but not require?',
     options: [
-      'Wrapping every tool and agent in your system with decorators to enable comprehensive instrumentation and profiling',
       'Migrating all agent logic to NVIDIA infrastructure and replacing existing implementations with NVIDIA-optimized versions',
       'Using only NVIDIA models for all LLM calls throughout the system, eliminating non-NVIDIA providers',
-      'Implementing custom communication protocols specifically designed for NVIDIA agents to ensure proper telemetry collection'
+      'Implementing custom communication protocols specifically designed for NVIDIA agents to ensure proper telemetry collection',
+      'Wrapping every tool and agent in your system with decorators to enable comprehensive instrumentation and profiling'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'While AIQ toolkit actively encourages and recommends that users wrap (decorate) every tool and agent throughout their system to get the most comprehensive, detailed, and valuable data out of the profiler—enabling deep insights into performance characteristics, bottlenecks, decision-making patterns, token usage, tool invocation patterns, and optimization opportunities across the entire agent workflow—this comprehensive instrumentation is explicitly presented as a strong recommendation for maximizing value rather than a mandatory requirement for using the toolkit at all. This recommendation-not-requirement approach acknowledges several important realities. First, comprehensive decoration provides maximum visibility and profiling benefits, allowing the profiler to track every decision point, measure every operation, and provide complete end-to-end visibility into agent behavior. Second, it respects that teams may want or need to start smaller, perhaps focusing initially on specific high-value areas, critical workflows, or known problem areas before expanding to comprehensive coverage. Third, it recognizes that in large, complex systems, instrumenting everything might represent a significant undertaking that needs to be staged and prioritized. Fourth, it allows teams to prove value in limited contexts before making larger investments in broader instrumentation. The toolkit remains useful and provides meaningful insights even with partial adoption—you\'ll get profiling data for whatever you\'ve instrumented, though naturally the comprehensiveness and depth of analysis improves as instrumentation coverage increases. This graduated approach reduces adoption barriers, enables learning-driven expansion where teams can see benefits before committing to comprehensive instrumentation, and respects that different organizations have different starting points, priorities, and constraints around how much effort they can invest in instrumentation.'
   },
   {
     id: 'q9',
     question: 'What does AIQ toolkit\'s opt-in design philosophy enable for development teams?',
     options: [
-      'Gradual adoption strategies starting with highest-value areas and expanding based on demonstrated benefits and learnings',
       'Mandatory standardization across all agent implementations to ensure consistent patterns and architectural approaches',
       'Immediate full-scale deployment requirements across all systems to achieve consistency and comprehensive coverage',
-      'Exclusive use of NVIDIA-developed components throughout the entire agent stack to ensure compatibility and support'
+      'Exclusive use of NVIDIA-developed components throughout the entire agent stack to ensure compatibility and support',
+      'Gradual adoption strategies starting with highest-value areas and expanding based on demonstrated benefits and learnings'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'The 100% opt-in nature of AIQ toolkit fundamentally enables gradual adoption strategies where teams can start small in areas where they believe they\'ll see the most immediate value, prove benefits in those limited contexts with concrete metrics and outcomes, learn what works well for their specific use cases and organizational context, and then scale adoption systematically based on demonstrated benefits and growing confidence. This approach is particularly valuable in enterprise environments where large-scale changes require careful validation, risk management, and stakeholder buy-in. Teams can begin by instrumenting just the most critical workflows, the most problematic agents, or the highest-value use cases—perhaps a production customer service agent that handles significant volume, a complex research assistant with sophisticated tool use, or a high-stakes decision-making agent where optimization would have measurable business impact. They can gather detailed profiling data from these initial implementations, identify concrete optimization opportunities and bottlenecks, make improvements and measure their impact, and present clear ROI evidence to stakeholders and leadership. This proven value then justifies expanding instrumentation to additional agents and workflows, creating a virtuous cycle where each success builds confidence and momentum for broader adoption. This gradual approach significantly reduces organizational change management challenges since it doesn\'t require convincing everyone to adopt everything all at once. It allows learning and adjustment along the way—if initial implementations reveal that certain integration patterns work better than others, subsequent rollouts can incorporate those learnings. It reduces risk since problems with initial implementations affect limited scope rather than entire systems. It enables experimentation with low stakes, allowing teams to try different approaches and find what works best for their specific context before committing broadly.'
   },
   {
     id: 'q10',
     question: 'How does AIQ toolkit\'s approach to agent communication differ from creating new standards?',
     options: [
-      'It leverages existing proven protocols like MCP, HTTP, and gRPC rather than introducing yet another standard',
       'It builds proprietary protocols optimized for NVIDIA hardware to achieve superior performance and lower latency',
       'It requires all agents use identical communication methods defined by comprehensive NVIDIA specifications',
-      'It creates new industry standards specifically designed for future-proofing against evolving agent architectures'
+      'It creates new industry standards specifically designed for future-proofing against evolving agent architectures',
+      'It leverages existing proven protocols like MCP, HTTP, and gRPC rather than introducing yet another standard'
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'Rather than attempting to solve agent-to-agent communication by creating new proprietary protocols, inventing yet another standard that the industry would need to learn and adopt, or defining NVIDIA-specific communication patterns that would fragment the ecosystem, AIQ toolkit takes a deliberately pragmatic approach by recognizing that communication is best handled over existing, mature, widely-adopted protocols such as MCP (Model Context Protocol for AI-specific communications), HTTP (the foundation of web services and RESTful APIs), gRPC (Google\'s high-performance RPC framework with efficient serialization), and traditional sockets (for low-level networking needs). This decision reflects several important and well-reasoned principles about software ecosystem development and avoiding unnecessary fragmentation. First, protocol proliferation is a well-documented problem in software ecosystems—introducing yet another communication standard, even a technically excellent one, would fragment rather than unify the ecosystem, creating interoperability challenges, increasing learning curves, and requiring bridging code to connect systems using different protocols. Second, the existing protocols have accumulated years or even decades of real-world usage, battle-hardening through countless production deployments, extensive tooling and library support across virtually all programming languages and platforms, comprehensive documentation and community knowledge, and deep developer familiarity that dramatically reduces learning curves and implementation time. Third, by building on standard protocols rather than proprietary ones, AIQ toolkit ensures that agents built with the toolkit can seamlessly communicate with agents built using completely different frameworks, technologies, programming languages, or vendors, promoting true interoperability across the broader AI agent ecosystem rather than creating walled gardens. Fourth, developers, operations teams, and security professionals already deeply understand these protocols, existing infrastructure already supports them comprehensively, security teams have established policies and best practices for them, and monitoring tools can already observe and analyze them. Rather than spending valuable engineering resources and community mindshare on reinventing communication—a problem that isn\'t meaningfully unsolved—AIQ toolkit focuses its innovation efforts on areas where it can provide truly unique value that addresses real gaps in the current agent development ecosystem, such as comprehensive profiling of agent performance characteristics, systematic evaluation of decision-making quality, deep observability into agent reasoning processes, and intelligent optimization of resource usage patterns.'
   }
 ];
-
